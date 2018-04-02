@@ -2,20 +2,18 @@ import React, { Component } from 'react'
 import { page, title } from './util/helpers'
 import getContent from './util/api'
 
-class Page extends Component {
-    constructor(props) {
-        super(props)
+const req = `${page}7`
+
+class About extends Component {
+    constructor() {
+        super()
         this.state = {
-            style: props.style,
             html: null
         }
-        const StyledPage = this.state.style
     }
 
-    componentDidMount() {
-        
-        const req = `${page}${this.props.number}`
-        document.title = `${this.props.name} | ${title}`
+    componentWillMount() {
+        document.title = `About | ${title}`
         getContent(req, (html) => {
             this.setState({ html })
         })
@@ -23,11 +21,11 @@ class Page extends Component {
 
     render() {
         return (
-            <StyledPage dangerouslySetInnerHTML={{
+            <div className="content" dangerouslySetInnerHTML={{
                 __html: this.state.html
             }} />
         )
     }
 }
 
-export default Page
+export default About
