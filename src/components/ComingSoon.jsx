@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import title from './util/helpers'
+import { page, title } from './util/helpers'
 import getContent from './util/api'
 
-const req = 'http://runebear.localhost/wp-json/wp/v2/pages/5'
+const req = `${page}5`
 
 class ComingSoon extends Component {
   constructor() {
