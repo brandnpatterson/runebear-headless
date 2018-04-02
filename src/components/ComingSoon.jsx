@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import title from './util/helpers'
 import getContent from './util/api'
 
-const req = 'http://runebear.localhost/wp-json/wp/v2/pages/7'
+const req = 'http://runebear.localhost/wp-json/wp/v2/pages/5'
 
-class About extends Component {
+class ComingSoon extends Component {
   constructor() {
     super()
     this.state = {
@@ -13,7 +13,7 @@ class About extends Component {
   }
 
   componentWillMount() {
-    document.title = `About | ${title}`
+    document.title = `Coming Soon | ${title}`
     getContent(req, (html) => {
       this.setState({ html })
     })
@@ -28,4 +28,4 @@ class About extends Component {
   }
 }
 
-export default About
+export default ComingSoon

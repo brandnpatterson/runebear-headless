@@ -1,20 +1,31 @@
-import React from 'react'
+import React, { Component } from 'react'
+import title from './util/helpers'
+import getContent from './util/api'
 
-const Home = () => (
-  <div>
-    <div className="featured">
-      <div className="featured-header">
-        <div className="featured-hero">
-          <img className="runebear-word" src="images/runebear-word.png" alt="runebear word"/>
-          <img className="runebear-logo" src="images/runebear-logo.png" alt="runebear logo" />
-        </div>
-        <h4 className="featured-subtitle center">
-          <em> Rune Bear </em>
-          <span> subtitle </span>
-        </h4>
-      </div>
-    </div>
-  </div>
-)
+const req = 'http://runebear.localhost/wp-json/wp/v2/pages/1'
+
+class Home extends Component {
+  constructor() {
+    super()
+    this.state = {
+      html: null
+    }
+  }
+
+  componentWillMount() {
+    document.title = `Home | ${title}`
+    getContent(req, (html) => {
+      this.setState({ html })
+    })
+  }
+
+  render() {
+    return (
+      <div className="content" dangerouslySetInnerHTML={{
+        __html: this.state.html
+      }} />
+    )
+  }
+}
 
 export default Home
