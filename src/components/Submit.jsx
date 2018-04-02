@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import { page, title } from './util/helpers'
-import getContent from './util/api'
-
-const req = `${page}3`
+import { title } from './util/helpers'
 
 class Submit extends Component {
   constructor() {
@@ -14,8 +11,15 @@ class Submit extends Component {
 
   componentWillMount() {
     document.title = `Submit | ${title}`
-    getContent(req, (html) => {
-      this.setState({ html })
+
+    this.props.pages.map(page => {
+      if (page.id === Number(this.props.id)) {
+        return this.setState({
+          html: page.content.rendered
+        })
+      } else {
+        return null
+      }
     })
   }
 
