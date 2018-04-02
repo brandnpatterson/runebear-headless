@@ -12,32 +12,34 @@ const routes = [
   { id: 5, to: '/about', title: 'ABOUT' },
 ]
 
-const routesMarkup = () => {
-  return routes.map(route => {
-    return <div key={route.id} className="navbar-item">
-      <Link to={route.to}>{route.title}</Link>
-    </div>
-  })
-}
+const Header = () => {
+  const routesMarkup = () => {
+    return routes.map(route => {
+      return <div key={route.id} className="navbar-item">
+        <Link to={route.to}> {route.title} </Link>
+      </div>
+    })
+  }
 
-const Header = () => (
-  <StyledHeader>
-    <nav className="navbar" aria-label="main navigation">
-      <div className="navbar-brand">
-        <div className="navbar-burger is-large" data-target="navMenu">
-          <span />
-          <span />
-          <span />
+  return (
+    <StyledHeader>
+      <nav className="navbar" aria-label="main navigation">
+        <div className="navbar-brand">
+          <div className="navbar-burger is-large" data-target="navMenu">
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
-      </div>
-      <div className="navbar-menu navbar-target" id="navMenu">
-        <div className="navbar-items">
-          {routesMarkup()}
+        <div className="navbar-menu navbar-target" id="navMenu">
+          <div className="navbar-items">
+            {routesMarkup()}
+          </div>
         </div>
-      </div>
-    </nav>
-  </StyledHeader>
-)
+      </nav>
+    </StyledHeader>
+  )
+}
 
 const StyledHeader = styled.header `
   .navbar {
