@@ -1,4 +1,5 @@
 import about from './about'
 import submit from './submit'
+import comingSoon from './coming-soon'
 
-export { about, submit }
+export { comingSoon, about, submit }
