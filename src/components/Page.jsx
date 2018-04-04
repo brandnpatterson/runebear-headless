@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
-
 import { title } from './util/helpers'
+
+// styles
+import styled from 'styled-components'
+import media from './styles/media'
+import page from './styles/page'
 
 class Page extends Component {
     constructor() {
@@ -42,14 +45,22 @@ const StyledContent = styled.div `
     margin: 100px auto;
     width: 80%;
 
-    p {
-        text-align: center;
+    .alignright {
+        margin-top: -30px;
     }
 
-    h1, h2, h3, h4 {
-        font-size: 30px;
-        margin-bottom: 30px;
+    img {
+        height: 200px;
+        width: 200px;
+
+        ${media.$mediumUp} {
+            height: 400px;
+            width: 400px;
+        }
     }
+
+    {/* boilerplate styling for all pages */}
+    ${page}
 `
 
 export default Page

@@ -1,5 +1,4 @@
 import React,{ Component } from 'react'
-
 import getContent from './util/api'
 import { page } from './util/helpers'
 
@@ -81,6 +80,10 @@ const StyledFooter = styled.footer `
     font-size: 14px;
     margin-left: 10px;
     text-align: left;
+
+    &:hover {
+      color: ${color.$blue}
+    }
 
     ${media.$mediumOnly} {
       font-size: 18px;

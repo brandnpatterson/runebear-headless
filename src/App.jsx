@@ -4,9 +4,8 @@ import axios from 'axios'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
-import NotFound from './components/NotFound'
-
 import Page from './components/Page'
+import NotFound from './components/NotFound'
 
 class App extends React.Component {
   constructor() {
@@ -23,10 +22,9 @@ class App extends React.Component {
     
     axios.get(pages)
       .then(res => {
-        // listen for navbar from api
-        const navbar = res.data.filter(d => {
-          if (d.id !== 56) return null
-          return d
+        // return header navbar
+        let navbar = res.data.filter(d => {
+          return d.id === 56
           // replace all html and new lines with an empty string
           // split each string at the comma and trim empty space
         }).map(d => {
@@ -35,15 +33,22 @@ class App extends React.Component {
 
           return trim
         })
+        navbar = [].concat.apply([], navbar);
 
-        // listen for pages from api
+        // return footer
+        const footer = res.data.filter(d => {
+          return d.id === 43
+        })
+
+        console.log(footer)
+
+        // return all pages from api that are not the header and footer
         const pages = res.data.filter(d => {
-          if (d.title.rendered === 'Footer' || d.title.rendered === 'Header') return null
-          return d
+          return d.title.rendered !== 'Footer' && d.title.rendered !== 'Header'
         }).map(d => d)
         
         this.setState({ pages })
-        this.setState({ navbar: navbar[0] })
+        this.setState({ navbar: navbar })
         this.setState({
           routes: this.createRoutes()
         })
