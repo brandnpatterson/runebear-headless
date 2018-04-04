@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { lowerAndDash, pages } from './util/helpers'
 import axios from 'axios'
 
 import Header from './components/Header'
@@ -11,19 +12,18 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      navbar: null,
+      footer: null,
+      header: null,
       pages: null,
       routes: null,
     }
   }
 
-  componentDidMount() {
-    const pages = 'http://runebear.localhost/wp-json/wp/v2/pages'
-    
+  componentDidMount() {    
     axios.get(pages)
       .then(res => {
-        // return header navbar
-        let navbar = res.data.filter(d => {
+        // return header header
+        let header = res.data.filter(d => {
           return d.id === 56
           // replace all html and new lines with an empty string
           // split each string at the comma and trim empty space
@@ -33,22 +33,22 @@ class App extends React.Component {
 
           return trim
         })
-        navbar = [].concat.apply([], navbar);
+        header = [].concat.apply([], header);
 
         // return footer
-        const footer = res.data.filter(d => {
+        let footer = res.data.filter(d => {
           return d.id === 43
-        })
-
-        console.log(footer)
+        }).map(d => d.content.rendered)
+        footer = footer[0]
 
         // return all pages from api that are not the header and footer
         const pages = res.data.filter(d => {
           return d.title.rendered !== 'Footer' && d.title.rendered !== 'Header'
         }).map(d => d)
         
+        this.setState({ footer })
         this.setState({ pages })
-        this.setState({ navbar: navbar })
+        this.setState({ header: header })
         this.setState({
           routes: this.createRoutes()
         })
@@ -58,8 +58,6 @@ class App extends React.Component {
 
   createRoutes() {
     const { pages } = this.state
-
-    const lowerAndDash = e => e.toLowerCase().replace(/\s+/g, '-')
 
     const routes = pages.map((nav, i) => {
       let pageName
@@ -72,9 +70,9 @@ class App extends React.Component {
         pageName = '/' + pageClass
       }
 
-      const route = 
+      const route =
       <Route key={i} exact path={pageName} component={() => (
-        <Page id={pageId} pages={pages} class={pageClass} />
+        <Page id={pageId} pages={pages} pageClass={pageClass} />
       )} />
 
       return route
@@ -84,18 +82,20 @@ class App extends React.Component {
   }
   
   render() {
-    const { navbar, pages, routes } = this.state
+    const { footer, header, pages, routes } = this.state
 
     return (
       <div id="wrapper">
-        {navbar &&
-          <Header navbar={navbar} />
+        {header &&
+          <Header header={header} />
         }
         <Switch>
           {pages && routes}
           {pages && <Route path="*" component={NotFound} />}
         </Switch>
-        <Footer />
+        {footer && 
+          <Footer footer={footer} />
+        }
       </div>
     )
   }

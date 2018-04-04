@@ -1,19 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import color from './styles/color'
-import media from './styles/media'
 
-const Header = ({ navbar }) => {
-  const setNavbar = () => {
+// styles
+import color from '../util/color'
+import media from '../util/media'
+import styled from 'styled-components'
+
+const Header = ({ header }) => {
+  const setHeader = () => {
     let location
-    return navbar.map((nav, i) => {
+    return header.map((nav, i) => {
       // home page
       if (nav === 'HOME') {
         location = ''
-      // promotional
-      } else if (nav === 'QUARTERLY'.toUpperCase() || nav === 'WEEKLY'.toUpperCase()) {
-        location = 'coming-soon'
       // any other page
       } else {
         location = nav.toLowerCase()
@@ -38,7 +37,7 @@ const Header = ({ navbar }) => {
         </div>
         <div className="navbar-menu navbar-target" id="navMenu">
           <div className="navbar-items">
-            {setNavbar()}
+            {setHeader()}
           </div>
         </div>
       </nav>
@@ -52,7 +51,7 @@ const StyledHeader = styled.header `
   }
 
   .navbar-menu {
-    background: ${color.$dark};
+    background: ${color.dark};
   }
 
   .navbar-burger.is-active {
@@ -60,7 +59,7 @@ const StyledHeader = styled.header `
     z-index: 10;
 
     span {
-      background: ${color.$lighter};
+      background: ${color.lighter};
     }
   }
 
@@ -69,24 +68,24 @@ const StyledHeader = styled.header `
     flex-wrap: wrap;
     margin: 20px 0;
     max-width: 1100px;
-    ${media.$mediumUp} {
+    ${media.mediumUp} {
       display: flex;
       margin: 0 auto;
     }
 
     .navbar-item {
-      ${media.$mediumUp} {
+      ${media.mediumUp} {
         margin: 0 35px;
       }
     }
 
     a {
-      color: ${color.$lighter};
+      color: ${color.lighter};
       font-family: serif;
       font-size: 25px;
 
       &:hover {
-        color: ${color.$lighter};
+        color: ${color.lighter};
       }
     }
   }

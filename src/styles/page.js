@@ -1,19 +1,7 @@
-import media from './media'
+import media from '../util/media'
 
+// boilerplate styling for all pages
 const page = `
-    p, h1, h2, h3, h4 {
-        text-align: center;
-    }
-
-    h1, h2, h3, h4 {
-        margin: 30px;
-        text-align: center;
-
-        ${media.$mediumUp} {
-            margin: 60px;
-        }
-    }
-
     h1, h2, h3, h4 {
         max-width: 550px;
     }
@@ -21,7 +9,7 @@ const page = `
     h1 {
         font-size: 26px;
 
-        ${media.$mediumUp} {
+        ${media.mediumUp} {
             font-size: 30px;
         }
     }
@@ -29,7 +17,7 @@ const page = `
     h2 {
         font-size: 22px;
 
-        ${media.$mediumUp} {
+        ${media.mediumUp} {
             font-size: 26px;
         }
     }
@@ -37,7 +25,7 @@ const page = `
     h3 {
         font-size: 20px;
 
-        ${media.$mediumUp} {
+        ${media.mediumUp} {
             font-size: 22px;
         }
     }
@@ -45,7 +33,7 @@ const page = `
     h4 {
         font-size: 18px;
 
-        ${media.$mediumUp} {
+        ${media.mediumUp} {
             font-size: 20px;
         }
     }

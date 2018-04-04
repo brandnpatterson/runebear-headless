@@ -1,63 +1,44 @@
-import React,{ Component } from 'react'
-import getContent from './util/api'
-import { page } from './util/helpers'
+import React from 'react'
 
 // styles
+import color from '../util/color'
+import media from '../util/media'
 import styled from 'styled-components'
-import color from './styles/color'
-import media from './styles/media'
 
-const req = `${page}43`
+const Footer = ({ footer }) => {
+  const thisYear = new Date().getFullYear();
 
-class Footer extends Component {
-  constructor() {
-    super()
-    this.state = {
-      html: null
-    }
-  }
-
-  componentWillMount() {
-    getContent(req, (html) => {
-      this.setState({ html })
-    })
-  }
-
-  render() {
-    const thisYear = new Date().getFullYear();
-    
-    return (
-      <StyledFooter>
-        <div className="content" dangerouslySetInnerHTML={{
-          __html: this.state.html
-        }} />
-        <a className="copyright" href="http://brandnpatterson.com">
-          &copy;{thisYear} Brandon Patterson. All Rights Reserved.
-        </a>
-      </StyledFooter>
-    )
-  }
+  return (
+    <StyledFooter>
+      <div className="content" dangerouslySetInnerHTML={{
+        __html: footer
+      }} />
+      <a className="copyright" href="http://brandnpatterson.com">
+        &copy;{thisYear} Brandon Patterson. All Rights Reserved.
+      </a>
+    </StyledFooter>
+  )
 }
 
 const StyledFooter = styled.footer `
-  background: ${color.$dark};
-  color: ${color.$lighter};
+  background: ${color.dark};
+  color: ${color.lighter};
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 
   a { 
-    color: ${color.$blue}; 
+    color: ${color.blue}; 
   }
 
   p {
-    color: ${color.$lighter};
+    color: ${color.lighter};
     font-size: 14px;
     max-width: 400px;
     padding: 30px 0 0 10px;
     width: 90%;
 
-    ${media.$mediumUp} {
+    ${media.mediumUp} {
       font-size: 18px;
       margin-bottom: 50px;
       max-width: 500px;
@@ -67,7 +48,7 @@ const StyledFooter = styled.footer `
     }
 
     strong {
-      color: ${color.$lighter};
+      color: ${color.lighter};
     }
 
     span {
@@ -76,16 +57,16 @@ const StyledFooter = styled.footer `
   }
 
   .copyright {
-    color: ${color.$lighter};
+    color: ${color.lighter};
     font-size: 14px;
     margin-left: 10px;
     text-align: left;
 
     &:hover {
-      color: ${color.$blue}
+      color: ${color.blue}
     }
 
-    ${media.$mediumOnly} {
+    ${media.mediumUp} {
       font-size: 18px;
       margin: 25px 0 50px 60px;
     }

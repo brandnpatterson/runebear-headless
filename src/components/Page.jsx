@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { title } from './util/helpers'
+import { capitalizeFirstLetter, title } from './util/helpers'
+import media from '../util/media'
 
 // styles
 import styled from 'styled-components'
-import media from './styles/media'
-import page from './styles/page'
+import page from '../styles/page'
+import submit from '../styles/submit'
+import about from '../styles/about'
 
 class Page extends Component {
     constructor() {
@@ -15,10 +17,12 @@ class Page extends Component {
     }
 
     componentWillMount() {
-        document.title = `Page | ${title}`
+          const { id, pageClass, pages } = this.props
 
-        this.props.pages.map(page => {
-            if (page.id === Number(this.props.id)) {
+        document.title = `${capitalizeFirstLetter(pageClass)} | ${title}`
+
+        pages.map(page => {
+            if (page.id === Number(id)) {
                 return this.setState({
                     html: page.content.rendered
                 })
@@ -45,15 +49,11 @@ const StyledContent = styled.div `
     margin: 100px auto;
     width: 80%;
 
-    .alignright {
-        margin-top: -30px;
-    }
-
     img {
         height: 200px;
         width: 200px;
 
-        ${media.$mediumUp} {
+        ${media.mediumUp} {
             height: 400px;
             width: 400px;
         }
@@ -61,6 +61,12 @@ const StyledContent = styled.div `
 
     {/* boilerplate styling for all pages */}
     ${page}
+
+    {/* styling for submit page */}
+    ${submit}
+
+    {/* styling for about page */}
+    ${about}
 `
 
 export default Page
