@@ -5,8 +5,8 @@ import { page } from './util/helpers'
 
 // styles
 import styled from 'styled-components'
-import color from './styles/color';
-import media from './styles/media';
+import color from './styles/color'
+import media from './styles/media'
 
 const req = `${page}43`
 
