@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+
 import { title } from './util/helpers'
 
 class Page extends Component {

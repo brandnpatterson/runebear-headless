@@ -1,10 +1,14 @@
 import React,{ Component } from 'react'
+
 import getContent from './util/api'
+import { page } from './util/helpers'
+
+// styles
 import styled from 'styled-components'
 import color from './styles/color';
 import media from './styles/media';
 
-const req = 'http://runebear.localhost/wp-json/wp/v2/pages/43'
+const req = `${page}43`
 
 class Footer extends Component {
   constructor() {

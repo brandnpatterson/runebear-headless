@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
+// styles
 import styled from 'styled-components'
 import color from './styles/color';
 import media from './styles/media';
