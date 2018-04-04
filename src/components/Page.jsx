@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import page from '../styles/page'
 import submit from '../styles/submit'
 import about from '../styles/about'
+import comingSoon from '../styles/coming-soon'
 
 class Page extends Component {
     constructor() {
@@ -69,6 +70,9 @@ const StyledContent = styled.div `
 
     {/* styling for about page */}
     ${about}
+
+    {/* styling for quarterly and weekly pages */}
+    ${comingSoon}
 `
 
 export default Page

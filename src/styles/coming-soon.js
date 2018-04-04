@@ -1,0 +1,35 @@
+import media from '../util/media'
+
+const comingSoon = `
+    .coming-soon-inner {
+        margin-top: 120px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        
+        ${media.mediumUp} {
+            flex-direction: row;
+        }
+    }
+
+    .wp-image-15 {
+        ${media.mediumUp} {
+            margin-top: -120px;
+            margin-right: 50px;
+        }
+    }
+
+    .coming-soon {
+        left: 30px;
+        position: absolute;
+        top: 60px;
+
+        ${media.mediumUp} {
+            font-size: 30px;
+            left: 70px;
+            top: 20px;
+        }
+    }
+`
+
+export default comingSoon

@@ -2,6 +2,10 @@ import media from '../util/media'
 
 // styling for all pages
 const page = `
+    ${media.mediumUp} {
+        width: 100%;
+    }
+
     .image-wrapper {
         display: flex;
         flex-direction: column;

@@ -3,11 +3,6 @@ import media from '../util/media'
 
 // styling for about page
 const about = `
-
-    ${media.mediumUp} {
-        width: 100%;
-    }
-
     .featured-hero {
         align-items: center;
         display: flex;
