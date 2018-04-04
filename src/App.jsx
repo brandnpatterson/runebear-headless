@@ -3,18 +3,18 @@ import { Route, Switch } from 'react-router-dom'
 import axios from 'axios'
 
 import Header from './components/Header'
-import Home from './components/Home'
-import Submit from './components/Submit'
-import About from './components/About'
-import NotFound from './components/NotFound'
 import Footer from './components/Footer'
-import ComingSoon from './components/ComingSoon'
+import NotFound from './components/NotFound'
+
+import Page from './components/Page'
 
 class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      pages: null
+      navbar: null,
+      pages: null,
+      routes: null,
     }
   }
 
@@ -23,46 +23,72 @@ class App extends React.Component {
     
     axios.get(pages)
       .then(res => {
-        const pages = res.data
+        // listen for navbar from api
+        const navbar = res.data.filter(d => {
+          if (d.id !== 56) return null
+          return d
+          // replace all html and new lines with an empty string
+          // split each string at the comma and trim empty space
+        }).map(d => {
+          const split = d.content.rendered.replace(/<(.|\n)*?>/g, '').split(',')
+          const trim = split.map(s => s.trim())
+
+          return trim
+        })
+
+        // listen for pages from api
+        const pages = res.data.filter(d => {
+          if (d.title.rendered === 'Footer' || d.title.rendered === 'Header') return null
+          return d
+        }).map(d => d)
+        
         this.setState({ pages })
+        this.setState({ navbar: navbar[0] })
+        this.setState({
+          routes: this.createRoutes()
+        })
       })
       .catch(err => console.log(err))
   }
 
-  render() {
+  createRoutes() {
     const { pages } = this.state
+
+    const lowerAndDash = e => e.toLowerCase().replace(/\s+/g, '-')
+
+    const routes = pages.map((nav, i) => {
+      let pageName
+      const pageClass = lowerAndDash(nav.title.rendered)
+      const pageId = nav.id
+
+      if (nav.title.rendered === 'Home') {
+        pageName = '/'
+      } else {
+        pageName = '/' + pageClass
+      }
+
+      const route = 
+      <Route key={i} exact path={pageName} component={() => (
+        <Page id={pageId} pages={pages} class={pageClass} />
+      )} />
+
+      return route
+    })
+
+    return routes
+  }
+  
+  render() {
+    const { navbar, pages, routes } = this.state
+
     return (
-      <div className="content">
-        <Header />
+      <div id="wrapper">
+        {navbar &&
+          <Header navbar={navbar} />
+        }
         <Switch>
-          {pages &&
-            <Route exact path='/' component={() => (
-              <Home id="1" pages={pages} />
-            )} />
-          }
-          {pages &&
-            <Route exact path='/submit' component={() => (
-              <Submit id="3" pages={pages} />
-            )} />
-          }
-          {pages &&
-            <Route exact path='/weekly' component={() => (
-              <ComingSoon id="5" pages={pages} />
-            )} />
-          }
-          {pages &&
-            <Route exact path='/quarterly' component={() => (
-              <ComingSoon id="5" pages={pages} />
-            )} />
-          }
-          {pages && 
-            <Route exact path='/about' component={() => (
-              <About id="7" pages={pages} />
-            )} />
-          }
-          {pages &&
-            <Route path="*" component={NotFound} />
-          }
+          {pages && routes}
+          {pages && <Route path="*" component={NotFound} />}
         </Switch>
         <Footer />
       </div>

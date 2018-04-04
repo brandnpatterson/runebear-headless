@@ -4,20 +4,25 @@ import styled from 'styled-components'
 import color from './styles/color';
 import media from './styles/media';
 
-const routes = [
-  { id: 1, to: '/', title: 'HOME' },
-  { id: 2, to: '/submit', title: 'SUBMIT' },
-  { id: 3, to: '/weekly', title: 'WEEKLY' },
-  { id: 4, to: '/quarterly', title: 'QUARTERLY' },
-  { id: 5, to: '/about', title: 'ABOUT' },
-]
-
-const Header = () => {
-  const routesMarkup = () => {
-    return routes.map(route => {
-      return <div key={route.id} className="navbar-item">
-        <Link to={route.to}> {route.title} </Link>
-      </div>
+const Header = ({ navbar }) => {
+  const setNavbar = () => {
+    let location
+    return navbar.map((nav, i) => {
+      // home page
+      if (nav === 'HOME') {
+        location = ''
+      // promotional
+      } else if (nav === 'QUARTERLY'.toUpperCase() || nav === 'WEEKLY'.toUpperCase()) {
+        location = 'coming-soon'
+      // any other page
+      } else {
+        location = nav.toLowerCase()
+      }
+      return (
+        <div key={i} className="navbar-item">
+          <Link to={location}>{nav}</Link>
+        </div>
+      )
     })
   }
 
@@ -33,7 +38,7 @@ const Header = () => {
         </div>
         <div className="navbar-menu navbar-target" id="navMenu">
           <div className="navbar-items">
-            {routesMarkup()}
+            {setNavbar()}
           </div>
         </div>
       </nav>
@@ -60,7 +65,10 @@ const StyledHeader = styled.header `
   }
 
   .navbar-items {
+    display: flex;
+    flex-wrap: wrap;
     margin: 20px 0;
+    max-width: 1100px;
     ${media.$mediumUp} {
       display: flex;
       margin: 0 auto;
