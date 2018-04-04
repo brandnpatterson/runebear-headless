@@ -23,17 +23,11 @@ class App extends React.Component {
     axios.get(pages)
       .then(res => {
         // return header header
-        let header = res.data.filter(d => {
-          return d.id === 56
-          // replace all html and new lines with an empty string
-          // split each string at the comma and trim empty space
-        }).map(d => {
-          const split = d.content.rendered.replace(/<(.|\n)*?>/g, '').split(',')
-          const trim = split.map(s => s.trim())
-
-          return trim
+        const header = res.data.filter(d => {
+          return d.title.rendered !== 'Footer' && d.title.rendered !== 'Header'
         })
-        header = [].concat.apply([], header);
+        .sort((a, b) => a.id - b.id)
+        .map(d => d.title.rendered)
 
         // return footer
         let footer = res.data.filter(d => {

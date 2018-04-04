@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { capitalizeFirstLetter, title } from './util/helpers'
-import media from '../util/media'
+import { capitalizeFirstLetter, title } from '../util/helpers'
 
 // styles
+import media from '../util/media'
 import styled from 'styled-components'
 import page from '../styles/page'
 import submit from '../styles/submit'
@@ -33,8 +33,10 @@ class Page extends Component {
     }
 
     render() {
+        const { pageClass } = this.props
+
         return (
-            <StyledContent dangerouslySetInnerHTML={{
+            <StyledContent className={pageClass} dangerouslySetInnerHTML={{
                 __html: this.state.html
             }} />
         )

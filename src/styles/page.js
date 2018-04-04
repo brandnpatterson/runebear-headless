@@ -1,7 +1,33 @@
 import media from '../util/media'
 
-// boilerplate styling for all pages
+// styling for all pages
 const page = `
+    .image-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        ${media.mediumUp} {
+            flex-direction: row;
+        }
+
+        img {
+            margin: 20px;
+        }
+
+        img:nth-child(2) {
+            margin-bottom: 50px;
+        }
+    }
+
+    .subtitle {
+        text-align: center;
+        max-width: 700px;
+
+        ${media.mediumUp} { 
+            width: 700px;
+        }
+    }
+
     h1, h2, h3, h4 {
         max-width: 550px;
     }

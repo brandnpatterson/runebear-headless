@@ -9,17 +9,19 @@ import styled from 'styled-components'
 const Header = ({ header }) => {
   const setHeader = () => {
     let location
-    return header.map((nav, i) => {
+    return header.map((headerItem, i) => {
+      headerItem = headerItem.toUpperCase()
+
       // home page
-      if (nav === 'HOME') {
+      if (headerItem === 'HOME') {
         location = ''
       // any other page
       } else {
-        location = nav.toLowerCase()
+        location = headerItem.toLowerCase().replace(/\s+/g, '-')
       }
       return (
         <div key={i} className="navbar-item">
-          <Link to={location}>{nav}</Link>
+          <Link to={location}>{headerItem}</Link>
         </div>
       )
     })
