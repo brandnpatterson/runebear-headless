@@ -1,8 +1,9 @@
+import { css } from 'styled-components'
 import color from '../util/color'
 import media from '../util/media'
 
 // styling for submit page
-const submit = `
+const submit = props => props.className = submit && css`
     .submit.inner {
         display: flex;
         flex-direction: column;

@@ -1,7 +1,9 @@
+import { css } from 'styled-components'
+
 import media from '../util/media'
 
 // styling for all pages
-const page = `
+const page = props => css `
     ${media.mediumUp} {
         width: 100%;
     }
