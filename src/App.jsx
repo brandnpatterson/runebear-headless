@@ -66,7 +66,7 @@ class App extends React.Component {
 
       return (
         <Route key={page.id} exact path={pagePath} component={() => (
-          <Page html={html} pageClass={pageClass} />
+          <Page __html={html} pageClass={pageClass} />
         )} />
       )
     })

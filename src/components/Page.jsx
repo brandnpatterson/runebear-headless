@@ -6,13 +6,11 @@ import media from '../util/media'
 import styled from 'styled-components'
 import { comingSoon, about, page, submit } from '../styles/index'
 
-const Page = ({ pageClass, html}) => {
+const Page = ({ pageClass, __html}) => {
     document.title = `${capitalizeFirstLetter(pageClass)} | ${title}`
 
     return (
-        <StyledPage className={pageClass} dangerouslySetInnerHTML={{
-            __html: html
-        }} />
+        <StyledPage className={pageClass} dangerouslySetInnerHTML={{ __html }} />
     )
 }
 
