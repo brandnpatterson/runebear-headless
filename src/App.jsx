@@ -53,23 +53,22 @@ class App extends React.Component {
   createRoutes() {
     const { pages } = this.state
 
-    const routes = pages.map((nav, i) => {
-      let pageName
-      const pageClass = lowerAndDash(nav.title.rendered)
-      const pageId = nav.id
+    const routes = pages.map(page => {
+      const pageClass = lowerAndDash(page.title.rendered)
+      let pagePath
+      let html = page.content.rendered
 
-      if (nav.title.rendered === 'Home') {
-        pageName = '/'
+      if (page.title.rendered === 'Home') {
+        pagePath = '/'
       } else {
-        pageName = '/' + pageClass
+        pagePath = '/' + pageClass
       }
 
-      const route =
-      <Route key={i} exact path={pageName} component={() => (
-        <Page id={pageId} pages={pages} pageClass={pageClass} />
-      )} />
-
-      return route
+      return (
+        <Route key={page.id} exact path={pagePath} component={() => (
+          <Page html={html} pageClass={pageClass} />
+        )} />
+      )
     })
 
     return routes
