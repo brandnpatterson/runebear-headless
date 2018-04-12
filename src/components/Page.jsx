@@ -1,12 +1,12 @@
 import React from 'react'
+import styled from 'styled-components'
 import { capitalizeFirstLetter, title } from '../util/helpers'
 
 // styles
 import media from '../util/media'
-import styled from 'styled-components'
 import { comingSoon, about, page, submit } from '../styles/index'
 
-const Page = ({ pageClass, __html}) => {
+let Page = ({ pageClass, __html}) => {
     document.title = `${capitalizeFirstLetter(pageClass)} | ${title}`
 
     return (
@@ -14,12 +14,12 @@ const Page = ({ pageClass, __html}) => {
     )
 }
 
-const StyledPage = styled.div `
+let StyledPage = styled.div `
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    margin: 100px auto;
+    margin: 50px auto;
     width: 80%;
     
     img {

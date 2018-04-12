@@ -2,15 +2,15 @@ import { css } from 'styled-components'
 import media from '../util/media'
 
 // styling for quarterly and weekly pages
-const comingSoon = props => props.className = comingSoon && css`
+let comingSoon = props => props.className = comingSoon && css`
     .coming-soon-inner {
-        margin-top: 120px;
         position: relative;
         display: flex;
         flex-direction: column;
 
         ${media.mediumUp} {
             flex-direction: row;
+            margin-top: 120px;
         }
     }
 

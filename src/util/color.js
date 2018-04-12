@@ -1,4 +1,4 @@
-const color = {
+let color = {
     black: '#000',
     dark: '#333',
     light: '#a2a2a2',

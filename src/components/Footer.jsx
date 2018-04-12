@@ -1,12 +1,12 @@
 import React from 'react'
+import styled from 'styled-components'
 
 // styles
 import color from '../util/color'
 import media from '../util/media'
-import styled from 'styled-components'
 
-const Footer = ({ footer }) => {
-  const thisYear = new Date().getFullYear();
+let Footer = ({ footer }) => {
+  let thisYear = new Date().getFullYear();
 
   return (
     <StyledFooter>
@@ -20,7 +20,7 @@ const Footer = ({ footer }) => {
   )
 }
 
-const StyledFooter = styled.footer `
+let StyledFooter = styled.footer `
   background: ${color.dark};
   color: ${color.lighter};
   display: flex;

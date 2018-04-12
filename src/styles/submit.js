@@ -3,7 +3,7 @@ import color from '../util/color'
 import media from '../util/media'
 
 // styling for submit page
-const submit = props => props.className = submit && css`
+let submit = props => props.className = submit && css`
     .submit.inner {
         display: flex;
         flex-direction: column;

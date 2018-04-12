@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 // styles
 import color from '../util/color'
 import media from '../util/media'
-import styled from 'styled-components'
 
-const Header = ({ header }) => {
-  const setHeader = () => {
+class Header extends Component {
+  constructor() {
+    super()
+    this.state = {
+      active: false,
+      smallScreen: true
+    }
+  }
+  
+  setHeader = () => {
+    console.log(this.state)
+    let { header } = this.props
     let location
     return header.map((headerItem, i) => {
       headerItem = headerItem.toUpperCase()
@@ -20,35 +30,54 @@ const Header = ({ header }) => {
         location = headerItem.toLowerCase().replace(/\s+/g, '-')
       }
       return (
-        <div key={i} className="navbar-item">
+        <div key={i} onClick={this.toggleActive} className="navbar-item">
           <Link to={location}>{headerItem}</Link>
         </div>
       )
     })
   }
 
-  return (
-    <StyledHeader>
-      <nav className="navbar" aria-label="main navigation">
-        <div className="navbar-brand">
-          <div className="navbar-burger is-large" data-target="navMenu">
+  toggleActive = () => {
+    // toggle active state only if screen is small
+    if (window.innerWidth <= 1023) {
+      this.setState({
+        active: !this.state.active
+      })
+    }
+  }
+
+  render() {
+    let { active } = this.state
+
+    return (
+      <StyledHeader>
+        <nav className="navbar" aria-label="main navigation">
+          <div
+            onClick={this.toggleActive}
+            className={'navbar-burger is-large ' + (active ? 'is-active' : '')}
+            data-target="navMenu"
+          >
             <span />
             <span />
             <span />
           </div>
-        </div>
-        <div className="navbar-menu navbar-target" id="navMenu">
-          <div className="navbar-items">
-            {setHeader()}
+          <div 
+            className={'navbar-menu navbar-target ' + (active ? 'is-active' : '')} 
+            id="navMenu"
+          >
+            <div className="navbar-items">
+              {this.setHeader()}
+            </div>
           </div>
-        </div>
-      </nav>
-    </StyledHeader>
-  )
+        </nav>
+      </StyledHeader>
+    )
+  }
 }
 
-const StyledHeader = styled.header `
+let StyledHeader = styled.header `
   .navbar {
+    margin-top: -2px;
     margin-bottom: 50px;
   }
 
@@ -68,10 +97,11 @@ const StyledHeader = styled.header `
   .navbar-items {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     margin: 20px 0;
     max-width: 1100px;
     ${media.mediumUp} {
-      display: flex;
+      flex-direction: row;
       margin: 0 auto;
     }
 

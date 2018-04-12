@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { lowerAndDash, pages } from './util/helpers'
 import axios from 'axios'
+import { lowerAndDash, pages } from './util/helpers'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -15,15 +15,15 @@ class App extends React.Component {
       footer: null,
       header: null,
       pages: null,
-      routes: null,
+      routes: null
     }
   }
 
-  componentDidMount() {    
+  componentDidMount() {   
     axios.get(pages)
       .then(res => {
         // return header header
-        const header = res.data.filter(d => {
+        let header = res.data.filter(d => {
           return d.title.rendered !== 'Footer' && d.title.rendered !== 'Header'
         })
         .sort((a, b) => a.id - b.id)
@@ -36,25 +36,21 @@ class App extends React.Component {
         footer = footer[0]
 
         // return all pages from api that are not the header and footer
-        const pages = res.data.filter(d => {
+        let pages = res.data.filter(d => {
           return d.title.rendered !== 'Footer' && d.title.rendered !== 'Header'
         }).map(d => d)
-        
-        this.setState({ footer })
-        this.setState({ pages })
-        this.setState({ header: header })
-        this.setState({
-          routes: this.createRoutes()
-        })
+
+        this.setState({ footer, header, pages })
       })
+      .then(() => this.createRoutes())
       .catch(err => console.log(err))
   }
 
   createRoutes() {
-    const { pages } = this.state
+    let { pages } = this.state
 
-    const routes = pages.map(page => {
-      const pageClass = lowerAndDash(page.title.rendered)
+    let routes = pages.map(page => {
+      let pageClass = lowerAndDash(page.title.rendered)
       let pagePath
       let html = page.content.rendered
 
@@ -71,11 +67,11 @@ class App extends React.Component {
       )
     })
 
-    return routes
+    this.setState({ routes })
   }
   
   render() {
-    const { footer, header, pages, routes } = this.state
+    let { footer, header, pages, routes } = this.state
 
     return (
       <div id="wrapper">

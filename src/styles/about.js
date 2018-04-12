@@ -3,7 +3,7 @@ import color from '../util/color'
 import media from '../util/media'
 
 // styling for about page
-const about = props => props.className = about && css `
+let about = props => props.className = about && css `
     .featured-hero {
         align-items: center;
         display: flex;
