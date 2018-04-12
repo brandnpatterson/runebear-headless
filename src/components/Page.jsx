@@ -19,9 +19,13 @@ let StyledPage = styled.div `
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    margin: 50px auto;
     width: 80%;
-    
+    margin: 50px auto;
+
+    ${media.mediumUp} {
+        margin: 82px auto;
+    }
+
     img {
         height: 200px;
         width: 200px;

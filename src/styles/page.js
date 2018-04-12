@@ -9,14 +9,17 @@ let page = props => css `
 
     .image-wrapper {
         display: flex;
-        flex-direction: column;
 
-        ${media.mediumUp} {
-            flex-direction: row;
+        ${media.tiny} {
+            flex-direction: column;
         }
 
         img {
             margin: 20px;
+
+            ${media.mediumUp} {
+                margin: 20px 50px;
+            }
         }
 
         img:nth-child(2) {
@@ -26,10 +29,10 @@ let page = props => css `
 
     .subtitle {
         text-align: center;
-        max-width: 700px;
+        max-width: 300px;
 
         ${media.mediumUp} { 
-            width: 700px;
+            width: 550px;
         }
     }
 
