@@ -16,7 +16,6 @@ class Header extends Component {
   }
   
   setHeader = () => {
-    console.log(this.state)
     let { header } = this.props
     let location
     return header.map((headerItem, i) => {
