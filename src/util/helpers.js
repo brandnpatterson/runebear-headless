@@ -5,7 +5,7 @@ function capitalizeFirstLetter(string) {
 let lowerAndDash = e => e.toLowerCase().replace(/\s+/g, '-')
 
 let title = 'Rune Bear'
-let pages = 'http://api.runebear.localhost/wp-json/wp/v2/pages/'
+let pages = 'http://admin.runebear.localhost/wp-json/wp/v2/pages/'
 // let pages = 'https://admin.runebear.com/wp-json/wp/v2/pages/'
 
 export { capitalizeFirstLetter, lowerAndDash, pages, title }

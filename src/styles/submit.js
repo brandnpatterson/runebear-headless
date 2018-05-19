@@ -15,6 +15,9 @@ let submit = props => props.className = submit && css`
 
     .submit-card {
         border: 1px solid ${color.black};
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         margin: 50px auto;
         padding: 0 30px 50px;
         width: 100%;
@@ -30,7 +33,7 @@ let submit = props => props.className = submit && css`
             font-weight: bold;
             margin-top: 30px;
             padding-top: 0;
-            text-align: center;
+            display: block;
         }
 
         p {

@@ -22,13 +22,13 @@ let comingSoon = props => props.className = comingSoon && css`
     }
 
     .coming-soon {
-        left: 30px;
+        left: 55px;
         position: absolute;
-        top: 60px;
+        top: 65px;
 
         ${media.mediumUp} {
             font-size: 30px;
-            left: 70px;
+            left: 110px;
             top: 20px;
         }
     }
