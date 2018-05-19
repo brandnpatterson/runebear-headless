@@ -4,7 +4,7 @@ import { capitalizeFirstLetter, title } from '../util/helpers'
 
 // styles
 import media from '../util/media'
-import { comingSoon, about, page, submit } from '../styles/index'
+import { comingSoon, about, page, home, submit } from '../styles/index'
 
 let Page = ({ pageClass, __html}) => {
     document.title = `${capitalizeFirstLetter(pageClass)} | ${title}`
@@ -38,6 +38,9 @@ let StyledPage = styled.div `
 
     {/* styling for all pages */}
     ${page}
+
+    {/* styling for home page  */}
+    ${home}
 
     {/* styling for submit page */}
     ${submit}

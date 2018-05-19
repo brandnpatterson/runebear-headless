@@ -1,7 +1,8 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import axios from 'axios'
-import { lowerAndDash, pages } from './util/helpers'
+import { lowerAndDash } from './util/helpers'
+import pages from './conf'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
