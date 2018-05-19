@@ -75,8 +75,6 @@ class App extends React.Component {
   render() {
     let { footer, header, pages, routes } = this.state
 
-    console.log(footer);
-
     return (
       <div id="wrapper">
         {header &&
