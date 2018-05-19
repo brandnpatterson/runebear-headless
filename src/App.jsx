@@ -23,6 +23,7 @@ class App extends React.Component {
   componentDidMount() {   
     axios.get(pages)
       .then(res => {
+
         // return header header
         let header = res.data.filter(d => {
           return d.title.rendered !== 'Footer' && d.title.rendered !== 'Header'
@@ -32,7 +33,7 @@ class App extends React.Component {
 
         // return footer
         let footer = res.data.filter(d => {
-          return d.id === 43
+          return d.id === 12
         }).map(d => d.content.rendered)
         footer = footer[0]
 
@@ -73,6 +74,8 @@ class App extends React.Component {
   
   render() {
     let { footer, header, pages, routes } = this.state
+
+    console.log(footer);
 
     return (
       <div id="wrapper">
