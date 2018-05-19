@@ -14,7 +14,7 @@ let comingSoon = props => props.className = comingSoon && css`
         }
     }
 
-    .wp-image-15 {
+    .speech-bubble {
         ${media.mediumUp} {
             margin-top: -120px;
             margin-right: 50px;
