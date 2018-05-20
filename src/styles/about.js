@@ -9,7 +9,6 @@ let about = props => props.className = about && css `
         display: flex;
         flex-direction: column-reverse;
         justify-content: space-around;
-        width: 700px;
 
         ${media.mediumUp} {
             flex-direction: row;

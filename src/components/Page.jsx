@@ -1,13 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { capitalizeFirstLetter, title } from '../util/helpers'
 
 // styles
 import media from '../util/media'
 import { comingSoon, about, page, home, submit } from '../styles/index'
 
-let Page = ({ pageClass, __html}) => {
-    document.title = `${capitalizeFirstLetter(pageClass)} | ${title}`
+let Page = ({ __html, pageClass, pageTitle }) => {
+    document.title = `${pageTitle} | Rune Bear`
 
     return (
         <StyledPage className={pageClass} dangerouslySetInnerHTML={{ __html }} />

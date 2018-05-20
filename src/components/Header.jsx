@@ -10,9 +10,18 @@ class Header extends Component {
   constructor() {
     super()
     this.state = {
-      active: false,
-      smallScreen: true
+      active: false
     }
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1023) {
+        this.setState({
+          active: false
+        })
+      }
+    })
   }
   
   setHeader = () => {
