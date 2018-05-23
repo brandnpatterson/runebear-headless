@@ -11,14 +11,16 @@ let about = props => props.className === 'about' && css `
 
         ${media.mediumUp} {
             flex-direction: row;
+            width: 650px;
         }
         
         h1 {
             font-family: Garamond;
             font-size: 70px;
+            margin-top: 0;
 
-            ${media.smallOnly} {
-                margin-top: 0;
+            ${media.mediumUp} {
+                margin-top: 55px;
             }
 
             ${media.mediumUp} {
@@ -32,25 +34,17 @@ let about = props => props.className === 'about' && css `
     }
 
     .container {
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: Garamond;
-        }
-    }
-
-    .container {
         border: 2px solid ${color.gray2};
         margin: 50px auto;
         max-width: 950px;
         padding: 30px;
         width: 100%;
 
-        ${media.mediumUp} {
-            display: flex;
-            justify-content: space-around;
-            width: 1100px;
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: Garamond;
         }
 
         p {
@@ -61,6 +55,12 @@ let about = props => props.className === 'about' && css `
                 padding-left: 40px;
                 padding-top: 10px;
             }
+        }
+
+        ${media.mediumUp} {
+            display: flex;
+            justify-content: space-around;
+            width: 1100px;
         }
     }
 
