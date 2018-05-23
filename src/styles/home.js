@@ -1,5 +1,5 @@
 import { css } from 'styled-components'
-import media from '../util/media'
+import { mediumUp, smallOnly } from '../util/media'
 
 let home = props => props.className === 'home' && css `
     display: flex;
@@ -7,7 +7,7 @@ let home = props => props.className === 'home' && css `
     align-items: center;
 
     .images-wrapper p {                    
-        ${media.smallOnly} {
+        @media ${smallOnly} {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -18,7 +18,7 @@ let home = props => props.className === 'home' && css `
         text-align: center;
         width: 300px;
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             width: 450px;
         }
     }

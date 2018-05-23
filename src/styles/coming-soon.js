@@ -1,5 +1,5 @@
 import { css } from 'styled-components'
-import media from '../util/media'
+import { mediumUp } from '../util/media'
 
 let comingSoon = props => css `
     position: relative;
@@ -7,7 +7,7 @@ let comingSoon = props => css `
     flex-direction: column;
     justify-content: space-around;
 
-    ${media.mediumUp} {
+    @media ${mediumUp} {
         flex-direction: row;
         margin-top: 120px;
         max-width: 900px;
@@ -18,7 +18,7 @@ let comingSoon = props => css `
     }
 
     .speech-bubble {        
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             margin-top: -120px;
         }
     }
@@ -28,7 +28,7 @@ let comingSoon = props => css `
         left: 50px;
         top: 70px;
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             font-size: 30px;
             left: 110px;
             top: 25px;

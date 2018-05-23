@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 // styles
 import color from '../util/color'
-import media from '../util/media'
+import { mediumUp } from '../util/media'
 
 let Footer = ({ footer }) => {
   let thisYear = new Date().getFullYear();
@@ -38,7 +38,7 @@ let StyledFooter = styled.footer `
     padding: 30px 0 0 10px;
     width: 90%;
 
-    ${media.mediumUp} {
+    @media ${mediumUp} {
       font-size: 18px;
       margin-bottom: 50px;
       max-width: 500px;
@@ -66,7 +66,7 @@ let StyledFooter = styled.footer `
       color: ${color.blue}
     }
 
-    ${media.mediumUp} {
+    @media ${mediumUp} {
       font-size: 18px;
       margin: 25px 0 50px 60px;
     }

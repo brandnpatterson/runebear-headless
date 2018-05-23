@@ -1,13 +1,14 @@
 import { css } from 'styled-components'
 import color from '../util/color'
-import media from '../util/media'
+import { garamond } from '../util/font'
+import { mediumUp } from '../util/media'
 
 let submit = props => props.className === 'submit' && css `
     display: flex;
     flex-direction: column;
     margin: 0 auto;
 
-    ${media.mediumUp} {
+    @media ${mediumUp} {
         flex-direction: row;
     }
 
@@ -20,7 +21,7 @@ let submit = props => props.className === 'submit' && css `
         padding: 0 30px 50px;
         width: 100%;
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             margin: 50px 30px;
             width: 50%;
         }
@@ -30,7 +31,7 @@ let submit = props => props.className === 'submit' && css `
         }
 
         h1 {
-            font-family: Garamond, serif;
+            font-family: ${garamond}, serif;
             font-size: 110px;
             font-weight: bold;
             padding-top: 0;

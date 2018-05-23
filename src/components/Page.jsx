@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 // styles
-import media from '../util/media'
+import { mediumUp, tiny } from '../util/media'
 import { about, home, quarterly, submit, weekly } from '../styles'
 
 let Page = ({ __html, pageClass, pageTitle }) => {
@@ -22,17 +22,22 @@ let StyledPage = styled.div `
     width: 80%;
     margin: 50px auto;
 
+    @media ${mediumUp} {
+        margin: 82px auto;
+        width: 100%;
+    }
+
     .image-wrapper {
         display: flex;
 
-        ${media.tiny} {
+        @media ${tiny} {
             flex-direction: column;
         }
 
         img {
             margin: 20px;
 
-            ${media.mediumUp} {
+            @media ${mediumUp} {
                 margin: 20px 50px;
             }
         }
@@ -46,7 +51,7 @@ let StyledPage = styled.div `
         text-align: center;
         max-width: 300px;
 
-        ${media.mediumUp} { 
+        @media ${mediumUp} { 
             width: 550px;
         }
     }
@@ -58,7 +63,7 @@ let StyledPage = styled.div `
     h1 {
         font-size: 26px;
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             font-size: 30px;
         }
     }
@@ -66,7 +71,7 @@ let StyledPage = styled.div `
     h2 {
         font-size: 22px;
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             font-size: 26px;
         }
     }
@@ -74,7 +79,7 @@ let StyledPage = styled.div `
     h3 {
         font-size: 20px;
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             font-size: 22px;
         }
     }
@@ -82,7 +87,7 @@ let StyledPage = styled.div `
     h4 {
         font-size: 18px;
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             font-size: 20px;
         }
     }
@@ -91,15 +96,10 @@ let StyledPage = styled.div `
         height: 200px;
         width: 200px;
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             height: 400px;
             width: 400px;
         }
-    }
-
-    ${media.mediumUp} {
-        margin: 82px auto;
-        width: 100%;
     }
 
     {/* styling for about page */}

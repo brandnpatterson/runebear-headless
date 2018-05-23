@@ -1,6 +1,7 @@
 import { css } from 'styled-components'
+import { garamond } from '../util/font'
 import color from '../util/color'
-import media from '../util/media'
+import { mediumUp } from '../util/media'
 
 let about = props => props.className === 'about' && css `
     .featured-hero {
@@ -9,22 +10,19 @@ let about = props => props.className === 'about' && css `
         flex-direction: column-reverse;
         justify-content: space-around;
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             flex-direction: row;
             width: 650px;
         }
-        
+
         h1 {
-            font-family: Garamond;
+            font-family: ${garamond};
             font-size: 70px;
             margin-top: 0;
 
-            ${media.mediumUp} {
-                margin-top: 55px;
-            }
-
-            ${media.mediumUp} {
+            @media ${mediumUp} {
                 font-size: 100px;
+                margin-top: 55px;
             }
         }
 
@@ -45,20 +43,20 @@ let about = props => props.className === 'about' && css `
         h2,
         h3,
         h4 {
-            font-family: Garamond;
+            font-family: ${garamond};
         }
 
         p {
             font-size: 18px;
 
-            ${media.mediumUp} {
+            @media ${mediumUp} {
                 font-size: 20px;
                 padding-left: 40px;
                 padding-top: 10px;
             }
         }
 
-        ${media.mediumUp} {
+        @media ${mediumUp} {
             display: flex;
             justify-content: space-around;
             width: 1100px;

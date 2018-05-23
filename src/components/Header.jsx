@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 // styles
 import color from '../util/color'
-import media from '../util/media'
+import { mediumUp } from '../util/media'
 
 class Header extends Component {
   constructor() {
@@ -108,13 +108,13 @@ let StyledHeader = styled.header `
     flex-direction: column;
     margin: 20px 0;
     max-width: 1100px;
-    ${media.mediumUp} {
+    @media ${mediumUp} {
       flex-direction: row;
       margin: 0 auto;
     }
 
     .navbar-item {
-      ${media.mediumUp} {
+      @media ${mediumUp} {
         margin: 0 35px;
       }
     }
