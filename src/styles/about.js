@@ -27,6 +27,7 @@ let about = props => props.className === 'about' && css `
                 font-size: 100px;
             }
         }
+
         img {
             height: 200px;
             width: 200px;
