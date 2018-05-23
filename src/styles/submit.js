@@ -33,13 +33,12 @@ let submit = props => props.className === 'submit' && css `
             font-family: Garamond, serif;
             font-size: 110px;
             font-weight: bold;
-            margin-top: 30px;
             padding-top: 0;
             display: block;
+            margin: 30px auto;
         }
 
         p {
-            text-align: left;            
             color: ${color.gray2};
         }
     }
