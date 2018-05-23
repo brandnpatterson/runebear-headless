@@ -1,13 +1,13 @@
 import about from './about'
-import comingSoon from './coming-soon'
+import quarterly from './quarterly'
 import home from './home'
-import page from './page'
 import submit from './submit'
+import weekly from './weekly'
 
 export {
     about,
-    comingSoon,
+    quarterly,
     home,
-    page,
-    submit
+    submit,
+    weekly
 }

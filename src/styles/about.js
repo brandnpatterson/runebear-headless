@@ -2,8 +2,7 @@ import { css } from 'styled-components'
 import color from '../util/color'
 import media from '../util/media'
 
-// styling for about page
-let about = props => props.className = about && css `
+let about = props => props.className === 'about' && css `
     .featured-hero {
         align-items: center;
         display: flex;
@@ -30,13 +29,6 @@ let about = props => props.className = about && css `
             height: 200px;
             width: 200px;
         }
-    }
-
-    hr {
-        background: ${color.black};
-        height: 3px;
-        margin-top: 30px;
-        width: 300px;
     }
 
     .container {
@@ -86,6 +78,13 @@ let about = props => props.className = about && css `
             max-width: 100%;
             text-align: right;
         }
+    }
+
+    hr {
+        background: ${color.black};
+        height: 3px;
+        margin-top: 30px;
+        width: 300px;
     }
 `
 

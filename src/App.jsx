@@ -40,7 +40,7 @@ class App extends React.Component {
           key={page.id}
           exact path={pagePath()} 
           component={() => (
-            <Page 
+            <Page
               __html={page.content.rendered} 
               pageClass={pageClass} 
               pageTitle={page.title.rendered}

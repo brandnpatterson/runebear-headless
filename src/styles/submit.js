@@ -2,22 +2,20 @@ import { css } from 'styled-components'
 import color from '../util/color'
 import media from '../util/media'
 
-// styling for submit page
-let submit = props => props.className = submit && css`
-    .submit.inner {
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        ${media.mediumUp} {
-            flex-direction: row;
-        }
+let submit = props => props.className === 'submit' && css `
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+    ${media.mediumUp} {
+        flex-direction: row;
     }
 
     .submit-card {
         border: 1px solid ${color.black};
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: left;
         margin: 50px auto;
         padding: 0 30px 50px;
         width: 100%;
@@ -25,6 +23,10 @@ let submit = props => props.className = submit && css`
         ${media.mediumUp} {
             margin: 50px 30px;
             width: 50%;
+        }
+
+        .highlight {
+            color: ${color.black};
         }
 
         h1 {
@@ -37,11 +39,8 @@ let submit = props => props.className = submit && css`
         }
 
         p {
+            text-align: left;            
             color: ${color.gray2};
-        }
-
-        .highlight {
-            color: ${color.black};
         }
     }
 `

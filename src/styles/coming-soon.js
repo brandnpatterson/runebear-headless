@@ -1,37 +1,41 @@
 import { css } from 'styled-components'
 import media from '../util/media'
 
-// styling for quarterly and weekly pages
-let comingSoon = props => props.className = comingSoon && css`
-    .coming-soon-inner {
-        position: relative;
-        display: flex;
-        flex-direction: column;
+let comingSoon = props => css `
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 
-        ${media.mediumUp} {
-            flex-direction: row;
-            margin-top: 120px;
-        }
+    ${media.mediumUp} {
+        flex-direction: row;
+        margin-top: 120px;
+        max-width: 900px;
     }
 
-    .speech-bubble {
+    .speech-bubble-wrapper {
+        position: relative;
+    }
+
+    .speech-bubble {        
         ${media.mediumUp} {
             margin-top: -120px;
-            margin-right: 50px;
         }
     }
 
-    .coming-soon {
-        left: 55px;
+    .coming-soon-text {
         position: absolute;
-        top: 65px;
+        left: 50px;
+        top: 70px;
 
         ${media.mediumUp} {
             font-size: 30px;
             left: 110px;
-            top: 20px;
+            top: 25px;
         }
     }
 `
 
 export default comingSoon
+
+
