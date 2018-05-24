@@ -1,15 +1,22 @@
 import React from 'react'
+import { string } from 'prop-types'
 import styled from 'styled-components'
 
 // styles
 import { mediumUp, tiny } from '../util/media'
 import { about, home, quarterly, submit, weekly } from '../styles'
 
-let Page = ({ __html, pageClass, pageTitle }) => {
+let propTypes = {
+    __html: string.isRequired,
+    pageClass: string.isRequired, 
+    pageTitle: string.isRequired
+}
+
+let Page = ({ __html, pageClass, pageTitle }) => {    
     document.title = `${pageTitle} | Rune Bear`
 
     return (
-        <StyledPage className={pageClass} dangerouslySetInnerHTML={{ __html }} />
+        <StyledPage className={pageClass} dangerouslySetInnerHTML={{  __html }} />
     )
 }
 
@@ -117,5 +124,7 @@ let StyledPage = styled.div `
     {/* styling for weekly page */}    
     ${weekly}
 `
+
+Page.propTypes = propTypes
 
 export default Page

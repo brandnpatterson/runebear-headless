@@ -23,7 +23,7 @@ class App extends React.Component {
     getPages()
       .then(data => {
         let { pages, header, footer } = data
-        this.setState({ pages, header, footer })
+        this.setState({ pages, header, footer: footer[0] })
       })
       .then(() => this.createRoutes())
   }

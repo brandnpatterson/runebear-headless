@@ -1,9 +1,14 @@
 import React from 'react'
+import { string } from 'prop-types'
 import styled from 'styled-components'
 
 // styles
 import { blue, dark, light } from '../util/color'
 import { mediumUp } from '../util/media'
+
+let propTypes = {
+  footer: string.isRequired
+}
 
 let Footer = ({ footer }) => {
   let thisYear = new Date().getFullYear();
@@ -72,5 +77,7 @@ let StyledFooter = styled.footer `
     }
   }
 `
+
+Footer.propTypes = propTypes
 
 export default Footer

@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
+import { array } from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 // styles
 import { dark, light } from '../util/color'
 import { mediumUp } from '../util/media'
+
+let propTypes = {
+  header: array.isRequired
+}
 
 class Header extends Component {
   constructor() {
@@ -148,4 +153,7 @@ let StyledHeader = styled.header `
     top: 60px;
   }
 `
+
+Header.propTypes = propTypes
+
 export default Header
