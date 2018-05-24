@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router-dom'
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 import App from './App'
 
 let rootEl = document.getElementById('root')
@@ -18,7 +18,7 @@ let render = Component => {
   )
 }
 
-registerServiceWorker()
+// registerServiceWorker()
 
 render(App)
 
