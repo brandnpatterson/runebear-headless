@@ -6,15 +6,11 @@ import App from './App'
 
 let rootEl = document.getElementById('root')
 
-const rendered = Component => {
-  render(
-    <AppContainer>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AppContainer>, 
-    rootEl
-  )
-}
-
-rendered(App)
+render(
+  <AppContainer>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </AppContainer>, 
+  rootEl
+)
