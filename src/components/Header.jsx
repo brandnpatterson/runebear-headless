@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 // styles
-import color from '../util/color'
+import { dark, light } from '../util/color'
 import { mediumUp } from '../util/media'
 
 class Header extends Component {
@@ -90,7 +90,7 @@ let StyledHeader = styled.header `
   }
 
   .navbar-menu {
-    background: ${color.dark};
+    background: ${dark};
   }
 
   .navbar-burger.is-active {
@@ -98,7 +98,7 @@ let StyledHeader = styled.header `
     z-index: 10;
 
     span {
-      background: ${color.lighter};
+      background: ${light};
     }
   }
 
@@ -120,12 +120,12 @@ let StyledHeader = styled.header `
     }
 
     a {
-      color: ${color.lighter};
+      color: ${light};
       font-family: serif;
       font-size: 25px;
 
       &:hover {
-        color: ${color.lighter};
+        color: ${light};
       }
     }
   }

@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 import { garamond } from '../util/font'
-import color from '../util/color'
+import { black, gray } from '../util/color'
 import { mediumUp } from '../util/media'
 
 let about = props => props.className === 'about' && css `
@@ -33,7 +33,7 @@ let about = props => props.className === 'about' && css `
     }
 
     .container {
-        border: 2px solid ${color.gray2};
+        border: 2px solid ${gray};
         margin: 50px auto;
         max-width: 950px;
         padding: 30px;
@@ -80,7 +80,7 @@ let about = props => props.className === 'about' && css `
     }
 
     hr {
-        background: ${color.black};
+        background: ${black};
         height: 3px;
         margin-top: 30px;
         width: 300px;

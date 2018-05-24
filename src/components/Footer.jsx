@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 // styles
-import color from '../util/color'
+import { blue, dark, light } from '../util/color'
 import { mediumUp } from '../util/media'
 
 let Footer = ({ footer }) => {
@@ -21,18 +21,18 @@ let Footer = ({ footer }) => {
 }
 
 let StyledFooter = styled.footer `
-  background: ${color.dark};
-  color: ${color.lighter};
+  background: ${dark};
+  color: ${light};
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 
   a { 
-    color: ${color.blue}; 
+    color: ${blue}; 
   }
 
   p {
-    color: ${color.lighter};
+    color: ${light};
     font-size: 14px;
     max-width: 400px;
     padding: 30px 0 0 10px;
@@ -48,7 +48,7 @@ let StyledFooter = styled.footer `
     }
 
     strong {
-      color: ${color.lighter};
+      color: ${light};
     }
 
     span {
@@ -57,13 +57,13 @@ let StyledFooter = styled.footer `
   }
 
   .copyright {
-    color: ${color.lighter};
+    color: ${light};
     font-size: 14px;
     margin-left: 10px;
     text-align: left;
 
     &:hover {
-      color: ${color.blue}
+      color: ${blue}
     }
 
     @media ${mediumUp} {

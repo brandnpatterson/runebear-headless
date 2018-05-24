@@ -1,5 +1,5 @@
 import { css } from 'styled-components'
-import color from '../util/color'
+import { black, gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
@@ -13,7 +13,7 @@ let submit = props => props.className === 'submit' && css `
     }
 
     .submit-card {
-        border: 1px solid ${color.black};
+        border: 1px solid ${black};
         display: flex;
         flex-direction: column;
         align-items: left;
@@ -27,7 +27,7 @@ let submit = props => props.className === 'submit' && css `
         }
 
         .highlight {
-            color: ${color.black};
+            color: ${black};
         }
 
         h1 {
@@ -40,7 +40,7 @@ let submit = props => props.className === 'submit' && css `
         }
 
         p {
-            color: ${color.gray2};
+            color: ${gray};
         }
     }
 `
