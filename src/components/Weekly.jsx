@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { string } from 'prop-types'
+import { getWeeklyPosts } from '../api'
 import styled from 'styled-components'
 
 // styles
 import { mediumUp, tiny } from '../util/media'
-import { about, home, quarterly, submit } from '../styles'
+import { weekly } from '../styles'
 
 let propTypes = {
     __html: string.isRequired,
@@ -12,12 +13,32 @@ let propTypes = {
     pageTitle: string.isRequired
 }
 
-let Page = ({ __html, pageClass, pageTitle }) => {    
-    document.title = `${pageTitle} | Rune Bear`
+class Weekly extends Component {
+    
+    componentDidMount() {
+        getWeeklyPosts()
+            .then(data => {
+                const weekly_posts = data.posts.map(post => {
+                    return {
+                        title: post.title.rendered,
+                        content: post.content.rendered,
+                        categories: post.categories,
+                        tags: post.tags
+                    }
+                })
 
-    return (
-        <StyledPage className={pageClass} dangerouslySetInnerHTML={{  __html }} />
-    )
+                console.log(weekly_posts)
+            })
+    }
+
+    render() {
+        const { __html, pageClass, pageTitle } = this.props
+        document.title = `${pageTitle} | Rune Bear`
+
+        return (
+            <StyledPage className={pageClass} dangerouslySetInnerHTML={{ __html }} />
+        )
+    }
 }
 
 let StyledPage = styled.div `
@@ -109,19 +130,10 @@ let StyledPage = styled.div `
         }
     }
 
-    {/* styling for about page */}
-    ${about}
-
-    {/* styling for home page  */}
-    ${home}
-
-    {/* styling for quarterly page */}
-    ${quarterly}
-
-    {/* styling for submit page */}
-    ${submit}
+    {/* styling for weekly page */}    
+    ${weekly}
 `
 
-Page.propTypes = propTypes
+Weekly.propTypes = propTypes
 
-export default Page
+export default Weekly

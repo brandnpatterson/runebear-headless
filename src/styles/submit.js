@@ -6,6 +6,7 @@ import { mediumUp } from '../util/media'
 let submit = props => props.className === 'submit' && css `
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     margin: 0 auto;
 
     @media ${mediumUp} {

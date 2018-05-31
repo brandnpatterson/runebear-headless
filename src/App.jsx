@@ -7,6 +7,7 @@ import Page from './components/Page'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import NotFound from './components/NotFound'
+import Weekly from './components/Weekly'
 
 class App extends React.Component {
   constructor() {
@@ -19,10 +20,11 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {   
+  componentDidMount() { 
     getPages()
       .then(data => {
         let { pages, header, footer } = data
+
         this.setState({ pages, header, footer: footer[0] })
       })
       .then(() => this.createRoutes())
@@ -35,19 +37,35 @@ class App extends React.Component {
       let pageClass = lowerAndDash(page.title.rendered)
       let pagePath = () => page.title.rendered === 'Home' ? '/' : '/' + pageClass
 
-      return (
-        <Route 
-          key={page.id}
-          exact path={pagePath()} 
-          component={() => (
-            <Page
-              __html={page.content.rendered} 
-              pageClass={pageClass} 
-              pageTitle={page.title.rendered}
-            />
-          )
-        } />
-      )
+      if (page.title.rendered === 'Weekly') {
+        return (
+          <Route
+            key={page.id}
+            exact path={pagePath()}
+            component={() => (
+              <Weekly
+                __html={page.content.rendered}
+                pageClass={pageClass}
+                pageTitle={page.title.rendered}
+              />
+            )
+          } />
+        )
+      } else {
+        return (
+          <Route
+            key={page.id}
+            exact path={pagePath()}
+            component={() => (
+              <Page
+                __html={page.content.rendered}
+                pageClass={pageClass}
+                pageTitle={page.title.rendered}
+              />
+            )
+          } />
+        )
+      }
     })
   
     this.setState({ routes })
