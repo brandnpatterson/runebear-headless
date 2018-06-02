@@ -1,0 +1,37 @@
+import React from 'react'
+import styled from 'styled-components'
+import { mediumUp, smallOnly } from '../util/media'
+
+let Home = ({ __html, pageClass, pageTitle }) => {
+  document.title = `${pageTitle} | Rune Bear`
+
+  return (
+    <StyledHome className={pageClass} dangerouslySetInnerHTML={{ __html }} />
+  )
+}
+
+
+let StyledHome = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .images-wrapper p {
+    @media ${smallOnly} {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .home-subtitle {
+    text-align: center;
+    width: 300px;
+
+    @media ${mediumUp} {
+      width: 450px;
+    }
+  }
+`
+
+export default Home
