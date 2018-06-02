@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import { mediumUp, tiny } from './util/media'
-import { getPages, getWeeklyPosts } from './api'
+import { getAuthor, getPages, getWeeklyPosts } from './api'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -23,7 +23,7 @@ class App extends React.Component {
       footer: null,
       routes: null,
       weekly: null,
-
+      weekly_ids: []
     }
   }
 
@@ -39,8 +39,19 @@ class App extends React.Component {
     getWeeklyPosts()
       .then(data => {
         let { posts } = data
+        
+        let weekly_ids = data.posts.map(post => post.id)
 
-        this.setState({ weekly: posts })
+        this.setState({ weekly: posts, weekly_ids })
+      })
+      .then(() => {
+        let { weekly_ids } = this.state
+        weekly_ids.map(id => {
+          return getAuthor(id)
+            .then(data => {
+              console.log(data[0].name)
+            })
+        })
       })
   }
 

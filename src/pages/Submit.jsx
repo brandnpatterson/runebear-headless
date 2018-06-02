@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { black, gray } from '../util/color'
+import { black } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp, largeUp } from '../util/media'
 
@@ -40,10 +40,6 @@ let StyledSubmit = styled.div`
       width: 50%;
     }
 
-    .highlight {
-      color: ${black};
-    }
-
     h1 {
       font-family: ${garamond}, serif;
       font-size: 110px;
@@ -54,7 +50,7 @@ let StyledSubmit = styled.div`
     }
 
     p {
-      color: ${gray};
+      margin-bottom: 24px;
     }
   }
 `

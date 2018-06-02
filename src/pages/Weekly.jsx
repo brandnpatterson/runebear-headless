@@ -1,24 +1,48 @@
 import React from 'react'
 import styled from 'styled-components'
-import { black } from '../util/color'
+import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
 
 let Weekly = ({ __html, pageClass, pageTitle, weekly }) => {
 
-  console.log(weekly)
+  let posts = () => {
+    return weekly.map(post => {
+      let title = post.title.rendered
+      let content = post.content.rendered
+
+      return (
+        <StyledPost key={post.id}>
+          <div className="card-title">
+            <h2>{title}</h2>
+          </div>
+          <p
+            className="card-content"
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
+        </StyledPost>
+      )
+    })
+  }
 
   return (
-    <div className="weekly-wrapper">
+    <StyledWeeklyWrapper >
       <StyledWeekly className={pageClass} dangerouslySetInnerHTML={{ __html }} />
-      {/* <div className="card">posts</div> */}
-    </div>
+      {weekly && posts()}
+    </StyledWeeklyWrapper>
+    
   )
 }
 
+let StyledWeeklyWrapper = styled.div `
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`
+
 let StyledWeekly = styled.div `
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -50,29 +74,29 @@ let StyledWeekly = styled.div `
       top: 25px;
     }
   }
+`
 
-  .card {
-    border: 1px solid ${black};
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    margin: 50px auto;
-    padding: 0 30px 50px;
-    width: 100%;
+let StyledPost = styled.div `
+  border: 1px solid ${gray};
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin: 50px auto;
+  padding: 0 30px 50px;
+  width: 100%;
 
-    @media ${mediumUp} {
-      margin: 50px 30px;
-      width: 50%;
-    }
+  @media ${mediumUp} {
+    margin: 50px 30px;
+    width: 50%;
+  }
 
-    h1 {
-      font-family: ${garamond}, serif;
-      font-size: 110px;
-      font-weight: bold;
-      padding-top: 0;
-      display: block;
-      margin: 30px auto;
-    }
+  h1 {
+    font-family: ${garamond}, serif;
+    font-size: 110px;
+    font-weight: bold;
+    padding-top: 0;
+    display: block;
+    margin: 30px auto;
   }
 `
 

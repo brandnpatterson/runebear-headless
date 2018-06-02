@@ -2,6 +2,7 @@ import axios from 'axios'
 
 let pages = 'https://admin.runebear.com/wp-json/wp/v2/pages/'
 let weekly_posts = 'https://admin.runebear.com/wp-json/wp/v2/weekly_posts/'
+let authors = 'https://admin.runebear.com/wp-json/wp/v2/post_author?post='
 // let quarterly_posts = 'https://admin.runebear.com/wp-json/wp/v2/quarterly_posts/'
 
 let getPages = (query = '', callback) => {
@@ -38,6 +39,16 @@ let getWeeklyPosts = (query = '', callback) => {
   })
 }
 
+let getAuthor = (weekly_id = '') => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${authors}${weekly_id}`)
+      .then(res => {
+        resolve(res.data)
+      })
+      .catch(err => console.log(err))
+  })
+}
+
 // let getQuarterlyPosts = (query = '', callback) => {
 //   return new Promise((resolve, reject) => {
 //     axios.get(quarterly_posts)
@@ -52,4 +63,4 @@ let getWeeklyPosts = (query = '', callback) => {
 //   })
 // }
 
-export { getPages, getWeeklyPosts }
+export { getAuthor, getPages, getWeeklyPosts }
