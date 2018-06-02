@@ -46,6 +46,7 @@ class App extends React.Component {
       })
       .then(() => {
         let { weekly_ids } = this.state
+
         weekly_ids.map(id => {
           return getAuthor(id)
             .then(data => {
