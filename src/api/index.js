@@ -1,13 +1,10 @@
 import axios from 'axios'
 
-let pages = 'https://admin.runebear.com/wp-json/wp/v2/pages/'
-let weekly_posts = 'https://admin.runebear.com/wp-json/wp/v2/weekly_posts/'
-let authors = 'https://admin.runebear.com/wp-json/wp/v2/post_author?post='
-// let quarterly_posts = 'https://admin.runebear.com/wp-json/wp/v2/quarterly_posts/'
+let endpoint = endpoint => `https://admin.runebear.com/wp-json/wp/v2/${endpoint}`;
 
 let getPages = (query = '', callback) => {
   return new Promise((resolve, reject) => {
-    axios.get(pages)
+    axios.get(`${endpoint('pages')}`)
       .then(res => {
         let pages = res.data
           .filter(d => d.title.rendered !== 'Footer')
@@ -29,7 +26,7 @@ let getPages = (query = '', callback) => {
 
 let getWeeklyPosts = (query = '', callback) => {
   return new Promise((resolve, reject) => {
-    axios.get(weekly_posts)
+    axios.get(`${endpoint('weekly_posts')}`)
       .then(res => {
         let posts = res.data
 
@@ -41,9 +38,11 @@ let getWeeklyPosts = (query = '', callback) => {
 
 let getAuthor = (weekly_id = '') => {
   return new Promise((resolve, reject) => {
-    axios.get(`${authors}${weekly_id}`)
+    axios.get(`${endpoint('post_author')}?post=${weekly_id}`)
       .then(res => {
-        resolve(res.data)
+        let author = res.data
+
+        resolve(author)
       })
       .catch(err => console.log(err))
   })

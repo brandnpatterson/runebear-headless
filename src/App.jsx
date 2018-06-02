@@ -22,8 +22,7 @@ class App extends React.Component {
       header: null,
       footer: null,
       routes: null,
-      weekly: null,
-      weekly_ids: []
+      weekly: null
     }
   }
 
@@ -39,19 +38,19 @@ class App extends React.Component {
     getWeeklyPosts()
       .then(data => {
         let { posts } = data
-        
-        let weekly_ids = data.posts.map(post => post.id)
 
-        this.setState({ weekly: posts, weekly_ids })
+        this.setState({ weekly: posts })
       })
       .then(() => {
-        let { weekly_ids } = this.state
+        let { weekly } = this.state
 
-        weekly_ids.map(id => {
-          return getAuthor(id)
+        weekly.map(post => {
+          return (
+            getAuthor(post.id)
             .then(data => {
               console.log(data[0].name)
             })
+          )
         })
       })
   }
