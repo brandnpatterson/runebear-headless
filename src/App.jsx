@@ -74,9 +74,10 @@ class App extends React.Component {
                 let checkAndAdd = name => {
                   let found = all_authors.some((el) => el.name === name)
 
-                  if (!found) { 
+                  if (!found) {
                     all_authors.push({
                       name: data[0].name,
+                      description: data[0].description,
                       slug: data[0].slug
                     })
                   }
@@ -86,9 +87,11 @@ class App extends React.Component {
 
                 post.author = data[0].name
                 post.author_slug = data[0].slug
+                post.author_description = data[0].description
               } else {
                 post.author = ''
                 post.author_slug = ''
+                post.author_description = ''
               }
             })
             .then(() => {
@@ -104,6 +107,8 @@ class App extends React.Component {
   render() {
     let { authors, pages, header, footer, tags, weekly_posts } = this.state
     
+    console.log(authors)
+
     return (
       <div id="wrapper">
         {weekly_posts && tags && authors && <Header header={header} />}

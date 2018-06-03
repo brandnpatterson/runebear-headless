@@ -66,9 +66,7 @@ let WeeklyPost = ({ tags, weekly_post, weekly_posts }) => {
           <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
         </div>
         <div className="card-footer">
-          <Link to={`/authors/${post.author_slug}`}>
-            <h2 className="card-author">{post.author}</h2>
-          </Link>
+          <p className="card-author-description">{post.author_description}</p>
           <div className="card-tags">
             {post.tag_names && post.tag_names.map((tag, index, { length }) => {
               return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
@@ -89,15 +87,18 @@ let WeeklyPost = ({ tags, weekly_post, weekly_posts }) => {
           </div>
         </div>
       </StyledPost>
-    }
-    <div className="arrow-wrapper-bottom arrow-wrapper">
-      <Link to={`/weekly/${prev}`}>
-        <span className="left-arrow">{'<<<'}</span>
-      </Link>
-      <Link to={`/weekly/${next}`}>
-        <span className="right-arrow">{'>>>'}</span>
-      </Link>
-    </div>
+      }
+      <div className="arrow-wrapper-bottom arrow-wrapper">
+        <Link to={`/weekly/${prev}`}>
+          <span className="left-arrow">{'<<<'}</span>
+        </Link>
+        <Link to={`/weekly/${next}`}>
+          <span className="right-arrow">{'>>>'}</span>
+        </Link>
+      </div>
+      <h2 className="card-author">All from&nbsp;
+        <Link to={`/authors/${post.author_slug}`}>{post.author}</Link>
+      </h2>
     </StyledWeeklyWrapper>
   )
 }
@@ -187,6 +188,10 @@ let StyledPost = styled.div`
     margin: 50px;
     padding: 50px;
     width: 65%;
+  }
+
+  .card-author-description {
+    margin-top: 50px;
   }
 
   .card-read-more {
