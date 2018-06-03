@@ -12,27 +12,28 @@ import About from './pages/About'
 import Home from './pages/Home'
 import Quarterly from './pages/Quarterly'
 import Submit from './pages/Submit'
-// import FilterByAuthor from './pages/FilterByAuthor'
-// import FilterByWeeklyPost from './pages/FilterByWeeklyPost'
+import WeeklyPost from './pages/WeeklyPost'
+import FilterByAuthor from './pages/FilterByAuthor'
 import FilterByTag from './pages/FilterByTag'
-import Weekly from './pages/Weekly'
+import WeeklyPosts from './pages/WeeklyPosts'
 
 class App extends React.Component {
   constructor() {
     super()
     this.state = {
+      authors: [],
       pages: null,
       header: null,
       footer: null,
       tags: null,
-      weekly: null
+      weekly_posts: null
     }
   }
 
   componentDidMount() {
     let all_authors = []
     let all_tags = []
-  
+        
     getPages()
       .then(data => {
         let { pages, header, footer } = data
@@ -41,11 +42,11 @@ class App extends React.Component {
       })
 
     getWeeklyPosts()
-      .then(weekly => this.setState({ weekly }))
+      .then(weekly_posts => this.setState({ weekly_posts }))
       .then(() => {
-        let { weekly } = this.state
+        let { weekly_posts } = this.state
         
-        return weekly.map(post => {
+        return weekly_posts.map(post => {
           let tag_names = []
           
           getTaxonomy('tags', post.id)
@@ -59,41 +60,55 @@ class App extends React.Component {
                   return post.tag_names = tag_names
                 })
               } else {
-                return false
+                return all_tags.push('')
               }
             })
             .then(() => this.setState({
               tags: all_tags, 
-              weekly 
+              weekly_posts 
             }))
 
           return getTaxonomy('post_author', post.id)
             .then(data => {
               if (data && data[0] && data[0].name) {
+                let checkAndAdd = name => {
+                  let found = all_authors.some((el) => el.name === name)
+
+                  if (!found) { 
+                    all_authors.push({
+                      name: data[0].name,
+                      slug: data[0].slug
+                    })
+                  }
+                }
+
+                checkAndAdd(data[0].name)
+
                 post.author = data[0].name
-                all_authors.push(data[0].name)
+                post.author_slug = data[0].slug
               } else {
                 post.author = ''
+                post.author_slug = ''
               }
-              
-              all_authors = [...new Set(all_authors)].sort()
             })
-            .then(() => this.setState({
-              authors: all_authors,
-              weekly 
-            }))
+            .then(() => {
+              this.setState({
+                authors: all_authors,
+                weekly_posts
+              })
+            })
         })
       })
   }
 
   render() {
-    let { authors, pages, header, footer, tags, weekly } = this.state
+    let { authors, pages, header, footer, tags, weekly_posts } = this.state
     
     return (
       <div id="wrapper">
-        {weekly && tags && authors && <Header header={header} />}
+        {weekly_posts && tags && authors && <Header header={header} />}
         <Switch>
-          {weekly && tags && authors && pages.map(page => {
+          {weekly_posts && tags && authors && pages.map(page => {
             let path = () => page.title.rendered === 'Home' ? '/' : '/' + page.slug
 
             let Component = () => {
@@ -131,12 +146,12 @@ class App extends React.Component {
                 )
               if (page.title.rendered === 'Weekly')
                 return (
-                  weekly && 
-                  <Weekly
+                  weekly_posts && 
+                  <WeeklyPosts
                     __html={page.content.rendered}
                     pageClass={page.slug}
                     pageTitle={page.title.rendered}
-                    weekly={weekly}
+                    weekly_posts={weekly_posts}
                   />
                 )
             }
@@ -149,37 +164,40 @@ class App extends React.Component {
               )} />
             )
           })}
-          {/* {weekly && authors && <Route exact path={`/weekly/:weeklyPost`} render={({ match }) => (
-            <FilterByWeeklyPost
+          {weekly_posts && tags && authors &&
+          <Route exact path={`/weekly/:weeklyPost`} component={({ match }) => (
+            <WeeklyPost
               match={match}
               weekly_post={
-                weekly.map(post => {
+                weekly_posts.map(post => {
                   if (post.slug === match.params.weeklyPost) {
                     return post
                   } else return null
                 })
               }
+              weekly_posts={weekly_posts}
             />
-          )} />} */}
-          {/* {weekly && tags && authors && <Route exact path={`/authors/:author`} render={({ match }) => (
+          )} />}
+          {weekly_posts && tags && authors && 
+          <Route exact path={`/authors/:author`} render={({ match }) => (
             <FilterByAuthor
               match={match}
-              authors={authors}
-              weekly={
-                weekly.map(post => {
-                  if (lowerAndDash(post.author) === match.params.author) {
+              weekly_posts={
+                weekly_posts.map(post => {
+                  if (post.author_slug === match.params.author) {
                     return post
                   } else return null
                 })
               }
             />
-          )} />} */}
-          {weekly && tags && authors && <Route exact path={`/tags/:tagName`} render={({ match }) => (
+          )} />}
+          {weekly_posts && tags && authors && 
+          <Route exact path={`/tags/:tagName`} render={({ match }) => (
             <FilterByTag
               match={match}
               tags={tags}
-              weekly={
-                weekly.map(post => {
+              weekly_posts={
+                weekly_posts.map(post => {
                   if (post.tag_names) {
                     return post.tag_names.map(tag => {
                       if (tag === match.params.tagName) {
@@ -191,9 +209,9 @@ class App extends React.Component {
               }
             />
           )} />}
-          {weekly && tags && authors && <Route path="*" component={NotFound} />}
+          {weekly_posts && tags && authors && <Route path="*" component={NotFound} />}
         </Switch>
-        {weekly && tags && authors && <Footer footer={footer} />}
+        {weekly_posts && tags && authors && <Footer footer={footer} />}
       </div>
     )
   }

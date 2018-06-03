@@ -5,10 +5,10 @@ import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
-let FilterByTag = ({ match, tags, weekly }) => {
+let FilterByTag = ({ match, tags, weekly_posts }) => {
   let matched = match.params.author
   let filtered = []
-  let flatten = [].concat.apply([], weekly)
+  let flatten = [].concat.apply([], weekly_posts)
 
   window.scrollTo(0, 0)
 
@@ -20,7 +20,7 @@ let FilterByTag = ({ match, tags, weekly }) => {
 
   return (
     <StyledFiltered>
-      <h1>Tags</h1>
+      <h1 className="card-title">Tags</h1>
       <div className="tags-header">
         <ul className="tags-list">
           {tags.map((tag, index) => {
@@ -29,19 +29,35 @@ let FilterByTag = ({ match, tags, weekly }) => {
         </ul>
       </div>
       {filtered.map((post, postIndex) => {
-        return (
-          <StyledPost key={post.id}>
-            <h2 className="card-title">{post.title.rendered}</h2>
-            <div className="card-content">
-              <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-            </div>
-            <div className="card-footer">
-              <Link to={`authors/${post.author_slug}`}>
-                <h2 className="card-author">{post.author}</h2>
-              </Link>
-            </div>
-          </StyledPost>
-        )
+        let trimmed = post.content.rendered.substr(0, 345);
+        let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
+
+        if (post.author_slug !== '') {
+          return (
+            <StyledPost key={post.id}>
+              <h2 className="card-title">{post.title.rendered}</h2>
+              <div className="card-content">
+                <p dangerouslySetInnerHTML={{ __html: excerpt }} />
+                <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
+              </div>
+              <div className="card-footer">
+                <Link to={`/authors/${post.author_slug}`}>
+                  <h2 className="card-author">{post.author}</h2>
+                </Link>
+              </div>
+            </StyledPost>
+          )
+        } else {
+          return (
+            <StyledPost key={post.id}>
+              <h2 className="card-title">{post.title.rendered}</h2>
+              <div className="card-content">
+                <p dangerouslySetInnerHTML={{ __html: excerpt }} />
+                <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
+              </div>
+            </StyledPost>
+          )
+        }
       })}
     </StyledFiltered>
   )
@@ -66,6 +82,13 @@ let StyledFiltered = styled.div`
     justify-content: space-around;
     flex-wrap: wrap;
     width: 200px;
+  }
+
+  .card-title {
+    font-family: ${garamond};
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
   }
 `
 
@@ -94,14 +117,9 @@ let StyledPost = styled.div`
     text-transform: uppercase;
   }
 
-  .card-content {
-    position: relative;
-  }
-
   .card-read-more {
-    position: absolute;
-    right: 15%;
-    top: 72%;
+    display: block;
+    text-align: right;
   }
 
   .card-footer {

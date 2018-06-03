@@ -5,14 +5,12 @@ import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
-let FilterByAuthor = ({ match, authors, weekly }) => {
-  let lowerAndDash = e => e.toLowerCase().replace(/\s+/g, '-')
-  let matched = match.params.tagName
+let FilterByAuthor = ({ match, weekly_posts }) => {
   let filtered = []
 
   window.scrollTo(0, 0)
-  
-  weekly.map(post => {
+
+  weekly_posts.map(post => {
     if (post)
       return filtered.push(post)
     else return false
@@ -20,25 +18,28 @@ let FilterByAuthor = ({ match, authors, weekly }) => {
 
   return (
     <StyleFiltered>
-      <h1>Authors</h1>
-      <div className="authors-header">
-        <ul className="authors-list">
-          {authors.map((author, index) => {
-            return <li className={matched} key={index}><Link to={lowerAndDash(author)}>{author}</Link></li>
-          })}
-        </ul>
-      </div>
+      {filtered[0] && filtered[0].author &&
+        <div>
+          <h1 className="card-title">{filtered[0].author}</h1>
+        </div>
+      }
       {filtered.map((post, postIndex) => {
+        let trimmed = post.content.rendered.substr(0, 345);
+        let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
+
         return (
           <StyledPost key={post.id}>
             <h2 className="card-title">{post.title.rendered}</h2>
             <div className="card-content">
-              <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+              <p dangerouslySetInnerHTML={{ __html: excerpt }} />
+              <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
             </div>
             <div className="card-footer">
-              <Link to={post.author_slug}>
-                <h2 className="card-author">{post.author}</h2>
-              </Link>
+              <div className="card-tags">
+                {post.tag_names && post.tag_names.map((tag, index, { length }) => {
+                  return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
+                })}
+              </div>
             </div>
           </StyledPost>
         )
@@ -67,6 +68,13 @@ let StyleFiltered = styled.div`
     flex-wrap: wrap;
     width: 200px;
   }
+
+  .card-title {
+    font-family: ${garamond};
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+  }
 `
 
 let StyledPost = styled.div`
@@ -94,14 +102,9 @@ let StyledPost = styled.div`
     text-transform: uppercase;
   }
 
-  .card-content {
-    position: relative;
-  }
-
   .card-read-more {
-    position: absolute;
-    right: 15%;
-    top: 72%;
+    display: block;
+    text-align: right;
   }
 
   .card-footer {

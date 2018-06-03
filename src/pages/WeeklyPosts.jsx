@@ -5,13 +5,13 @@ import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
-let Weekly = ({ __html, authors, pageClass, pageTitle, weekly }) => {
+let WeeklyPosts = ({ __html, authors, pageClass, pageTitle, weekly_posts }) => {
   document.title = `${pageTitle} | Rune Bear`
 
   return (
     <StyledWeeklyWrapper>
-      <StyledWeekly className={pageClass} dangerouslySetInnerHTML={{ __html }} />
-      {weekly.map((post, postIndex) => {
+      <StyledWeeklyPosts className={pageClass} dangerouslySetInnerHTML={{ __html }} />
+      {weekly_posts.map((post, postIndex) => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
     
@@ -20,15 +20,15 @@ let Weekly = ({ __html, authors, pageClass, pageTitle, weekly }) => {
             <h2 className="card-title">{post.title.rendered}</h2>
             <div className="card-content">
               <p dangerouslySetInnerHTML={{ __html: excerpt }} />
-              <Link className="card-read-more" to={`weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
+              <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
             </div>
             <div className="card-footer">
-              <Link to={`authors/${'no'}`}>
+              <Link to={`authors/${post.author_slug}`}>
                 <h2 className="card-author">{post.author}</h2>
               </Link>
               <div className="card-tags">
                 {post.tag_names && post.tag_names.map((tag, index, { length }) => {
-                  return <Link to={`tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
+                  return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
                 })}
               </div>
             </div>
@@ -46,7 +46,7 @@ let StyledWeeklyWrapper = styled.div `
   justify-content: space-around;
 `
 
-let StyledWeekly = styled.div `
+let StyledWeeklyPosts = styled.div `
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -105,7 +105,8 @@ let StyledPost = styled.div `
     text-transform: uppercase;
   }
 
-  .card-content {
+  .card-read-more {
+    display: block;
     text-align: right;
   }
 
@@ -117,4 +118,4 @@ let StyledPost = styled.div `
   }
 `
 
-export default Weekly
+export default WeeklyPosts
