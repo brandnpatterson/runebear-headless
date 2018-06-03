@@ -16,11 +16,14 @@ let FilterByAuthor = ({ match, weekly_posts }) => {
     else return false
   })
 
+  let post = filtered[0]
+
   return (
     <StyleFiltered>
-      {filtered[0] && filtered[0].author &&
+      {post && post.author && post.author_description &&
         <div>
-          <h1 className="card-title">{filtered[0].author}</h1>
+          <h1 className="card-title">{post.author}</h1>
+        <p className="card-author-description">{post.author_description}</p>
         </div>
       }
       {filtered.map((post, postIndex) => {

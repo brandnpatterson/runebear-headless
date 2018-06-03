@@ -106,8 +106,6 @@ class App extends React.Component {
 
   render() {
     let { authors, pages, header, footer, tags, weekly_posts } = this.state
-    
-    console.log(authors)
 
     return (
       <div id="wrapper">
