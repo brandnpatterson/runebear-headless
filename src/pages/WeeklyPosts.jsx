@@ -44,6 +44,8 @@ let StyledWeeklyWrapper = styled.div `
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  margin-bottom: 100px;
+  text-align: left;
 `
 
 let StyledWeeklyPosts = styled.div `

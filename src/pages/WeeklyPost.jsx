@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { gray } from '../util/color'
 import { garamond } from '../util/font'
-import { mediumUp, smallOnly } from '../util/media'
+import { mediumUp } from '../util/media'
 
 let WeeklyPost = ({ tags, weekly_post, weekly_posts }) => {
   let filtered = []
@@ -131,6 +131,11 @@ let StyledWeeklyWrapper = styled.div`
 
   .arrow-wrapper-top {
     margin-top: -30px;
+
+    @media ${mediumUp} {
+      margin-top: inherit
+      display: none;
+    }
   }
 
   .arrow-wrapper {
