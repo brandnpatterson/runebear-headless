@@ -14,9 +14,8 @@ let Weekly = ({ __html, authors, pageClass, pageTitle, weekly }) => {
       {weekly.map((post, postIndex) => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
-        
+    
         return (
-          post.tag_names &&
           <StyledPost key={post.id}>
             <h2 className="card-title">{post.title.rendered}</h2>
             <div className="card-content">
@@ -24,16 +23,12 @@ let Weekly = ({ __html, authors, pageClass, pageTitle, weekly }) => {
               <Link className="card-read-more" to={`weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
             </div>
             <div className="card-footer">
-              <Link to={`authors/${post.author_slug}`}>
+              <Link to={`authors/${'no'}`}>
                 <h2 className="card-author">{post.author}</h2>
               </Link>
               <div className="card-tags">
-                {post.tag_names.map((tag, index, { length }) => {
-                  if (index + 1 === length) {
-                    return <Link to={`tags/${tag}`} key={index}>{tag}</Link>
-                  } else {
-                    return <Link to={`tags/${tag}`} key={index}>{tag},&nbsp;</Link>
-                  }
+                {post.tag_names && post.tag_names.map((tag, index, { length }) => {
+                  return <Link to={`tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
                 })}
               </div>
             </div>
@@ -111,13 +106,7 @@ let StyledPost = styled.div `
   }
 
   .card-content {
-    position: relative;
-  }
-
-  .card-read-more {
-    position: absolute;
-    right: 15%;
-    top: 72%;
+    text-align: right;
   }
 
   .card-footer {

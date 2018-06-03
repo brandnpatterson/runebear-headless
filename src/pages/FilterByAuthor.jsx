@@ -5,26 +5,26 @@ import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
-let FilterByTag = ({ match, tags, weekly }) => {
-  let matched = match.params.author
+let FilterByAuthor = ({ match, authors, weekly }) => {
+  let lowerAndDash = e => e.toLowerCase().replace(/\s+/g, '-')
+  let matched = match.params.tagName
   let filtered = []
-  let flatten = [].concat.apply([], weekly)
 
   window.scrollTo(0, 0)
-
-  flatten.map(post => {
+  
+  weekly.map(post => {
     if (post)
       return filtered.push(post)
     else return false
   })
 
   return (
-    <StyledFiltered>
-      <h1>Tags</h1>
-      <div className="tags-header">
-        <ul className="tags-list">
-          {tags.map((tag, index) => {
-            return <li className={matched} key={index}><Link to={tag}>{'#' + tag}</Link></li>
+    <StyleFiltered>
+      <h1>Authors</h1>
+      <div className="authors-header">
+        <ul className="authors-list">
+          {authors.map((author, index) => {
+            return <li className={matched} key={index}><Link to={lowerAndDash(author)}>{author}</Link></li>
           })}
         </ul>
       </div>
@@ -36,19 +36,19 @@ let FilterByTag = ({ match, tags, weekly }) => {
               <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
             </div>
             <div className="card-footer">
-              <Link to={`authors/${post.author_slug}`}>
+              <Link to={post.author_slug}>
                 <h2 className="card-author">{post.author}</h2>
               </Link>
             </div>
           </StyledPost>
         )
       })}
-    </StyledFiltered>
+    </StyleFiltered>
   )
 }
 
 
-let StyledFiltered = styled.div`
+let StyleFiltered = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -56,12 +56,12 @@ let StyledFiltered = styled.div`
   margin-bottom: 100px;
   text-align: left;
 
-  .tags-header {
+  .authors-header {
     display: flex;
     justify-content: center;
   }
 
-  .tags-list {
+  .authors-list {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -112,4 +112,4 @@ let StyledPost = styled.div`
   }
 `
 
-export default FilterByTag
+export default FilterByAuthor

@@ -12,6 +12,8 @@ import About from './pages/About'
 import Home from './pages/Home'
 import Quarterly from './pages/Quarterly'
 import Submit from './pages/Submit'
+// import FilterByAuthor from './pages/FilterByAuthor'
+// import FilterByWeeklyPost from './pages/FilterByWeeklyPost'
 import FilterByTag from './pages/FilterByTag'
 import Weekly from './pages/Weekly'
 
@@ -28,6 +30,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    let all_authors = []
     let all_tags = []
   
     getPages()
@@ -41,41 +44,56 @@ class App extends React.Component {
       .then(weekly => this.setState({ weekly }))
       .then(() => {
         let { weekly } = this.state
-
+        
         return weekly.map(post => {
           let tag_names = []
           
           getTaxonomy('tags', post.id)
             .then(data => {
-              return data.map(tag => {
-                tag_names.push(tag.name)
-                all_tags.push(tag.name)
-                all_tags = [...new Set(all_tags)].sort()
+              if (data) {
+                return data.map(tag => {
+                  tag_names.push(tag.name)
+                  all_tags.push(tag.name)
+                  all_tags = [...new Set(all_tags)].sort()
 
-                return post.tag_names = tag_names
-              })
+                  return post.tag_names = tag_names
+                })
+              } else {
+                return false
+              }
             })
-            .then(() => this.setState({ tags: all_tags }))
-            .then(() => this.setState({ weekly }))
+            .then(() => this.setState({
+              tags: all_tags, 
+              weekly 
+            }))
 
           return getTaxonomy('post_author', post.id)
             .then(data => {
-              post.author = data[0].name
-              post.author_slug = data[0].slug
+              if (data && data[0] && data[0].name) {
+                post.author = data[0].name
+                all_authors.push(data[0].name)
+              } else {
+                post.author = ''
+              }
+              
+              all_authors = [...new Set(all_authors)].sort()
             })
-            .then(() => this.setState({ weekly }))
+            .then(() => this.setState({
+              authors: all_authors,
+              weekly 
+            }))
         })
       })
   }
 
   render() {
-    let { pages, header, footer, tags, weekly } = this.state
-  
+    let { authors, pages, header, footer, tags, weekly } = this.state
+    
     return (
       <div id="wrapper">
-        {tags && <Header header={header} />}
+        {weekly && tags && authors && <Header header={header} />}
         <Switch>
-          {tags && pages.map(page => {
+          {weekly && tags && authors && pages.map(page => {
             let path = () => page.title.rendered === 'Home' ? '/' : '/' + page.slug
 
             let Component = () => {
@@ -131,8 +149,35 @@ class App extends React.Component {
               )} />
             )
           })}
-          {weekly && tags && <Route exact path={`/tags/:tagName`} render={({ match }) => (
+          {/* {weekly && authors && <Route exact path={`/weekly/:weeklyPost`} render={({ match }) => (
+            <FilterByWeeklyPost
+              match={match}
+              weekly_post={
+                weekly.map(post => {
+                  if (post.slug === match.params.weeklyPost) {
+                    return post
+                  } else return null
+                })
+              }
+            />
+          )} />} */}
+          {/* {weekly && tags && authors && <Route exact path={`/authors/:author`} render={({ match }) => (
+            <FilterByAuthor
+              match={match}
+              authors={authors}
+              weekly={
+                weekly.map(post => {
+                  if (lowerAndDash(post.author) === match.params.author) {
+                    return post
+                  } else return null
+                })
+              }
+            />
+          )} />} */}
+          {weekly && tags && authors && <Route exact path={`/tags/:tagName`} render={({ match }) => (
             <FilterByTag
+              match={match}
+              tags={tags}
               weekly={
                 weekly.map(post => {
                   if (post.tag_names) {
@@ -144,12 +189,11 @@ class App extends React.Component {
                   } else return null
                 })
               }
-              tags={tags}
             />
           )} />}
-          {tags && <Route path="*" component={NotFound} />}
+          {weekly && tags && authors && <Route path="*" component={NotFound} />}
         </Switch>
-        {tags && <Footer footer={footer} />}
+        {weekly && tags && authors && <Footer footer={footer} />}
       </div>
     )
   }
