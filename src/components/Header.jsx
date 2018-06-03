@@ -44,7 +44,7 @@ class Header extends Component {
       }
       return (
         <div key={i} onClick={this.toggleActive} className="navbar-item">
-          <Link to={location}>{headerItem}</Link>
+          <Link to={'/' + location}>{headerItem}</Link>
         </div>
       )
     })

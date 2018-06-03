@@ -2,7 +2,7 @@ import axios from 'axios'
 
 let endpoint = endpoint => `https://admin.runebear.com/wp-json/wp/v2/${endpoint}`;
 
-let getPages = (query = '', callback) => {
+let getPages = (query = '') => {
   return new Promise((resolve, reject) => {
     axios.get(`${endpoint('pages')}`)
       .then(res => {
@@ -20,46 +20,26 @@ let getPages = (query = '', callback) => {
 
         resolve({ pages, footer, header })
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
   })
 }
 
-let getWeeklyPosts = (query = '', callback) => {
+let getWeeklyPosts = (query = '') => {
   return new Promise((resolve, reject) => {
     axios.get(`${endpoint('weekly_posts')}`)
       .then(res => {
-        let posts = res.data
-
-        resolve({ posts })
+        resolve(res.data)
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
   })
 }
 
-let getAuthor = (weekly_id = '') => {
+let getTaxonomy = (taxonomy, weekly_id = '') => {
   return new Promise((resolve, reject) => {
-    axios.get(`${endpoint('post_author')}?post=${weekly_id}`)
-      .then(res => {
-        let author = res.data
-
-        resolve(author)
-      })
-      .catch(err => console.log(err))
+    axios.get(`${endpoint(taxonomy)}?post=${weekly_id}`)
+      .then(res => resolve(res.data))
+      .catch(err => console.error(err))
   })
 }
 
-// let getQuarterlyPosts = (query = '', callback) => {
-//   return new Promise((resolve, reject) => {
-//     axios.get(quarterly_posts)
-//       .then(res => {
-//         let posts = res.data
-
-//         resolve({
-//           posts
-//         })
-//       })
-//       .catch(err => console.log(err))
-//   })
-// }
-
-export { getAuthor, getPages, getWeeklyPosts }
+export { getPages, getTaxonomy, getWeeklyPosts }

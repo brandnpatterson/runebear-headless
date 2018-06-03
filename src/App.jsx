@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import { mediumUp, tiny } from './util/media'
-import { getAuthor, getPages, getWeeklyPosts } from './api'
+import { getTaxonomy, getPages, getWeeklyPosts } from './api'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -12,6 +12,7 @@ import About from './pages/About'
 import Home from './pages/Home'
 import Quarterly from './pages/Quarterly'
 import Submit from './pages/Submit'
+import FilterByTag from './pages/FilterByTag'
 import Weekly from './pages/Weekly'
 
 class App extends React.Component {
@@ -21,116 +22,134 @@ class App extends React.Component {
       pages: null,
       header: null,
       footer: null,
-      routes: null,
+      tags: null,
       weekly: null
     }
   }
 
-  componentDidMount() { 
+  componentDidMount() {
+    let all_tags = []
+  
     getPages()
       .then(data => {
         let { pages, header, footer } = data
 
         this.setState({ pages, header, footer: footer[0] })
       })
-      .then(() => this.createRoutes())
 
     getWeeklyPosts()
-      .then(data => {
-        let { posts } = data
-
-        this.setState({ weekly: posts })
-      })
+      .then(weekly => this.setState({ weekly }))
       .then(() => {
         let { weekly } = this.state
 
-        weekly.map(post => {
-          return (
-            getAuthor(post.id)
+        return weekly.map(post => {
+          let tag_names = []
+          
+          getTaxonomy('tags', post.id)
             .then(data => {
-              console.log(data[0].name)
+              return data.map(tag => {
+                tag_names.push(tag.name)
+                all_tags.push(tag.name)
+                all_tags = [...new Set(all_tags)].sort()
+
+                return post.tag_names = tag_names
+              })
             })
-          )
+            .then(() => this.setState({ tags: all_tags }))
+            .then(() => this.setState({ weekly }))
+
+          return getTaxonomy('post_author', post.id)
+            .then(data => {
+              post.author = data[0].name
+              post.author_slug = data[0].slug
+            })
+            .then(() => this.setState({ weekly }))
         })
       })
   }
 
-  createRoutes() {
-    let { pages } = this.state
-
-    let routes = pages.map(page => {
-      let path = () => page.title.rendered === 'Home' ? '/' : '/' + page.slug
-  
-      if (page.title.rendered === 'About') {
-        return <Route key={page.id} exact path={path()} component={() => (
-            <StyledComponent>
-              <About
-                __html={page.content.rendered}
-                pageClass={page.slug}
-                pageTitle={page.title.rendered}
-              />
-            </StyledComponent>
-        )} />
-      } else if (page.title.rendered === 'Home') {
-        return <Route key={page.id} exact path={path()} component={() => (
-            <StyledComponent>
-              <Home
-                __html={page.content.rendered}
-                pageClass={page.slug}
-                pageTitle={page.title.rendered}
-              />
-            </StyledComponent>
-        )} />
-      } else if (page.title.rendered === 'Quarterly') {
-        return <Route key={page.id} exact path={path()} component={() => (
-            <StyledComponent>
-              <Quarterly
-                __html={page.content.rendered}
-                pageClass={page.slug}
-                pageTitle={page.title.rendered}
-              />
-            </StyledComponent>
-        )} />
-      } else if (page.title.rendered === 'Submit') {
-        return <Route key={page.id} exact path={path()} component={() => (
-            <StyledComponent>
-              <Submit
-                __html={page.content.rendered}
-                pageClass={page.slug}
-                pageTitle={page.title.rendered}
-              />
-            </StyledComponent>
-        )} />
-      } else if (page.title.rendered === 'Weekly') {
-        return <Route key={page.id} exact path={path()} component={() => (
-            <StyledComponent>
-              <Weekly
-                __html={page.content.rendered}
-                pageClass={page.slug}
-                pageTitle={page.title.rendered}
-                weekly={this.state.weekly}
-              />
-            </StyledComponent>
-        )} />
-      } else { 
-        return false 
-      }
-    })
-  
-    this.setState({ routes })
-  }
-
   render() {
-    let { pages, header, footer, routes } = this.state
-    
+    let { pages, header, footer, tags, weekly } = this.state
+  
     return (
       <div id="wrapper">
-        {header && <Header header={header} />}
+        {tags && <Header header={header} />}
         <Switch>
-          {pages && routes}
-          {pages && <Route path="*" component={NotFound} />}
+          {tags && pages.map(page => {
+            let path = () => page.title.rendered === 'Home' ? '/' : '/' + page.slug
+
+            let Component = () => {
+              if (page.title.rendered === 'About')
+                return (
+                  <About
+                    __html={page.content.rendered}
+                    pageClass={page.slug}
+                    pageTitle={page.title.rendered}
+                  />
+                )
+              if (page.title.rendered === 'Home')
+                return (
+                  <Home
+                    __html={page.content.rendered}
+                    pageClass={page.slug}
+                    pageTitle={page.title.rendered}
+                  />
+                )
+              if (page.title.rendered === 'Quarterly')
+                return (
+                  <Quarterly
+                    __html={page.content.rendered}
+                    pageClass={page.slug}
+                    pageTitle={page.title.rendered}
+                  />
+                )
+              if (page.title.rendered === 'Submit')
+                return (
+                  <Submit
+                    __html={page.content.rendered}
+                    pageClass={page.slug}
+                    pageTitle={page.title.rendered}
+                  />
+                )
+              if (page.title.rendered === 'Weekly')
+                return (
+                  weekly && 
+                  <Weekly
+                    __html={page.content.rendered}
+                    pageClass={page.slug}
+                    pageTitle={page.title.rendered}
+                    weekly={weekly}
+                  />
+                )
+            }
+
+            return (
+              <Route key={page.id} exact path={path()} component={() => (
+                <StyledComponent>
+                  <Component />
+                </StyledComponent>
+              )} />
+            )
+          })}
+          {weekly && tags && <Route exact path={`/tags/:tagName`} render={({ match }) => (
+            <FilterByTag
+              weekly={
+                weekly.map(post => {
+                  if (post.tag_names) {
+                    return post.tag_names.map(tag => {
+                      if (tag === match.params.tagName) {
+                        return post
+                      } else return null
+                    })
+                  } else return null
+                })
+              }
+              tags={tags}
+            />
+          )} />}
+          {tags && <Route path="*" component={NotFound} />}
         </Switch>
-        {footer && <Footer footer={footer} />}
+        {tags && <Footer footer={footer} />}
       </div>
     )
   }
@@ -141,8 +160,7 @@ let StyledComponent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  width: 80%;
-  margin: 50px auto;
+  width: 100%;
 
   @media ${mediumUp} {
     margin: 82px auto;
@@ -220,8 +238,5 @@ let StyledComponent = styled.div`
     }
   }
 `
-
-
-
 
 export default App
