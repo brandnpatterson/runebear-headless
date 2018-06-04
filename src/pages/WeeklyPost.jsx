@@ -1,18 +1,25 @@
 import React from 'react'
+import { array, object } from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
-let WeeklyPost = ({ tags, weekly_post, weekly_posts }) => {
+let propTypes = {
+  match: object.isRequired,
+  weeklyPost: array.isRequired, 
+  weeklyPosts: array.isRequired
+}
+
+let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
   let filtered = []
-  let next_array = []
-  let prev_array = []
+  let nextArr = []
+  let prevArr = []
 
   window.scrollTo(0, 0)
 
-  weekly_post.map(post => {
+  weeklyPost.map(post => {
     if (post)
       return filtered.push(post)
     else return false
@@ -20,32 +27,32 @@ let WeeklyPost = ({ tags, weekly_post, weekly_posts }) => {
 
   let post = filtered[0]
 
-  weekly_posts.map((p, i, { length }) => {
+  weeklyPosts.map((p, i, { length }) => {
     if (post.id === p.id) {
       if (i + 1 === length) {
-        next_array.push(weekly_posts[0].slug)
+        nextArr.push(weeklyPosts[0].slug)
         return true
       } else {
-        next_array.push(weekly_posts[i + 1].slug)
+        nextArr.push(weeklyPosts[i + 1].slug)
         return true
       }
     } else return false
   })
 
-  weekly_posts.map((p, i, { length }) => {
+  weeklyPosts.map((p, i, { length }) => {
     if (post.id === p.id) {
       if (i === 0) {
-        prev_array.push(weekly_posts[length - 1].slug)
+        prevArr.push(weeklyPosts[length - 1].slug)
         return true
       } else {
-        prev_array.push(weekly_posts[i - 1].slug)
+        prevArr.push(weeklyPosts[i - 1].slug)
         return true
       }
     } else return false
   })
 
-  let next = next_array[0]
-  let prev = prev_array[0]
+  let next = nextArr[0]
+  let prev = prevArr[0]
 
   return (
     <StyledWeeklyWrapper>
@@ -58,17 +65,17 @@ let WeeklyPost = ({ tags, weekly_post, weekly_posts }) => {
         </Link>
       </div>
       <h1 className="card-title">{filtered[0].title.rendered}</h1>
-      {post.author_slug !== '' 
+      {post.authorSlug !== '' 
       ?
-      post.author_slug &&
+      post.authorSlug &&
       <StyledPost key={post.id}>
         <div className="card-content">
           <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
         </div>
         <div className="card-footer">
-          <p className="card-author-description">{post.author_description}</p>
+          <p className="card-author-description">{post.authorDesc}</p>
           <div className="card-tags">
-            {post.tag_names && post.tag_names.map((tag, index, { length }) => {
+            {post.tagNames && post.tagNames.map((tag, index, { length }) => {
               return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
             })}
           </div>
@@ -81,7 +88,7 @@ let WeeklyPost = ({ tags, weekly_post, weekly_posts }) => {
         </div>
         <div className="card-footer">
           <div className="card-tags">
-            {post.tag_names && post.tag_names.map((tag, index, { length }) => {
+            {post.tagNames && post.tagNames.map((tag, index, { length }) => {
               return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
             })}
           </div>
@@ -99,7 +106,7 @@ let WeeklyPost = ({ tags, weekly_post, weekly_posts }) => {
       {post.author 
         ? 
           <h2 className="card-author">All from&nbsp;
-          <Link to={`/authors/${post.author_slug}`}>{post.author}</Link>
+          <Link to={`/authors/${post.authorSlug}`}>{post.author}</Link>
           </h2>
         : null
       }
@@ -210,5 +217,7 @@ let StyledPost = styled.div`
     margin-left: 22px;
   }
 `
+
+WeeklyPost.propTypes = propTypes
 
 export default WeeklyPost

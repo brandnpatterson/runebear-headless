@@ -1,6 +1,13 @@
 import React from 'react'
+import { string } from 'prop-types'
 import styled from 'styled-components'
 import { mediumUp } from '../util/media'
+
+let propTypes = {
+  __html: string.isRequired,
+  pageClass: string.isRequired,
+  pageTitle: string.isRequired
+}
 
 let Quarterly = ({ __html, pageClass, pageTitle }) => {
   document.title = `${pageTitle} | Rune Bear`
@@ -44,5 +51,7 @@ let StyledQuarterly = styled.div`
     }
   }
 `
+
+Quarterly.propTypes = propTypes
 
 export default Quarterly

@@ -1,16 +1,22 @@
 import React from 'react'
+import { array, object } from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
-let FilterByAuthor = ({ match, weekly_posts }) => {
+let propTypes = {
+  match: object.isRequired,
+  weeklyPosts: array.isRequired
+}
+
+let FilterByAuthor = ({ match, weeklyPosts }) => {
   let filtered = []
 
   window.scrollTo(0, 0)
 
-  weekly_posts.map(post => {
+  weeklyPosts.map(post => {
     if (post)
       return filtered.push(post)
     else return false
@@ -20,10 +26,10 @@ let FilterByAuthor = ({ match, weekly_posts }) => {
 
   return (
     <StyleFiltered>
-      {post && post.author && post.author_description &&
+      {post && post.author && post.authorDesc &&
         <div>
           <h1 className="card-title">{post.author}</h1>
-        <p className="card-author-description">{post.author_description}</p>
+        <p className="card-author-description">{post.authorDesc}</p>
         </div>
       }
       {filtered.map((post, postIndex) => {
@@ -39,7 +45,7 @@ let FilterByAuthor = ({ match, weekly_posts }) => {
             </div>
             <div className="card-footer">
               <div className="card-tags">
-                {post.tag_names && post.tag_names.map((tag, index, { length }) => {
+                {post.tagNames && post.tagNames.map((tag, index, { length }) => {
                   return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
                 })}
               </div>
@@ -50,7 +56,6 @@ let FilterByAuthor = ({ match, weekly_posts }) => {
     </StyleFiltered>
   )
 }
-
 
 let StyleFiltered = styled.div`
   align-items: center;
@@ -117,5 +122,7 @@ let StyledPost = styled.div`
     margin-left: 22px;
   }
 `
+
+FilterByAuthor.propTypes = propTypes
 
 export default FilterByAuthor

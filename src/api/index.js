@@ -34,9 +34,9 @@ let getWeeklyPosts = (query = '') => {
   })
 }
 
-let getTaxonomy = (taxonomy, weekly_id = '') => {
+let getTaxonomy = (taxonomy, weeklyId = '') => {
   return new Promise((resolve, reject) => {
-    axios.get(`${endpoint(taxonomy)}?post=${weekly_id}`)
+    axios.get(`${endpoint(taxonomy)}?post=${weeklyId}`)
       .then(res => resolve(res.data))
       .catch(err => console.error(err))
   })

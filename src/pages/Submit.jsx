@@ -1,8 +1,15 @@
 import React from 'react'
+import { string } from 'prop-types'
 import styled from 'styled-components'
 import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp, largeUp } from '../util/media'
+
+let propTypes = {
+  __html: string.isRequired,
+  pageClass: string.isRequired,
+  pageTitle: string.isRequired
+}
 
 let Submit = ({ __html, pageClass, pageTitle }) => {
   document.title = `${pageTitle} | Rune Bear`
@@ -54,5 +61,7 @@ let StyledSubmit = styled.div`
     }
   }
 `
+
+Submit.propTypes = propTypes
 
 export default Submit

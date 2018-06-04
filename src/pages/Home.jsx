@@ -1,6 +1,13 @@
 import React from 'react'
+import { string } from 'prop-types'
 import styled from 'styled-components'
 import { mediumUp, smallOnly } from '../util/media'
+
+let propTypes = { 
+  __html: string.isRequired, 
+  pageClass: string.isRequired, 
+  pageTitle: string.isRequired
+}
 
 let Home = ({ __html, pageClass, pageTitle }) => {
   document.title = `${pageTitle} | Rune Bear`
@@ -9,7 +16,6 @@ let Home = ({ __html, pageClass, pageTitle }) => {
     <StyledHome className={pageClass} dangerouslySetInnerHTML={{ __html }} />
   )
 }
-
 
 let StyledHome = styled.div`
   display: flex;
@@ -33,5 +39,7 @@ let StyledHome = styled.div`
     }
   }
 `
+
+Home.propTypes = propTypes
 
 export default Home

@@ -1,17 +1,25 @@
 import React from 'react'
+import { array, string } from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
-let WeeklyPosts = ({ __html, authors, pageClass, pageTitle, weekly_posts }) => {
+let propTypes = { 
+  __html: string.isRequired, 
+  pageClass: string.isRequired, 
+  pageTitle: string.isRequired, 
+  weeklyPosts: array.isRequired
+}
+
+let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
   document.title = `${pageTitle} | Rune Bear`
 
   return (
     <StyledWeeklyWrapper>
       <StyledWeeklyPosts className={pageClass} dangerouslySetInnerHTML={{ __html }} />
-      {weekly_posts.map((post, postIndex) => {
+      {weeklyPosts.map((post, postIndex) => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
     
@@ -23,11 +31,11 @@ let WeeklyPosts = ({ __html, authors, pageClass, pageTitle, weekly_posts }) => {
               <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
             </div>
             <div className="card-footer">
-              <Link to={`authors/${post.author_slug}`}>
+              <Link to={`authors/${post.authorSlug}`}>
                 <h3 className="card-author">{post.author}</h3>
               </Link>
               <div className="card-tags">
-                {post.tag_names && post.tag_names.map((tag, index, { length }) => {
+                {post.tagNames && post.tagNames.map((tag, index, { length }) => {
                   return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
                 })}
               </div>
@@ -119,5 +127,7 @@ let StyledPost = styled.div `
     margin-left: 22px;
   }
 `
+
+WeeklyPosts.propTypes = propTypes
 
 export default WeeklyPosts

@@ -1,8 +1,15 @@
 import React from 'react'
+import { string } from 'prop-types'
 import styled from 'styled-components'
 import { garamond } from '../util/font'
 import { black, gray } from '../util/color'
 import { mediumUp } from '../util/media'
+
+let propTypes = {
+  __html: string.isRequired,
+  pageClass: string.isRequired,
+  pageTitle: string.isRequired
+}
 
 let About = ({ __html, pageClass, pageTitle }) => {
   document.title = `${pageTitle} | Rune Bear`
@@ -97,5 +104,7 @@ let StyledAbout = styled.div`
     width: 300px;
   }
 `
+
+About.propTypes = propTypes
 
 export default About

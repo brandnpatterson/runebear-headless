@@ -1,14 +1,21 @@
 import React from 'react'
+import { array, object } from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
-let FilterByTag = ({ match, tags, weekly_posts }) => {
+let propTypes = {
+  match: object.isRequired,
+  tags: array.isRequired,
+  weeklyPosts: array.isRequired
+}
+
+let FilterByTag = ({ match, tags, weeklyPosts }) => {
   let matched = match.params.author
   let filtered = []
-  let flatten = [].concat.apply([], weekly_posts)
+  let flatten = [].concat.apply([], weeklyPosts)
 
   window.scrollTo(0, 0)
 
@@ -32,7 +39,7 @@ let FilterByTag = ({ match, tags, weekly_posts }) => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
 
-        if (post.author_slug !== '') {
+        if (post.authorSlug !== '') {
           return (
             <StyledPost key={post.id}>
               <h2 className="card-title">{post.title.rendered}</h2>
@@ -41,7 +48,7 @@ let FilterByTag = ({ match, tags, weekly_posts }) => {
                 <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
               </div>
               <div className="card-footer">
-                <Link to={`/authors/${post.author_slug}`}>
+                <Link to={`/authors/${post.authorSlug}`}>
                   <h2 className="card-author">{post.author}</h2>
                 </Link>
               </div>
@@ -62,7 +69,6 @@ let FilterByTag = ({ match, tags, weekly_posts }) => {
     </StyledFiltered>
   )
 }
-
 
 let StyledFiltered = styled.div`
   align-items: center;
@@ -129,5 +135,7 @@ let StyledPost = styled.div`
     margin-left: 22px;
   }
 `
+
+FilterByTag.propTypes = propTypes
 
 export default FilterByTag
