@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "npm run lint && react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp CNAME build/CNAME",
+    "deploy": "npm run build && surge build",
     "lint": "stylelint src/**/*.jsx",
     "test": "react-scripts test --env=jsdom"
   },
