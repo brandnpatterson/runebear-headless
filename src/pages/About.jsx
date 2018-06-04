@@ -46,10 +46,10 @@ let StyledAbout = styled.div`
   }
 
   .container {
-    border: 2px solid ${gray};
+    border: 1px solid ${gray};
     margin: 50px auto;
     max-width: 950px;
-    padding: 30px;
+    padding: 30px 50px 50px;
     width: 100%;
 
     h1,
@@ -60,11 +60,7 @@ let StyledAbout = styled.div`
     }
 
     p {
-      font-size: 18px;
-
       @media ${mediumUp} {
-        font-size: 20px;
-        padding-left: 40px;
         padding-top: 10px;
       }
     }
@@ -78,10 +74,12 @@ let StyledAbout = styled.div`
 
   .content-inner {
     h1 {
+      font-size: 26px;
       margin-bottom: 0;
     }
 
     h2 {
+      font-size: 20px;
       margin-bottom: 30px;
     }
 

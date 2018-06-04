@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { black } from '../util/color'
+import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp, largeUp } from '../util/media'
 
@@ -27,7 +27,7 @@ let StyledSubmit = styled.div`
   }
 
   .card {
-    border: 1px solid ${black};
+    border: 1px solid ${gray};
     display: flex;
     flex-direction: column;
     align-items: left;
