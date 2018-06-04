@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "stylelint src/styles/*.js && react-scripts start",
+    "start": "npm run lint && react-scripts start",
     "build": "react-scripts build",
+    "lint": "stylelint src/**/*.jsx",
     "test": "react-scripts test --env=jsdom"
   },
   "dependencies": {

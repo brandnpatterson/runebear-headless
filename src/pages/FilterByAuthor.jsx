@@ -62,7 +62,7 @@ let StyleFiltered = styled.div`
 
   .authors-header {
     display: flex;
-    justify-content: center;
+    justify-content: center
   }
 
   .authors-list {

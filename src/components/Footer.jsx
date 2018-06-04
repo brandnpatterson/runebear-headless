@@ -45,9 +45,8 @@ let StyledFooter = styled.footer `
 
     @media ${mediumUp} {
       font-size: 18px;
-      margin-bottom: 50px;
       max-width: 500px;
-      margin: 25px 0 0 40px;
+      margin: 25px 0 50px 40px;
       text-align: center;
       width: 530px;
     }

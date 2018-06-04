@@ -138,7 +138,7 @@ let StyledWeeklyWrapper = styled.div`
     margin-top: -30px;
 
     @media ${mediumUp} {
-      margin-top: inherit
+      margin-top: inherit;
       display: none;
     }
   }
