@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "npm run lint && react-scripts start",
-    "build": "react-scripts build && cp CNAME build/CNAME",
+    "build": "react-scripts build && npm run create-cname",
+    "create-cname": "echo 'test-runebear.surge.sh' > build/CNAME",
     "deploy": "npm run build && surge build",
     "lint": "stylelint src/**/*.jsx",
     "test": "react-scripts test --env=jsdom"
