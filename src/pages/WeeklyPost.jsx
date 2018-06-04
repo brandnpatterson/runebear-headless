@@ -96,9 +96,13 @@ let WeeklyPost = ({ tags, weekly_post, weekly_posts }) => {
           <span className="right-arrow">{'>>>'}</span>
         </Link>
       </div>
-      <h2 className="card-author">All from&nbsp;
-        <Link to={`/authors/${post.author_slug}`}>{post.author}</Link>
-      </h2>
+      {post.author 
+        ? 
+          <h2 className="card-author">All from&nbsp;
+          <Link to={`/authors/${post.author_slug}`}>{post.author}</Link>
+          </h2>
+        : null
+      }
     </StyledWeeklyWrapper>
   )
 }
