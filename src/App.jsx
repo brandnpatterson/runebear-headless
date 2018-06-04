@@ -12,9 +12,9 @@ import About from './pages/About'
 import Home from './pages/Home'
 import Quarterly from './pages/Quarterly'
 import Submit from './pages/Submit'
-import WeeklyPost from './pages/WeeklyPost'
 import FilterByAuthor from './pages/FilterByAuthor'
 import FilterByTag from './pages/FilterByTag'
+import WeeklyPost from './pages/WeeklyPost'
 import WeeklyPosts from './pages/WeeklyPosts'
 
 class App extends React.Component {
