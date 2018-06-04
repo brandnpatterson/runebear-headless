@@ -1,8 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
 import styled from 'styled-components'
-
-// styles
 import { blue, dark, light } from '../util/color'
 import { mediumUp } from '../util/media'
 

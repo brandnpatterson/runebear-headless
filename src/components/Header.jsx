@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { array } from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-
-// styles
 import { dark, light } from '../util/color'
 import { mediumUp } from '../util/media'
 
