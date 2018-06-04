@@ -27,9 +27,7 @@ let getPages = (query = '') => {
 let getWeeklyPosts = (query = '') => {
   return new Promise((resolve, reject) => {
     axios.get(`${endpoint('weekly_posts')}`)
-      .then(res => {
-        resolve(res.data)
-      })
+      .then(res => resolve(res.data))
       .catch(err => console.error(err))
   })
 }
