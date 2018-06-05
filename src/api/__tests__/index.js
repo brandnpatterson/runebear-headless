@@ -2,7 +2,7 @@ import {
     getPages,
     getTaxonomy,
     getWeeklyPosts,
-} from './index'
+} from '../index'
 
 it('makes a request that returns pages', () => {
     return getPages('pages')
