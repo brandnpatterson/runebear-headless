@@ -14,7 +14,6 @@ it('makes a request that returns pages', () => {
 it('makes a request that returns taxonomy', () => {
     return getTaxonomy(`post_author?post=${1}`)
         .then(data => {
-            console.log('taxonomy')
             console.log(data)
         })
 })
@@ -22,7 +21,6 @@ it('makes a request that returns taxonomy', () => {
 it('makes a request that returns weekly posts', () => {
     return getWeeklyPosts('weekly_posts')
         .then(data => {
-            console.log('weekly posts')
             console.log(data)
         })
 })
