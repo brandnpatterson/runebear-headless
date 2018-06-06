@@ -233,10 +233,12 @@ let StyledComponent = styled.div`
   align-items: center;
   justify-content: space-around;
   width: 100%;
+  min-height: 600px;
+
   @media ${mediumUp} {
-    margin: 82px auto;
     width: 100%;
   }
+
   .image-wrapper {
     display: flex;
     @media ${tiny} {

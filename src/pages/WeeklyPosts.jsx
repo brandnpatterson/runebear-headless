@@ -19,10 +19,11 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
   return (
     <StyledWeeklyWrapper>
       <StyledWeeklyPosts className={pageClass} dangerouslySetInnerHTML={{ __html }} />
-      {weeklyPosts.map((post, postIndex) => {
+      { // if there are weekly posts
+        weeklyPosts.map((post, postIndex) => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
-    
+
         return (
           <StyledPost key={post.id}>
             <h2 className="card-title">{post.title.rendered}</h2>
@@ -42,6 +43,7 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
             </div>
           </StyledPost>
         )
+        // ./ if there are weekly posts
       })}
     </StyledWeeklyWrapper>
   )
@@ -51,41 +53,42 @@ let StyledWeeklyWrapper = styled.div `
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  margin-bottom: 100px;
-  text-align: left;
 `
 
 let StyledWeeklyPosts = styled.div `
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  align-items: center;
 
   @media ${mediumUp} {
-    flex-direction: row;
-    margin-top: 120px;
     max-width: 900px;
   }
 
-  .speech-bubble-wrapper {
-    position: relative;
-  }
+  .featured-hero {
+    align-items: center;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
 
-  .speech-bubble {        
     @media ${mediumUp} {
-      margin-top: -120px;
+      flex-direction: row;
+      width: 650px;
     }
-  }
 
-  .coming-soon-text {
-    position: absolute;
-    left: 50px;
-    top: 70px;
+    h1 {
+      font-family: ${garamond};
+      font-size: 70px;
+      margin-top: 0;
 
-    @media ${mediumUp} {
-      font-size: 30px;
-      left: 110px;
-      top: 25px;
+      @media ${mediumUp} {
+        font-size: 100px;
+        margin-top: 55px;
+      }
+    }
+
+    img {
+      height: 200px;
+      width: 200px;
     }
   }
 `
@@ -109,7 +112,7 @@ let StyledPost = styled.div `
     font-family: ${garamond};
     font-weight: bold;
     position: absolute;
-    right: 50px;
+    right: 70px;
     top: 40px;
     text-align: right;
     text-transform: uppercase;
@@ -118,6 +121,7 @@ let StyledPost = styled.div `
   .card-read-more {
     display: block;
     text-align: right;
+    margin-top: 20px;
   }
 
   .card-footer {
