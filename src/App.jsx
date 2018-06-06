@@ -1,19 +1,8 @@
 import React from 'react'
-import { 
-  BrowserRouter as Router, 
-  Route, 
-  Switch
-} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
-import { 
-  mediumUp, 
-  tiny
-} from './util/media'
-import { 
-  getTaxonomy, 
-  getPages, 
-  getWeeklyPosts 
-} from './api'
+import { mediumUp, tiny } from './util/media'
+import { getTaxonomy, getPages, getWeeklyPosts } from './api'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -44,89 +33,93 @@ class App extends React.Component {
   componentDidMount() {
     let allAuthors = []
     let allTags = []
-        
+
     getPages()
       .then(data => {
         let { pages, header, footer } = data
-
+        
         this.setState({ pages, header, footer: footer[0] })
       })
 
     getWeeklyPosts()
-      .then(weeklyPosts => this.setState({ weeklyPosts }))
+      .then(weeklyPosts => {
+        this.setState({ weeklyPosts })
+      })
       .then(() => {
         let { weeklyPosts } = this.state
-        
-        return weeklyPosts.map(post => {
-          let tagNames = []
-          
-          getTaxonomy('tags', post.id)
-            .then(data => {
-              if (data) {
-                return data.map(tag => {
-                  tagNames.push(tag.name)
-                  allTags.push(tag.name)
-                  allTags = [...new Set(allTags)].sort()
 
-                  return post.tagNames = tagNames
-                })
-              } else {
-                return allTags.push('')
-              }
-            })
-            .then(() => this.setState({
-              tags: allTags, 
-              weeklyPosts 
-            }))
+        if (weeklyPosts.length === 0) {
+          return
+        } else {
+          return weeklyPosts.map(post => {
+            let tagNames = []
 
-          return getTaxonomy('post_author', post.id)
-            .then(data => {
-              if (data && data[0] && data[0].name) {
-                let checkAndAdd = name => {
-                  let found = allAuthors.some((el) => el.name === name)
+            getTaxonomy('tags', post.id)
+              .then(data => {
+                if (data) {
+                  return data.map(tag => {
+                    tagNames.push(tag.name)
+                    allTags.push(tag.name)
+                    allTags = [...new Set(allTags)].sort()
 
-                  if (!found) {
-                    allAuthors.push({
-                      name: data[0].name,
-                      description: data[0].description,
-                      slug: data[0].slug
-                    })
-                  }
+                    return post.tagNames = tagNames
+                  })
+                } else {
+                  return allTags.push('')
                 }
-
-                checkAndAdd(data[0].name)
-
-                post.author = data[0].name
-                post.authorSlug = data[0].slug
-                post.authorDesc = data[0].description
-              } else {
-                post.author = ''
-                post.authorSlug = ''
-                post.authorDesc = ''
-              }
-            })
-            .then(() => {
-              this.setState({
-                authors: allAuthors,
-                weeklyPosts
               })
-            })
-        })
+              .then(() => this.setState({
+                tags: allTags,
+                weeklyPosts
+              }))
+
+            return getTaxonomy('post_author', post.id)
+              .then(data => {
+                if (data && data[0] && data[0].name) {
+                  let checkAndAdd = name => {
+                    let found = allAuthors.some((el) => el.name === name)
+
+                    if (!found) {
+                      allAuthors.push({
+                        name: data[0].name,
+                        description: data[0].description,
+                        slug: data[0].slug
+                      })
+                    }
+                  }
+
+                  checkAndAdd(data[0].name)
+
+                  post.author = data[0].name
+                  post.authorSlug = data[0].slug
+                  post.authorDesc = data[0].description
+                } else {
+                  post.author = ''
+                  post.authorSlug = ''
+                  post.authorDesc = ''
+                }
+              })
+              .then(() => {
+                this.setState({
+                  authors: allAuthors,
+                  weeklyPosts
+                })
+              })
+          })
+        }
       })
   }
 
   render() {
-    let { authors, pages, header, footer, tags, weeklyPosts } = this.state
+    let { pages, header, footer, tags, weeklyPosts } = this.state
 
     return (
       <Router>
-        <div id="wrapper">
-          {weeklyPosts && tags && authors && <Header header={header} />}
+        {weeklyPosts && header && footer && <div id="wrapper">
           <Header header={header} />
           <Switch>
-            {weeklyPosts && tags && authors && pages.map(page => {
+            {pages.map(page => {
               let path = () => page.title.rendered === 'Home' ? '/' : '/' + page.slug
-
               let Component = () => {
                 if (page.title.rendered === 'About')
                   return (
@@ -162,7 +155,7 @@ class App extends React.Component {
                   )
                 if (page.title.rendered === 'Weekly')
                   return (
-                    weeklyPosts && 
+                    weeklyPosts &&
                     <WeeklyPosts
                       __html={page.content.rendered}
                       pageClass={page.slug}
@@ -171,7 +164,6 @@ class App extends React.Component {
                     />
                   )
               }
-
               return (
                 <Route key={page.id} exact path={path()} component={() => (
                   <StyledComponent>
@@ -180,56 +172,56 @@ class App extends React.Component {
                 )} />
               )
             })}
-            {weeklyPosts && tags && authors &&
-            <Route exact path={`/weekly/:weeklyPost`} component={({ match }) => (
-              <WeeklyPost
-                match={match}
-                weeklyPost={
-                  weeklyPosts.map(post => {
-                    if (post.slug === match.params.weeklyPost) {
-                      return post
-                    } else return null
-                  })
-                }
-                weeklyPosts={weeklyPosts}
-              />
-            )} />}
-            {weeklyPosts && tags && authors && 
-            <Route exact path={`/authors/:author`} render={({ match }) => (
-              <FilterByAuthor
-                match={match}
-                weeklyPosts={
-                  weeklyPosts.map(post => {
-                    if (post.authorSlug === match.params.author) {
-                      return post
-                    } else return null
-                  })
-                }
-              />
-            )} />}
-            {weeklyPosts && tags && authors && 
-            <Route exact path={`/tags/:tagName`} render={({ match }) => (
-              <FilterByTag
-                match={match}
-                tags={tags}
-                weeklyPosts={
-                  weeklyPosts.map(post => {
-                    if (post.tagNames) {
-                      return post.tagNames.map(tag => {
-                        if (tag === match.params.tagName) {
+            {weeklyPosts.lenght > 0 &&
+              <div className="weekly-routes">
+                <Route exact path={`/weekly/:weeklyPost`} component={({ match }) => (
+                  <WeeklyPost
+                    match={match}
+                    weeklyPost={
+                      weeklyPosts.map(post => {
+                        if (post.slug === match.params.weeklyPost) {
                           return post
                         } else return null
                       })
-                    } else return null
-                  })
-                }
-              />
-            )} />}
-            {weeklyPosts && tags && authors && <Route path="*" component={NotFound} />}
+                    }
+                    weeklyPosts={weeklyPosts}
+                  />
+                )} />
+                <Route exact path={`/authors/:author`} render={({ match }) => (
+                  <FilterByAuthor
+                    match={match}
+                    weeklyPosts={
+                      weeklyPosts.map(post => {
+                        if (post.authorSlug === match.params.author) {
+                          return post
+                        } else return null
+                      })
+                    }
+                  />
+                )} />
+                <Route exact path={`/tags/:tagName`} render={({ match }) => (
+                  <FilterByTag
+                    match={match}
+                    tags={tags}
+                    weeklyPosts={
+                      weeklyPosts.map(post => {
+                        if (post.tagNames) {
+                          return post.tagNames.map(tag => {
+                            if (tag === match.params.tagName) {
+                              return post
+                            } else return null
+                          })
+                        } else return null
+                      })
+                    }
+                  />
+                )} />
+              </div>
+            }
+            <Route path="*" component={NotFound} />
           </Switch>
-          {weeklyPosts && tags && authors && <Footer footer={footer} />}
           <Footer footer={footer} />
-        </div>
+        </div>}
       </Router>
     )
   }
@@ -241,19 +233,15 @@ let StyledComponent = styled.div`
   align-items: center;
   justify-content: space-around;
   width: 100%;
-
   @media ${mediumUp} {
     margin: 82px auto;
     width: 100%;
   }
-
   .image-wrapper {
     display: flex;
-
     @media ${tiny} {
       flex-direction: column;
     }
-
     img {
       margin: 20px;
       @media ${mediumUp} {
@@ -265,7 +253,6 @@ let StyledComponent = styled.div`
       margin-bottom: 50px;
     }
   }
-
   .subtitle {
     text-align: center;
     max-width: 300px;
@@ -273,35 +260,30 @@ let StyledComponent = styled.div`
       width: 550px;
     }
   }
-
   h1, 
   h2, 
   h3, 
   h4 {
     max-width: 550px;
   }
-
   h1 {
     font-size: 26px;
     @media ${mediumUp} {
       font-size: 30px;
     }
   }
-
   h2 {
     font-size: 22px;
     @media ${mediumUp} {
       font-size: 26px;
     }
   }
-
   h3 {
     font-size: 20px;
     @media ${mediumUp} {
       font-size: 22px;
     }
   }
-
   h4 {
     font-size: 18px;
     @media ${mediumUp} {

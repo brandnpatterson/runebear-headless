@@ -29,6 +29,7 @@ class Header extends Component {
   
   setHeader = () => {
     let { header } = this.props
+    
     let location
     return header.map((headerItem, i) => {
       headerItem = headerItem.toUpperCase()
