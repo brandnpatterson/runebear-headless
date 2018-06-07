@@ -16,7 +16,7 @@ let Footer = ({ footer }) => {
       <div className="content" dangerouslySetInnerHTML={{
         __html: footer
       }} />
-      <a className="copyright" href="http://brandnpatterson.com">
+      <a className="copyright" href="https://github.com/brandnpatterson" target="_blank">
         &copy;{thisYear} Brandon Patterson. All Rights Reserved.
       </a>
     </StyledFooter>
