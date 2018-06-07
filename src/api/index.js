@@ -2,7 +2,7 @@ import axios from 'axios'
 
 let endpoint = endpoint => `https://admin.runebear.com/wp-json/wp/v2/${endpoint}`;
 
-let getPages = (query = '') => {
+let getPages = () => {
   return new Promise((resolve, reject) => {
     axios.get(`${endpoint('pages')}`)
       .then(res => {
@@ -24,7 +24,7 @@ let getPages = (query = '') => {
   })
 }
 
-let getWeeklyPosts = (query = '') => {
+let getWeeklyPosts = () => {
   return new Promise((resolve, reject) => {
     axios.get(`${endpoint('weekly_posts')}`)
       .then(res => resolve(res.data))
