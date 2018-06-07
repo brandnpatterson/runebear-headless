@@ -114,8 +114,8 @@ class App extends React.Component {
     let { pages, header, footer, tags, weeklyPosts } = this.state
 
     return (
-      <Router>
-        {weeklyPosts && header && footer && <div id="wrapper">
+      weeklyPosts && header && footer && <Router>
+        <div id="wrapper">
           <Header header={header} />
           <Switch>
             {pages.map(page => {
@@ -172,56 +172,58 @@ class App extends React.Component {
                 )} />
               )
             })}
-            {weeklyPosts.lenght > 0 &&
-              <div className="weekly-routes">
-                <Route exact path={`/weekly/:weeklyPost`} component={({ match }) => (
-                  <WeeklyPost
-                    match={match}
-                    weeklyPost={
-                      weeklyPosts.map(post => {
-                        if (post.slug === match.params.weeklyPost) {
+
+            {weeklyPosts && weeklyPosts[0] &&
+              <Route exact path={`/weekly/:weeklyPost`} component={({ match }) => (
+                <WeeklyPost
+                  match={match}
+                  weeklyPost={
+                    weeklyPosts.map(post => {
+                      if (post.slug === match.params.weeklyPost) {
+                        return post
+                      } else return null
+                    })
+                  }
+                  weeklyPosts={weeklyPosts}
+                />
+              )} />}
+
+            {weeklyPosts && weeklyPosts[0] &&
+            <Route exact path={`/authors/:author`} render={({ match }) => (
+              <FilterByAuthor
+                weeklyPosts={
+                  weeklyPosts.map(post => {
+                    if (post.authorSlug === match.params.author) {
+                      return post
+                    } else return null
+                  })
+                }
+              />
+            )} />}
+
+            {weeklyPosts && weeklyPosts[0] &&
+            <Route exact path={`/tags/:tagName`} render={({ match }) => (
+              <FilterByTag
+                match={match}
+                tags={tags}
+                weeklyPosts={
+                  weeklyPosts.map(post => {
+                    if (post.tagNames) {
+                      return post.tagNames.map(tag => {
+                        if (tag === match.params.tagName) {
                           return post
                         } else return null
                       })
-                    }
-                    weeklyPosts={weeklyPosts}
-                  />
-                )} />
-                <Route exact path={`/authors/:author`} render={({ match }) => (
-                  <FilterByAuthor
-                    match={match}
-                    weeklyPosts={
-                      weeklyPosts.map(post => {
-                        if (post.authorSlug === match.params.author) {
-                          return post
-                        } else return null
-                      })
-                    }
-                  />
-                )} />
-                <Route exact path={`/tags/:tagName`} render={({ match }) => (
-                  <FilterByTag
-                    match={match}
-                    tags={tags}
-                    weeklyPosts={
-                      weeklyPosts.map(post => {
-                        if (post.tagNames) {
-                          return post.tagNames.map(tag => {
-                            if (tag === match.params.tagName) {
-                              return post
-                            } else return null
-                          })
-                        } else return null
-                      })
-                    }
-                  />
-                )} />
-              </div>
+                    } else return null
+                  })
+                }
+              />
+            )} />}
             }
             <Route path="*" component={NotFound} />
           </Switch>
           <Footer footer={footer} />
-        </div>}
+        </div>
       </Router>
     )
   }

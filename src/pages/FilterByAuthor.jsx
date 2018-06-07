@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, object } from 'prop-types'
+import { array } from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { gray } from '../util/color'
@@ -7,11 +7,10 @@ import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
 let propTypes = {
-  match: object.isRequired,
   weeklyPosts: array.isRequired
 }
 
-let FilterByAuthor = ({ match, weeklyPosts }) => {
+let FilterByAuthor = ({ weeklyPosts }) => {
   let filtered = []
 
   window.scrollTo(0, 0)
@@ -82,6 +81,16 @@ let StyleFiltered = styled.div`
     font-weight: bold;
     text-align: center;
     text-transform: uppercase;
+  }
+
+
+  .card-author-description {
+    margin: 0 auto;
+    max-width: 90%;
+
+    @media ${mediumUp} { 
+      max-width: 70%;
+    }
   }
 `
 
