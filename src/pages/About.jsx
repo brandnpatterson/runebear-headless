@@ -53,17 +53,14 @@ let StyledAbout = styled.div`
   }
 
   .container {
-    border: 1px solid ${gray};
+    border-top: 1px solid ${gray};
     margin: 50px auto;
     max-width: 950px;
     padding: 30px 50px 50px;
     width: 100%;
-
-    h1,
-    h2,
-    h3,
-    h4 {
-      font-family: ${garamond};
+    
+    @media ${mediumUp} {
+      border: 1px solid ${gray};
     }
 
     p {

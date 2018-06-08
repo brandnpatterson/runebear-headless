@@ -94,6 +94,13 @@ let StyledHeader = styled.header `
 
   .navbar-menu {
     background: ${dark};
+    position: relative;
+    z-index: 2;
+  }
+
+  .navbar-burger {
+    position: relative:
+    z-index: 3;
   }
 
   .navbar-burger.is-active {

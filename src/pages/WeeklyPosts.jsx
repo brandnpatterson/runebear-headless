@@ -1,8 +1,8 @@
 import React from 'react'
 import { array, string } from 'prop-types'
 import { Link } from 'react-router-dom'
+import StyledPost from '../templates/StyledPost'
 import styled from 'styled-components'
-import { gray } from '../util/color'
 import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
@@ -90,45 +90,6 @@ let StyledWeeklyPosts = styled.div `
       height: 200px;
       width: 200px;
     }
-  }
-`
-
-let StyledPost = styled.div `
-  border-top: 1px solid ${gray};
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  position: relative;
-  padding: 100px 0 50px;
-
-  @media ${mediumUp} {
-    border: 1px solid ${gray};
-    margin: 50px;
-    padding: 100px 50px 50px;
-    width: 70%;
-  }
-
-  .card-title {
-    font-family: ${garamond};
-    font-weight: bold;
-    position: absolute;
-    right: 70px;
-    top: 40px;
-    text-align: right;
-    text-transform: uppercase;
-  }
-
-  .card-read-more {
-    display: block;
-    text-align: right;
-    margin-top: 20px;
-  }
-
-  .card-footer {
-    border: none;
-    display: flex;
-    flex-direction: column;
-    margin-left: 22px;
   }
 `
 

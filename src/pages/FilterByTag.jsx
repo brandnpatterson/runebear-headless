@@ -1,10 +1,9 @@
 import React from 'react'
 import { array, object } from 'prop-types'
 import { Link } from 'react-router-dom'
+import StyledPost from '../templates/StyledPost'
 import styled from 'styled-components'
-import { gray } from '../util/color'
 import { garamond } from '../util/font'
-import { mediumUp } from '../util/media'
 
 let propTypes = {
   match: object.isRequired,
@@ -35,36 +34,27 @@ let FilterByTag = ({ match, tags, weeklyPosts }) => {
           })}
         </ul>
       </div>
-      {filtered.map((post, postIndex) => {
+      {filtered.map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
 
-        if (post.authorSlug !== '') {
-          return (
-            <StyledPost key={post.id}>
-              <h2 className="card-title">{post.title.rendered}</h2>
-              <div className="card-content">
-                <p dangerouslySetInnerHTML={{ __html: excerpt }} />
-                <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
-              </div>
-              <div className="card-footer">
+        return (
+          <StyledPost key={post.id}>
+            <h2 className="card-title">{post.title.rendered}</h2>
+            <div className="card-content">
+              <p dangerouslySetInnerHTML={{ __html: excerpt }} />
+              <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
+            </div>
+            {post.authorSlug !== ''
+              ? <div className="card-footer">
                 <Link to={`/authors/${post.authorSlug}`}>
                   <h2 className="card-author">{post.author}</h2>
                 </Link>
               </div>
-            </StyledPost>
-          )
-        } else {
-          return (
-            <StyledPost key={post.id}>
-              <h2 className="card-title">{post.title.rendered}</h2>
-              <div className="card-content">
-                <p dangerouslySetInnerHTML={{ __html: excerpt }} />
-                <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
-              </div>
-            </StyledPost>
-          )
-        }
+              : null
+            }
+          </StyledPost>
+        )
       })}
     </StyledFiltered>
   )
@@ -95,44 +85,6 @@ let StyledFiltered = styled.div`
     font-weight: bold;
     text-align: center;
     text-transform: uppercase;
-  }
-`
-
-let StyledPost = styled.div`
-  border-top: 1px solid ${gray};
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  position: relative;
-  padding: 100px 0 50px;
-
-  @media ${mediumUp} {
-    border: 1px solid ${gray};
-    margin: 50px;
-    padding: 100px 50px 50px;
-    width: 70%;
-  }
-
-  .card-title {
-    font-family: ${garamond};
-    font-weight: bold;
-    position: absolute;
-    right: 50px;
-    top: 40px;
-    text-align: right;
-    text-transform: uppercase;
-  }
-
-  .card-read-more {
-    display: block;
-    text-align: right;
-  }
-
-  .card-footer {
-    border: none;
-    display: flex;
-    flex-direction: column;
-    margin-left: 22px;
   }
 `
 

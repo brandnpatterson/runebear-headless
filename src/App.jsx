@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import styled, { injectGlobal } from 'styled-components'
+import styled from 'styled-components'
 import { mediumUp, tiny } from './util/media'
 import { getTaxonomy, getPages, getWeeklyPosts } from './api'
 
@@ -282,42 +282,6 @@ let StyledComponent = styled.div`
     max-width: 300px;
     @media ${mediumUp} { 
       width: 550px;
-    }
-  }
-`
-
-injectGlobal `
-  h1 {
-    font-size: 26px;
-    @media ${mediumUp} {
-      font-size: 30px;
-    }
-  }
-  h2 {
-    font-size: 22px;
-    @media ${mediumUp} {
-      font-size: 24px;
-    }
-  }
-  h3 {
-    font-size: 20px;
-    @media ${mediumUp} {
-      font-size: 22px;
-    }
-  }
-  h4 {
-    font-size: 18px;
-    @media ${mediumUp} {
-      font-size: 20px;
-    }
-  }
-  
-  img {
-    height: 200px;
-    width: 200px;
-    @media ${mediumUp} {
-      height: 400px;
-      width: 400px;
     }
   }
 `
