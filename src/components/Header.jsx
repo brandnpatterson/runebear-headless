@@ -99,7 +99,7 @@ let StyledHeader = styled.header `
   }
 
   .navbar-burger {
-    position: relative:
+    position: relative;
     z-index: 3;
   }
 

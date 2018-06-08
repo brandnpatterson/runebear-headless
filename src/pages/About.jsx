@@ -54,6 +54,7 @@ let StyledAbout = styled.div`
 
   .container {
     border-top: 1px solid ${gray};
+    font-family: ${garamond};
     margin: 50px auto;
     max-width: 950px;
     padding: 30px 50px 50px;
