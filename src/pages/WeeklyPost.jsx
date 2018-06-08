@@ -136,6 +136,7 @@ let StyledWeeklyWrapper = styled.div`
 
   .card-title {
     font-family: ${garamond};
+    font-size: 26px
     font-weight: bold;
     text-align: center;
     text-transform: uppercase;
