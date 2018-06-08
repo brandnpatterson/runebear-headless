@@ -105,9 +105,9 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
       </div>
       {post.author 
         ? 
-          <h2 className="card-author">All from&nbsp;
+          <p className="card-author">All from&nbsp;
           <Link to={`/authors/${post.authorSlug}`}>{post.author}</Link>
-          </h2>
+          </p>
         : null
       }
     </StyledWeeklyWrapper>
@@ -136,7 +136,6 @@ let StyledWeeklyWrapper = styled.div`
 
   .card-title {
     font-family: ${garamond};
-    font-size: 26px;
     font-weight: bold;
     text-align: center;
     text-transform: uppercase;

@@ -33,7 +33,7 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
             </div>
             <div className="card-footer">
               <Link to={`authors/${post.authorSlug}`}>
-                <h3 className="card-author">{post.author}</h3>
+                <p className="card-author">{post.author}</p>
               </Link>
               <div className="card-tags">
                 {post.tagNames && post.tagNames.map((tag, index, { length }) => {
