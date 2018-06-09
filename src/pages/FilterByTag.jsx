@@ -74,8 +74,8 @@ let StyledFiltered = styled.div`
 
   .tags-list {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
+    justify-content: space-around;
     width: 200px;
   }
 

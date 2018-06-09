@@ -55,9 +55,9 @@ let StyledWeeklyWrapper = styled.div `
 `
 
 let StyledWeeklyPosts = styled.div `
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   @media ${mediumUp} {
     max-width: 900px;

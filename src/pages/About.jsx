@@ -19,9 +19,9 @@ let About = ({ __html, pageClass, pageTitle }) => {
 }
 
 let StyledAbout = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   .container {
     border-top: 1px solid ${gray};
@@ -34,12 +34,6 @@ let StyledAbout = styled.div`
       border: 1px solid ${gray};
     }
 
-    p {
-      @media ${mediumUp} {
-        padding-top: 10px;
-      }
-    }
-
     @media ${mediumUp} {
       display: flex;
       justify-content: space-around;
@@ -47,22 +41,27 @@ let StyledAbout = styled.div`
     }
   }
 
-  .content-inner {
-    h1 {
-      font-size: 26px;
-      margin-bottom: 0;
-    }
+  .container p {
 
-    h2 {
-      font-size: 20px;
-      margin-bottom: 30px;
+    @media ${mediumUp} {
+      padding-top: 10px;
     }
+  }
 
-    h1,
-    h2 {
-      max-width: 100%;
-      text-align: right;
-    }
+  .content-inner h1 {
+    font-size: 26px;
+    margin-bottom: 0;
+  }
+
+  .content-inner h2 {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .content-inner h1,
+  .content-inner h2 {
+    max-width: 100%;
+    text-align: right;
   }
 
   hr {

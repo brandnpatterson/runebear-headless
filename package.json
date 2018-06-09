@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run lint && react-scripts start",
     "build": "react-scripts build && npm run create-cname",
     "create-cname": "echo 'test-runebear.surge.sh' > build/CNAME",
     "deploy": "npm run build && surge build",

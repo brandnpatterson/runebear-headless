@@ -18,16 +18,17 @@ let Home = ({ __html, pageClass, pageTitle }) => {
 }
 
 let StyledHome = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: -100px;
 
   .images-wrapper p {
+
     @media ${smallOnly} {
+      align-items: center;
       display: flex;
       flex-direction: column;
-      align-items: center;
     }
   }
 

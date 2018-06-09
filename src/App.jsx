@@ -9,10 +9,10 @@ import Footer from './components/Footer'
 import NotFound from './components/NotFound'
 
 import About from './pages/About'
+import Author from './pages/Author'
 import Home from './pages/Home'
 import Quarterly from './pages/Quarterly'
 import Submit from './pages/Submit'
-import FilterByAuthor from './pages/FilterByAuthor'
 import FilterByTag from './pages/FilterByTag'
 import WeeklyPost from './pages/WeeklyPost'
 import WeeklyPosts from './pages/WeeklyPosts'
@@ -223,7 +223,7 @@ class App extends React.Component {
             {weeklyPostExists &&
               <Route exact path={`/authors/:author`} component={({ match }) => {
                 return (
-                  <FilterByAuthor
+                  <Author
                     weeklyPosts={filterByAuthor(match)}
                   />
                 )

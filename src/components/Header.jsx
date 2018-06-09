@@ -106,37 +106,38 @@ let StyledHeader = styled.header`
   .navbar-burger.is-active {
     position: relative;
     z-index: 10;
+  }
 
-    span {
-      background: ${light};
-    }
+  .navbar-burger span {
+    background: ${light};
   }
 
   .navbar-items {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
+    flex-wrap: wrap;
     margin: 20px 0;
     max-width: 1100px;
+
     @media ${mediumUp} {
       flex-direction: row;
       margin: 0 auto;
     }
+  }
 
-    .navbar-item {
-      @media ${mediumUp} {
-        margin: 0 35px;
-      }
-    }
+  .navbar-items a {
+    color: ${light};
+    font-family: serif;
+    font-size: 25px;
+  }
 
-    a {
-      color: ${light};
-      font-family: serif;
-      font-size: 25px;
+  .navbar-items a:hover {
+    color: ${light};
+  }
 
-      &:hover {
-        color: ${light};
-      }
+  .navbar-items .navbar-item {
+    @media ${mediumUp} {
+      margin: 0 35px;
     }
   }
 

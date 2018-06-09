@@ -19,9 +19,9 @@ let Submit = ({ __html, pageClass, pageTitle }) => {
 }
 
 let StyledSubmit = styled.div`
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   margin: 0 auto;
 
   @media ${mediumUp} {
@@ -33,29 +33,29 @@ let StyledSubmit = styled.div`
   }
 
   .card {
+    align-items: left;
     display: flex;
     flex-direction: column;
-    align-items: left;
     padding: 0 30px 50px;
     width: 100%;
 
     @media ${mediumUp} {
       border: 1px solid ${gray};
-      margin: 50px 30px 50px;
+      margin: 50px 30px;
       width: 50%;
     }
+  }
 
-    h1 {
-      font-size: 110px;
-      font-weight: bold;
-      padding-top: 0;
-      display: block;
-      margin: 30px auto;
-    }
+  .card h1 {
+    display: block;
+    font-size: 110px;
+    font-weight: bold;
+    margin: 30px auto;
+    padding-top: 0;
+  }
 
-    p {
-      margin-bottom: 24px;
-    }
+  .card p {
+    margin-bottom: 24px;
   }
 `
 

@@ -115,8 +115,8 @@ let StyledWeeklyWrapper = styled.div`
 
   .authors-list {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
+    justify-content: space-around;
     width: 200px;
   }
 
@@ -125,8 +125,8 @@ let StyledWeeklyWrapper = styled.div`
   }
 
   .card-title {
-    margin-bottom: 25px;
     font-weight: bold;
+    margin-bottom: 25px;
     text-align: center;
     text-transform: uppercase;
 
@@ -153,8 +153,9 @@ let StyledWeeklyWrapper = styled.div`
     z-index: 1;
 
     @media ${mediumUp} {
-      margin-top: inherit;
-      display: none;
+      position: absolute;
+      top: 600px;
+      width: 1000px;
     }
   }
 
@@ -164,9 +165,7 @@ let StyledWeeklyWrapper = styled.div`
     padding-top: 50px;
 
     @media ${mediumUp} {
-      border: 0;
-      margin: 0;
-      padding: 0;
+      display: none;
     }
   }
 
@@ -176,25 +175,6 @@ let StyledWeeklyWrapper = styled.div`
     border-radius: 10%;
     cursor: pointer;
     padding: 10px;
-
-    @media ${mediumUp} {
-      position: absolute;
-      top: 42%;
-    }
-  }
-
-  .left-arrow {
-    @media ${mediumUp} {
-      bottom: inherit;
-      left: 50px;
-    }
-  }
-
-  .right-arrow {
-    @media ${mediumUp} {
-      bottom: inherit;
-      right: 50px;
-    }
   }
 `
 

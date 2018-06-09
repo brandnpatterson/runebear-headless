@@ -65,13 +65,13 @@ let StyleFiltered = styled.div`
 
   .authors-header {
     display: flex;
-    justify-content: center
+    justify-content: center;
   }
 
   .authors-list {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
+    justify-content: space-around;
     width: 200px;
   }
 
@@ -81,7 +81,6 @@ let StyleFiltered = styled.div`
     text-align: center;
     text-transform: uppercase;
   }
-
 
   .card-author-description {
     margin: 0 auto;

@@ -18,10 +18,10 @@ let Quarterly = ({ __html, pageClass, pageTitle }) => {
 }
 
 let StyledQuarterly = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  position: relative;
 
   @media ${mediumUp} {
     flex-direction: row;
@@ -40,8 +40,8 @@ let StyledQuarterly = styled.div`
   }
 
   .coming-soon-text {
-    position: absolute;
     left: 50px;
+    position: absolute;
     top: 70px;
 
     @media ${mediumUp} {

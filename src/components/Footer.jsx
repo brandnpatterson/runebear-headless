@@ -49,14 +49,14 @@ let StyledFooter = styled.footer`
       text-align: center;
       width: 530px;
     }
+  }
 
-    strong {
-      color: ${light};
-    }
+  strong {
+    color: ${light};
+  }
 
-    span {
-      font-weight: bold;
-    }
+  span {
+    font-weight: bold;
   }
 
   .copyright {
@@ -65,14 +65,14 @@ let StyledFooter = styled.footer`
     margin-left: 10px;
     text-align: left;
 
-    &:hover {
-      color: ${blue}
-    }
-
     @media ${mediumUp} {
       font-size: 18px;
       margin: 25px 0 50px 60px;
     }
+  }
+
+  .copyright:hover {
+    color: ${blue};
   }
 `
 
