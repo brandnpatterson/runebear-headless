@@ -29,7 +29,7 @@ let StyledFooter = styled.footer`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-top: 100px;
+  margin-top: 20px;
 
   a { 
     color: ${blue}; 

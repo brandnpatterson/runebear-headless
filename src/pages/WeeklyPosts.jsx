@@ -62,33 +62,6 @@ let StyledWeeklyPosts = styled.div `
   @media ${mediumUp} {
     max-width: 900px;
   }
-
-  .featured-hero {
-    align-items: center;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-around;
-
-    @media ${mediumUp} {
-      flex-direction: row;
-      width: 650px;
-    }
-
-    h1 {
-      font-size: 70px;
-      margin-top: 0;
-
-      @media ${mediumUp} {
-        font-size: 100px;
-        margin-top: 55px;
-      }
-    }
-
-    img {
-      height: 200px;
-      width: 200px;
-    }
-  }
 `
 
 WeeklyPosts.propTypes = propTypes

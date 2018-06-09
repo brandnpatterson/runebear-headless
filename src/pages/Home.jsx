@@ -21,6 +21,7 @@ let StyledHome = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: -100px;
 
   .images-wrapper p {
     @media ${smallOnly} {

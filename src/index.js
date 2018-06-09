@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { injectGlobal } from 'styled-components'
+import { black } from './util/color'
 import { garamond } from './util/font'
 import { mediumUp } from './util/media'
 import App from './App'
@@ -10,7 +11,12 @@ injectGlobal `
   h2,
   h3,
   h4 {
+    color: ${black};
     font-family: ${garamond};
+  }
+
+  strong {
+    color: ${black};
   }
 
   h1 {
@@ -41,6 +47,31 @@ injectGlobal `
     }
   }
   
+  .featured-hero {
+    align-items: center;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+  
+    @media ${mediumUp} {
+      flex-direction: row;
+      width: 650px;
+    }
+
+    h1 {
+      font-size: 70px;
+
+      @media ${mediumUp} {
+        font-size: 100px;
+      }
+    }
+
+    img {
+      height: 150px;
+      width: 150px;
+    }
+  }
+
   img {
     height: 200px;
     width: 200px;

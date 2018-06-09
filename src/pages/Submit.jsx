@@ -33,17 +33,15 @@ let StyledSubmit = styled.div`
   }
 
   .card {
-    border-top: 1px solid ${gray};
     display: flex;
     flex-direction: column;
     align-items: left;
-    margin: 50px auto;
     padding: 0 30px 50px;
     width: 100%;
 
     @media ${mediumUp} {
       border: 1px solid ${gray};
-      margin: 50px 30px;
+      margin: 50px 30px 50px;
       width: 50%;
     }
 

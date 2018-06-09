@@ -30,7 +30,7 @@ let FilterByAuthor = ({ weeklyPosts }) => {
         <p className="card-author-description">{post.authorDesc}</p>
         </div>
       }
-      {filtered.map((post, postIndex) => {
+      {filtered.map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
 
@@ -43,7 +43,7 @@ let FilterByAuthor = ({ weeklyPosts }) => {
             </div>
             <div className="card-footer">
               <div className="card-tags">
-                {post.tagNames && post.tagNames.map((tag, index, { length }) => {
+                {post.tagNames && post.tagNames.map((tag, index) => {
                   return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
                 })}
               </div>
@@ -77,6 +77,7 @@ let StyleFiltered = styled.div`
 
   .card-title {
     font-weight: bold;
+    margin-bottom: 50px;
     text-align: center;
     text-transform: uppercase;
   }

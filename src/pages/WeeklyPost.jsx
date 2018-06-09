@@ -73,7 +73,7 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
         <NextArrow />
       </div>
       <h1 className="card-title">{filtered[0].title.rendered}</h1>
-      <StyledPost key={post.id}>
+      <StyledPost className="weekly-post-complete" key={post.id}>
         <div className="card-content">
           <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
         </div>
@@ -133,6 +133,10 @@ let StyledWeeklyWrapper = styled.div`
     @media ${mediumUp} {
       margin-bottom: 0;
     }
+  }
+
+  .weekly-post-complete {
+    max-width: 700px;
   }
 
   .arrow-wrapper {
