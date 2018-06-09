@@ -2,7 +2,6 @@ import React from 'react'
 import { string } from 'prop-types'
 import styled from 'styled-components'
 import { gray } from '../util/color'
-import { garamond } from '../util/font'
 import { mediumUp, largeUp } from '../util/media'
 
 let propTypes = {
@@ -49,7 +48,6 @@ let StyledSubmit = styled.div`
     }
 
     h1 {
-      font-family: ${garamond}, serif;
       font-size: 110px;
       font-weight: bold;
       padding-top: 0;

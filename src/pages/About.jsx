@@ -1,7 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
 import styled from 'styled-components'
-import { garamond } from '../util/font'
 import { black, gray } from '../util/color'
 import { mediumUp } from '../util/media'
 
@@ -36,7 +35,6 @@ let StyledAbout = styled.div`
     }
 
     h1 {
-      font-family: ${garamond};
       font-size: 70px;
       margin-top: 0;
 
@@ -54,7 +52,6 @@ let StyledAbout = styled.div`
 
   .container {
     border-top: 1px solid ${gray};
-    font-family: ${garamond};
     margin: 50px auto;
     max-width: 950px;
     padding: 30px 50px 50px;

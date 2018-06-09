@@ -3,7 +3,6 @@ import { array, string } from 'prop-types'
 import { Link } from 'react-router-dom'
 import StyledPost from '../templates/StyledPost'
 import styled from 'styled-components'
-import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
 let propTypes = { 
@@ -20,7 +19,7 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
     <StyledWeeklyWrapper>
       <StyledWeeklyPosts className={pageClass} dangerouslySetInnerHTML={{ __html }} />
       { // if there are weekly posts
-        weeklyPosts.map((post, postIndex) => {
+        weeklyPosts.map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
 
@@ -36,7 +35,7 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
                 <p className="card-author">{post.author}</p>
               </Link>
               <div className="card-tags">
-                {post.tagNames && post.tagNames.map((tag, index, { length }) => {
+                {post.tagNames && post.tagNames.map((tag, index) => {
                   return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
                 })}
               </div>
@@ -76,7 +75,6 @@ let StyledWeeklyPosts = styled.div `
     }
 
     h1 {
-      font-family: ${garamond};
       font-size: 70px;
       margin-top: 0;
 

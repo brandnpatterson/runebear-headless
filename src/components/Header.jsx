@@ -87,7 +87,7 @@ class Header extends Component {
   }
 }
 
-let StyledHeader = styled.header `
+let StyledHeader = styled.header`
   .navbar {
     margin-bottom: 50px;
   }

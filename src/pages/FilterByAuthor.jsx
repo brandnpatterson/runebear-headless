@@ -3,7 +3,6 @@ import { array } from 'prop-types'
 import { Link } from 'react-router-dom'
 import StyledPost from '../templates/StyledPost'
 import styled from 'styled-components'
-import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
 let propTypes = {
@@ -77,7 +76,6 @@ let StyleFiltered = styled.div`
   }
 
   .card-title {
-    font-family: ${garamond};
     font-weight: bold;
     text-align: center;
     text-transform: uppercase;

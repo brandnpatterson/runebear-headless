@@ -23,7 +23,7 @@ let Footer = ({ footer }) => {
   )
 }
 
-let StyledFooter = styled.footer `
+let StyledFooter = styled.footer`
   background: ${dark};
   color: ${light};
   display: flex;
@@ -44,8 +44,8 @@ let StyledFooter = styled.footer `
 
     @media ${mediumUp} {
       font-size: 18px;
-      max-width: 500px;
       margin: 25px 0 0 40px;
+      max-width: 500px;
       text-align: center;
       width: 530px;
     }

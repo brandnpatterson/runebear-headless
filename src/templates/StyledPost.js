@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { garamond } from '../util/font'
 import { gray } from '../util/color'
 import { mediumUp } from '../util/media'
 
@@ -19,7 +18,6 @@ let StyledPost = styled.div`
   }
 
   .card-title {
-    font-family: ${garamond};
     font-weight: bold;
     position: absolute;
     right: 50px;

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import StyledPost from '../templates/StyledPost'
 import styled from 'styled-components'
 import { gray } from '../util/color'
-import { garamond } from '../util/font'
 import { mediumUp } from '../util/media'
 
 let propTypes = {
@@ -79,11 +78,6 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
           <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
         </div>
         <div className="card-footer">
-          {post.authorSlug !== ''
-            ? post.authorSlug && 
-              <p className="card-author-description">{post.authorDesc}</p>
-            : null
-          }
           <div className="card-tags">
             {post.tagNames && post.tagNames.map((tag, index) => {
               return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
@@ -131,7 +125,6 @@ let StyledWeeklyWrapper = styled.div`
   }
 
   .card-title {
-    font-family: ${garamond};
     margin-bottom: 25px;
     font-weight: bold;
     text-align: center;
