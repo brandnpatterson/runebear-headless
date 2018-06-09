@@ -10,10 +10,11 @@ import NotFound from './components/NotFound'
 
 import About from './pages/About'
 import Author from './pages/Author'
+import Category from './pages/Category'
 import Home from './pages/Home'
 import Quarterly from './pages/Quarterly'
 import Submit from './pages/Submit'
-import FilterByTag from './pages/FilterByTag'
+import Tag from './pages/Tag'
 import WeeklyPost from './pages/WeeklyPost'
 import WeeklyPosts from './pages/WeeklyPosts'
 
@@ -22,6 +23,7 @@ class App extends React.Component {
     super()
     this.state = {
       authors: [],
+      categories: null,
       pages: null,
       header: null,
       footer: null,
@@ -32,6 +34,7 @@ class App extends React.Component {
 
   componentDidMount() {
     let allAuthors = []
+    let allCategories = []
     let allTags = []
 
     getPages()
@@ -52,6 +55,7 @@ class App extends React.Component {
           return
         } else {
           return weeklyPosts.map(post => {
+            let categories = []
             let tagNames = []
 
             getTaxonomy('tags', post.id)
@@ -70,6 +74,25 @@ class App extends React.Component {
               })
               .then(() => this.setState({
                 tags: allTags,
+                weeklyPosts
+              }))
+
+            getTaxonomy('categories', post.id)
+              .then(data => {
+                if (data) {
+                  return data.map(tag => {
+                    categories.push(tag.name)
+                    allCategories.push(tag.name)
+                    allCategories = [...new Set(allCategories)].sort()
+
+                    return post.categories = categories
+                  })
+                } else {
+                  return allCategories.push('')
+                }
+              })
+              .then(() => this.setState({
+                categories: allCategories,
                 weeklyPosts
               }))
 
@@ -111,7 +134,7 @@ class App extends React.Component {
   }
 
   render() {
-    let { pages, header, footer, tags, weeklyPosts } = this.state
+    let { categories, pages, header, footer, tags, weeklyPosts } = this.state
 
     let weeklyPostExists = weeklyPosts && weeklyPosts[0]
 
@@ -131,6 +154,18 @@ class App extends React.Component {
       })
     }
   
+    let filterByCategory = match => {
+      return weeklyPosts.map(post => {
+        if (post.categories) {
+          return post.categories.map(tag => {
+            if (tag === match.params.category) {
+              return post
+            } else return null
+          })
+        } else return null
+      })
+    }
+
     let filterByTag = match => {
       return weeklyPosts.map(post => {
         if (post.tagNames) {
@@ -144,7 +179,7 @@ class App extends React.Component {
     }
 
     return (
-      header && footer && 
+      categories && footer && header && tags &&
       <Router>
         <div id="wrapper">
           <Header header={header} />
@@ -230,9 +265,20 @@ class App extends React.Component {
               }} />
             }
             {weeklyPostExists &&
+              <Route exact path={`/categories/:category`} component={({ match }) => {
+                return (
+                  <Category
+                    match={match}
+                    categories={categories}
+                    weeklyPosts={filterByCategory(match)}
+                  />
+                )
+              }} />
+            }
+            {weeklyPostExists &&
               <Route exact path={`/tags/:tagName`} component={({ match }) => {
                 return (
-                  <FilterByTag
+                  <Tag
                     match={match}
                     tags={tags}
                     weeklyPosts={filterByTag(match)}

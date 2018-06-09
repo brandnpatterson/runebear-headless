@@ -23,7 +23,7 @@ let FilterByAuthor = ({ weeklyPosts }) => {
   let post = filtered[0]
 
   return (
-    <StyleFiltered>
+    <StyledAuthor>
       {post && post.author && post.authorDesc &&
         <div>
           <h1 className="card-title">{post.author}</h1>
@@ -43,7 +43,13 @@ let FilterByAuthor = ({ weeklyPosts }) => {
             </div>
             <div className="card-footer">
               <div className="card-tags">
-                {post.tagNames && post.tagNames.map((tag, index) => {
+                { // list categories first
+                  post.categories && post.categories.map((category, index) => {
+                    return <Link to={`/categories/${category}`} key={index}>{'#' + category}&nbsp;</Link>
+                })}
+                  
+                { // then list tags
+                  post.tagNames && post.tagNames.map((tag, index) => {
                   return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
                 })}
               </div>
@@ -51,11 +57,11 @@ let FilterByAuthor = ({ weeklyPosts }) => {
           </StyledPost>
         )
       })}
-    </StyleFiltered>
+    </StyledAuthor>
   )
 }
 
-let StyleFiltered = styled.div`
+let StyledAuthor = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;

@@ -6,12 +6,10 @@ import styled from 'styled-components'
 
 let propTypes = {
   match: object.isRequired,
-  tags: array.isRequired,
   weeklyPosts: array.isRequired
 }
 
-let FilterByTag = ({ match, tags, weeklyPosts }) => {
-  let matched = match.params.author
+let Tag = ({ match, weeklyPosts }) => {
   let filtered = []
   let flatten = [].concat.apply([], weeklyPosts)
 
@@ -24,14 +22,13 @@ let FilterByTag = ({ match, tags, weeklyPosts }) => {
   })
 
   return (
-    <StyledFiltered>
-      <h1 className="card-title">Tags</h1>
+    <StyledTag>
       <div className="tags-header">
-        <ul className="tags-list">
-          {tags.map((tag, index) => {
-            return <li className={matched} key={index}><Link to={tag}>{'#' + tag}</Link></li>
-          })}
-        </ul>
+        <h1>
+          <strong>
+            {match.params.tagName.toUpperCase()}
+          </strong>
+        </h1>
       </div>
       {filtered.map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
@@ -47,7 +44,7 @@ let FilterByTag = ({ match, tags, weeklyPosts }) => {
             {post.authorSlug !== ''
               ? <div className="card-footer">
                 <Link to={`/authors/${post.authorSlug}`}>
-                  <h2 className="card-author">{post.author}</h2>
+                  <p className="card-author">{post.author}</p>
                 </Link>
               </div>
               : null
@@ -55,11 +52,11 @@ let FilterByTag = ({ match, tags, weeklyPosts }) => {
           </StyledPost>
         )
       })}
-    </StyledFiltered>
+    </StyledTag>
   )
 }
 
-let StyledFiltered = styled.div`
+let StyledTag = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -72,13 +69,6 @@ let StyledFiltered = styled.div`
     justify-content: center;
   }
 
-  .tags-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 200px;
-  }
-
   .card-title {
     font-weight: bold;
     text-align: center;
@@ -86,6 +76,6 @@ let StyledFiltered = styled.div`
   }
 `
 
-FilterByTag.propTypes = propTypes
+Tag.propTypes = propTypes
 
-export default FilterByTag
+export default Tag

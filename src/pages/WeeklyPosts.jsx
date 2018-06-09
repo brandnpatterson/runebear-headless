@@ -31,11 +31,20 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
               <Link className="card-read-more" to={`/weekly/${post.slug}`}>...Read more {post.title.rendered}</Link>
             </div>
             <div className="card-footer">
-              <Link to={`authors/${post.authorSlug}`}>
-                <p className="card-author">{post.author}</p>
-              </Link>
+              <p className="card-author">
+                By&nbsp;
+                <Link to={`authors/${post.authorSlug}`}>
+                  {post.author}
+                </Link>
+              </p>
               <div className="card-tags">
-                {post.tagNames && post.tagNames.map((tag, index) => {
+                { // list categories first
+                  post.categories && post.categories.map((category, index) => {
+                    return <Link to={`/categories/${category}`} key={index}>{'#' + category}&nbsp;</Link>
+                })}
+                  
+                { // then list tags
+                  post.tagNames && post.tagNames.map((tag, index) => {
                   return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
                 })}
               </div>
