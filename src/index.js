@@ -6,7 +6,12 @@ import { garamond } from './util/font'
 import { mediumUp } from './util/media'
 import App from './App'
 
-injectGlobal `
+render(
+  <App />,
+  document.getElementById('root')
+)
+
+injectGlobal`
   h1,
   h2,
   h3,
@@ -81,8 +86,3 @@ injectGlobal `
     }
   }
 `
-
-render(
-  <App />,
-  document.getElementById('root')
-)

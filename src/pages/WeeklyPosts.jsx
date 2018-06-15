@@ -57,13 +57,13 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
   )
 }
 
-let StyledWeeklyWrapper = styled.div `
+let StyledWeeklyWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
 `
 
-let StyledWeeklyPosts = styled.div `
+let StyledWeeklyPosts = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;

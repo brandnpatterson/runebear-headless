@@ -79,9 +79,15 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
         </div>
         <div className="card-footer">
           <div className="card-tags">
-            {post.tagNames && post.tagNames.map((tag, index) => {
-              return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
-            })}
+            { // list categories first
+              post.categories && post.categories.map((category, index) => {
+                return <Link to={`/categories/${category}`} key={index}>{'#' + category}&nbsp;</Link>
+              })}
+
+            { // then list tags
+              post.tagNames && post.tagNames.map((tag, index) => {
+                return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
+              })}
           </div>
         </div>
       </StyledPost>
@@ -135,10 +141,6 @@ let StyledWeeklyWrapper = styled.div`
     }
   }
 
-  .weekly-post-complete {
-    max-width: 700px;
-  }
-
   .arrow-wrapper {
     display: flex;
     justify-content: space-between;
@@ -148,13 +150,11 @@ let StyledWeeklyWrapper = styled.div`
   }
 
   .arrow-wrapper-top {
-    position: absolute;
-    top: 110px;
-    z-index: 1;
+    margin-bottom: 50px;
 
     @media ${mediumUp} {
       position: absolute;
-      top: 600px;
+      top: 500px;
       width: 1000px;
     }
   }

@@ -20,7 +20,7 @@ let StyledPost = styled.div`
   .card-title {
     font-weight: bold;
     position: absolute;
-    right: 50px;
+    right: 70px;
     top: 40px;
     text-align: right;
     text-transform: uppercase;
