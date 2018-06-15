@@ -93,7 +93,7 @@ let StyledAuthor = styled.div`
     max-width: 90%;
 
     @media ${mediumUp} { 
-      max-width: 70%;
+      width: 775px;
     }
   }
 `

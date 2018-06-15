@@ -113,7 +113,7 @@ let StyledWeeklyWrapper = styled.div`
   justify-content: space-around;
   margin-bottom: 100px;
   text-align: left;
-
+  
   .authors-header {
     display: flex;
     justify-content: center;
@@ -124,6 +124,10 @@ let StyledWeeklyWrapper = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
     width: 200px;
+  }
+
+  .weekly-post-complete {
+    padding-top: 25px;
   }
 
   .card-tags {

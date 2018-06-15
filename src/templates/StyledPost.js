@@ -7,6 +7,7 @@ let StyledPost = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
+  margin-top: 50px;
   position: relative;
   padding: 100px 0 50px;
 
