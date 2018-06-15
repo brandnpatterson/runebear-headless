@@ -14,7 +14,7 @@ let StyledPost = styled.div`
     border: 1px solid ${gray};
     margin: 50px;
     padding: 100px 50px 50px;
-    width: 70%;
+    width: 700px;
   }
 
   .card-title {
