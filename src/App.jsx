@@ -26,9 +26,10 @@ class App extends React.Component {
       categories: null,
       pages: null,
       header: null,
+      loading: true,
       footer: null,
       tags: null,
-      weeklyPosts: null
+      weeklyPosts: null,
     }
   }
 
@@ -91,10 +92,12 @@ class App extends React.Component {
                   return allCategories.push('')
                 }
               })
-              .then(() => this.setState({
-                categories: allCategories,
-                weeklyPosts
-              }))
+              .then(() => {
+                this.setState({
+                  categories: allCategories,
+                  weeklyPosts
+                })
+              })
 
             return getTaxonomy('post_author', post.id)
               .then(data => {
@@ -125,6 +128,7 @@ class App extends React.Component {
               .then(() => {
                 this.setState({
                   authors: allAuthors,
+                  loading: false,
                   weeklyPosts
                 })
               })
@@ -134,7 +138,15 @@ class App extends React.Component {
   }
 
   render() {
-    let { categories, pages, header, footer, tags, weeklyPosts } = this.state
+    let {
+      categories,
+      footer,
+      pages,
+      header,
+      loading,
+      tags,
+      weeklyPosts
+    } = this.state
 
     let weeklyPostExists = weeklyPosts && weeklyPosts[0]
 
@@ -178,120 +190,135 @@ class App extends React.Component {
       })
     }
 
-    return (
-      categories && footer && header && tags &&
-      <Router>
-        <div id="wrapper">
-          <Header header={header} />
-          <Switch>
-            {pages.map(page => {
-              let __html = page.content.rendered
-              let pageClass = page.slug
-              let pageTitle = page.title.rendered
-              let path = () => pageTitle === 'Home' ? '/' : '/' + page.slug
+    if (loading) {
+      let style = {
+        marginTop: '250px',
+        display: 'flex',
+        height: '100vh',
+        justifyContent: 'center'
+      }
 
-              let Component = () => {
-                if (pageTitle === 'About')
+      return (
+        <div style={style} className="loading">
+          <h2>Loading...</h2>
+        </div>
+      )
+    } else {
+      return (
+        categories && footer && header && tags &&
+        <Router>
+          <div id="wrapper">
+            <Header header={header} />
+            <Switch>
+              {pages.map(page => {
+                let __html = page.content.rendered
+                let pageClass = page.slug
+                let pageTitle = page.title.rendered
+                let path = () => pageTitle === 'Home' ? '/' : '/' + page.slug
+
+                let Component = () => {
+                  if (pageTitle === 'About')
+                    return (
+                      <About
+                        __html={__html}
+                        pageClass={pageClass}
+                        pageTitle={pageTitle}
+                      />
+                    )
+                  if (pageTitle === 'Home')
+                    return (
+                      <Home
+                        __html={__html}
+                        pageClass={pageClass}
+                        pageTitle={pageTitle}
+                      />
+                    )
+                  if (pageTitle === 'Quarterly')
+                    return (
+                      <Quarterly
+                        __html={__html}
+                        pageClass={pageClass}
+                        pageTitle={pageTitle}
+                      />
+                    )
+                  if (pageTitle === 'Submit')
+                    return (
+                      <Submit
+                        __html={__html}
+                        pageClass={pageClass}
+                        pageTitle={pageTitle}
+                      />
+                    )
+                  if (pageTitle === 'Weekly')
+                    return (
+                      weeklyPosts &&
+                      <WeeklyPosts
+                        __html={__html}
+                        pageClass={pageClass}
+                        pageTitle={pageTitle}
+                        weeklyPosts={weeklyPosts}
+                      />
+                    )
+                }
+                return (
+                  <Route key={page.id} exact path={path()} component={() => {
+                    return (
+                      <StyledComponent>
+                        <Component />
+                      </StyledComponent>
+                    )
+                  }} />
+                )
+              })}
+              {weeklyPostExists &&
+                <Route exact path={`/weekly/:weeklyPost`} component={({ match }) => {
                   return (
-                    <About
-                      __html={__html}
-                      pageClass={pageClass}
-                      pageTitle={pageTitle}
-                    />
-                  )
-                if (pageTitle === 'Home')
-                  return (
-                    <Home
-                      __html={__html}
-                      pageClass={pageClass}
-                      pageTitle={pageTitle}
-                    />
-                  )
-                if (pageTitle === 'Quarterly')
-                  return (
-                    <Quarterly
-                      __html={__html}
-                      pageClass={pageClass}
-                      pageTitle={pageTitle}
-                    />
-                  )
-                if (pageTitle === 'Submit')
-                  return (
-                    <Submit
-                      __html={__html}
-                      pageClass={pageClass}
-                      pageTitle={pageTitle}
-                    />
-                  )
-                if (pageTitle === 'Weekly')
-                  return (
-                    weeklyPosts &&
-                    <WeeklyPosts
-                      __html={__html}
-                      pageClass={pageClass}
-                      pageTitle={pageTitle}
+                    <WeeklyPost
+                      match={match}
+                      weeklyPost={filterByPost(match)}
                       weeklyPosts={weeklyPosts}
                     />
                   )
+                }} />
               }
-              return (
-                <Route key={page.id} exact path={path()} component={() => {
+              {weeklyPostExists &&
+                <Route exact path={`/authors/:author`} component={({ match }) => {
                   return (
-                    <StyledComponent>
-                      <Component />
-                    </StyledComponent>
+                    <Author
+                      weeklyPosts={filterByAuthor(match)}
+                    />
                   )
                 }} />
-              )
-            })}
-            {weeklyPostExists &&
-              <Route exact path={`/weekly/:weeklyPost`} component={({ match }) => {
-                return (
-                  <WeeklyPost
-                    match={match}
-                    weeklyPost={filterByPost(match)}
-                    weeklyPosts={weeklyPosts}
-                  />
-                )
-              }} />
-            }
-            {weeklyPostExists &&
-              <Route exact path={`/authors/:author`} component={({ match }) => {
-                return (
-                  <Author
-                    weeklyPosts={filterByAuthor(match)}
-                  />
-                )
-              }} />
-            }
-            {weeklyPostExists &&
-              <Route exact path={`/categories/:category`} component={({ match }) => {
-                return (
-                  <Category
-                    match={match}
-                    categories={categories}
-                    weeklyPosts={filterByCategory(match)}
-                  />
-                )
-              }} />
-            }
-            {weeklyPostExists &&
-              <Route exact path={`/tags/:tagName`} component={({ match }) => {
-                return (
-                  <Tag
-                    match={match}
-                    tags={tags}
-                    weeklyPosts={filterByTag(match)}
-                  />
-                )
-              }} />
-            }
-            <Route path="*" component={NotFound} />
-          </Switch>
-          <Footer footer={footer} />
-        </div>
-      </Router>
-    )
+              }
+              {weeklyPostExists &&
+                <Route exact path={`/categories/:category`} component={({ match }) => {
+                  return (
+                    <Category
+                      match={match}
+                      categories={categories}
+                      weeklyPosts={filterByCategory(match)}
+                    />
+                  )
+                }} />
+              }
+              {weeklyPostExists &&
+                <Route exact path={`/tags/:tagName`} component={({ match }) => {
+                  return (
+                    <Tag
+                      match={match}
+                      tags={tags}
+                      weeklyPosts={filterByTag(match)}
+                    />
+                  )
+                }} />
+              }
+              <Route path="*" component={NotFound} />
+            </Switch>
+            <Footer footer={footer} />
+          </div>
+        </Router>
+      )
+    }
   }
 }
 
