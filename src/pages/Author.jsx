@@ -10,14 +10,15 @@ let propTypes = {
 }
 
 let FilterByAuthor = ({ weeklyPosts }) => {
-  let filtered = []
-
   window.scrollTo(0, 0)
 
+  let filtered = []
   weeklyPosts.map(post => {
-    if (post)
+    if (post) {
       return filtered.push(post)
-    else return false
+    }
+
+    return false
   })
 
   let post = filtered[0]
@@ -67,6 +68,7 @@ let StyledAuthor = styled.div`
   flex-direction: column;
   justify-content: space-around;
   margin-bottom: 100px;
+  min-height: 670px;
   text-align: left;
 
   .authors-header {

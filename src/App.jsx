@@ -148,7 +148,7 @@ class App extends React.Component {
       weeklyPosts
     } = this.state
 
-    let weeklyPostExists = weeklyPosts && weeklyPosts[0]
+    let weeklyPostExists = weeklyPosts && weeklyPosts.length
 
     let filterByAuthor = match => {
       return weeklyPosts.map(post => {

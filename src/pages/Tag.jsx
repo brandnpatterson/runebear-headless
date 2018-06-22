@@ -10,15 +10,16 @@ let propTypes = {
 }
 
 let Tag = ({ match, weeklyPosts }) => {
-  let filtered = []
-  let flatten = [].concat.apply([], weeklyPosts)
-
   window.scrollTo(0, 0)
 
+  let filtered = []
+  let flatten = [].concat.apply([], weeklyPosts)
   flatten.map(post => {
-    if (post)
+    if (post) {
       return filtered.push(post)
-    else return false
+    }
+    
+    return false
   })
 
   return (
@@ -43,10 +44,10 @@ let Tag = ({ match, weeklyPosts }) => {
             </div>
             {post.authorSlug !== ''
               ? <div className="card-footer">
-                <Link to={`/authors/${post.authorSlug}`}>
-                  <p className="card-author">{post.author}</p>
-                </Link>
-              </div>
+                  <Link to={`/authors/${post.authorSlug}`}>
+                    <p className="card-author">{post.author}</p>
+                  </Link>
+                </div>
               : null
             }
           </StyledPost>

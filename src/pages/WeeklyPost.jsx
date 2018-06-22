@@ -13,16 +13,18 @@ let propTypes = {
 }
 
 let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
+  window.scrollTo(0, 0)
+
   let filtered = []
   let nextArr = []
   let prevArr = []
 
-  window.scrollTo(0, 0)
-
   weeklyPost.map(post => {
-    if (post)
+    if (post) {
       return filtered.push(post)
-    else return false
+    }
+    
+    return false
   })
 
   let post = filtered[0]
@@ -30,25 +32,25 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
   weeklyPosts.map((p, i, { length }) => {
     if (post.id === p.id) {
       if (i + 1 === length) {
-        nextArr.push(weeklyPosts[0].slug)
-        return true
+        return nextArr.push(weeklyPosts[0].slug)
       } else {
-        nextArr.push(weeklyPosts[i + 1].slug)
-        return true
+        return nextArr.push(weeklyPosts[i + 1].slug)
       }
-    } else return false
+    }
+    
+    return false
   })
 
   weeklyPosts.map((p, i, { length }) => {
     if (post.id === p.id) {
       if (i === 0) {
-        prevArr.push(weeklyPosts[length - 1].slug)
-        return true
+        return prevArr.push(weeklyPosts[length - 1].slug)
       } else {
-        prevArr.push(weeklyPosts[i - 1].slug)
-        return true
+        return prevArr.push(weeklyPosts[i - 1].slug)
       }
-    } else return false
+    }
+    
+    return false
   })
 
   let next = nextArr[0]
@@ -83,7 +85,6 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
               post.categories && post.categories.map((category, index) => {
                 return <Link to={`/categories/${category}`} key={index}>{'#' + category}&nbsp;</Link>
               })}
-
             { // then list tags
               post.tagNames && post.tagNames.map((tag, index) => {
                 return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
@@ -96,9 +97,8 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
         <NextArrow />
       </div>
       {post.author 
-        ? 
-          <p className="card-author">All from&nbsp;
-          <Link to={`/authors/${post.authorSlug}`}>{post.author}</Link>
+        ? <p className="card-author">All from &nbsp;
+            <Link to={`/authors/${post.authorSlug}`}>{post.author}</Link>
           </p>
         : null
       }

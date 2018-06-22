@@ -18,8 +18,7 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
   return (
     <StyledWeeklyWrapper>
       <StyledWeeklyPosts className={pageClass} dangerouslySetInnerHTML={{ __html }} />
-      { // if there are weekly posts
-        weeklyPosts.map(post => {
+      {weeklyPosts.map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
 
@@ -42,7 +41,6 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
                   post.categories && post.categories.map((category, index) => {
                     return <Link to={`/categories/${category}`} key={index}>{'#' + category}&nbsp;</Link>
                 })}
-                  
                 { // then list tags
                   post.tagNames && post.tagNames.map((tag, index) => {
                   return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
@@ -51,7 +49,6 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
             </div>
           </StyledPost>
         )
-        // ./ if there are weekly posts
       })}
     </StyledWeeklyWrapper>
   )
