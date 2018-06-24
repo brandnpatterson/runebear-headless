@@ -15,19 +15,10 @@ let propTypes = {
 let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
   window.scrollTo(0, 0)
 
-  let filtered = []
+  weeklyPost = weeklyPost.filter(post => post !== null)
+  let post = weeklyPost[0]
   let nextArr = []
   let prevArr = []
-
-  weeklyPost.map(post => {
-    if (post) {
-      return filtered.push(post)
-    }
-    
-    return false
-  })
-
-  let post = filtered[0]
 
   weeklyPosts.map((p, i, { length }) => {
     if (post.id === p.id) {
@@ -74,7 +65,7 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
         <PrevArrow />
         <NextArrow />
       </div>
-      <h1 className="card-title">{filtered[0].title.rendered}</h1>
+      <h1 className="card-title">{weeklyPost[0].title.rendered}</h1>
       <StyledPost className="weekly-post-complete" key={post.id}>
         <div className="card-content">
           <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />

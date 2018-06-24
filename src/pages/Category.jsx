@@ -12,15 +12,8 @@ let propTypes = {
 let Category = ({ match, weeklyPosts }) => {
   window.scrollTo(0, 0)
 
-  let filtered = []
   let flatten = [].concat.apply([], weeklyPosts)
-  flatten.map(post => {
-    if (post) {
-      return filtered.push(post)
-    }
-    
-    return false
-  })
+  flatten = flatten.filter(post => post !== null)
 
   return (
     <StyledCategory>
@@ -31,7 +24,7 @@ let Category = ({ match, weeklyPosts }) => {
           </strong>
         </h1>
       </div>
-      {filtered.map(post => {
+      {flatten.map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
 
