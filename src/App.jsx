@@ -19,18 +19,15 @@ import WeeklyPost from './pages/WeeklyPost'
 import WeeklyPosts from './pages/WeeklyPosts'
 
 class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      authors: [],
-      categories: null,
-      pages: null,
-      header: null,
-      loading: true,
-      footer: null,
-      tags: null,
-      weeklyPosts: null,
-    }
+  state = {
+    authors: [],
+    categories: null,
+    pages: null,
+    header: null,
+    loading: true,
+    footer: null,
+    tags: null,
+    weeklyPosts: null,
   }
 
   componentDidMount() {

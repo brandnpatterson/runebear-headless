@@ -10,11 +10,8 @@ let propTypes = {
 }
 
 class Header extends Component {
-  constructor() {
-    super()
-    this.state = {
-      active: false
-    }
+  state = {
+    active: false
   }
 
   componentDidMount() {
