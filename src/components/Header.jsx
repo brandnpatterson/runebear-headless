@@ -11,14 +11,14 @@ let propTypes = {
 
 class Header extends Component {
   state = {
-    active: false
+    isActive: false
   }
 
   componentDidMount() {
     window.addEventListener('resize', () => {
       if (window.innerWidth > 1023) {
         this.setState({
-          active: false
+          isActive: false
         })
       }
     })
@@ -50,20 +50,20 @@ class Header extends Component {
     // toggle active state only if screen is small
     if (window.innerWidth <= 1023) {
       this.setState({
-        active: !this.state.active
+        isActive: !this.state.isActive
       })
     }
   }
 
   render() {
-    let { active } = this.state
+    let { isActive } = this.state
 
     return (
       <StyledHeader>
         <nav className="navbar" aria-label="main navigation">
           <div
             onClick={this.toggleActive}
-            className={'navbar-burger is-large ' + (active ? 'is-active' : '')}
+            className={'navbar-burger is-large ' + (isActive ? 'is-active' : '')}
             data-target="navMenu"
           >
             <span />
@@ -71,7 +71,7 @@ class Header extends Component {
             <span />
           </div>
           <div 
-            className={'navbar-menu navbar-target ' + (active ? 'is-active' : '')} 
+            className={'navbar-menu navbar-target ' + (isActive ? 'is-active' : '')} 
             id="navMenu"
           >
             <div className="navbar-items">

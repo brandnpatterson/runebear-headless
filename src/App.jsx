@@ -27,7 +27,7 @@ class App extends React.Component {
     loading: true,
     footer: null,
     tags: null,
-    weeklyPosts: null,
+    weeklyPosts: null
   }
 
   componentDidMount() {
