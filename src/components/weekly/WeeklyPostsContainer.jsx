@@ -1,9 +1,8 @@
 import React from 'react';
 import { array, string } from 'prop-types';
 import styled from 'styled-components';
-import { mediumUp } from '../util/media';
-
-import WeelyPosts from './WeeklyPosts';
+import { mediumUp } from '../../util/media';
+import WeeklyPosts from './WeeklyPosts';
 
 let propTypes = {
   __html: string.isRequired,
@@ -12,7 +11,7 @@ let propTypes = {
   weeklyPosts: array.isRequired
 };
 
-let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
+let WeeklyPostsContainer = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
   document.title = `${pageTitle} | Rune Bear`;
 
   return (
@@ -21,7 +20,7 @@ let WeeklyPosts = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
         className={pageClass}
         dangerouslySetInnerHTML={{ __html }}
       />
-      <WeelyPosts weeklyPosts={weeklyPosts} />
+      {weeklyPosts && <WeeklyPosts weeklyPosts={weeklyPosts} />}
     </StyledWeeklyWrapper>
   );
 };
@@ -30,6 +29,10 @@ let StyledWeeklyWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+
+  .card-tags {
+    display: flex;
+  }
 `;
 
 let StyledWeeklyPosts = styled.div`
@@ -42,6 +45,6 @@ let StyledWeeklyPosts = styled.div`
   }
 `;
 
-WeeklyPosts.propTypes = propTypes;
+WeeklyPostsContainer.propTypes = propTypes;
 
-export default WeeklyPosts;
+export default WeeklyPostsContainer;

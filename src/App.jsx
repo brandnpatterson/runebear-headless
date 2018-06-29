@@ -4,19 +4,19 @@ import styled from 'styled-components';
 import { mediumUp, tiny } from './util/media';
 import { getTaxonomy, getPages, getWeeklyPosts } from './api';
 
-import Header from './components/Header';
+// Components
+import About from './components/About';
+import Author from './components/Author';
 import Footer from './components/Footer';
+import Header from './components/Header';
+import Home from './components/Home';
 import NotFound from './components/NotFound';
-
-import About from './pages/About';
-import Author from './pages/Author';
-import Category from './pages/taxonomy/Category';
-import Home from './pages/Home';
-import Quarterly from './pages/Quarterly';
-import Submit from './pages/Submit';
-import Tag from './pages/taxonomy/Tag';
-import WeeklyPost from './pages/WeeklyPost';
-import WeeklyPostsContainer from './pages/WeeklyPostsContainer';
+import Quarterly from './components/Quarterly';
+import Submit from './components/Submit';
+import Weekly from './components/weekly/WeeklyTag';
+import WeeklyCategory from './components/weekly/WeeklyCategory';
+import WeeklyPost from './components/weekly/WeeklyPost';
+import WeeklyPostsContainer from './components/weekly/WeeklyPostsContainer';
 
 class App extends React.Component {
   state = {
@@ -136,36 +136,16 @@ class App extends React.Component {
   }
 
   render() {
-    let {
-      categories,
-      footer,
-      pages,
-      header,
-      loading,
-      tags,
-      weeklyPosts
-    } = this.state;
+    let { weeklyPosts } = this.state;
 
-    let weeklyPostExists = weeklyPosts && weeklyPosts.length;
+    let filterByAuthor = match =>
+      weeklyPosts.filter(post => post.authorSlug === match.params.author);
 
-    let filterByAuthor = match => {
-      return weeklyPosts.map(post => {
-        if (post.authorSlug === match.params.author) {
-          return post;
-        } else return null;
-      });
-    };
-
-    let filterByPost = match => {
-      return weeklyPosts.map(post => {
-        if (post.slug === match.params.weeklyPost) {
-          return post;
-        } else return null;
-      });
-    };
+    let filterByPost = match =>
+      weeklyPosts.filter(post => post.slug === match.params.weeklyPost);
 
     let filterByCategory = match => {
-      return weeklyPosts.map(post => {
+      return this.state.weeklyPosts.map(post => {
         if (post.categories) {
           return post.categories.map(tag => {
             if (tag === match.params.category) {
@@ -177,7 +157,7 @@ class App extends React.Component {
     };
 
     let filterByTag = match => {
-      return weeklyPosts.map(post => {
+      return this.state.weeklyPosts.map(post => {
         if (post.tagNames) {
           return post.tagNames.map(tag => {
             if (tag === match.params.tagName) {
@@ -188,7 +168,7 @@ class App extends React.Component {
       });
     };
 
-    if (loading) {
+    if (this.state.loading) {
       let style = {
         marginTop: '250px',
         display: 'flex',
@@ -203,15 +183,12 @@ class App extends React.Component {
       );
     } else {
       return (
-        categories &&
-        footer &&
-        header &&
-        tags && (
-          <Router>
-            <div id="wrapper">
-              <Header header={header} />
-              <Switch>
-                {pages.map(page => {
+        <Router>
+          <div id="router-container">
+            <Header header={this.state.header} />
+            <Switch>
+              {this.state.pages &&
+                this.state.pages.map(page => {
                   let __html = page.content.rendered;
                   let pageClass = page.slug;
                   let pageTitle = page.title.rendered;
@@ -253,12 +230,12 @@ class App extends React.Component {
                       );
                     if (pageTitle === 'Weekly')
                       return (
-                        weeklyPosts && (
+                        this.state.weeklyPosts && (
                           <WeeklyPostsContainer
                             __html={__html}
                             pageClass={pageClass}
                             pageTitle={pageTitle}
-                            weeklyPosts={weeklyPosts}
+                            weeklyPosts={this.state.weeklyPosts}
                           />
                         )
                       );
@@ -278,66 +255,57 @@ class App extends React.Component {
                     />
                   );
                 })}
-                {weeklyPostExists && (
-                  <Route
-                    exact
-                    path={`/weekly/:weeklyPost`}
-                    component={({ match }) => {
-                      return (
-                        <WeeklyPost
-                          match={match}
-                          weeklyPost={filterByPost(match)}
-                          weeklyPosts={weeklyPosts}
-                        />
-                      );
-                    }}
-                  />
-                )}
-                {weeklyPostExists && (
-                  <Route
-                    exact
-                    path={`/authors/:author`}
-                    component={({ match }) => {
-                      return <Author weeklyPosts={filterByAuthor(match)} />;
-                    }}
-                  />
-                )}
-                {weeklyPostExists && (
-                  <Route
-                    exact
-                    path={`/categories/:category`}
-                    component={({ match }) => {
-                      return (
-                        <Category
-                          match={match}
-                          categories={categories}
-                          weeklyPosts={filterByCategory(match)}
-                        />
-                      );
-                    }}
-                  />
-                )}
-                {weeklyPostExists && (
-                  <Route
-                    exact
-                    path={`/tags/:tagName`}
-                    component={({ match }) => {
-                      return (
-                        <Tag
-                          match={match}
-                          tags={tags}
-                          weeklyPosts={filterByTag(match)}
-                        />
-                      );
-                    }}
-                  />
-                )}
-                <Route path="*" component={NotFound} />
-              </Switch>
-              <Footer footer={footer} />
-            </div>
-          </Router>
-        )
+              <Route
+                exact
+                path={`/weekly/:weeklyPost`}
+                component={({ match }) => {
+                  return (
+                    <WeeklyPost
+                      match={match}
+                      weeklyPost={filterByPost(match)}
+                      weeklyPosts={this.state.weeklyPosts}
+                    />
+                  );
+                }}
+              />
+              <Route
+                exact
+                path={`/authors/:author`}
+                component={({ match }) => {
+                  return <Author weeklyByAuthor={filterByAuthor(match)} />;
+                }}
+              />
+              <Route
+                exact
+                path={`/categories/:category`}
+                component={({ match }) => {
+                  return (
+                    <WeeklyCategory
+                      match={match}
+                      categories={this.state.categories}
+                      weeklyByCategory={filterByCategory(match)}
+                    />
+                  );
+                }}
+              />
+              <Route
+                exact
+                path={`/tags/:tagName`}
+                component={({ match }) => {
+                  return (
+                    <Weekly
+                      match={match}
+                      tags={this.state.tags}
+                      weeklyByTag={filterByTag(match)}
+                    />
+                  );
+                }}
+              />
+              <Route path="*" component={NotFound} />
+            </Switch>
+            <Footer footer={this.state.footer} />
+          </div>
+        </Router>
       );
     }
   }
@@ -371,6 +339,7 @@ let StyledComponent = styled.div`
       margin-bottom: 50px;
     }
   }
+
   .subtitle {
     text-align: center;
     max-width: 300px;

@@ -13,12 +13,7 @@ let Footer = ({ footer }) => {
 
   return (
     <StyledFooter>
-      <div
-        className="content"
-        dangerouslySetInnerHTML={{
-          __html: footer
-        }}
-      />
+      <div className="content" dangerouslySetInnerHTML={{ __html: footer }} />
       <a
         className="copyright"
         href="https://github.com/brandnpatterson"

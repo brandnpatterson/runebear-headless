@@ -1,8 +1,10 @@
 import React from 'react';
 import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
-import StyledPost from '../templates/StyledPost';
-import styled from 'styled-components';
+
+import LinksCategories from '../LinksCategories';
+import StyledPost from '../../style-templates/StyledPost';
+import LinksTags from '../LinksTags';
 
 let propTypes = {
   weeklyPosts: array.isRequired
@@ -10,7 +12,7 @@ let propTypes = {
 
 let WeeklyPosts = ({ author, weeklyPosts }) => {
   return (
-    <StyledWeeklyWrapper>
+    <div>
       {weeklyPosts.map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(
@@ -35,38 +37,16 @@ let WeeklyPosts = ({ author, weeklyPosts }) => {
                 </p>
               )}
               <div className="card-tags">
-                {// list categories first
-                post.categories &&
-                  post.categories.map((category, index) => {
-                    return (
-                      <Link to={`/categories/${category}`} key={index}>
-                        {'#' + category}&nbsp;
-                      </Link>
-                    );
-                  })}
-                {// then list tags
-                post.tagNames &&
-                  post.tagNames.map((tag, index) => {
-                    return (
-                      <Link to={`/tags/${tag}`} key={index}>
-                        {'#' + tag}&nbsp;
-                      </Link>
-                    );
-                  })}
+                <LinksCategories post={post} />
+                <LinksTags post={post} />
               </div>
             </div>
           </StyledPost>
         );
       })}
-    </StyledWeeklyWrapper>
+    </div>
   );
 };
-
-let StyledWeeklyWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-`;
 
 WeeklyPosts.propTypes = propTypes;
 

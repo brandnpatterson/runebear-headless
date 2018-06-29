@@ -3,32 +3,39 @@ import { array } from 'prop-types';
 import styled from 'styled-components';
 import { mediumUp } from '../util/media';
 
-import WeeklyPosts from './WeeklyPosts';
+import WeeklyPosts from './weekly/WeeklyPosts';
 
 let propTypes = {
-  weeklyPosts: array.isRequired
+  weeklyByAuthor: array.isRequired
 };
 
-let FilterByAuthor = ({ weeklyPosts }) => {
-  window.scrollTo(0, 0);
+class FilterByAuthor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      author: props.weeklyByAuthor[0] && props.weeklyByAuthor[0].author,
+      authorDesc: props.weeklyByAuthor[0] && props.weeklyByAuthor[0].authorDesc
+    };
+  }
 
-  weeklyPosts = weeklyPosts.filter(post => post !== null);
-  let post = weeklyPosts[0];
+  render() {
+    window.scrollTo(0, 0);
 
-  return (
-    <StyledAuthor>
-      {post &&
-        post.author &&
-        post.authorDesc && (
-          <div>
-            <h1 className="card-title">{post.author}</h1>
-            <p className="card-author-description">{post.authorDesc}</p>
-          </div>
-        )}
-      <WeeklyPosts weeklyPosts={weeklyPosts} author={false} />
-    </StyledAuthor>
-  );
-};
+    let { weeklyByAuthor } = this.props;
+    let { author, authorDesc } = this.state;
+    let weeklyPosts = weeklyByAuthor.filter(post => post !== null);
+
+    return (
+      <StyledAuthor>
+        <div>
+          <h1 className="card-title">{author}</h1>
+          <p className="card-author-description">{authorDesc}</p>
+        </div>
+        <WeeklyPosts weeklyPosts={weeklyPosts} author={false} />
+      </StyledAuthor>
+    );
+  }
+}
 
 let StyledAuthor = styled.div`
   align-items: center;
@@ -49,6 +56,10 @@ let StyledAuthor = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
     width: 200px;
+  }
+
+  .card-tags {
+    display: flex;
   }
 
   .card-title {

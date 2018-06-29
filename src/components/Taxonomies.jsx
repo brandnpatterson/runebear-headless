@@ -1,16 +1,16 @@
 import React from 'react';
 import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
-import StyledPost from '../../templates/StyledPost';
-import styled from 'styled-components';
+
+import StyledPost from '../style-templates/StyledPost';
 
 let propTypes = {
   taxonomy: array.isRequired
 };
 
-let Taxonomy = ({ taxonomy }) => {
+let Taxonomies = ({ taxonomy }) => {
   return (
-    <StyledTaxonomy>
+    <div>
       {taxonomy.map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         let excerpt = trimmed.substr(
@@ -37,30 +37,10 @@ let Taxonomy = ({ taxonomy }) => {
           </StyledPost>
         );
       })}
-    </StyledTaxonomy>
+    </div>
   );
 };
 
-let StyledTaxonomy = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  margin-bottom: 100px;
-  text-align: left;
+Taxonomies.propTypes = propTypes;
 
-  .categories-header {
-    display: flex;
-    justify-content: center;
-  }
-
-  .card-title {
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-  }
-`;
-
-Taxonomy.propTypes = propTypes;
-
-export default Taxonomy;
+export default Taxonomies;

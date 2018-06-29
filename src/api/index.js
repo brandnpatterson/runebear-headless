@@ -22,7 +22,7 @@ let getPages = () => {
 
         resolve({ pages, footer, header });
       })
-      .catch(err => console.error(err));
+      .catch(err => reject(err));
   });
 };
 
@@ -31,7 +31,7 @@ let getWeeklyPosts = () => {
     axios
       .get(`${endpoint('weekly_posts')}`)
       .then(res => resolve(res.data))
-      .catch(err => console.error(err));
+      .catch(err => reject(err));
   });
 };
 
@@ -40,7 +40,7 @@ let getTaxonomy = (taxonomy, weeklyId = '') => {
     axios
       .get(`${endpoint(taxonomy)}?post=${weeklyId}`)
       .then(res => resolve(res.data))
-      .catch(err => console.error(err));
+      .catch(err => reject(err));
   });
 };
 

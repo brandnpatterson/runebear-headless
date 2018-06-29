@@ -1,32 +1,33 @@
 import React from 'react';
 import { array, object } from 'prop-types';
 import styled from 'styled-components';
-import Taxonomy from './Taxonomy';
+
+import Taxonomies from '../Taxonomies';
 
 let propTypes = {
   match: object.isRequired,
-  weeklyPosts: array.isRequired
+  weeklyByCategory: array.isRequired
 };
 
-let Tag = ({ match, weeklyPosts }) => {
+let WeeklyCategory = ({ match, weeklyByCategory }) => {
   window.scrollTo(0, 0);
 
-  let taxonomy = [].concat.apply([], weeklyPosts);
+  let taxonomy = [].concat.apply([], weeklyByCategory);
   taxonomy = taxonomy.filter(post => post !== null);
 
   return (
-    <StyledTag>
-      <div className="tags-header">
+    <StyledWeeklyCategory>
+      <div className="categories-header">
         <h1>
-          <strong>{match.params.tagName.toUpperCase()}</strong>
+          <strong>{match.params.category.toUpperCase()}</strong>
         </h1>
       </div>
-      <Taxonomy taxonomy={taxonomy} />
-    </StyledTag>
+      <Taxonomies taxonomy={taxonomy} />
+    </StyledWeeklyCategory>
   );
 };
 
-let StyledTag = styled.div`
+let StyledWeeklyCategory = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -34,7 +35,7 @@ let StyledTag = styled.div`
   margin-bottom: 100px;
   text-align: left;
 
-  .tags-header {
+  .categories-header {
     display: flex;
     justify-content: center;
   }
@@ -46,6 +47,6 @@ let StyledTag = styled.div`
   }
 `;
 
-Tag.propTypes = propTypes;
+WeeklyCategory.propTypes = propTypes;
 
-export default Tag;
+export default WeeklyCategory;

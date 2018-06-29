@@ -1,10 +1,13 @@
 import React from 'react';
 import { array, object } from 'prop-types';
 import { Link } from 'react-router-dom';
-import StyledPost from '../templates/StyledPost';
 import styled from 'styled-components';
-import { gray } from '../util/color';
-import { mediumUp } from '../util/media';
+import { gray } from '../../util/color';
+import { mediumUp } from '../../util/media';
+
+import LinksCategories from '../LinksCategories';
+import LinksTags from '../LinksTags';
+import StyledPost from '../../style-templates/StyledPost';
 
 let propTypes = {
   match: object.isRequired,
@@ -72,24 +75,8 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
         </div>
         <div className="card-footer">
           <div className="card-tags">
-            {// list categories first
-            post.categories &&
-              post.categories.map((category, index) => {
-                return (
-                  <Link to={`/categories/${category}`} key={index}>
-                    {'#' + category}&nbsp;
-                  </Link>
-                );
-              })}
-            {// then list tags
-            post.tagNames &&
-              post.tagNames.map((tag, index) => {
-                return (
-                  <Link to={`/tags/${tag}`} key={index}>
-                    {'#' + tag}&nbsp;
-                  </Link>
-                );
-              })}
+            <LinksCategories post={post} />
+            <LinksTags post={post} />
           </div>
         </div>
       </StyledPost>
@@ -132,6 +119,7 @@ let StyledWeeklyWrapper = styled.div`
   }
 
   .card-tags {
+    display: flex;
     margin-top: 25px;
   }
 
