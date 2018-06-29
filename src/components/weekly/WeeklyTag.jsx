@@ -2,7 +2,7 @@ import React from 'react';
 import { array, object } from 'prop-types';
 import styled from 'styled-components';
 
-import Taxonomies from '../Taxonomies';
+import FilterByTaxonomy from '../FilterByTaxonomy';
 
 let propTypes = {
   match: object.isRequired,
@@ -22,7 +22,7 @@ let WeeklyTag = ({ match, weeklyByTag }) => {
           <strong>{match.params.tagName.toUpperCase()}</strong>
         </h1>
       </div>
-      <Taxonomies taxonomy={taxonomy} />
+      <FilterByTaxonomy taxonomy={taxonomy} />
     </StyledWeeklyTag>
   );
 };

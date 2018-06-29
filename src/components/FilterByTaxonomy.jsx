@@ -8,7 +8,7 @@ let propTypes = {
   taxonomy: array.isRequired
 };
 
-let Taxonomies = ({ taxonomy }) => {
+let FilterByTaxonomy = ({ taxonomy }) => {
   return (
     <div>
       {taxonomy.map(post => {
@@ -41,6 +41,6 @@ let Taxonomies = ({ taxonomy }) => {
   );
 };
 
-Taxonomies.propTypes = propTypes;
+FilterByTaxonomy.propTypes = propTypes;
 
-export default Taxonomies;
+export default FilterByTaxonomy;
