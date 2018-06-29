@@ -35,7 +35,6 @@ class Header extends Component {
       weeklyRequestMade === false
     ) {
       this.props.getWeeklyPosts();
-      console.log(1);
     }
   }
 

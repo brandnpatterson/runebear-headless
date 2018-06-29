@@ -179,19 +179,24 @@ class App extends React.Component {
       );
     };
 
-    if (this.state.loading) {
-      let style = {
-        marginTop: '250px',
-        display: 'flex',
-        height: '100vh',
-        justifyContent: 'center'
-      };
-
+    const Loading = () => {
       return (
-        <div style={style} className="loading">
+        <div
+          style={{
+            marginTop: '250px',
+            display: 'flex',
+            height: '100vh',
+            justifyContent: 'center'
+          }}
+          className="loading"
+        >
           <h2>Loading...</h2>
         </div>
       );
+    };
+
+    if (this.state.loading) {
+      return <Loading />;
     } else {
       return (
         <Router>
@@ -241,17 +246,33 @@ class App extends React.Component {
                         />
                       );
                     if (page.title.rendered === 'Weekly')
-                      return (
-                        this.state.weeklyPosts && (
-                          <WeeklyPostsContainer
-                            __html={page.content.rendered}
-                            pageClass={page.slug}
-                            pageTitle={page.title.rendered}
-                            weeklyPosts={this.state.weeklyPosts}
-                            weeklyRequestMade={this.state.weeklyRequestMade}
-                          />
-                        )
-                      );
+                      if (weeklyRequestMade) {
+                        return (
+                          this.state.weeklyPosts && (
+                            <WeeklyPostsContainer
+                              __html={page.content.rendered}
+                              pageClass={page.slug}
+                              pageTitle={page.title.rendered}
+                              weeklyPosts={this.state.weeklyPosts}
+                              weeklyRequestMade={this.state.weeklyRequestMade}
+                            />
+                          )
+                        );
+                      } else {
+                        return (
+                          <div
+                            style={{
+                              marginTop: '250px',
+                              display: 'flex',
+                              height: '100vh',
+                              justifyContent: 'center'
+                            }}
+                            className="loading"
+                          >
+                            <h2>Loading...</h2>
+                          </div>
+                        );
+                      }
                   };
                   return (
                     <Route
@@ -268,61 +289,81 @@ class App extends React.Component {
                     />
                   );
                 })}
-              {weeklyRequestMade && (
+              {weeklyRequestMade ? (
                 <Route
                   exact
                   path={`/weekly/:weeklyPost`}
                   component={({ match }) => {
-                    return (
-                      <WeeklyPost
-                        match={match}
-                        weeklyPost={filterByPost(match)}
-                        weeklyPosts={this.state.weeklyPosts}
-                      />
-                    );
+                    if (weeklyRequestMade) {
+                      return (
+                        <WeeklyPost
+                          match={match}
+                          weeklyPost={filterByPost(match)}
+                          weeklyPosts={this.state.weeklyPosts}
+                        />
+                      );
+                    } else {
+                    }
                   }}
                 />
+              ) : (
+                <Loading />
               )}
-              {weeklyRequestMade && (
+              {weeklyRequestMade ? (
                 <Route
                   exact
                   path={`/weekly/authors/:author`}
                   component={({ match }) => {
-                    return <Author weeklyByAuthor={filterByAuthor(match)} />;
+                    if (weeklyRequestMade) {
+                      return <Author weeklyByAuthor={filterByAuthor(match)} />;
+                    } else {
+                    }
                   }}
                 />
+              ) : (
+                <Loading />
               )}
-              {weeklyRequestMade && (
+              {weeklyRequestMade ? (
                 <Route
                   exact
                   path={`/weekly/categories/:category`}
                   component={({ match }) => {
-                    return (
-                      <WeeklyCategory
-                        match={match}
-                        categories={this.state.categories}
-                        weeklyByCategory={filterByCategory(match)}
-                      />
-                    );
+                    if (weeklyRequestMade) {
+                      return (
+                        <WeeklyCategory
+                          match={match}
+                          categories={this.state.categories}
+                          weeklyByCategory={filterByCategory(match)}
+                        />
+                      );
+                    } else {
+                    }
                   }}
                 />
+              ) : (
+                <Loading />
               )}
-              {weeklyRequestMade && (
+              {weeklyRequestMade ? (
                 <Route
                   exact
                   path={`/weekly/tags/:tagName`}
                   component={({ match }) => {
-                    return (
-                      <Weekly
-                        match={match}
-                        tags={this.state.tags}
-                        weeklyByTag={filterByTag(match)}
-                      />
-                    );
+                    if (weeklyRequestMade) {
+                      return (
+                        <Weekly
+                          match={match}
+                          tags={this.state.tags}
+                          weeklyByTag={filterByTag(match)}
+                        />
+                      );
+                    } else {
+                    }
                   }}
                 />
+              ) : (
+                <Loading />
               )}
-              {!weeklyRequestMade && <Route path="*" component={NotFound} />}
+              {weeklyRequestMade && <Route path="*" component={NotFound} />}
             </Switch>
             <Footer footer={this.state.footer} />
           </div>
