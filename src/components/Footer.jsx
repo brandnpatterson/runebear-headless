@@ -1,27 +1,35 @@
-import React from 'react'
-import { string } from 'prop-types'
-import styled from 'styled-components'
-import { blue, dark, light } from '../util/color'
-import { mediumUp } from '../util/media'
+import React from 'react';
+import { string } from 'prop-types';
+import styled from 'styled-components';
+import { blue, dark, light } from '../util/color';
+import { mediumUp } from '../util/media';
 
 let propTypes = {
   footer: string.isRequired
-}
+};
 
 let Footer = ({ footer }) => {
   let thisYear = new Date().getFullYear();
 
   return (
     <StyledFooter>
-      <div className="content" dangerouslySetInnerHTML={{
-        __html: footer
-      }} />
-      <a className="copyright" href="https://github.com/brandnpatterson" target="_blank" rel="noopener noreferrer">
+      <div
+        className="content"
+        dangerouslySetInnerHTML={{
+          __html: footer
+        }}
+      />
+      <a
+        className="copyright"
+        href="https://github.com/brandnpatterson"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         &copy;{thisYear} Brandon Patterson. All Rights Reserved.
       </a>
     </StyledFooter>
-  )
-}
+  );
+};
 
 let StyledFooter = styled.footer`
   background: ${dark};
@@ -31,8 +39,8 @@ let StyledFooter = styled.footer`
   justify-content: flex-end;
   margin-top: 20px;
 
-  a { 
-    color: ${blue}; 
+  a {
+    color: ${blue};
   }
 
   p {
@@ -74,8 +82,8 @@ let StyledFooter = styled.footer`
   .copyright:hover {
     color: ${blue};
   }
-`
+`;
 
-Footer.propTypes = propTypes
+Footer.propTypes = propTypes;
 
-export default Footer
+export default Footer;

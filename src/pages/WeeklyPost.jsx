@@ -1,63 +1,63 @@
-import React from 'react'
-import { array, object } from 'prop-types'
-import { Link } from 'react-router-dom'
-import StyledPost from '../templates/StyledPost'
-import styled from 'styled-components'
-import { gray } from '../util/color'
-import { mediumUp } from '../util/media'
+import React from 'react';
+import { array, object } from 'prop-types';
+import { Link } from 'react-router-dom';
+import StyledPost from '../templates/StyledPost';
+import styled from 'styled-components';
+import { gray } from '../util/color';
+import { mediumUp } from '../util/media';
 
 let propTypes = {
   match: object.isRequired,
-  weeklyPost: array.isRequired, 
+  weeklyPost: array.isRequired,
   weeklyPosts: array.isRequired
-}
+};
 
 let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
-  window.scrollTo(0, 0)
+  window.scrollTo(0, 0);
 
-  weeklyPost = weeklyPost.filter(post => post !== null)
-  let post = weeklyPost[0]
-  let nextArr = []
-  let prevArr = []
+  weeklyPost = weeklyPost.filter(post => post !== null);
+  let post = weeklyPost[0];
+  let nextArr = [];
+  let prevArr = [];
 
   weeklyPosts.map((p, i, { length }) => {
     if (post.id === p.id) {
       if (i + 1 === length) {
-        return nextArr.push(weeklyPosts[0].slug)
+        return nextArr.push(weeklyPosts[0].slug);
       } else {
-        return nextArr.push(weeklyPosts[i + 1].slug)
+        return nextArr.push(weeklyPosts[i + 1].slug);
       }
     }
-    
-    return false
-  })
+
+    return false;
+  });
 
   weeklyPosts.map((p, i, { length }) => {
     if (post.id === p.id) {
       if (i === 0) {
-        return prevArr.push(weeklyPosts[length - 1].slug)
+        return prevArr.push(weeklyPosts[length - 1].slug);
       } else {
-        return prevArr.push(weeklyPosts[i - 1].slug)
+        return prevArr.push(weeklyPosts[i - 1].slug);
       }
     }
-    
-    return false
-  })
 
-  let next = nextArr[0]
-  let prev = prevArr[0]
+    return false;
+  });
+
+  let next = nextArr[0];
+  let prev = prevArr[0];
 
   let PrevArrow = () => (
     <Link to={`/weekly/${prev}`}>
       <span className="left-arrow">{'<<<'}</span>
     </Link>
-  )
-  
+  );
+
   let NextArrow = () => (
     <Link to={`/weekly/${next}`}>
       <span className="right-arrow">{'>>>'}</span>
     </Link>
-  )
+  );
 
   return (
     <StyledWeeklyWrapper>
@@ -72,13 +72,23 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
         </div>
         <div className="card-footer">
           <div className="card-tags">
-            { // list categories first
-              post.categories && post.categories.map((category, index) => {
-                return <Link to={`/categories/${category}`} key={index}>{'#' + category}&nbsp;</Link>
+            {// list categories first
+            post.categories &&
+              post.categories.map((category, index) => {
+                return (
+                  <Link to={`/categories/${category}`} key={index}>
+                    {'#' + category}&nbsp;
+                  </Link>
+                );
               })}
-            { // then list tags
-              post.tagNames && post.tagNames.map((tag, index) => {
-                return <Link to={`/tags/${tag}`} key={index}>{'#' + tag}&nbsp;</Link>
+            {// then list tags
+            post.tagNames &&
+              post.tagNames.map((tag, index) => {
+                return (
+                  <Link to={`/tags/${tag}`} key={index}>
+                    {'#' + tag}&nbsp;
+                  </Link>
+                );
               })}
           </div>
         </div>
@@ -87,15 +97,15 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
         <PrevArrow />
         <NextArrow />
       </div>
-      {post.author 
-        ? <p className="card-author">All from &nbsp;
-            <Link to={`/authors/${post.authorSlug}`}>{post.author}</Link>
-          </p>
-        : null
-      }
+      {post.author ? (
+        <p className="card-author">
+          All from &nbsp;
+          <Link to={`/authors/${post.authorSlug}`}>{post.author}</Link>
+        </p>
+      ) : null}
     </StyledWeeklyWrapper>
-  )
-}
+  );
+};
 
 let StyledWeeklyWrapper = styled.div`
   align-items: center;
@@ -104,7 +114,7 @@ let StyledWeeklyWrapper = styled.div`
   justify-content: space-around;
   margin-bottom: 100px;
   text-align: left;
-  
+
   .authors-header {
     display: flex;
     justify-content: center;
@@ -171,8 +181,8 @@ let StyledWeeklyWrapper = styled.div`
     cursor: pointer;
     padding: 10px;
   }
-`
+`;
 
-WeeklyPost.propTypes = propTypes
+WeeklyPost.propTypes = propTypes;
 
-export default WeeklyPost
+export default WeeklyPost;

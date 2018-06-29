@@ -1,15 +1,12 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { injectGlobal } from 'styled-components'
-import { black } from './util/color'
-import { garamond } from './util/font'
-import { mediumUp } from './util/media'
-import App from './App'
+import React from 'react';
+import { render } from 'react-dom';
+import { injectGlobal } from 'styled-components';
+import { black } from './util/color';
+import { garamond } from './util/font';
+import { mediumUp } from './util/media';
+import App from './App';
 
-render(
-  <App />,
-  document.getElementById('root')
-)
+render(<App />, document.getElementById('root'));
 
 injectGlobal`
   h1,
@@ -85,4 +82,4 @@ injectGlobal`
       width: 400px;
     }
   }
-`
+`;

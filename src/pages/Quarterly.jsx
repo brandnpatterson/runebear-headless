@@ -1,21 +1,24 @@
-import React from 'react'
-import { string } from 'prop-types'
-import styled from 'styled-components'
-import { mediumUp } from '../util/media'
+import React from 'react';
+import { string } from 'prop-types';
+import styled from 'styled-components';
+import { mediumUp } from '../util/media';
 
 let propTypes = {
   __html: string.isRequired,
   pageClass: string.isRequired,
   pageTitle: string.isRequired
-}
+};
 
 let Quarterly = ({ __html, pageClass, pageTitle }) => {
-  document.title = `${pageTitle} | Rune Bear`
+  document.title = `${pageTitle} | Rune Bear`;
 
   return (
-    <StyledQuarterly className={pageClass} dangerouslySetInnerHTML={{ __html }} />
-  )
-}
+    <StyledQuarterly
+      className={pageClass}
+      dangerouslySetInnerHTML={{ __html }}
+    />
+  );
+};
 
 let StyledQuarterly = styled.div`
   display: flex;
@@ -33,7 +36,7 @@ let StyledQuarterly = styled.div`
     position: relative;
   }
 
-  .speech-bubble {        
+  .speech-bubble {
     @media ${mediumUp} {
       margin-top: -120px;
     }
@@ -50,8 +53,8 @@ let StyledQuarterly = styled.div`
       top: 25px;
     }
   }
-`
+`;
 
-Quarterly.propTypes = propTypes
+Quarterly.propTypes = propTypes;
 
-export default Quarterly
+export default Quarterly;

@@ -1,22 +1,22 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import styled from 'styled-components'
-import { mediumUp, tiny } from './util/media'
-import { getTaxonomy, getPages, getWeeklyPosts } from './api'
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import styled from 'styled-components';
+import { mediumUp, tiny } from './util/media';
+import { getTaxonomy, getPages, getWeeklyPosts } from './api';
 
-import Header from './components/Header'
-import Footer from './components/Footer'
-import NotFound from './components/NotFound'
+import Header from './components/Header';
+import Footer from './components/Footer';
+import NotFound from './components/NotFound';
 
-import About from './pages/About'
-import Author from './pages/Author'
-import Category from './pages/Category'
-import Home from './pages/Home'
-import Quarterly from './pages/Quarterly'
-import Submit from './pages/Submit'
-import Tag from './pages/Tag'
-import WeeklyPost from './pages/WeeklyPost'
-import WeeklyPosts from './pages/WeeklyPosts'
+import About from './pages/About';
+import Author from './pages/Author';
+import Category from './pages/taxonomy/Category';
+import Home from './pages/Home';
+import Quarterly from './pages/Quarterly';
+import Submit from './pages/Submit';
+import Tag from './pages/taxonomy/Tag';
+import WeeklyPost from './pages/WeeklyPost';
+import WeeklyPostsContainer from './pages/WeeklyPostsContainer';
 
 class App extends React.Component {
   state = {
@@ -28,98 +28,99 @@ class App extends React.Component {
     footer: null,
     tags: null,
     weeklyPosts: null
-  }
+  };
 
   componentDidMount() {
-    let allAuthors = []
-    let allCategories = []
-    let allTags = []
+    let allAuthors = [];
+    let allCategories = [];
+    let allTags = [];
 
-    getPages()
-      .then(data => {
-        let { pages, header, footer } = data
-        
-        this.setState({ pages, header, footer: footer[0] })
-      })
+    getPages().then(data => {
+      let { pages, header, footer } = data;
+
+      this.setState({ pages, header, footer: footer[0] });
+    });
 
     getWeeklyPosts()
       .then(weeklyPosts => {
-        this.setState({ weeklyPosts })
+        this.setState({ weeklyPosts });
       })
       .then(() => {
-        let { weeklyPosts } = this.state
+        let { weeklyPosts } = this.state;
 
         if (weeklyPosts.length === 0) {
-          return
+          return;
         } else {
           return weeklyPosts.map(post => {
-            let categories = []
-            let tagNames = []
+            let categories = [];
+            let tagNames = [];
 
             getTaxonomy('tags', post.id)
               .then(data => {
                 if (data) {
                   return data.map(tag => {
-                    tagNames.push(tag.name)
-                    allTags.push(tag.name)
-                    allTags = [...new Set(allTags)].sort()
+                    tagNames.push(tag.name);
+                    allTags.push(tag.name);
+                    allTags = [...new Set(allTags)].sort();
 
-                    return post.tagNames = tagNames
-                  })
+                    return (post.tagNames = tagNames);
+                  });
                 } else {
-                  return allTags.push('')
+                  return allTags.push('');
                 }
               })
-              .then(() => this.setState({
-                tags: allTags,
-                weeklyPosts
-              }))
+              .then(() =>
+                this.setState({
+                  tags: allTags,
+                  weeklyPosts
+                })
+              );
 
             getTaxonomy('categories', post.id)
               .then(data => {
                 if (data) {
                   return data.map(tag => {
-                    categories.push(tag.name)
-                    allCategories.push(tag.name)
-                    allCategories = [...new Set(allCategories)].sort()
+                    categories.push(tag.name);
+                    allCategories.push(tag.name);
+                    allCategories = [...new Set(allCategories)].sort();
 
-                    return post.categories = categories
-                  })
+                    return (post.categories = categories);
+                  });
                 } else {
-                  return allCategories.push('')
+                  return allCategories.push('');
                 }
               })
               .then(() => {
                 this.setState({
                   categories: allCategories,
                   weeklyPosts
-                })
-              })
+                });
+              });
 
             return getTaxonomy('post_author', post.id)
               .then(data => {
                 if (data && data[0] && data[0].name) {
                   let checkAndAdd = name => {
-                    let found = allAuthors.some((el) => el.name === name)
+                    let found = allAuthors.some(el => el.name === name);
 
                     if (!found) {
                       allAuthors.push({
                         name: data[0].name,
                         description: data[0].description,
                         slug: data[0].slug
-                      })
+                      });
                     }
-                  }
+                  };
 
-                  checkAndAdd(data[0].name)
+                  checkAndAdd(data[0].name);
 
-                  post.author = data[0].name
-                  post.authorSlug = data[0].slug
-                  post.authorDesc = data[0].description
+                  post.author = data[0].name;
+                  post.authorSlug = data[0].slug;
+                  post.authorDesc = data[0].description;
                 } else {
-                  post.author = ''
-                  post.authorSlug = ''
-                  post.authorDesc = ''
+                  post.author = '';
+                  post.authorSlug = '';
+                  post.authorDesc = '';
                 }
               })
               .then(() => {
@@ -127,11 +128,11 @@ class App extends React.Component {
                   authors: allAuthors,
                   loading: false,
                   weeklyPosts
-                })
-              })
-          })
+                });
+              });
+          });
         }
-      })
+      });
   }
 
   render() {
@@ -143,49 +144,49 @@ class App extends React.Component {
       loading,
       tags,
       weeklyPosts
-    } = this.state
+    } = this.state;
 
-    let weeklyPostExists = weeklyPosts && weeklyPosts.length
+    let weeklyPostExists = weeklyPosts && weeklyPosts.length;
 
     let filterByAuthor = match => {
       return weeklyPosts.map(post => {
         if (post.authorSlug === match.params.author) {
-          return post
-        } else return null
-      })
-    }
+          return post;
+        } else return null;
+      });
+    };
 
     let filterByPost = match => {
       return weeklyPosts.map(post => {
         if (post.slug === match.params.weeklyPost) {
-          return post
-        } else return null
-      })
-    }
-  
+          return post;
+        } else return null;
+      });
+    };
+
     let filterByCategory = match => {
       return weeklyPosts.map(post => {
         if (post.categories) {
           return post.categories.map(tag => {
             if (tag === match.params.category) {
-              return post
-            } else return null
-          })
-        } else return null
-      })
-    }
+              return post;
+            } else return null;
+          });
+        } else return null;
+      });
+    };
 
     let filterByTag = match => {
       return weeklyPosts.map(post => {
         if (post.tagNames) {
           return post.tagNames.map(tag => {
             if (tag === match.params.tagName) {
-              return post
-            } else return null
-          })
-        } else return null
-      })
-    }
+              return post;
+            } else return null;
+          });
+        } else return null;
+      });
+    };
 
     if (loading) {
       let style = {
@@ -193,128 +194,151 @@ class App extends React.Component {
         display: 'flex',
         height: '100vh',
         justifyContent: 'center'
-      }
+      };
 
       return (
         <div style={style} className="loading">
           <h2>Loading...</h2>
         </div>
-      )
+      );
     } else {
       return (
-        categories && footer && header && tags &&
-        <Router>
-          <div id="wrapper">
-            <Header header={header} />
-            <Switch>
-              {pages.map(page => {
-                let __html = page.content.rendered
-                let pageClass = page.slug
-                let pageTitle = page.title.rendered
-                let path = () => pageTitle === 'Home' ? '/' : '/' + page.slug
+        categories &&
+        footer &&
+        header &&
+        tags && (
+          <Router>
+            <div id="wrapper">
+              <Header header={header} />
+              <Switch>
+                {pages.map(page => {
+                  let __html = page.content.rendered;
+                  let pageClass = page.slug;
+                  let pageTitle = page.title.rendered;
+                  let path = () =>
+                    pageTitle === 'Home' ? '/' : '/' + page.slug;
 
-                let Component = () => {
-                  if (pageTitle === 'About')
-                    return (
-                      <About
-                        __html={__html}
-                        pageClass={pageClass}
-                        pageTitle={pageTitle}
-                      />
-                    )
-                  if (pageTitle === 'Home')
-                    return (
-                      <Home
-                        __html={__html}
-                        pageClass={pageClass}
-                        pageTitle={pageTitle}
-                      />
-                    )
-                  if (pageTitle === 'Quarterly')
-                    return (
-                      <Quarterly
-                        __html={__html}
-                        pageClass={pageClass}
-                        pageTitle={pageTitle}
-                      />
-                    )
-                  if (pageTitle === 'Submit')
-                    return (
-                      <Submit
-                        __html={__html}
-                        pageClass={pageClass}
-                        pageTitle={pageTitle}
-                      />
-                    )
-                  if (pageTitle === 'Weekly')
-                    return (
-                      weeklyPosts &&
-                      <WeeklyPosts
-                        __html={__html}
-                        pageClass={pageClass}
-                        pageTitle={pageTitle}
-                        weeklyPosts={weeklyPosts}
-                      />
-                    )
-                }
-                return (
-                  <Route key={page.id} exact path={path()} component={() => {
-                    return (
-                      <StyledComponent>
-                        <Component />
-                      </StyledComponent>
-                    )
-                  }} />
-                )
-              })}
-              {weeklyPostExists &&
-                <Route exact path={`/weekly/:weeklyPost`} component={({ match }) => {
+                  let Component = () => {
+                    if (pageTitle === 'About')
+                      return (
+                        <About
+                          __html={__html}
+                          pageClass={pageClass}
+                          pageTitle={pageTitle}
+                        />
+                      );
+                    if (pageTitle === 'Home')
+                      return (
+                        <Home
+                          __html={__html}
+                          pageClass={pageClass}
+                          pageTitle={pageTitle}
+                        />
+                      );
+                    if (pageTitle === 'Quarterly')
+                      return (
+                        <Quarterly
+                          __html={__html}
+                          pageClass={pageClass}
+                          pageTitle={pageTitle}
+                        />
+                      );
+                    if (pageTitle === 'Submit')
+                      return (
+                        <Submit
+                          __html={__html}
+                          pageClass={pageClass}
+                          pageTitle={pageTitle}
+                        />
+                      );
+                    if (pageTitle === 'Weekly')
+                      return (
+                        weeklyPosts && (
+                          <WeeklyPostsContainer
+                            __html={__html}
+                            pageClass={pageClass}
+                            pageTitle={pageTitle}
+                            weeklyPosts={weeklyPosts}
+                          />
+                        )
+                      );
+                  };
                   return (
-                    <WeeklyPost
-                      match={match}
-                      weeklyPost={filterByPost(match)}
-                      weeklyPosts={weeklyPosts}
+                    <Route
+                      key={page.id}
+                      exact
+                      path={path()}
+                      component={() => {
+                        return (
+                          <StyledComponent>
+                            <Component />
+                          </StyledComponent>
+                        );
+                      }}
                     />
-                  )
-                }} />
-              }
-              {weeklyPostExists &&
-                <Route exact path={`/authors/:author`} component={({ match }) => {
-                  return (
-                    <Author
-                      weeklyPosts={filterByAuthor(match)}
-                    />
-                  )
-                }} />
-              }
-              {weeklyPostExists &&
-                <Route exact path={`/categories/:category`} component={({ match }) => {
-                  return (
-                    <Category
-                      match={match}
-                      categories={categories}
-                      weeklyPosts={filterByCategory(match)}
-                    />
-                  )
-                }} />
-              }
-              {weeklyPostExists &&
-                <Route exact path={`/tags/:tagName`} component={({ match }) => {
-                  return (
-                    <Tag
-                      match={match}
-                      tags={tags}
-                      weeklyPosts={filterByTag(match)}
-                    />
-                  )
-                }} />
-              }
-              <Route path="*" component={NotFound} />
-            </Switch>
-            <Footer footer={footer} />
-          </div>
-        </Router>
-      )
+                  );
+                })}
+                {weeklyPostExists && (
+                  <Route
+                    exact
+                    path={`/weekly/:weeklyPost`}
+                    component={({ match }) => {
+                      return (
+                        <WeeklyPost
+                          match={match}
+                          weeklyPost={filterByPost(match)}
+                          weeklyPosts={weeklyPosts}
+                        />
+                      );
+                    }}
+                  />
+                )}
+                {weeklyPostExists && (
+                  <Route
+                    exact
+                    path={`/authors/:author`}
+                    component={({ match }) => {
+                      return <Author weeklyPosts={filterByAuthor(match)} />;
+                    }}
+                  />
+                )}
+                {weeklyPostExists && (
+                  <Route
+                    exact
+                    path={`/categories/:category`}
+                    component={({ match }) => {
+                      return (
+                        <Category
+                          match={match}
+                          categories={categories}
+                          weeklyPosts={filterByCategory(match)}
+                        />
+                      );
+                    }}
+                  />
+                )}
+                {weeklyPostExists && (
+                  <Route
+                    exact
+                    path={`/tags/:tagName`}
+                    component={({ match }) => {
+                      return (
+                        <Tag
+                          match={match}
+                          tags={tags}
+                          weeklyPosts={filterByTag(match)}
+                        />
+                      );
+                    }}
+                  />
+                )}
+                <Route path="*" component={NotFound} />
+              </Switch>
+              <Footer footer={footer} />
+            </div>
+          </Router>
+        )
+      );
     }
   }
 }
@@ -342,7 +366,7 @@ let StyledComponent = styled.div`
         margin: 20px 50px;
       }
     }
-  
+
     img:nth-child(2) {
       margin-bottom: 50px;
     }
@@ -350,10 +374,10 @@ let StyledComponent = styled.div`
   .subtitle {
     text-align: center;
     max-width: 300px;
-    @media ${mediumUp} { 
+    @media ${mediumUp} {
       width: 550px;
     }
   }
-`
+`;
 
-export default App
+export default App;

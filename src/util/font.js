@@ -1,1 +1,1 @@
-export let garamond = 'Garamond'
+export let garamond = 'Garamond';

@@ -1,22 +1,22 @@
-import React from 'react'
-import { string } from 'prop-types'
-import styled from 'styled-components'
-import { black, gray } from '../util/color'
-import { mediumUp } from '../util/media'
+import React from 'react';
+import { string } from 'prop-types';
+import styled from 'styled-components';
+import { black, gray } from '../util/color';
+import { mediumUp } from '../util/media';
 
 let propTypes = {
   __html: string.isRequired,
   pageClass: string.isRequired,
   pageTitle: string.isRequired
-}
+};
 
 let About = ({ __html, pageClass, pageTitle }) => {
-  document.title = `${pageTitle} | Rune Bear`
+  document.title = `${pageTitle} | Rune Bear`;
 
   return (
     <StyledAbout className={pageClass} dangerouslySetInnerHTML={{ __html }} />
-  )
-}
+  );
+};
 
 let StyledAbout = styled.div`
   align-items: center;
@@ -29,7 +29,7 @@ let StyledAbout = styled.div`
     max-width: 950px;
     padding: 30px 50px 50px;
     width: 100%;
-    
+
     @media ${mediumUp} {
       border: 1px solid ${gray};
     }
@@ -42,7 +42,6 @@ let StyledAbout = styled.div`
   }
 
   .container p {
-
     @media ${mediumUp} {
       padding-top: 10px;
     }
@@ -70,8 +69,8 @@ let StyledAbout = styled.div`
     margin-top: 30px;
     width: 300px;
   }
-`
+`;
 
-About.propTypes = propTypes
+About.propTypes = propTypes;
 
-export default About
+export default About;

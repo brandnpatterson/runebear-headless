@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import { gray } from '../util/color'
-import { mediumUp } from '../util/media'
+import styled from 'styled-components';
+import { gray } from '../util/color';
+import { mediumUp } from '../util/media';
 
 let StyledPost = styled.div`
   border-top: 1px solid ${gray};
@@ -38,6 +38,6 @@ let StyledPost = styled.div`
     flex-direction: column;
     margin-left: 22px;
   }
-`
+`;
 
-export default StyledPost
+export default StyledPost;
