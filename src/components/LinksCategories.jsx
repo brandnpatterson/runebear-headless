@@ -12,7 +12,7 @@ let LinksCategories = ({ post }) => {
       {post.categories &&
         post.categories.map((category, index) => {
           return (
-            <Link to={`/categories/${category}`} key={index}>
+            <Link to={`/weekly/categories/${category}`} key={index}>
               {'#' + category}&nbsp;
             </Link>
           );

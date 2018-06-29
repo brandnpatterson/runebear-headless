@@ -29,7 +29,7 @@ let FilterByTaxonomy = ({ taxonomy }) => {
             </div>
             {post.authorSlug !== '' ? (
               <div className="card-footer">
-                <Link to={`/authors/${post.authorSlug}`}>
+                <Link to={`/weekly/authors/${post.authorSlug}`}>
                   <p className="card-author">{post.author}</p>
                 </Link>
               </div>

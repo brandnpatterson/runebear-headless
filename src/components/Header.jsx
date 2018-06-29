@@ -11,10 +11,13 @@ let propTypes = {
 
 class Header extends Component {
   state = {
-    isActive: false
+    isActive: false,
+    requestMade: false
   };
 
   componentDidMount() {
+    this.getWeeklyPosts();
+
     window.addEventListener('resize', () => {
       if (window.innerWidth > 1023) {
         this.setState({
@@ -22,6 +25,18 @@ class Header extends Component {
         });
       }
     });
+  }
+
+  getWeeklyPosts() {
+    const { weeklyRequestMade } = this.props;
+
+    if (
+      window.location.pathname.substring(0, 7) === '/weekly' &&
+      weeklyRequestMade === false
+    ) {
+      this.props.getWeeklyPosts();
+      console.log(1);
+    }
   }
 
   setHeader = () => {
@@ -47,6 +62,8 @@ class Header extends Component {
   };
 
   toggleActive = () => {
+    this.getWeeklyPosts();
+
     // toggle active state only if screen is small
     if (window.innerWidth <= 1023) {
       this.setState({

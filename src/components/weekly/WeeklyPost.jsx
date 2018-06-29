@@ -87,7 +87,7 @@ let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
       {post.author ? (
         <p className="card-author">
           All from &nbsp;
-          <Link to={`/authors/${post.authorSlug}`}>{post.author}</Link>
+          <Link to={`/weekly/authors/${post.authorSlug}`}>{post.author}</Link>
         </p>
       ) : null}
     </StyledWeeklyWrapper>

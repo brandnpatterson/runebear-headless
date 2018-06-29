@@ -12,7 +12,7 @@ let LinksTag = ({ post }) => {
       {post.tagNames &&
         post.tagNames.map((tag, index) => {
           return (
-            <Link to={`/tags/${tag}`} key={index}>
+            <Link to={`/weekly/tags/${tag}`} key={index}>
               {'#' + tag}&nbsp;
             </Link>
           );

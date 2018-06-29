@@ -11,18 +11,42 @@ let propTypes = {
   weeklyPosts: array.isRequired
 };
 
-let WeeklyPostsContainer = ({ __html, pageClass, pageTitle, weeklyPosts }) => {
+let WeeklyPostsContainer = ({
+  __html,
+  pageClass,
+  pageTitle,
+  weeklyPosts,
+  weeklyRequestMade
+}) => {
   document.title = `${pageTitle} | Rune Bear`;
 
-  return (
-    <StyledWeeklyWrapper>
-      <StyledWeeklyPosts
-        className={pageClass}
-        dangerouslySetInnerHTML={{ __html }}
-      />
-      {weeklyPosts && <WeeklyPosts weeklyPosts={weeklyPosts} />}
-    </StyledWeeklyWrapper>
-  );
+  let waitForPosts = () => {
+    if (weeklyRequestMade) {
+      return (
+        <div>
+          <StyledWeeklyPosts
+            className={pageClass}
+            dangerouslySetInnerHTML={{ __html }}
+          />
+          {weeklyPosts && <WeeklyPosts weeklyPosts={weeklyPosts} />}
+        </div>
+      );
+    } else {
+      let style = {
+        marginTop: '250px',
+        display: 'flex',
+        height: '100vh',
+        justifyContent: 'center'
+      };
+
+      return (
+        <div style={style} className="loading">
+          <h2>Loading...</h2>
+        </div>
+      );
+    }
+  };
+  return <StyledWeeklyWrapper>{waitForPosts()}</StyledWeeklyWrapper>;
 };
 
 let StyledWeeklyWrapper = styled.div`

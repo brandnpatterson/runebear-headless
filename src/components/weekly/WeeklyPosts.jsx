@@ -33,7 +33,9 @@ let WeeklyPosts = ({ author, weeklyPosts }) => {
               {author === false ? null : (
                 <p className="card-author">
                   By&nbsp;
-                  <Link to={`authors/${post.authorSlug}`}>{post.author}</Link>
+                  <Link to={`/weekly/authors/${post.authorSlug}`}>
+                    {post.author}
+                  </Link>
                 </p>
               )}
               <div className="card-tags">
