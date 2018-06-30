@@ -4,9 +4,29 @@ import { injectGlobal } from 'styled-components';
 import { black } from './util/color';
 import { garamond } from './util/font';
 import { mediumUp } from './util/media';
-import App from './App';
 
-render(<App />, document.getElementById('root'));
+import App from './App';
+import { AppContainer } from 'react-hot-loader';
+import registerServiceWorker from './registerServiceWorker';
+
+const renderApp = () => {
+  render(
+    <AppContainer>
+      <App />
+    </AppContainer>,
+    document.getElementById('root')
+  );
+};
+
+registerServiceWorker();
+
+renderApp();
+
+if (module.hot) {
+  module.hot.accept('./App', () => {
+    renderApp();
+  });
+}
 
 injectGlobal`
   h1,
