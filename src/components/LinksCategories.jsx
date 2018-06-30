@@ -9,8 +9,8 @@ let propTypes = {
 let LinksCategories = ({ post }) => {
   return (
     <div>
-      {post.categories &&
-        post.categories.map((category, index) => {
+      {post.categoryType &&
+        post.categoryType.map((category, index) => {
           return (
             <Link to={`/weekly/categories/${category}`} key={index}>
               {'#' + category}&nbsp;

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { mediumUp, tiny } from './util/media';
 import { getTaxonomy, getPages, getWeeklyPosts } from './api';
 
-// Components
 import About from './components/About';
 import Author from './components/Author';
 import Footer from './components/Footer';
@@ -16,19 +15,20 @@ import Submit from './components/Submit';
 import Weekly from './components/weekly/WeeklyTag';
 import WeeklyCategory from './components/weekly/WeeklyCategory';
 import WeeklyPost from './components/weekly/WeeklyPost';
-import WeeklyPostsContainer from './components/weekly/WeeklyPostsContainer';
+import WeeklyPostsPage from './components/weekly/WeeklyPostsPage';
 
 class App extends React.Component {
   state = {
     authors: [],
-    categories: null,
     pages: null,
     header: null,
     loading: true,
     footer: null,
     tags: null,
-    weeklyPosts: null,
-    weeklyRequestMade: false
+    weekly_category_type: null,
+    weekly_total_pages: null,
+    weekly_posts: null,
+    weekly_requests_made: false
   };
 
   componentDidMount() {
@@ -36,26 +36,31 @@ class App extends React.Component {
       let { pages, header, footer } = data;
 
       this.setState({ pages, header, loading: false, footer: footer[0] });
+
+      this.getWeeklyPostsRequest();
     });
   }
 
-  getWeeklyPostsRequest = () => {
+  getWeeklyPostsRequest = page => {
     let allAuthors = [];
     let allCategories = [];
     let allTags = [];
 
-    getWeeklyPosts()
+    getWeeklyPosts(page)
       .then(weeklyPosts => {
-        this.setState({ weeklyPosts });
+        this.setState({
+          weekly_posts: weeklyPosts.data,
+          weekly_total_pages: weeklyPosts.totalPages
+        });
       })
       .then(() => {
-        let { weeklyPosts } = this.state;
+        let { weekly_posts } = this.state;
 
-        if (weeklyPosts.length === 0) {
+        if (weekly_posts.length === 0) {
           return;
         } else {
-          return weeklyPosts.map(post => {
-            let categories = [];
+          return weekly_posts.map(post => {
+            let categoryType = [];
             let tagNames = [];
 
             getTaxonomy('tags', post.id)
@@ -75,7 +80,7 @@ class App extends React.Component {
               .then(() =>
                 this.setState({
                   tags: allTags,
-                  weeklyPosts
+                  weekly_posts
                 })
               );
 
@@ -83,11 +88,11 @@ class App extends React.Component {
               .then(data => {
                 if (data) {
                   return data.map(tag => {
-                    categories.push(tag.name);
+                    categoryType.push(tag.name);
                     allCategories.push(tag.name);
                     allCategories = [...new Set(allCategories)].sort();
 
-                    return (post.categories = categories);
+                    return (post.categoryType = categoryType);
                   });
                 } else {
                   return allCategories.push('');
@@ -95,8 +100,8 @@ class App extends React.Component {
               })
               .then(() => {
                 this.setState({
-                  categories: allCategories,
-                  weeklyPosts
+                  weekly_category_type: allCategories,
+                  weekly_posts
                 });
               });
 
@@ -129,8 +134,8 @@ class App extends React.Component {
               .then(() => {
                 this.setState({
                   authors: allAuthors,
-                  weeklyPosts,
-                  weeklyRequestMade: true
+                  weekly_posts,
+                  weekly_requests_made: true
                 });
               });
           });
@@ -139,22 +144,22 @@ class App extends React.Component {
   };
 
   render() {
-    let { weeklyPosts, weeklyRequestMade } = this.state;
+    let { weekly_posts, weekly_requests_made } = this.state;
 
     let filterByAuthor = match =>
-      weeklyPosts &&
-      weeklyPosts.filter(post => post.authorSlug === match.params.author);
+      weekly_posts &&
+      weekly_posts.filter(post => post.authorSlug === match.params.author);
 
     let filterByPost = match =>
-      weeklyPosts &&
-      weeklyPosts.filter(post => post.slug === match.params.weeklyPost);
+      weekly_posts &&
+      weekly_posts.filter(post => post.slug === match.params.weeklyPost);
 
     let filterByCategory = match => {
       return (
-        weeklyPosts &&
-        weeklyPosts.map(post => {
-          if (post.categories) {
-            return post.categories.map(tag => {
+        weekly_posts &&
+        weekly_posts.map(post => {
+          if (post.categoryType) {
+            return post.categoryType.map(tag => {
               if (tag === match.params.category) {
                 return post;
               } else return null;
@@ -166,8 +171,8 @@ class App extends React.Component {
 
     let filterByTag = match => {
       return (
-        weeklyPosts &&
-        weeklyPosts.map(post => {
+        weekly_posts &&
+        weekly_posts.map(post => {
           if (post.tagNames) {
             return post.tagNames.map(tag => {
               if (tag === match.params.tagName) {
@@ -179,16 +184,16 @@ class App extends React.Component {
       );
     };
 
-    const Loading = () => {
+    let Loading = () => {
       return (
         <div
+          className="loading"
           style={{
             marginTop: '250px',
             display: 'flex',
             height: '100vh',
             justifyContent: 'center'
           }}
-          className="loading"
         >
           <h2>Loading...</h2>
         </div>
@@ -201,11 +206,7 @@ class App extends React.Component {
       return (
         <Router>
           <div id="router-container">
-            <Header
-              header={this.state.header}
-              getWeeklyPosts={this.getWeeklyPostsRequest}
-              weeklyRequestMade={this.state.weeklyRequestMade}
-            />
+            <Header header={this.state.header} />
             <Switch>
               {this.state.pages &&
                 this.state.pages.map(page => {
@@ -246,32 +247,22 @@ class App extends React.Component {
                         />
                       );
                     if (page.title.rendered === 'Weekly')
-                      if (weeklyRequestMade) {
+                      if (weekly_requests_made) {
                         return (
-                          this.state.weeklyPosts && (
-                            <WeeklyPostsContainer
+                          this.state.weekly_posts && (
+                            <WeeklyPostsPage
                               __html={page.content.rendered}
+                              clearWeeklyPosts={this.clearWeeklyPosts}
+                              getWeeklyPosts={this.getWeeklyPostsRequest}
                               pageClass={page.slug}
                               pageTitle={page.title.rendered}
-                              weeklyPosts={this.state.weeklyPosts}
-                              weeklyRequestMade={this.state.weeklyRequestMade}
+                              weeklyPosts={this.state.weekly_posts}
+                              weeklyTotalPages={this.state.weekly_total_pages}
                             />
                           )
                         );
                       } else {
-                        return (
-                          <div
-                            style={{
-                              marginTop: '250px',
-                              display: 'flex',
-                              height: '100vh',
-                              justifyContent: 'center'
-                            }}
-                            className="loading"
-                          >
-                            <h2>Loading...</h2>
-                          </div>
-                        );
+                        return <Loading />;
                       }
                   };
                   return (
@@ -289,81 +280,69 @@ class App extends React.Component {
                     />
                   );
                 })}
-              {weeklyRequestMade ? (
+              {weekly_requests_made ? (
                 <Route
                   exact
                   path={`/weekly/:weeklyPost`}
                   component={({ match }) => {
-                    if (weeklyRequestMade) {
-                      return (
-                        <WeeklyPost
-                          match={match}
-                          weeklyPost={filterByPost(match)}
-                          weeklyPosts={this.state.weeklyPosts}
-                        />
-                      );
-                    } else {
-                    }
+                    return (
+                      <WeeklyPost
+                        match={match}
+                        weeklyPost={filterByPost(match)}
+                        weeklyPosts={this.state.weekly_posts}
+                      />
+                    );
                   }}
                 />
               ) : (
                 <Loading />
               )}
-              {weeklyRequestMade ? (
+              {weekly_requests_made ? (
                 <Route
                   exact
                   path={`/weekly/authors/:author`}
                   component={({ match }) => {
-                    if (weeklyRequestMade) {
-                      return <Author weeklyByAuthor={filterByAuthor(match)} />;
-                    } else {
-                    }
+                    return <Author weeklyByAuthor={filterByAuthor(match)} />;
                   }}
                 />
               ) : (
                 <Loading />
               )}
-              {weeklyRequestMade ? (
+              {weekly_requests_made ? (
                 <Route
                   exact
                   path={`/weekly/categories/:category`}
                   component={({ match }) => {
-                    if (weeklyRequestMade) {
-                      return (
-                        <WeeklyCategory
-                          match={match}
-                          categories={this.state.categories}
-                          weeklyByCategory={filterByCategory(match)}
-                        />
-                      );
-                    } else {
-                    }
+                    return (
+                      <WeeklyCategory
+                        match={match}
+                        categoryType={this.state.weekly_category_type}
+                        weeklyByCategory={filterByCategory(match)}
+                      />
+                    );
                   }}
                 />
               ) : (
                 <Loading />
               )}
-              {weeklyRequestMade ? (
+              {weekly_requests_made ? (
                 <Route
                   exact
                   path={`/weekly/tags/:tagName`}
                   component={({ match }) => {
-                    if (weeklyRequestMade) {
-                      return (
-                        <Weekly
-                          match={match}
-                          tags={this.state.tags}
-                          weeklyByTag={filterByTag(match)}
-                        />
-                      );
-                    } else {
-                    }
+                    return (
+                      <Weekly
+                        match={match}
+                        tags={this.state.tags}
+                        weeklyByTag={filterByTag(match)}
+                      />
+                    );
                   }}
                 />
               ) : (
                 <Loading />
               )}
-              {weeklyRequestMade && <Route path="*" component={NotFound} />}
+              {weekly_requests_made && <Route path="*" component={NotFound} />}
             </Switch>
             <Footer footer={this.state.footer} />
           </div>
@@ -400,6 +379,13 @@ let StyledComponent = styled.div`
     img:nth-child(2) {
       margin-bottom: 50px;
     }
+  }
+
+  .loading {
+    margintop: 250px;
+    display: flex;
+    height: 100vh;
+    justifycontent: center;
   }
 
   .subtitle {

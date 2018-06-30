@@ -26,11 +26,18 @@ let getPages = () => {
   });
 };
 
-let getWeeklyPosts = () => {
+let getWeeklyPosts = (page = 1) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${endpoint('weekly_posts')}`)
-      .then(res => resolve(res.data))
+      .get(`${endpoint('weekly_posts')}?per_page=2&page=${page}`)
+      .then(res => {
+        let totalPages = Number(res.headers['x-wp-totalpages']);
+
+        resolve({
+          data: res.data,
+          totalPages
+        });
+      })
       .catch(err => reject(err));
   });
 };
