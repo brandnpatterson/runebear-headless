@@ -3,13 +3,14 @@ import { gray } from '../util/color';
 import { mediumUp } from '../util/media';
 
 let StyledPost = styled.div`
+  align-items: left;
   border-top: 1px solid ${gray};
   display: flex;
   flex-direction: column;
-  align-items: left;
+  height: 400px;
   margin-top: 50px;
-  position: relative;
   padding: 100px 0 50px;
+  position: relative;
 
   @media ${mediumUp} {
     border: 1px solid ${gray};
@@ -22,9 +23,9 @@ let StyledPost = styled.div`
     font-weight: bold;
     position: absolute;
     right: 70px;
-    top: 40px;
     text-align: right;
     text-transform: uppercase;
+    top: 40px;
   }
 
   .card-read-more {
@@ -33,7 +34,7 @@ let StyledPost = styled.div`
   }
 
   .card-footer {
-    border: none;
+    border: 0;
     display: flex;
     flex-direction: column;
     margin-left: 22px;

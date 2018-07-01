@@ -3,8 +3,8 @@ import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import LinksCategories from '../LinksCategories';
-import StyledPost from '../../style-templates/StyledPost';
 import LinksTags from '../LinksTags';
+import StyledPost from '../../style-templates/StyledPost';
 
 let propTypes = {
   weeklyPosts: array.isRequired
@@ -12,11 +12,12 @@ let propTypes = {
 
 class WeeklyPosts extends React.Component {
   render() {
-    let { author, weeklyPosts } = this.props;
+    let { weeklyPosts } = this.props;
 
     return (
       <div>
         {weeklyPosts.map(post => {
+          let author = post.author;
           let trimmed = post.content.rendered.substr(0, 345);
           let excerpt = trimmed.substr(
             0,
@@ -35,9 +36,9 @@ class WeeklyPosts extends React.Component {
               <div className="card-footer">
                 {author === false ? null : (
                   <p className="card-author">
-                    {post.author ? 'By ' : 'Loading Author...'}
+                    {author ? 'By ' : 'Loading Author...'}
                     <Link to={`/weekly/authors/${post.authorSlug}`}>
-                      {post.author}
+                      {author}
                     </Link>
                   </p>
                 )}

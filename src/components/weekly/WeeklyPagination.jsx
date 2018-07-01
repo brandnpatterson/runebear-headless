@@ -10,8 +10,11 @@ let propTypes = {
 class WeeklyPagination extends Component {
   onPageSelect = event => {
     let dataId = event.target.dataset.id;
-    this.props.getWeeklyPosts(dataId);
-    this.props.onSelectWeeklyPage(Number(dataId));
+
+    if (event.target.classList.contains('is-current') === false) {
+      this.props.getWeeklyPosts(dataId);
+      this.props.onSelectWeeklyPage(Number(dataId));
+    }
   };
 
   onNextPage = () => {

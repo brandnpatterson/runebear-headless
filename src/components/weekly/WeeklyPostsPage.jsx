@@ -2,6 +2,7 @@ import React from 'react';
 import { array, func, number, string } from 'prop-types';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
+
 import WeeklyPosts from './WeeklyPosts';
 import WeeklyPagination from './WeeklyPagination';
 
@@ -48,6 +49,7 @@ let StyledWeeklyWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  margin-bottom: 40px;
 
   .card-tags {
     display: flex;
