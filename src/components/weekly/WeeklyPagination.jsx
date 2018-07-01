@@ -3,77 +3,93 @@ import { func, number } from 'prop-types';
 
 let propTypes = {
   getWeeklyPosts: func.isRequired,
+  weeklyPage: number.isRequired,
   weeklyTotalPages: number.isRequired
 };
 
 class WeeklyPagination extends Component {
-  state = {
-    currentPage: 1
+  onPageSelect = event => {
+    let dataId = event.target.dataset.id;
+    this.props.getWeeklyPosts(dataId);
+    this.props.onSelectWeeklyPage(Number(dataId));
   };
 
-  changePage = page => {
-    this.props.getWeeklyPosts(page);
+  onNextPage = () => {
+    if (Number(this.props.weeklyPage) !== Number(this.props.weeklyTotalPages)) {
+      this.props.onNextWeeklyPage();
+    }
   };
 
-  changePagination = page => {
-    this.setState({ currentPage: page });
+  onPreviousPage = () => {
+    if (Number(this.props.weeklyPage) !== 1) {
+      this.props.onPreviousWeeklyPage();
+    }
   };
 
   render() {
-    let { weeklyTotalPages } = this.props;
+    let NextButton = () => {
+      let isDisabled =
+        Number(this.props.weeklyPage) === Number(this.props.weeklyTotalPages)
+          ? true
+          : false;
 
-    let Pagination = () => {
-      let pagination = [];
-
-      for (let i = 0; i < weeklyTotalPages; i++) {
-        let page = i + 1;
-        pagination.push(page);
-      }
-
-      console.log(pagination);
-
-      let navigation = pagination.map(page => {
-        return (
-          <li key={page}>
-            <a
-              onClick={() => {
-                this.changePage(page);
-                this.changePagination(page);
-              }}
-              className={
-                'pagination-link' +
-                (page === this.state.currentPage ? ' is-current' : '')
-              }
-              aria-label={`Page ${page}`}
-              aria-current="page"
-            >
-              {page}
-            </a>
-          </li>
-        );
-      });
-
-      return navigation;
+      return (
+        <a
+          className="pagination-next"
+          onClick={this.onNextPage}
+          disabled={isDisabled}
+        >
+          Next page
+        </a>
+      );
     };
 
     let PreviousButton = () => {
-      let isDisabled = this.state.currentPage === 1 ? true : false;
+      let isDisabled = Number(this.props.weeklyPage) === 1 ? true : false;
 
       return (
         <a
           className="pagination-previous"
           title="This is the first page"
           disabled={isDisabled}
+          onClick={this.onPreviousPage}
         >
           Previous
         </a>
       );
     };
 
+    let Pagination = () => {
+      let listItems = [];
+
+      for (var i = 0; i < this.props.weeklyTotalPages; i++) {
+        let page = i + 1;
+
+        listItems.push(
+          <li key={page}>
+            <a
+              className={
+                'pagination-link' +
+                (page === Number(this.props.weeklyPage) ? ' is-current' : '')
+              }
+              aria-label="Page 1"
+              aria-current="page"
+              onClick={this.onPageSelect}
+              data-id={page}
+            >
+              {page}
+            </a>
+          </li>
+        );
+      }
+
+      return listItems;
+    };
+
     return (
       <nav className="pagination" aria-label="pagination">
         <PreviousButton />
-        <a className="pagination-next">Next page</a>
+        <NextButton />
         <ul className="pagination-list">
           <Pagination />
         </ul>

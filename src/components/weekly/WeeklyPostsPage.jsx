@@ -8,35 +8,36 @@ import WeeklyPagination from './WeeklyPagination';
 let propTypes = {
   __html: string.isRequired,
   getWeeklyPosts: func.isRequired,
+  onNextWeeklyPage: func.isRequired,
+  onPreviousWeeklyPage: func.isRequired,
+  onSelectWeeklyPage: func.isRequired,
   pageClass: string.isRequired,
   pageTitle: string.isRequired,
+  weeklyPage: number.isRequired,
   weeklyPosts: array.isRequired,
   weeklyTotalPages: number.isRequired
 };
 
 class WeeklyPostsPage extends React.Component {
   render() {
-    let {
-      __html,
-      getWeeklyPosts,
-      pageClass,
-      pageTitle,
-      weeklyPosts,
-      weeklyTotalPages
-    } = this.props;
+    let { __html, weeklyPosts } = this.props;
 
-    document.title = `${pageTitle} | Rune Bear`;
+    document.title = `${this.props.pageTitle} | Rune Bear`;
 
     return (
       <StyledWeeklyWrapper>
         <StyledWeeklyPosts
-          className={pageClass}
+          className={this.props.pageClass}
           dangerouslySetInnerHTML={{ __html }}
         />
         {weeklyPosts && <WeeklyPosts weeklyPosts={weeklyPosts} />}
         <WeeklyPagination
-          getWeeklyPosts={getWeeklyPosts}
-          weeklyTotalPages={weeklyTotalPages}
+          onNextWeeklyPage={this.props.onNextWeeklyPage}
+          onPreviousWeeklyPage={this.props.onPreviousWeeklyPage}
+          onSelectWeeklyPage={this.props.onSelectWeeklyPage}
+          getWeeklyPosts={this.props.getWeeklyPosts}
+          weeklyPage={this.props.weeklyPage}
+          weeklyTotalPages={this.props.weeklyTotalPages}
         />
       </StyledWeeklyWrapper>
     );

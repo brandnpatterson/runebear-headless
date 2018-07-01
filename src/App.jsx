@@ -27,6 +27,7 @@ class App extends React.Component {
     tags: null,
     weekly_category_type: null,
     weekly_total_pages: null,
+    weekly_page: 1,
     weekly_posts: null,
     weekly_requests_made: false
   };
@@ -40,6 +41,27 @@ class App extends React.Component {
       this.getWeeklyPostsRequest();
     });
   }
+
+  onSelectWeeklyPage = page => {
+    window.scrollTo(0, 0);
+    this.setState({ weekly_page: page });
+  };
+
+  onNextWeeklyPage = () => {
+    let nextPage = this.state.weekly_page + 1;
+    window.scrollTo(0, 0);
+
+    this.setState({ weekly_page: nextPage });
+    this.getWeeklyPostsRequest(nextPage);
+  };
+
+  onPreviousWeeklyPage = () => {
+    window.scrollTo(0, 0);
+    let prevPage = this.state.weekly_page - 1;
+
+    this.setState({ weekly_page: prevPage });
+    this.getWeeklyPostsRequest(prevPage);
+  };
 
   getWeeklyPostsRequest = page => {
     let allAuthors = [];
@@ -252,10 +274,14 @@ class App extends React.Component {
                           this.state.weekly_posts && (
                             <WeeklyPostsPage
                               __html={page.content.rendered}
+                              onNextWeeklyPage={this.onNextWeeklyPage}
+                              onPreviousWeeklyPage={this.onPreviousWeeklyPage}
+                              onSelectWeeklyPage={this.onSelectWeeklyPage}
                               clearWeeklyPosts={this.clearWeeklyPosts}
                               getWeeklyPosts={this.getWeeklyPostsRequest}
                               pageClass={page.slug}
                               pageTitle={page.title.rendered}
+                              weeklyPage={this.state.weekly_page}
                               weeklyPosts={this.state.weekly_posts}
                               weeklyTotalPages={this.state.weekly_total_pages}
                             />
