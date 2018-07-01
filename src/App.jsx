@@ -43,20 +43,17 @@ class App extends React.Component {
   }
 
   onSelectWeeklyPage = page => {
-    window.scrollTo(0, 0);
     this.setState({ weekly_page: page });
   };
 
   onNextWeeklyPage = () => {
     let nextPage = this.state.weekly_page + 1;
-    window.scrollTo(0, 0);
 
     this.setState({ weekly_page: nextPage });
     this.getWeeklyPostsRequest(nextPage);
   };
 
   onPreviousWeeklyPage = () => {
-    window.scrollTo(0, 0);
     let prevPage = this.state.weekly_page - 1;
 
     this.setState({ weekly_page: prevPage });

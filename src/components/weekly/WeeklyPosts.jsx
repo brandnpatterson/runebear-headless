@@ -35,7 +35,7 @@ class WeeklyPosts extends React.Component {
               <div className="card-footer">
                 {author === false ? null : (
                   <p className="card-author">
-                    {post.author ? 'By ' : null}
+                    {post.author ? 'By ' : 'Loading Author...'}
                     <Link to={`/weekly/authors/${post.authorSlug}`}>
                       {post.author}
                     </Link>

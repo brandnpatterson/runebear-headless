@@ -15,7 +15,7 @@ class WeeklyPagination extends Component {
   };
 
   onNextPage = () => {
-    if (Number(this.props.weeklyPage) !== Number(this.props.weeklyTotalPages)) {
+    if (this.props.weeklyPage !== this.props.weeklyTotalPages) {
       this.props.onNextWeeklyPage();
     }
   };
@@ -29,9 +29,7 @@ class WeeklyPagination extends Component {
   render() {
     let NextButton = () => {
       let isDisabled =
-        Number(this.props.weeklyPage) === Number(this.props.weeklyTotalPages)
-          ? true
-          : false;
+        this.props.weeklyPage === this.props.weeklyTotalPages ? true : false;
 
       return (
         <a
@@ -91,7 +89,7 @@ class WeeklyPagination extends Component {
         <PreviousButton />
         <NextButton />
         <ul className="pagination-list">
-          <Pagination />
+          {this.props.weeklyTotalPages > 2 ? <Pagination /> : null}
         </ul>
       </nav>
     );
