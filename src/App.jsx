@@ -24,12 +24,12 @@ class App extends React.Component {
     header: null,
     loading: true,
     footer: null,
-    tags: null,
     weekly_category_type: null,
     weekly_total_pages: null,
     weekly_page: 1,
     weekly_posts: null,
-    weekly_requests_made: false
+    weekly_requests_made: false,
+    weekly_tags: null
   };
 
   componentDidMount() {
@@ -98,7 +98,7 @@ class App extends React.Component {
               })
               .then(() =>
                 this.setState({
-                  tags: allTags,
+                  weekly_tags: allTags,
                   weekly_posts
                 })
               );
@@ -356,7 +356,7 @@ class App extends React.Component {
                     return (
                       <Weekly
                         match={match}
-                        tags={this.state.tags}
+                        tags={this.state.weekly_tags}
                         weeklyByTag={filterByTag(match)}
                       />
                     );
