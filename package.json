@@ -1,12 +1,12 @@
 {
   "name": "runebear",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
-    "start": "npm run stylelint && react-app-rewired start",
     "build": "react-app-rewired build && npm run create-cname",
     "create-cname": "echo 'test-runebear.surge.sh' > build/CNAME",
     "deploy": "npm run build && surge build",
+    "start": "npm run stylelint && react-app-rewired start",
     "stylelint": "stylelint src/**/*.jsx && stylelint src/**/*.js",
     "test": "react-app-rewired test --env=jsdom"
   },
