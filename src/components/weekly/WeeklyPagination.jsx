@@ -9,6 +9,8 @@ let propTypes = {
 
 class WeeklyPagination extends Component {
   onPageSelect = event => {
+    window.scrollTo(0, 0);
+
     let dataId = event.target.dataset.id;
 
     if (event.target.classList.contains('is-current') === false) {
@@ -18,12 +20,16 @@ class WeeklyPagination extends Component {
   };
 
   onNextPage = () => {
+    window.scrollTo(0, 0);
+
     if (this.props.weeklyPage !== this.props.weeklyTotalPages) {
       this.props.onNextWeeklyPage();
     }
   };
 
   onPreviousPage = () => {
+    window.scrollTo(0, 0);
+
     if (Number(this.props.weeklyPage) !== 1) {
       this.props.onPreviousWeeklyPage();
     }
@@ -87,12 +93,13 @@ class WeeklyPagination extends Component {
       return listItems;
     };
 
+    console.log(this.props.weeklyTotalPages);
     return (
       <nav className="pagination" aria-label="pagination">
         <PreviousButton />
         <NextButton />
         <ul className="pagination-list">
-          {this.props.weeklyTotalPages > 2 ? <Pagination /> : null}
+          {this.props.weeklyTotalPages >= 2 ? <Pagination /> : null}
         </ul>
       </nav>
     );

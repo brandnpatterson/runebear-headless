@@ -7,7 +7,7 @@ let StyledPost = styled.div`
   border-top: 1px solid ${gray};
   display: flex;
   flex-direction: column;
-  height: 400px;
+  min-height: 400px;
   margin-top: 50px;
   padding: 100px 0 50px;
   position: relative;
