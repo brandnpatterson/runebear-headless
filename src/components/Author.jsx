@@ -31,7 +31,7 @@ class FilterByAuthor extends React.Component {
           <h1 className="card-title">{author}</h1>
           <p className="card-author-description">{authorDesc}</p>
         </div>
-        <WeeklyPosts weeklyPosts={weeklyPosts} author={false} />
+        <WeeklyPosts weeklyPosts={weeklyPosts} notShowingAuthor={true} />
       </StyledAuthor>
     );
   }

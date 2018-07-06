@@ -12,7 +12,7 @@ let propTypes = {
 
 class WeeklyPosts extends React.Component {
   render() {
-    let { weeklyPosts } = this.props;
+    let { notShowingAuthor, weeklyPosts } = this.props;
 
     return (
       <div>
@@ -34,7 +34,7 @@ class WeeklyPosts extends React.Component {
                 </Link>
               </div>
               <div className="card-footer">
-                {author === false ? null : (
+                {notShowingAuthor === true || author === false ? null : (
                   <p className="card-author">
                     {author ? 'By ' : 'Loading Author...'}
                     <Link to={`/weekly/authors/${post.authorSlug}`}>

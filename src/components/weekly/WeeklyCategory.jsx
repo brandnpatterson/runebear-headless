@@ -19,7 +19,7 @@ let WeeklyCategory = ({ match, weeklyByCategory }) => {
     <StyledWeeklyCategory>
       <div className="categories-header">
         <h1>
-          <strong>{match.params.categoryType.toUpperCase()}</strong>
+          <strong>{match.params.category.toUpperCase()}</strong>
         </h1>
       </div>
       <FilterByTaxonomy taxonomy={taxonomy} />

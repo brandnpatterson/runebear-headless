@@ -40,9 +40,7 @@ class App extends React.Component {
       this.setState({ pages, header, loading: false, footer: footer[0] });
 
       this.getWeeklyPostsRequest();
-      getWeeklyPosts(1, '').then(weeklyPosts => {
-        this.setState({ weekly_posts_all: weeklyPosts.data });
-      });
+      this.getWeeklyPostsRequestAll();
     });
   }
 
@@ -62,6 +60,104 @@ class App extends React.Component {
 
     this.setState({ weekly_page: prevPage });
     this.getWeeklyPostsRequest(prevPage);
+  };
+
+  getWeeklyPostsRequestAll = page => {
+    let allAuthors = [];
+    let allCategories = [];
+    let allTags = [];
+
+    getWeeklyPosts(page, '')
+      .then(weeklyPosts => {
+        this.setState({
+          weekly_posts_all: weeklyPosts.data
+        });
+      })
+      .then(() => {
+        let { weekly_posts_all } = this.state;
+
+        if (weekly_posts_all.length === 0) {
+          return;
+        } else {
+          return weekly_posts_all.map(post => {
+            let categoryType = [];
+            let tagNames = [];
+
+            getTaxonomy('tags', post.id)
+              .then(data => {
+                if (data) {
+                  return data.map(tag => {
+                    tagNames.push(tag.name);
+                    allTags.push(tag.name);
+                    allTags = [...new Set(allTags)].sort();
+
+                    return (post.tagNames = tagNames);
+                  });
+                } else {
+                  return allTags.push('');
+                }
+              })
+              .then(() =>
+                this.setState({
+                  weekly_tags: allTags
+                })
+              );
+
+            getTaxonomy('categories', post.id)
+              .then(data => {
+                if (data) {
+                  return data.map(tag => {
+                    categoryType.push(tag.name);
+                    allCategories.push(tag.name);
+                    allCategories = [...new Set(allCategories)].sort();
+
+                    return (post.categoryType = categoryType);
+                  });
+                } else {
+                  return allCategories.push('');
+                }
+              })
+              .then(() => {
+                this.setState({
+                  weekly_category_type: allCategories
+                });
+              });
+
+            return getTaxonomy('post_author', post.id)
+              .then(data => {
+                if (data && data[0] && data[0].name) {
+                  let checkAndAdd = name => {
+                    let found = allAuthors.some(el => el.name === name);
+
+                    if (!found) {
+                      allAuthors.push({
+                        name: data[0].name,
+                        description: data[0].description,
+                        slug: data[0].slug
+                      });
+                    }
+                  };
+
+                  checkAndAdd(data[0].name);
+
+                  post.author = data[0].name;
+                  post.authorSlug = data[0].slug;
+                  post.authorDesc = data[0].description;
+                } else {
+                  post.author = '';
+                  post.authorSlug = '';
+                  post.authorDesc = '';
+                }
+              })
+              .then(() => {
+                this.setState({
+                  authors: allAuthors,
+                  weekly_requests_made: true
+                });
+              });
+          });
+        }
+      });
   };
 
   getWeeklyPostsRequest = page => {
@@ -102,8 +198,7 @@ class App extends React.Component {
               })
               .then(() =>
                 this.setState({
-                  weekly_tags: allTags,
-                  weekly_posts
+                  weekly_tags: allTags
                 })
               );
 
@@ -123,8 +218,7 @@ class App extends React.Component {
               })
               .then(() => {
                 this.setState({
-                  weekly_category_type: allCategories,
-                  weekly_posts
+                  weekly_category_type: allCategories
                 });
               });
 
@@ -157,7 +251,6 @@ class App extends React.Component {
               .then(() => {
                 this.setState({
                   authors: allAuthors,
-                  weekly_posts,
                   weekly_requests_made: true
                 });
               });
@@ -182,8 +275,8 @@ class App extends React.Component {
         weekly_posts_all &&
         weekly_posts_all.map(post => {
           if (post.categoryType) {
-            return post.categoryType.map(tag => {
-              if (tag === match.params.category) {
+            return post.categoryType.map(category => {
+              if (category === match.params.category) {
                 return post;
               } else return null;
             });
