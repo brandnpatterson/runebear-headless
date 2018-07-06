@@ -9,7 +9,7 @@ import App from './App';
 import { AppContainer } from 'react-hot-loader';
 import registerServiceWorker from './registerServiceWorker';
 
-const renderApp = () => {
+let renderApp = () => {
   render(
     <AppContainer>
       <App />

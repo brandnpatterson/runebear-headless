@@ -28,6 +28,7 @@ class App extends React.Component {
     weekly_total_pages: null,
     weekly_page: 1,
     weekly_posts: null,
+    weekly_posts_all: null,
     weekly_requests_made: false,
     weekly_tags: null
   };
@@ -39,6 +40,9 @@ class App extends React.Component {
       this.setState({ pages, header, loading: false, footer: footer[0] });
 
       this.getWeeklyPostsRequest();
+      getWeeklyPosts(1, '').then(weeklyPosts => {
+        this.setState({ weekly_posts_all: weeklyPosts.data });
+      });
     });
   }
 
@@ -163,20 +167,20 @@ class App extends React.Component {
   };
 
   render() {
-    let { weekly_posts, weekly_requests_made } = this.state;
+    let { weekly_posts_all, weekly_requests_made } = this.state;
 
     let filterByAuthor = match =>
-      weekly_posts &&
-      weekly_posts.filter(post => post.authorSlug === match.params.author);
+      weekly_posts_all &&
+      weekly_posts_all.filter(post => post.authorSlug === match.params.author);
 
     let filterByPost = match =>
-      weekly_posts &&
-      weekly_posts.filter(post => post.slug === match.params.weeklyPost);
+      weekly_posts_all &&
+      weekly_posts_all.filter(post => post.slug === match.params.weeklyPost);
 
     let filterByCategory = match => {
       return (
-        weekly_posts &&
-        weekly_posts.map(post => {
+        weekly_posts_all &&
+        weekly_posts_all.map(post => {
           if (post.categoryType) {
             return post.categoryType.map(tag => {
               if (tag === match.params.category) {
@@ -190,8 +194,8 @@ class App extends React.Component {
 
     let filterByTag = match => {
       return (
-        weekly_posts &&
-        weekly_posts.map(post => {
+        weekly_posts_all &&
+        weekly_posts_all.map(post => {
           if (post.tagNames) {
             return post.tagNames.map(tag => {
               if (tag === match.params.tagName) {
@@ -310,9 +314,8 @@ class App extends React.Component {
                   component={({ match }) => {
                     return (
                       <WeeklyPost
-                        match={match}
                         weeklyPost={filterByPost(match)}
-                        weeklyPosts={this.state.weekly_posts}
+                        weeklyPosts={this.state.weekly_posts_all}
                       />
                     );
                   }}

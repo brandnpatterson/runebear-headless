@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, object } from 'prop-types';
+import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { gray } from '../../util/color';
@@ -10,7 +10,6 @@ import LinksTags from '../LinksTags';
 import StyledPost from '../../style-templates/StyledPost';
 
 let propTypes = {
-  match: object.isRequired,
   weeklyPost: array.isRequired,
   weeklyPosts: array.isRequired
 };

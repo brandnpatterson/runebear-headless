@@ -93,15 +93,18 @@ class WeeklyPagination extends Component {
       return listItems;
     };
 
-    console.log(this.props.weeklyTotalPages);
     return (
-      <nav className="pagination" aria-label="pagination">
-        <PreviousButton />
-        <NextButton />
-        <ul className="pagination-list">
-          {this.props.weeklyTotalPages >= 2 ? <Pagination /> : null}
-        </ul>
-      </nav>
+      <div>
+        {this.props.weeklyTotalPages >= 2 && (
+          <nav className="pagination" aria-label="pagination">
+            <PreviousButton />
+            <NextButton />
+            <ul className="pagination-list">
+              <Pagination />
+            </ul>
+          </nav>
+        )}
+      </div>
     );
   }
 }
