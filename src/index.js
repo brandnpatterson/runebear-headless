@@ -68,6 +68,21 @@ injectGlobal`
       font-size: 20px;
     }
   }
+
+  img {
+    height: 200px;
+    width: 200px;
+    @media ${mediumUp} {
+      height: 400px;
+      width: 400px;
+    }
+  }
+  
+  .flex-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
   
   .featured-hero {
     align-items: center;
@@ -91,15 +106,6 @@ injectGlobal`
     img {
       height: 150px;
       width: 150px;
-    }
-  }
-
-  img {
-    height: 200px;
-    width: 200px;
-    @media ${mediumUp} {
-      height: 400px;
-      width: 400px;
     }
   }
 `;

@@ -6,20 +6,20 @@ import { mediumUp } from '../../util/media';
 import WeeklyPosts from './WeeklyPosts';
 import WeeklyPagination from './WeeklyPagination';
 
-let propTypes = {
-  __html: string.isRequired,
-  getWeeklyPosts: func.isRequired,
-  onNextWeeklyPage: func.isRequired,
-  onPreviousWeeklyPage: func.isRequired,
-  onSelectWeeklyPage: func.isRequired,
-  pageClass: string.isRequired,
-  pageTitle: string.isRequired,
-  weeklyPage: number.isRequired,
-  weeklyPosts: array.isRequired,
-  weeklyTotalPages: number.isRequired
-};
-
 class WeeklyPostsPage extends React.Component {
+  static propTypes = {
+    __html: string.isRequired,
+    getWeeklyPosts: func.isRequired,
+    onNextWeeklyPage: func.isRequired,
+    onPreviousWeeklyPage: func.isRequired,
+    onSelectWeeklyPage: func.isRequired,
+    pageClass: string.isRequired,
+    pageTitle: string.isRequired,
+    weeklyPage: number.isRequired,
+    weeklyPosts: array.isRequired,
+    weeklyTotalPages: number.isRequired
+  };
+
   render() {
     let { __html, weeklyPosts } = this.props;
 
@@ -65,7 +65,5 @@ let StyledWeeklyPosts = styled.div`
     max-width: 900px;
   }
 `;
-
-WeeklyPostsPage.propTypes = propTypes;
 
 export default WeeklyPostsPage;

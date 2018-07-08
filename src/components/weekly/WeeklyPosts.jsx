@@ -2,15 +2,15 @@ import React from 'react';
 import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import LinksCategories from '../LinksCategories';
-import LinksTags from '../LinksTags';
+import LinksCategories from '../common/LinksCategories';
+import LinksTags from '../common/LinksTags';
 import StyledPost from '../../style-templates/StyledPost';
 
-let propTypes = {
-  weeklyPosts: array.isRequired
-};
-
 class WeeklyPosts extends React.Component {
+  static propTypes = {
+    weeklyPosts: array.isRequired
+  };
+
   render() {
     let { notShowingAuthor, weeklyPosts } = this.props;
 
@@ -54,7 +54,5 @@ class WeeklyPosts extends React.Component {
     );
   }
 }
-
-WeeklyPosts.propTypes = propTypes;
 
 export default WeeklyPosts;

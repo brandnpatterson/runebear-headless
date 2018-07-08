@@ -2,7 +2,7 @@ import React from 'react';
 import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import StyledPost from '../style-templates/StyledPost';
+import StyledPost from '../../style-templates/StyledPost';
 
 let propTypes = {
   taxonomy: array.isRequired

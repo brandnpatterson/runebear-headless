@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import { dark, light } from '../util/color';
 import { mediumUp } from '../util/media';
 
-let propTypes = {
-  header: array.isRequired
-};
-
 class Header extends Component {
+  static propTypes = {
+    header: array.isRequired
+  };
+
   state = {
     isActive: false,
     requestMade: false
@@ -159,7 +159,5 @@ let StyledHeader = styled.header`
     top: 60px;
   }
 `;
-
-Header.propTypes = propTypes;
 
 export default Header;

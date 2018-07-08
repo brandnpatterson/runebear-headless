@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { func, number } from 'prop-types';
 
-let propTypes = {
-  getWeeklyPosts: func.isRequired,
-  weeklyPage: number.isRequired,
-  weeklyTotalPages: number.isRequired
-};
-
 class WeeklyPagination extends Component {
+  static propTypes = {
+    getWeeklyPosts: func.isRequired,
+    weeklyPage: number.isRequired,
+    weeklyTotalPages: number.isRequired
+  };
+
   onPageSelect = event => {
     window.scrollTo(0, 0);
 
@@ -108,7 +108,5 @@ class WeeklyPagination extends Component {
     );
   }
 }
-
-WeeklyPagination.propTypes = propTypes;
 
 export default WeeklyPagination;

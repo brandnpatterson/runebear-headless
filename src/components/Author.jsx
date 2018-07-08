@@ -5,11 +5,11 @@ import { mediumUp } from '../util/media';
 
 import WeeklyPosts from './weekly/WeeklyPosts';
 
-let propTypes = {
-  weeklyByAuthor: array.isRequired
-};
-
 class FilterByAuthor extends React.Component {
+  static propTypes = {
+    weeklyByAuthor: array.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -78,7 +78,5 @@ let StyledAuthor = styled.div`
     }
   }
 `;
-
-FilterByAuthor.propTypes = propTypes;
 
 export default FilterByAuthor;

@@ -2,7 +2,7 @@ import React from 'react';
 import { array, object } from 'prop-types';
 import styled from 'styled-components';
 
-import FilterByTaxonomy from '../FilterByTaxonomy';
+import FilterByTaxonomy from '../common/FilterByTaxonomy';
 
 let propTypes = {
   match: object.isRequired,

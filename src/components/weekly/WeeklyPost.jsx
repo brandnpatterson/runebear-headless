@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { gray } from '../../util/color';
 import { mediumUp } from '../../util/media';
 
-import LinksCategories from '../LinksCategories';
-import LinksTags from '../LinksTags';
+import LinksCategories from '../common/LinksCategories';
+import LinksTags from '../common/LinksTags';
 import StyledPost from '../../style-templates/StyledPost';
 
 let propTypes = {
