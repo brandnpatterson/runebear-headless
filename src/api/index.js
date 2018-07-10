@@ -8,19 +8,19 @@ let getPages = () => {
     axios
       .get(`${endpoint('pages')}`)
       .then(res => {
-        let pages = res.data
-          .filter(d => d.title.rendered !== 'Footer')
-          .map(d => d);
+        let pages = res.data.filter(d => d.title.rendered !== 'Footer');
 
         let header = pages
           .sort((a, b) => a.id - b.id)
           .map(d => d.title.rendered);
 
-        let footer = res.data
-          .filter(d => d.title.rendered === 'Footer')
-          .map(d => d.content.rendered);
+        let footer = res.data.filter(d => d.title.rendered === 'Footer');
 
-        resolve({ pages, footer, header });
+        resolve({
+          pages,
+          footer: footer[0].content.rendered,
+          header
+        });
       })
       .catch(err => reject(err));
   });

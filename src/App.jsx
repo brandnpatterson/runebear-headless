@@ -37,7 +37,7 @@ class App extends React.Component {
     getPages().then(data => {
       let { pages, header, footer } = data;
 
-      this.setState({ pages, header, loading: false, footer: footer[0] });
+      this.setState({ pages, header, loading: false, footer: footer });
 
       this.getWeeklyPostsRequest();
       this.getWeeklyPostsRequestAll();
