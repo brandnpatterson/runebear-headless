@@ -13,14 +13,14 @@ let Home = ({ __html, pageClass, pageTitle }) => {
   document.title = `${pageTitle} | Rune Bear`;
 
   return (
-    <StyledHome className={pageClass} dangerouslySetInnerHTML={{ __html }} />
+    <StyledHome
+      className={`${pageClass} flex-center`}
+      dangerouslySetInnerHTML={{ __html }}
+    />
   );
 };
 
 let StyledHome = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
   margin-top: -100px;
 
   .images-wrapper p {

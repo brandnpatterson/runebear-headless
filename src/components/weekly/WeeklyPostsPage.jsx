@@ -26,7 +26,7 @@ class WeeklyPostsPage extends React.Component {
     document.title = `${this.props.pageTitle} | Rune Bear`;
 
     return (
-      <StyledWeeklyWrapper>
+      <StyledWeeklyWrapper className="flex-center">
         <StyledWeeklyPosts
           className={this.props.pageClass}
           dangerouslySetInnerHTML={{ __html }}
@@ -46,9 +46,6 @@ class WeeklyPostsPage extends React.Component {
 }
 
 let StyledWeeklyWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
   margin-bottom: 40px;
 
   .card-tags {

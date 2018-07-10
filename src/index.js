@@ -78,12 +78,13 @@ injectGlobal`
     }
   }
   
-  .flex-container {
+  .flex-center {
     align-items: center;
     display: flex;
     flex-direction: column;
   }
-  
+
+  {/* .featured-hero is defined in the wordpress CMS on Pages */}
   .featured-hero {
     align-items: center;
     display: flex;

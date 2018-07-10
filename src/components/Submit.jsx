@@ -14,7 +14,10 @@ let Submit = ({ __html, pageClass, pageTitle }) => {
   document.title = `${pageTitle} | Rune Bear`;
 
   return (
-    <StyledSubmit className={pageClass} dangerouslySetInnerHTML={{ __html }} />
+    <StyledSubmit
+      className={`${pageClass} flex-center`}
+      dangerouslySetInnerHTML={{ __html }}
+    />
   );
 };
 

@@ -26,7 +26,7 @@ class FilterByAuthor extends React.Component {
     let weeklyPosts = weeklyByAuthor.filter(post => post !== null);
 
     return (
-      <StyledAuthor>
+      <StyledAuthor className="flex-center">
         <div>
           <h1 className="card-title">{author}</h1>
           <p className="card-author-description">{authorDesc}</p>
@@ -38,9 +38,6 @@ class FilterByAuthor extends React.Component {
 }
 
 let StyledAuthor = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
   justify-content: space-around;
   margin-bottom: 100px;
   min-height: 670px;

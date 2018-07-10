@@ -16,7 +16,7 @@ let WeeklyCategory = ({ match, weeklyByCategory }) => {
   taxonomy = taxonomy.filter(post => post !== null);
 
   return (
-    <StyledWeeklyCategory>
+    <StyledWeeklyCategory className="flex-center">
       <div className="categories-header">
         <h1>
           <strong>{match.params.category.toUpperCase()}</strong>
@@ -28,9 +28,6 @@ let WeeklyCategory = ({ match, weeklyByCategory }) => {
 };
 
 let StyledWeeklyCategory = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
   justify-content: space-around;
   margin-bottom: 100px;
   text-align: left;

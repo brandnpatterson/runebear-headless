@@ -16,7 +16,7 @@ let WeeklyTag = ({ match, weeklyByTag }) => {
   taxonomy = taxonomy.filter(post => post !== null);
 
   return (
-    <StyledWeeklyTag>
+    <StyledWeeklyTag className="flex-center">
       <div className="tags-header">
         <h1>
           <strong>{match.params.tagName.toUpperCase()}</strong>
@@ -28,9 +28,6 @@ let WeeklyTag = ({ match, weeklyByTag }) => {
 };
 
 let StyledWeeklyTag = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
   justify-content: space-around;
   margin-bottom: 100px;
   text-align: left;

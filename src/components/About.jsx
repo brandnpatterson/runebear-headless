@@ -14,15 +14,14 @@ let About = ({ __html, pageClass, pageTitle }) => {
   document.title = `${pageTitle} | Rune Bear`;
 
   return (
-    <StyledAbout className={pageClass} dangerouslySetInnerHTML={{ __html }} />
+    <StyledAbout
+      className={`${pageClass} flex-center`}
+      dangerouslySetInnerHTML={{ __html }}
+    />
   );
 };
 
 let StyledAbout = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-
   .container {
     border-top: 1px solid ${gray};
     margin: 50px auto;
