@@ -350,6 +350,7 @@ class App extends React.Component {
             <Header
               header={this.state.header}
               onSelectWeeklyPage={this.onSelectWeeklyPage}
+              weeklyCachedPosts={this.state.weekly_cached_posts}
             />
             <Switch>
               {this.state.pages &&
