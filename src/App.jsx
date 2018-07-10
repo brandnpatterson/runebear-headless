@@ -24,6 +24,7 @@ class App extends React.Component {
     header: null,
     loading: true,
     footer: null,
+    weekly_cached_posts: {},
     weekly_category_type: null,
     weekly_total_pages: null,
     weekly_page: 1,
@@ -39,13 +40,21 @@ class App extends React.Component {
 
       this.setState({ pages, header, loading: false, footer: footer });
 
-      this.getWeeklyPostsRequest();
+      this.getWeeklyPostsRequest(this.state.weekly_page);
       this.getWeeklyPostsRequestAll();
     });
   }
 
-  onSelectWeeklyPage = page => {
-    this.setState({ weekly_page: page });
+  onSelectWeeklyPage = (page, cached) => {
+    if (page === null) {
+      this.setState({
+        weekly_page: cached,
+        weekly_posts: this.state.weekly_cached_posts[cached]
+      });
+    } else {
+      this.setState({ weekly_page: page });
+      this.getWeeklyPostsRequest(page);
+    }
   };
 
   onNextWeeklyPage = () => {
@@ -253,6 +262,22 @@ class App extends React.Component {
                   authors: allAuthors,
                   weekly_requests_made: true
                 });
+              })
+              .then(() => {
+                let {
+                  weekly_cached_posts,
+                  weekly_page,
+                  weekly_posts
+                } = this.state;
+
+                if (!weekly_cached_posts.weekly_page) {
+                  this.setState({
+                    weekly_cached_posts: {
+                      ...this.state.weekly_cached_posts,
+                      [weekly_page]: weekly_posts
+                    }
+                  });
+                }
               });
           });
         }
@@ -322,7 +347,10 @@ class App extends React.Component {
       return (
         <Router>
           <div id="router-container">
-            <Header header={this.state.header} />
+            <Header
+              header={this.state.header}
+              onSelectWeeklyPage={this.onSelectWeeklyPage}
+            />
             <Switch>
               {this.state.pages &&
                 this.state.pages.map(page => {
@@ -368,11 +396,11 @@ class App extends React.Component {
                           this.state.weekly_posts && (
                             <WeeklyPostsPage
                               __html={page.content.rendered}
+                              weeklyCachedPosts={this.state.weekly_cached_posts}
                               onNextWeeklyPage={this.onNextWeeklyPage}
                               onPreviousWeeklyPage={this.onPreviousWeeklyPage}
                               onSelectWeeklyPage={this.onSelectWeeklyPage}
                               clearWeeklyPosts={this.clearWeeklyPosts}
-                              getWeeklyPosts={this.getWeeklyPostsRequest}
                               pageClass={page.slug}
                               pageTitle={page.title.rendered}
                               weeklyPage={this.state.weekly_page}
@@ -392,7 +420,7 @@ class App extends React.Component {
                       path={path()}
                       component={() => {
                         return (
-                          <StyledComponent>
+                          <StyledComponent className="flex-center">
                             <Component />
                           </StyledComponent>
                         );
@@ -472,9 +500,6 @@ class App extends React.Component {
 }
 
 let StyledComponent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: space-around;
   width: 100%;
   min-height: 600px;

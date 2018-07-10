@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, func, number, string } from 'prop-types';
+import { array, func, number, object, string } from 'prop-types';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
 
@@ -9,12 +9,12 @@ import WeeklyPagination from './WeeklyPagination';
 class WeeklyPostsPage extends React.Component {
   static propTypes = {
     __html: string.isRequired,
-    getWeeklyPosts: func.isRequired,
     onNextWeeklyPage: func.isRequired,
     onPreviousWeeklyPage: func.isRequired,
     onSelectWeeklyPage: func.isRequired,
     pageClass: string.isRequired,
     pageTitle: string.isRequired,
+    weeklyCachedPosts: object.isRequired,
     weeklyPage: number.isRequired,
     weeklyPosts: array.isRequired,
     weeklyTotalPages: number.isRequired
@@ -36,7 +36,7 @@ class WeeklyPostsPage extends React.Component {
           onNextWeeklyPage={this.props.onNextWeeklyPage}
           onPreviousWeeklyPage={this.props.onPreviousWeeklyPage}
           onSelectWeeklyPage={this.props.onSelectWeeklyPage}
-          getWeeklyPosts={this.props.getWeeklyPosts}
+          weeklyCachedPosts={this.props.weeklyCachedPosts}
           weeklyPage={this.props.weeklyPage}
           weeklyTotalPages={this.props.weeklyTotalPages}
         />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array } from 'prop-types';
+import { array, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { dark, light } from '../util/color';
@@ -7,7 +7,8 @@ import { mediumUp } from '../util/media';
 
 class Header extends Component {
   static propTypes = {
-    header: array.isRequired
+    header: array.isRequired,
+    onSelectWeeklyPage: func.isRequired
   };
 
   state = {
@@ -53,6 +54,10 @@ class Header extends Component {
       this.setState({
         isActive: !this.state.isActive
       });
+    }
+
+    if (window.location.pathname === '/weekly') {
+      this.props.onSelectWeeklyPage(1);
     }
   };
 

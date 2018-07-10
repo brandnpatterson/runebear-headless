@@ -3,7 +3,7 @@ import { func, number } from 'prop-types';
 
 class WeeklyPagination extends Component {
   static propTypes = {
-    getWeeklyPosts: func.isRequired,
+    onSelectWeeklyPage: func.isRequired,
     weeklyPage: number.isRequired,
     weeklyTotalPages: number.isRequired
   };
@@ -11,18 +11,27 @@ class WeeklyPagination extends Component {
   onPageSelect = event => {
     window.scrollTo(0, 0);
 
-    let dataId = event.target.dataset.id;
+    let { weeklyCachedPosts, weeklyPage } = this.props;
+    let dataId = Number(event.target.dataset.id);
 
-    if (event.target.classList.contains('is-current') === false) {
-      this.props.getWeeklyPosts(dataId);
-      this.props.onSelectWeeklyPage(Number(dataId));
+    if (weeklyCachedPosts[weeklyPage] && dataId === weeklyPage) {
+      this.props.onSelectWeeklyPage(null, weeklyPage);
+    } else if (weeklyCachedPosts[dataId] !== undefined) {
+      this.props.onSelectWeeklyPage(null, dataId);
+    } else if (event.target.classList.contains('is-current') === false) {
+      this.props.onSelectWeeklyPage(dataId);
     }
   };
 
   onNextPage = () => {
     window.scrollTo(0, 0);
 
-    if (this.props.weeklyPage !== this.props.weeklyTotalPages) {
+    let { weeklyCachedPosts, weeklyPage } = this.props;
+    let nextPage = weeklyPage + 1;
+
+    if (weeklyCachedPosts[nextPage]) {
+      this.props.onSelectWeeklyPage(null, nextPage);
+    } else if (this.props.weeklyPage !== this.props.weeklyTotalPages) {
       this.props.onNextWeeklyPage();
     }
   };
@@ -30,7 +39,12 @@ class WeeklyPagination extends Component {
   onPreviousPage = () => {
     window.scrollTo(0, 0);
 
-    if (Number(this.props.weeklyPage) !== 1) {
+    let { weeklyCachedPosts, weeklyPage } = this.props;
+    let prevPage = weeklyPage - 1;
+
+    if (weeklyCachedPosts[prevPage]) {
+      this.props.onSelectWeeklyPage(null, prevPage);
+    } else if (Number(this.props.weeklyPage) !== 1) {
       this.props.onPreviousWeeklyPage();
     }
   };
