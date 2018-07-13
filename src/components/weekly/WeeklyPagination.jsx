@@ -111,11 +111,11 @@ class WeeklyPagination extends Component {
       <div>
         {this.props.weeklyTotalPages >= 2 && (
           <nav className="pagination" aria-label="pagination">
-            <PreviousButton />
-            <NextButton />
             <ul className="pagination-list">
               <Pagination />
             </ul>
+            <PreviousButton />
+            <NextButton />
           </nav>
         )}
       </div>
