@@ -20,6 +20,8 @@ class FilterByAuthor extends React.Component {
   }
 
   render() {
+    window.scrollTo(0, 0);
+
     let { weeklyByAuthor } = this.props;
     let { author, authorDesc } = this.state;
 

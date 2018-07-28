@@ -223,7 +223,7 @@ class App extends React.Component {
     return (
       <Router>
         <div id="router-container">
-          {weekly_requests_complete ? (
+          {this.state.header ? (
             <div>
               <Header
                 header={this.state.header}
@@ -287,7 +287,7 @@ class App extends React.Component {
                             )
                           );
                         } else {
-                          return null;
+                          return <Loading />;
                         }
                     };
                     return (
@@ -305,64 +305,56 @@ class App extends React.Component {
                       />
                     );
                   })}
-                {weekly_requests_complete ? (
-                  <Route
-                    exact
-                    path={`/weekly/:weeklyPost`}
-                    component={({ match }) => {
-                      return (
-                        <WeeklyPost
-                          weeklyPost={filterByPost(match)}
-                          weeklyPosts={this.state.weekly_posts_all}
-                        />
-                      );
-                    }}
-                  />
-                ) : null}
-                {weekly_requests_complete ? (
-                  <Route
-                    exact
-                    path={`/weekly/authors/:author`}
-                    component={({ match }) => {
-                      return (
-                        <Author
-                          match={match}
-                          weeklyByAuthor={filterByAuthor(match)}
-                        />
-                      );
-                    }}
-                  />
-                ) : null}
-                {weekly_requests_complete ? (
-                  <Route
-                    exact
-                    path={`/weekly/categories/:category`}
-                    component={({ match }) => {
-                      return (
-                        <WeeklyCategory
-                          match={match}
-                          categoryType={this.state.weekly_category_type}
-                          weeklyByCategory={filterByCategory(match)}
-                        />
-                      );
-                    }}
-                  />
-                ) : null}
-                {weekly_requests_complete ? (
-                  <Route
-                    exact
-                    path={`/weekly/tags/:tagName`}
-                    component={({ match }) => {
-                      return (
-                        <Weekly
-                          match={match}
-                          tags={this.state.weekly_tags}
-                          weeklyByTag={filterByTag(match)}
-                        />
-                      );
-                    }}
-                  />
-                ) : null}
+                <Route
+                  exact
+                  path={`/weekly/:weeklyPost`}
+                  component={({ match }) => {
+                    return (
+                      <WeeklyPost
+                        weeklyPost={filterByPost(match)}
+                        weeklyPosts={this.state.weekly_posts_all}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/authors/:author`}
+                  component={({ match }) => {
+                    return (
+                      <Author
+                        match={match}
+                        weeklyByAuthor={filterByAuthor(match)}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/categories/:category`}
+                  component={({ match }) => {
+                    return (
+                      <WeeklyCategory
+                        match={match}
+                        categoryType={this.state.weekly_category_type}
+                        weeklyByCategory={filterByCategory(match)}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/tags/:tagName`}
+                  component={({ match }) => {
+                    return (
+                      <Weekly
+                        match={match}
+                        tags={this.state.weekly_tags}
+                        weeklyByTag={filterByTag(match)}
+                      />
+                    );
+                  }}
+                />
                 {weekly_requests_complete && (
                   <Route path="*" component={NotFound} />
                 )}

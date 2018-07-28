@@ -11,6 +11,8 @@ let propTypes = {
 };
 
 let WeeklyTag = ({ match, weeklyByTag }) => {
+  window.scrollTo(0, 0);
+
   return weeklyByTag.length > 0 ? (
     <StyledWeeklyTag className="flex-center">
       <div className="tags-header">

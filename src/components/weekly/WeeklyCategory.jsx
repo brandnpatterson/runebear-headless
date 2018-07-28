@@ -10,6 +10,8 @@ let propTypes = {
 };
 
 let WeeklyCategory = ({ match, weeklyByCategory }) => {
+  window.scrollTo(0, 0);
+
   return (
     <StyledWeeklyCategory className="flex-center">
       <div className="categories-header">
