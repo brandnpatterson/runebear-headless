@@ -15,8 +15,6 @@ let propTypes = {
 };
 
 let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
-  window.scrollTo(0, 0);
-
   weeklyPost = weeklyPost.filter(post => post !== null);
   let post = weeklyPost[0];
   let nextArr = [];

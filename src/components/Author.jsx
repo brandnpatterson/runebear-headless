@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { mediumUp } from '../util/media';
 
 import WeeklyPosts from './weekly/WeeklyPosts';
+import Loading from './common/Loading';
 
 class FilterByAuthor extends React.Component {
   static propTypes = {
@@ -19,20 +20,19 @@ class FilterByAuthor extends React.Component {
   }
 
   render() {
-    window.scrollTo(0, 0);
-
     let { weeklyByAuthor } = this.props;
     let { author, authorDesc } = this.state;
-    let weeklyPosts = weeklyByAuthor.filter(post => post !== null);
 
-    return (
+    return author ? (
       <StyledAuthor className="flex-center">
         <div>
           <h1 className="card-title">{author}</h1>
           <p className="card-author-description">{authorDesc}</p>
         </div>
-        <WeeklyPosts weeklyPosts={weeklyPosts} notShowingAuthor={true} />
+        <WeeklyPosts weeklyPosts={weeklyByAuthor} notShowingAuthor={true} />
       </StyledAuthor>
+    ) : (
+      <Loading />
     );
   }
 }

@@ -56,13 +56,7 @@ class Header extends Component {
       });
     }
 
-    let { weeklyCachedPosts } = this.props;
-
-    if (weeklyCachedPosts[1]) {
-      this.props.onSelectWeeklyPage(null, 1);
-    } else if (window.location.pathname === '/weekly') {
-      this.props.onSelectWeeklyPage(1);
-    }
+    this.props.onSelectWeeklyPage(1);
   };
 
   render() {

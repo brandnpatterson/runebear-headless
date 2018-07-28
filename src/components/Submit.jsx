@@ -28,7 +28,7 @@ let StyledSubmit = styled.div`
   margin: 0 auto;
 
   @media ${mediumUp} {
-    flex-direction: row;
+    flex-direction: row !important;
   }
 
   @media ${largeUp} {

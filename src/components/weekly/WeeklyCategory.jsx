@@ -10,11 +10,6 @@ let propTypes = {
 };
 
 let WeeklyCategory = ({ match, weeklyByCategory }) => {
-  window.scrollTo(0, 0);
-
-  let taxonomy = [].concat.apply([], weeklyByCategory);
-  taxonomy = taxonomy.filter(post => post !== null);
-
   return (
     <StyledWeeklyCategory className="flex-center">
       <div className="categories-header">
@@ -22,7 +17,7 @@ let WeeklyCategory = ({ match, weeklyByCategory }) => {
           <strong>{match.params.category.toUpperCase()}</strong>
         </h1>
       </div>
-      <FilterByTaxonomy taxonomy={taxonomy} />
+      <FilterByTaxonomy taxonomy={weeklyByCategory} />
     </StyledWeeklyCategory>
   );
 };

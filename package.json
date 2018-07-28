@@ -6,7 +6,8 @@
     "build": "react-app-rewired build && npm run create-cname",
     "create-cname": "echo 'test-runebear.surge.sh' > build/CNAME",
     "deploy": "npm run build && surge build",
-    "start": "npm run stylelint && react-app-rewired start",
+    "dev": "npm run stylelint && npm start",
+    "start": "react-app-rewired start",
     "stylelint": "stylelint src/**/*.jsx && stylelint src/**/*.js",
     "test": "react-app-rewired test --env=jsdom"
   },

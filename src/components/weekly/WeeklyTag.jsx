@@ -3,6 +3,7 @@ import { array, object } from 'prop-types';
 import styled from 'styled-components';
 
 import FilterByTaxonomy from '../common/FilterByTaxonomy';
+import Loading from '../common/Loading';
 
 let propTypes = {
   match: object.isRequired,
@@ -10,20 +11,17 @@ let propTypes = {
 };
 
 let WeeklyTag = ({ match, weeklyByTag }) => {
-  window.scrollTo(0, 0);
-
-  let taxonomy = [].concat.apply([], weeklyByTag);
-  taxonomy = taxonomy.filter(post => post !== null);
-
-  return (
+  return weeklyByTag.length > 0 ? (
     <StyledWeeklyTag className="flex-center">
       <div className="tags-header">
         <h1>
           <strong>{match.params.tagName.toUpperCase()}</strong>
         </h1>
       </div>
-      <FilterByTaxonomy taxonomy={taxonomy} />
+      <FilterByTaxonomy taxonomy={weeklyByTag} />
     </StyledWeeklyTag>
+  ) : (
+    <Loading />
   );
 };
 
