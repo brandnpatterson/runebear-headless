@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { func, number } from 'prop-types';
+import styled from 'styled-components';
 
 class WeeklyPagination extends Component {
   static propTypes = {
@@ -81,7 +82,7 @@ class WeeklyPagination extends Component {
     };
 
     return (
-      <div>
+      <StyledPagination>
         {this.props.weeklyTotalPages >= 2 && (
           <nav className="pagination" aria-label="pagination">
             <ul className="pagination-list">
@@ -91,9 +92,15 @@ class WeeklyPagination extends Component {
             <NextButton />
           </nav>
         )}
-      </div>
+      </StyledPagination>
     );
   }
 }
+
+let StyledPagination = styled.div`
+  .is-current {
+    pointer-events: none;
+  }
+`;
 
 export default WeeklyPagination;

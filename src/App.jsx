@@ -58,25 +58,29 @@ class App extends React.Component {
   };
 
   onNextWeeklyPage = () => {
-    window.scrollTo(0, 0);
-
     let nextPage = this.state.weekly_page + 1;
 
-    this.setState({
-      weekly_page: nextPage,
-      weekly_posts: this.state.weekly_pages[nextPage]
-    });
+    if (nextPage <= this.state.weekly_total_pages) {
+      window.scrollTo(0, 0);
+
+      this.setState({
+        weekly_page: nextPage,
+        weekly_posts: this.state.weekly_pages[nextPage]
+      });
+    }
   };
 
   onPreviousWeeklyPage = () => {
-    window.scrollTo(0, 0);
-
     let prevPage = this.state.weekly_page - 1;
 
-    this.setState({
-      weekly_page: prevPage,
-      weekly_posts: this.state.weekly_pages[prevPage]
-    });
+    if (prevPage !== 0) {
+      window.scrollTo(0, 0);
+
+      this.setState({
+        weekly_page: prevPage,
+        weekly_posts: this.state.weekly_pages[prevPage]
+      });
+    }
   };
 
   getWeeklyPostsRequest = page => {
