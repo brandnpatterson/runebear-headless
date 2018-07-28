@@ -5,27 +5,33 @@ import styled from 'styled-components';
 import FilterByTaxonomy from '../common/FilterByTaxonomy';
 import Loading from '../common/Loading';
 
-let propTypes = {
-  match: object.isRequired,
-  weeklyByTag: array.isRequired
-};
+class WeeklyTag extends React.Component {
+  static propTypes = {
+    match: object.isRequired,
+    weeklyByTag: array.isRequired
+  };
 
-let WeeklyTag = ({ match, weeklyByTag }) => {
-  window.scrollTo(0, 0);
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
 
-  return weeklyByTag.length > 0 ? (
-    <StyledWeeklyTag className="flex-center">
-      <div className="tags-header">
-        <h1>
-          <strong>{match.params.tagName.toUpperCase()}</strong>
-        </h1>
-      </div>
-      <FilterByTaxonomy taxonomy={weeklyByTag} />
-    </StyledWeeklyTag>
-  ) : (
-    <Loading />
-  );
-};
+  render() {
+    let { match, weeklyByTag } = this.props;
+
+    return weeklyByTag.length > 0 ? (
+      <StyledWeeklyTag className="flex-center">
+        <div className="tags-header">
+          <h1>
+            <strong>{match.params.tagName.toUpperCase()}</strong>
+          </h1>
+        </div>
+        <FilterByTaxonomy taxonomy={weeklyByTag} />
+      </StyledWeeklyTag>
+    ) : (
+      <Loading />
+    );
+  }
+}
 
 let StyledWeeklyTag = styled.div`
   justify-content: space-around;
@@ -43,7 +49,5 @@ let StyledWeeklyTag = styled.div`
     text-transform: uppercase;
   }
 `;
-
-WeeklyTag.propTypes = propTypes;
 
 export default WeeklyTag;

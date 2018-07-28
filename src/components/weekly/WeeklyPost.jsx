@@ -9,89 +9,99 @@ import LinksCategories from '../common/LinksCategories';
 import LinksTags from '../common/LinksTags';
 import StyledPost from '../../style-templates/StyledPost';
 
-let propTypes = {
-  weeklyPost: array.isRequired,
-  weeklyPosts: array.isRequired
-};
+class WeeklyPost extends React.Component {
+  static propTypes = {
+    weeklyPost: array.isRequired,
+    weeklyPosts: array.isRequired
+  };
 
-let WeeklyPost = ({ weeklyPost, weeklyPosts }) => {
-  window.scrollTo(0, 0);
+  componentDidMount() {
+    this.shiftUp();
+  }
 
-  weeklyPost = weeklyPost.filter(post => post !== null);
-  let post = weeklyPost[0];
-  let nextArr = [];
-  let prevArr = [];
+  shiftUp() {
+    window.scrollTo(0, 0);
+  }
 
-  weeklyPosts.map((p, i, { length }) => {
-    if (post.id === p.id) {
-      if (i + 1 === length) {
-        return nextArr.push(weeklyPosts[0].slug);
-      } else {
-        return nextArr.push(weeklyPosts[i + 1].slug);
+  render() {
+    let { weeklyPost, weeklyPosts } = this.props;
+
+    weeklyPost = weeklyPost.filter(post => post !== null);
+    let post = weeklyPost[0];
+    let nextArr = [];
+    let prevArr = [];
+
+    weeklyPosts.map((p, i, { length }) => {
+      if (post.id === p.id) {
+        if (i + 1 === length) {
+          return nextArr.push(weeklyPosts[0].slug);
+        } else {
+          return nextArr.push(weeklyPosts[i + 1].slug);
+        }
       }
-    }
 
-    return false;
-  });
+      return false;
+    });
 
-  weeklyPosts.map((p, i, { length }) => {
-    if (post.id === p.id) {
-      if (i === 0) {
-        return prevArr.push(weeklyPosts[length - 1].slug);
-      } else {
-        return prevArr.push(weeklyPosts[i - 1].slug);
+    weeklyPosts.map((p, i, { length }) => {
+      if (post.id === p.id) {
+        if (i === 0) {
+          return prevArr.push(weeklyPosts[length - 1].slug);
+        } else {
+          return prevArr.push(weeklyPosts[i - 1].slug);
+        }
       }
-    }
 
-    return false;
-  });
+      return false;
+    });
 
-  let next = nextArr[0];
-  let prev = prevArr[0];
+    let next = nextArr[0];
+    let prev = prevArr[0];
 
-  let PrevArrow = () => (
-    <Link to={`/weekly/${prev}`}>
-      <span className="left-arrow">{'<<<'}</span>
-    </Link>
-  );
+    let PrevArrow = () => (
+      <Link onClick={this.shiftUp} to={`/weekly/${prev}`}>
+        <span className="left-arrow">{'<<<'}</span>
+      </Link>
+    );
 
-  let NextArrow = () => (
-    <Link to={`/weekly/${next}`}>
-      <span className="right-arrow">{'>>>'}</span>
-    </Link>
-  );
+    let NextArrow = () => (
+      <Link onClick={this.shiftUp} to={`/weekly/${next}`}>
+        <span className="right-arrow">{'>>>'}</span>
+      </Link>
+    );
 
-  return (
-    <StyledWeeklyWrapper>
-      <div className="arrow-wrapper-top arrow-wrapper">
-        <PrevArrow />
-        <NextArrow />
-      </div>
-      <h1 className="card-title">{weeklyPost[0].title.rendered}</h1>
-      <StyledPost className="weekly-post-complete" key={post.id}>
-        <div className="card-content">
-          <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+    return (
+      <StyledWeeklyWrapper>
+        <div className="arrow-wrapper-top arrow-wrapper">
+          <PrevArrow />
+          <NextArrow />
         </div>
-        <div className="card-footer">
-          <div className="card-tags">
-            <LinksCategories post={post} />
-            <LinksTags post={post} />
+        <h1 className="card-title">{weeklyPost[0].title.rendered}</h1>
+        <StyledPost className="weekly-post-complete" key={post.id}>
+          <div className="card-content">
+            <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
           </div>
+          <div className="card-footer">
+            <div className="card-tags">
+              <LinksCategories post={post} />
+              <LinksTags post={post} />
+            </div>
+          </div>
+        </StyledPost>
+        <div className="arrow-wrapper-bottom arrow-wrapper">
+          <PrevArrow />
+          <NextArrow />
         </div>
-      </StyledPost>
-      <div className="arrow-wrapper-bottom arrow-wrapper">
-        <PrevArrow />
-        <NextArrow />
-      </div>
-      {post.author ? (
-        <p className="card-author">
-          All from &nbsp;
-          <Link to={`/weekly/authors/${post.authorSlug}`}>{post.author}</Link>
-        </p>
-      ) : null}
-    </StyledWeeklyWrapper>
-  );
-};
+        {post.author ? (
+          <p className="card-author">
+            All from &nbsp;
+            <Link to={`/weekly/authors/${post.authorSlug}`}>{post.author}</Link>
+          </p>
+        ) : null}
+      </StyledWeeklyWrapper>
+    );
+  }
+}
 
 let StyledWeeklyWrapper = styled.div`
   align-items: center;
@@ -169,7 +179,5 @@ let StyledWeeklyWrapper = styled.div`
     padding: 10px;
   }
 `;
-
-WeeklyPost.propTypes = propTypes;
 
 export default WeeklyPost;

@@ -4,25 +4,30 @@ import styled from 'styled-components';
 
 import FilterByTaxonomy from '../common/FilterByTaxonomy';
 
-let propTypes = {
-  match: object.isRequired,
-  weeklyByCategory: array.isRequired
-};
+class WeeklyCategory extends React.Component {
+  static propTypes = {
+    match: object.isRequired,
+    weeklyByCategory: array.isRequired
+  };
 
-let WeeklyCategory = ({ match, weeklyByCategory }) => {
-  window.scrollTo(0, 0);
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
 
-  return (
-    <StyledWeeklyCategory className="flex-center">
-      <div className="categories-header">
-        <h1>
-          <strong>{match.params.category.toUpperCase()}</strong>
-        </h1>
-      </div>
-      <FilterByTaxonomy taxonomy={weeklyByCategory} />
-    </StyledWeeklyCategory>
-  );
-};
+  render() {
+    let { match, weeklyByCategory } = this.props;
+    return (
+      <StyledWeeklyCategory className="flex-center">
+        <div className="categories-header">
+          <h1>
+            <strong>{match.params.category.toUpperCase()}</strong>
+          </h1>
+        </div>
+        <FilterByTaxonomy taxonomy={weeklyByCategory} />
+      </StyledWeeklyCategory>
+    );
+  }
+}
 
 let StyledWeeklyCategory = styled.div`
   justify-content: space-around;
@@ -40,7 +45,5 @@ let StyledWeeklyCategory = styled.div`
     text-transform: uppercase;
   }
 `;
-
-WeeklyCategory.propTypes = propTypes;
 
 export default WeeklyCategory;
