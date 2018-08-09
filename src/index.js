@@ -7,7 +7,7 @@ import { mediumUp } from './util/media';
 
 import App from './App';
 import { AppContainer } from 'react-hot-loader';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 let renderApp = () => {
   render(
@@ -18,7 +18,7 @@ let renderApp = () => {
   );
 };
 
-registerServiceWorker();
+// registerServiceWorker();
 
 renderApp();
 
