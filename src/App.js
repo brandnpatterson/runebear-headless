@@ -4,19 +4,19 @@ import styled from 'styled-components';
 import { mediumUp, tiny } from './util/media';
 import { getTaxonomy, getPages, getWeeklyPosts } from './api';
 
-import About from './components/About';
-import Author from './components/Author';
+import About from './components/pages/About';
+import Author from './components/pages/Author';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Home from './components/Home';
+import Home from './components/pages/Home';
 import Loading from './components/common/Loading';
 import NotFound from './components/NotFound';
-import Quarterly from './components/Quarterly';
-import Submit from './components/Submit';
+import Quarterly from './components/pages/Quarterly';
+import Submit from './components/pages/Submit';
 import Weekly from './components/weekly/WeeklyTag';
 import WeeklyCategory from './components/weekly/WeeklyCategory';
 import WeeklyPost from './components/weekly/WeeklyPost';
-import WeeklyPostsPage from './components/weekly/WeeklyPostsPage';
+import WeeklyPosts from './components/weekly/WeeklyPosts';
 
 class App extends React.Component {
   state = {
@@ -279,7 +279,7 @@ class App extends React.Component {
                         if (weekly_requests_complete) {
                           return (
                             this.state.weekly_posts && (
-                              <WeeklyPostsPage
+                              <WeeklyPosts
                                 __html={page.content.rendered}
                                 onNextWeeklyPage={this.onNextWeeklyPage}
                                 onPreviousWeeklyPage={this.onPreviousWeeklyPage}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
-import { black, gray } from '../util/color';
-import { mediumUp } from '../util/media';
+import { black, gray } from '../../util/color';
+import { mediumUp } from '../../util/media';
 
 let propTypes = {
   __html: string.isRequired,

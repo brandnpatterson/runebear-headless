@@ -1,10 +1,10 @@
 import React from 'react';
 import { array } from 'prop-types';
 import styled from 'styled-components';
-import { mediumUp } from '../util/media';
+import { mediumUp } from '../../util/media';
 
-import WeeklyPosts from './weekly/WeeklyPosts';
-import Loading from './common/Loading';
+import WeeklyPosts from '../weekly/WeeklyPosts';
+import Loading from '../common/Loading';
 
 class FilterByAuthor extends React.Component {
   static propTypes = {

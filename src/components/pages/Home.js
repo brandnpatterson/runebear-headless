@@ -1,7 +1,7 @@
 import React from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
-import { mediumUp, smallOnly } from '../util/media';
+import { mediumUp, smallOnly } from '../../util/media';
 
 let propTypes = {
   __html: string.isRequired,

@@ -7,7 +7,7 @@ import { mediumUp } from '../../util/media';
 
 import LinksCategories from '../common/LinksCategories';
 import LinksTags from '../common/LinksTags';
-import StyledPost from '../../style-templates/StyledPost';
+import StyledPost from '../StyledPost';
 
 class WeeklyPost extends React.Component {
   static propTypes = {
