@@ -83,15 +83,15 @@ class App extends React.Component {
     }
   };
 
-  getWeeklyPostsRequest = page => {
+  getWeeklyPostsRequest = () => {
     let allAuthors = [];
     let allCategories = [];
     let allTags = [];
 
-    getWeeklyPosts(page, '')
+    getWeeklyPosts()
       .then(weeklyPosts => {
         this.setState({
-          weekly_posts_all: weeklyPosts.data
+          weekly_posts_all: weeklyPosts
         });
       })
       .then(() => {
@@ -100,7 +100,7 @@ class App extends React.Component {
         if (weekly_posts_all.length === 0) {
           return;
         } else {
-          return weekly_posts_all.map(post => {
+          return weekly_posts_all.map((post, index) => {
             let categoryType = [];
             let tagNames = [];
 
@@ -118,11 +118,11 @@ class App extends React.Component {
                   return allTags.push('');
                 }
               })
-              .then(() =>
+              .then(() => {
                 this.setState({
                   weekly_tags: allTags
-                })
-              );
+                });
+              });
 
             getTaxonomy('categories', post.id)
               .then(data => {
@@ -144,51 +144,52 @@ class App extends React.Component {
                 });
               });
 
-            return getTaxonomy('post_author', post.id)
-              .then(data => {
-                if (data && data[0] && data[0].name) {
-                  let checkAndAdd = name => {
-                    let found = allAuthors.some(el => el.name === name);
+            return getTaxonomy('post_author', post.id).then(data => {
+              if (data && data[0] && data[0].name) {
+                let checkAndAdd = name => {
+                  let found = allAuthors.some(el => el.name === name);
 
-                    if (!found) {
-                      allAuthors.push({
-                        name: data[0].name,
-                        description: data[0].description,
-                        slug: data[0].slug
-                      });
-                    }
-                  };
+                  if (!found) {
+                    allAuthors.push({
+                      name: data[0].name,
+                      description: data[0].description,
+                      slug: data[0].slug
+                    });
+                  }
+                };
 
-                  checkAndAdd(data[0].name);
+                checkAndAdd(data[0].name);
 
-                  post.author = data[0].name;
-                  post.authorSlug = data[0].slug;
-                  post.authorDesc = data[0].description;
-                } else {
-                  post.author = '';
-                  post.authorSlug = '';
-                  post.authorDesc = '';
-                }
-              })
-              .then(() => {
-                let { weekly_pages } = this.state;
-                let newArr = Array.from(weekly_posts_all);
-
-                let i = 0;
-                while (newArr.length) {
-                  weekly_pages[i + 1] = newArr.splice(0, 4);
-                  i++;
-                }
-
-                this.setState({
-                  authors: allAuthors,
-                  weekly_posts: this.state.weekly_pages[1],
-                  weekly_requests_complete: true,
-                  weekly_total_pages: Object.keys(this.state.weekly_pages)
-                    .length
-                });
-              });
+                post.author = data[0].name;
+                post.authorSlug = data[0].slug;
+                post.authorDesc = data[0].description;
+              } else {
+                post.author = '';
+                post.authorSlug = '';
+                post.authorDesc = '';
+              }
+            });
           });
+        }
+      })
+      .then(() => {
+        let { weekly_pages, weekly_posts_all } = this.state;
+        let newArr = Array.from(weekly_posts_all);
+
+        let i = 0;
+        while (newArr.length) {
+          weekly_pages[i + 1] = newArr.splice(0, 4);
+          i++;
+        }
+
+        this.setState({
+          authors: allAuthors,
+          weekly_requests_complete: true,
+          weekly_total_pages: Object.keys(this.state.weekly_pages).length
+        });
+
+        if (this.state.weekly_posts === null) {
+          this.setState({ weekly_posts: this.state.weekly_pages[1] });
         }
       });
   };

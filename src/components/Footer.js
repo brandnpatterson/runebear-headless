@@ -20,7 +20,8 @@ let Footer = ({ footer }) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        &copy;{thisYear} Brandon Patterson. All Rights Reserved.
+        &copy;
+        {thisYear} Brandon Patterson. All Rights Reserved.
       </a>
     </StyledFooter>
   );
