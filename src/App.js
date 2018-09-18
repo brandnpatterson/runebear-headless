@@ -160,12 +160,34 @@ class App extends React.Component {
 
                 checkAndAdd(data[0].name);
 
-                post.author = data[0].name;
-                post.authorSlug = data[0].slug;
+                if (data[1]) {
+                  let checkAndAddSecond = name => {
+                    let found = allAuthors.some(el => el.name === name);
+
+                    if (!found) {
+                      allAuthors.push({
+                        name: data[1].name,
+                        description: data[1].description,
+                        slug: data[1].slug
+                      });
+                    }
+                  };
+
+                  checkAndAddSecond(data[1].name);
+                }
+
+                post.authors = [];
+                post.authorSlugs = [];
+
+                data.forEach(d => {
+                  post.authors.push(d.name);
+                  post.authorSlugs.push(d.slug);
+                });
+
                 post.authorDesc = data[0].description;
               } else {
-                post.author = '';
-                post.authorSlug = '';
+                post.authors = [];
+                post.authorSlugs = [];
                 post.authorDesc = '';
               }
             });
@@ -199,7 +221,18 @@ class App extends React.Component {
 
     let filterByAuthor = match =>
       weekly_posts_all &&
-      weekly_posts_all.filter(post => post.authorSlug === match.params.author);
+      weekly_posts_all.filter(post => {
+        let slugs;
+        if (post.authorSlugs) {
+          slugs = post.authorSlugs.map(slug => slug);
+
+          return (
+            slugs[0] === match.params.author || slugs[1] === match.params.author
+          );
+        }
+
+        return false;
+      });
 
     let filterByPost = match =>
       weekly_posts_all &&

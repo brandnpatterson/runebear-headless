@@ -29,9 +29,21 @@ let FilterByTaxonomy = ({ taxonomy }) => {
             </div>
             {post.authorSlug !== '' ? (
               <div className="card-footer">
-                <Link to={`/weekly/authors/${post.authorSlug}`}>
-                  <p className="card-author">{post.author}</p>
-                </Link>
+                {post.authorSlugs && post.authorSlugs[0] ? (
+                  <Link to={`/weekly/authors/${post.authorSlugs[0]}`}>
+                    <p className="card-author">{post.authors[0]} </p>
+                  </Link>
+                ) : null}
+                {post.authorSlugs && post.authorSlugs[1] ? (
+                  <Link to={`/weekly/authors/${post.authorSlugs[1]}`}>
+                    <p className="card-author">{post.authors[1]}</p>
+                  </Link>
+                ) : null}
+                {post.authorSlugs && post.authorSlugs[2] ? (
+                  <Link to={`/weekly/authors/${post.authorSlugs[2]}`}>
+                    <p className="card-author">{post.authors[2]}</p>
+                  </Link>
+                ) : null}
               </div>
             ) : null}
           </StyledPost>

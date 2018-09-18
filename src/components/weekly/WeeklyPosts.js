@@ -25,7 +25,7 @@ class WeeklyPosts extends React.Component {
   render() {
     let { __html, notShowingAuthor, weeklyPosts } = this.props;
 
-    document.title = `${this.props.pageTitle} | Rune Bear`;
+    document.title = `Weekly | Rune Bear`;
 
     return (
       <StyledWeeklyWrapper className="flex-center">
@@ -35,7 +35,6 @@ class WeeklyPosts extends React.Component {
         />
         {weeklyPosts &&
           weeklyPosts.map(post => {
-            let author = post.author;
             let trimmed = post.content.rendered.substr(0, 345);
             let excerpt = trimmed.substr(
               0,
@@ -52,14 +51,29 @@ class WeeklyPosts extends React.Component {
                   </Link>
                 </div>
                 <div className="card-footer">
-                  {notShowingAuthor === true || author === false ? null : (
-                    <p className="card-author">
-                      {author ? 'By ' : 'Loading Author...'}
-                      <Link to={`/weekly/authors/${post.authorSlug}`}>
-                        {author}
+                  <span>
+                    {notShowingAuthor !== true &&
+                    post.authorSlugs &&
+                    post.authorSlugs[0] ? (
+                      <Link to={`/weekly/authors/${post.authorSlugs[0]}`}>
+                        <p className="card-author">{post.authors[0]}</p>
                       </Link>
-                    </p>
-                  )}
+                    ) : null}
+                    {notShowingAuthor !== true &&
+                    post.authorSlugs &&
+                    post.authorSlugs[1] ? (
+                      <Link to={`/weekly/authors/${post.authorSlugs[1]}`}>
+                        <p className="card-author">{post.authors[1]} </p>
+                      </Link>
+                    ) : null}
+                    {notShowingAuthor !== true &&
+                    post.authorSlugs &&
+                    post.authorSlugs[2] ? (
+                      <Link to={`/weekly/authors/${post.authorSlugs[2]}`}>
+                        <p className="card-author">{post.authors[2]} </p>
+                      </Link>
+                    ) : null}
+                  </span>
                   <div className="card-tags">
                     <LinksCategories post={post} />
                     <LinksTags post={post} />

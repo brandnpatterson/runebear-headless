@@ -92,10 +92,20 @@ class WeeklyPost extends React.Component {
           <PrevArrow />
           <NextArrow />
         </div>
-        {post.author ? (
+        {post && post.authors && post.authors[0] ? (
           <p className="card-author">
             All from &nbsp;
-            <Link to={`/weekly/authors/${post.authorSlug}`}>{post.author}</Link>
+            <Link to={`/weekly/authors/${post.authorSlugs[0]}`}>
+              {post.authors[0]}
+            </Link>
+          </p>
+        ) : null}
+        {post && post.authors && post.authors[1] ? (
+          <p className="card-author">
+            All from &nbsp;
+            <Link to={`/weekly/authors/${post.authorSlugs[1]}`}>
+              {post.authors[1]}
+            </Link>
           </p>
         ) : null}
       </StyledWeeklyWrapper>

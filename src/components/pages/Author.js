@@ -13,8 +13,9 @@ class FilterByAuthor extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      author: props.weeklyByAuthor[0] && props.weeklyByAuthor[0].author,
+      authors: props.weeklyByAuthor,
       authorDesc: props.weeklyByAuthor[0] && props.weeklyByAuthor[0].authorDesc
     };
   }
@@ -25,7 +26,19 @@ class FilterByAuthor extends React.Component {
 
   render() {
     let { weeklyByAuthor } = this.props;
-    let { author, authorDesc } = this.state;
+    let { authors, authorDesc } = this.state;
+
+    let currentAuthor = authors.map(author => {
+      return author.authorSlugs.map(slug => {
+        let unSlug = slug.replace(/-/g, ' ');
+
+        if (slug === this.props.match.params.author) {
+          return unSlug;
+        } else return null;
+      });
+    });
+
+    let author = currentAuthor[0];
 
     return author ? (
       <StyledAuthor className="flex-center">
