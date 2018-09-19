@@ -8,7 +8,7 @@ import { black } from './util/color';
 import { garamond } from './util/font';
 import { mediumUp } from './util/media';
 
-let renderApp = () => {
+const renderApp = () => {
   render(
     <Store>
       <AppContainer>

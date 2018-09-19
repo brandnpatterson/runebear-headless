@@ -8,7 +8,7 @@
     "deploy": "npm run build && surge build",
     "dev": "npm run stylelint && npm start",
     "start": "react-app-rewired start",
-    "stylelint": "stylelint src/**/*.js",
+    "stylelint": "stylelint src/**/**/*.js",
     "test": "react-app-rewired test --env=jsdom"
   },
   "dependencies": {

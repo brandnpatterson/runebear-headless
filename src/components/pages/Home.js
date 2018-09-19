@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import page from '../page';
 import styled from 'styled-components';
-import { mediumUp, smallOnly } from '../util/media';
+import { mediumUp, smallOnly } from '../../util/media';
 
-export class Home extends Component {
-  state = {
-    __html: null
-  };
-
+class Home extends Component {
   componentDidMount() {
-    const { home } = this.props.pages;
-    this.setState({ __html: home });
+    document.title = 'Rune Bear';
   }
 
   render() {
-    const { __html } = this.state;
+    const __html = this.props.__html;
 
     return (
       <StyledHome>
@@ -27,18 +22,11 @@ export class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  pages: state.pages
-});
+export default page(Home);
 
-const mapDispatchToProps = {};
+const StyledHome = styled.div`
+  margin-top: 73px;
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
-
-let StyledHome = styled.div`
   .images-wrapper p {
     @media ${smallOnly} {
       align-items: center;

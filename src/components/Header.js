@@ -7,17 +7,16 @@ import { mediumUp } from '../util/media';
 
 class Header extends Component {
   state = {
+    _mounted: false,
     isActive: false
   };
 
   componentDidMount() {
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1023) {
-        this.setState({
-          isActive: false
-        });
-      }
-    });
+    this._mounted = true;
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
 
   toggleActive = () => {
@@ -30,21 +29,29 @@ class Header extends Component {
   };
 
   renderHeader() {
-    const { data } = this.props.pages;
+    const { pages } = this.props;
 
-    return data.filter(page => page.title.rendered !== 'Footer').map(page => {
-      const pageTitle = page.title.rendered.toUpperCase();
-      let location;
-      // // home page
-      if (pageTitle === 'HOME') {
-        location = '';
-        // any other page
-      } else {
-        location = pageTitle.toLowerCase().replace(/\s+/g, '-');
-      }
+    if (this._mounted) {
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 1023) {
+          this.setState({
+            isActive: false
+          });
+        }
+      });
+    }
+
+    const header = Object.keys(pages)
+      .filter(page => page !== 'footer')
+      .filter(page => page !== 'loading')
+      .sort((a, b) => pages[a].id - pages[b].id);
+
+    return header.map(page => {
+      const location = page === 'home' ? '' : page;
+
       return (
-        <div key={page.id} onClick={this.toggleActive} className="navbar-item">
-          <Link to={'/' + location}>{pageTitle}</Link>
+        <div key={page} onClick={this.toggleActive} className="navbar-item">
+          <Link to={'/' + location}>{page.toUpperCase()}</Link>
         </div>
       );
     });

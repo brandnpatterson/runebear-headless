@@ -1,5 +1,5 @@
-export let black = '#000';
-export let blue = '#3273dc';
-export let dark = '#333';
-export let gray = '#808080';
-export let light = '#bfbfbf';
+export const black = '#000';
+export const blue = '#3273dc';
+export const dark = '#333';
+export const gray = '#808080';
+export const light = '#bfbfbf';
