@@ -29,7 +29,7 @@ let getPages = () => {
 let getWeeklyPosts = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${endpoint('weekly_posts')}`)
+      .get(`${endpoint('weekly_posts')}?per_page=100`)
       .then(res => resolve(res.data))
       .catch(err => reject(err));
   });
