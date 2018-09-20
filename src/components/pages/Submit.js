@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import page from '../page';
 import styled from 'styled-components';
 import { gray } from '../../util/color';
 import { mediumUp, largeUp } from '../../util/media';
+
+import page from '../page';
 
 class Submit extends Component {
   componentDidMount() {

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import page from '../page';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
+
+import page from '../page';
 
 class Quarterly extends Component {
   componentDidMount() {

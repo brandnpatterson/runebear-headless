@@ -2,10 +2,9 @@ import React from 'react';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import reduxPromise from 'redux-promise';
 import reducers from './reducers';
 
-const middleware = [reduxPromise, thunk];
+const middleware = [thunk];
 
 const Store = ({ children, initialState = {} }) => {
   const store = createStore(

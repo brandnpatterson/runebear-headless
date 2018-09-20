@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import page from '../page';
 import styled from 'styled-components';
 import { mediumUp, smallOnly } from '../../util/media';
+
+import page from '../page';
 
 class Home extends Component {
   componentDidMount() {

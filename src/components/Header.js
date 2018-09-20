@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { changeWeeklyPage } from '../actions';
 import styled from 'styled-components';
 import { dark, light } from '../util/color';
 import { mediumUp } from '../util/media';
@@ -20,6 +21,10 @@ class Header extends Component {
   }
 
   toggleActive = () => {
+    if (this.props.weekly.pageNumber !== 1) {
+      this.props.changeWeeklyPage(1);
+    }
+
     // toggle active state only if screen is small
     if (window.innerWidth <= 1023) {
       this.setState({
@@ -91,12 +96,15 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  pages: state.pages
+  pages: state.pages,
+  weekly: state.weekly
 });
+
+const mapDispatchToProps = { changeWeeklyPage };
 
 export default connect(
   mapStateToProps,
-  {}
+  mapDispatchToProps
 )(Header);
 
 const StyledHeader = styled.header`

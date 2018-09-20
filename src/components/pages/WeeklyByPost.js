@@ -1,17 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { array } from 'prop-types';
+import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
 import { gray } from '../../util/color';
 import { mediumUp } from '../../util/media';
 
 import Loading from '../Loading';
-import StyledPost from '../StyledPost';
+import WeeklyPostSingle from './WeeklyPostSingle';
 
-class WeeklyPost extends React.Component {
+class WeeklyByPost extends React.Component {
   static propTypes = {
-    weeklyPost: array.isRequired
+    weeklyByPost: object
   };
 
   componentDidMount() {
@@ -19,9 +20,12 @@ class WeeklyPost extends React.Component {
   }
 
   render() {
-    const { weekly } = this.props;
+    const { weekly, weeklyByPost } = this.props;
 
-    const post = this.props.weeklyPost[0];
+    const post = weeklyByPost.post;
+    const authors = weeklyByPost.authors;
+    const categories = weeklyByPost.categories;
+    const tags = weeklyByPost.tags;
 
     const nextArr = [];
     const prevArr = [];
@@ -69,37 +73,38 @@ class WeeklyPost extends React.Component {
 
     return (
       <div>
-        {post && post.content && post.content.rendered ? (
+        {!post ? (
+          <Loading />
+        ) : (
           <StyledWeeklyWrapper>
             <div className="arrow-wrapper-top arrow-wrapper">
               <PrevArrow />
               <NextArrow />
             </div>
-            <h1 className="card-title">
-              {post && post.title && post.title.rendered}
-            </h1>
-            <StyledPost className="weekly-post-complete">
-              <div className="card-content">
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: post && post.content && post.content.rendered
-                  }}
-                />
-              </div>
-              <div className="card-footer">
-                <div className="card-tags">
-                  {/* <LinksCategories post={post} /> */}
-                  {/* <LinksTags post={post} /> */}
-                </div>
-              </div>
-            </StyledPost>
+            <h1 className="card-title">{post.title.rendered}</h1>
+            <WeeklyPostSingle
+              authors={authors}
+              categories={categories}
+              content={post.content.rendered}
+              post={post}
+              tags={tags}
+            />
+
             <div className="arrow-wrapper-bottom arrow-wrapper">
               <PrevArrow />
               <NextArrow />
             </div>
+            {authors.map(author => {
+              return (
+                <p key={author.id} className="card-author">
+                  All from &nbsp;
+                  <Link to={`/weekly/authors/${author.slug}`}>
+                    {author.name}
+                  </Link>
+                </p>
+              );
+            })}
           </StyledWeeklyWrapper>
-        ) : (
-          <Loading />
         )}
       </div>
     );
@@ -110,7 +115,7 @@ const mapStateToProps = state => ({
   weekly: state.weekly.all
 });
 
-export default connect(mapStateToProps)(WeeklyPost);
+export default connect(mapStateToProps)(WeeklyByPost);
 
 const StyledWeeklyWrapper = styled.div`
   align-items: center;
@@ -119,6 +124,10 @@ const StyledWeeklyWrapper = styled.div`
   justify-content: space-around;
   margin-bottom: 100px;
   text-align: left;
+
+  .categories-and-tags {
+    display: flex;
+  }
 
   .authors-header {
     display: flex;
@@ -134,11 +143,6 @@ const StyledWeeklyWrapper = styled.div`
 
   .weekly-post-complete {
     padding-top: 25px;
-  }
-
-  .card-tags {
-    display: flex;
-    margin-top: 25px;
   }
 
   .card-title {

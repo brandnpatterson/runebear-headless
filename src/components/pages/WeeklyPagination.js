@@ -18,15 +18,23 @@ class WeeklyPagination extends Component {
   };
 
   onNextPage = () => {
-    this.props.changeWeeklyPage(null, 'next');
+    let nextPage = this.props.weekly.pageNumber + 1;
 
-    window.scrollTo(0, 0);
+    if (nextPage <= this.props.weekly.totalPages) {
+      this.props.changeWeeklyPage(null, 'next');
+
+      window.scrollTo(0, 0);
+    }
   };
 
   onPreviousPage = () => {
-    this.props.changeWeeklyPage(null, 'prev');
+    let prevPage = this.props.weekly.pageNumber - 1;
 
-    window.scrollTo(0, 0);
+    if (prevPage !== 0) {
+      this.props.changeWeeklyPage(null, 'prev');
+
+      window.scrollTo(0, 0);
+    }
   };
 
   render() {
@@ -112,9 +120,11 @@ const mapStateToProps = state => ({
   weekly: state.weekly
 });
 
+const mapDispatchToProps = { changeWeeklyPage };
+
 export default connect(
   mapStateToProps,
-  { changeWeeklyPage }
+  mapDispatchToProps
 )(WeeklyPagination);
 
 const StyledPagination = styled.div`

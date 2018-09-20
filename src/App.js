@@ -8,17 +8,19 @@ import Header from './components/Header';
 import Loading from './components/Loading';
 
 import About from './components/pages/About';
-import Author from './components/pages/Author';
 import Quarterly from './components/pages/Quarterly';
 import Home from './components/pages/Home';
-import Weekly from './components/pages/Weekly';
-import WeeklyCategory from './components/pages/WeeklyCategory';
-import WeeklyTag from './components/pages/WeeklyTag';
-import WeeklyPost from './components/pages/WeeklyPost';
+import WeeklyPosts from './components/pages/WeeklyPosts';
+import WeeklyByAuthor from './components/pages/WeeklyByAuthor';
+import WeeklyByCategory from './components/pages/WeeklyByCategory';
+import WeeklyByTag from './components/pages/WeeklyByTag';
+import WeeklyByPost from './components/pages/WeeklyByPost';
 import Submit from './components/pages/Submit';
 
 import styled from 'styled-components';
 import { mediumUp, tiny } from './util/media';
+
+import { associateFilter } from './util';
 
 class App extends React.Component {
   state = {
@@ -46,39 +48,85 @@ class App extends React.Component {
     const { loading } = this.props.pages;
 
     const filterByAuthor = match => {
-      return (
-        this.props.weekly.allAuthors &&
-        this.props.weekly.allAuthors.filter(author => {
-          return author.slug === match.params.author;
-        })
-      );
+      const author = this.props.weekly.allAuthors.filter(author => {
+        return author.slug === match.params.author;
+      });
+
+      const posts = associateFilter({
+        haystack: this.props.weekly.all,
+        needle: author,
+        hayProp: 'post_author'
+      });
+
+      return {
+        author,
+        posts
+      };
     };
 
     const filterByCategory = match => {
-      return (
-        this.props.weekly.allCategories &&
-        this.props.weekly.allCategories.filter(category => {
-          return category.slug === match.params.category;
-        })
-      );
+      const categories = this.props.weekly.allCategories.filter(category => {
+        return category.slug === match.params.category;
+      });
+
+      const posts = associateFilter({
+        haystack: this.props.weekly.all,
+        needle: categories,
+        hayProp: 'categories'
+      });
+
+      return {
+        categories,
+        posts
+      };
     };
 
     const filterByPost = match => {
-      return (
-        this.props.weekly.all &&
-        this.props.weekly.all.filter(
-          post => post.slug === match.params.weeklyPost
-        )
-      );
+      const post = this.props.weekly.all.filter(post => {
+        return post.slug === match.params.weeklyPost;
+      });
+
+      const authors = associateFilter({
+        haystack: this.props.weekly.allAuthors,
+        needle: post,
+        needleProp: 'post_author'
+      });
+
+      const categories = associateFilter({
+        haystack: this.props.weekly.allCategories,
+        needle: post,
+        needleProp: 'categories'
+      });
+
+      const tags = associateFilter({
+        haystack: this.props.weekly.allTags,
+        needle: post,
+        needleProp: 'tags'
+      });
+
+      return {
+        authors,
+        categories,
+        post: post[0],
+        tags
+      };
     };
 
     const filterByTag = match => {
-      return (
-        this.props.weekly.allTags &&
-        this.props.weekly.allTags.filter(tag => {
-          return tag.slug === match.params.tagName;
-        })
-      );
+      const tags = this.props.weekly.allTags.filter(tag => {
+        return tag.slug === match.params.tag;
+      });
+
+      const posts = associateFilter({
+        haystack: this.props.weekly.all,
+        needle: tags,
+        hayProp: 'tags'
+      });
+
+      return {
+        posts,
+        tags
+      };
     };
 
     return (
@@ -93,12 +141,12 @@ class App extends React.Component {
               <Route exact path="/" component={Home} />
               <Route exact path="/quarterly" component={Quarterly} />
               <Route exact path="/submit" component={Submit} />
-              <Route exact path="/weekly" component={Weekly} />
+              <Route exact path="/weekly" component={WeeklyPosts} />
               <Route
                 exact
                 path={`/weekly/:weeklyPost`}
                 component={({ match }) => {
-                  return <WeeklyPost weeklyPost={filterByPost(match)} />;
+                  return <WeeklyByPost weeklyByPost={filterByPost(match)} />;
                 }}
               />
               <Route
@@ -106,7 +154,9 @@ class App extends React.Component {
                 path={`/weekly/authors/:author`}
                 component={({ match }) => {
                   return (
-                    <Author
+                    <WeeklyByAuthor
+                      categories={this.props.weekly.allCategories}
+                      tags={this.props.weekly.allTags}
                       match={match}
                       weeklyByAuthor={filterByAuthor(match)}
                     />
@@ -118,7 +168,8 @@ class App extends React.Component {
                 path={`/weekly/categories/:category`}
                 component={({ match }) => {
                   return (
-                    <WeeklyCategory
+                    <WeeklyByCategory
+                      allAuthors={this.props.weekly.allAuthors}
                       match={match}
                       weeklyByCategory={filterByCategory(match)}
                     />
@@ -127,10 +178,14 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path={`/weekly/tags/:tagName`}
+                path={`/weekly/tags/:tag`}
                 component={({ match }) => {
                   return (
-                    <WeeklyTag match={match} weeklyByTag={filterByTag(match)} />
+                    <WeeklyByTag
+                      allAuthors={this.props.weekly.allAuthors}
+                      match={match}
+                      weeklyByTag={filterByTag(match)}
+                    />
                   );
                 }}
               />
