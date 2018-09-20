@@ -1,12 +1,22 @@
 import {
+  AUTHORS_WEEKLY,
   ERROR_WEEKLY,
+  FETCH_ALL_AUTHORS,
+  FETCH_ALL_CATEGORIES,
+  FETCH_ALL_TAGS,
+  FETCH_ALL_WEEKLY,
   FETCH_WEEKLY,
   LOADING_WEEKLY,
-  CHANGE_WEEKLY_PAGE
+  CATEGORIES_WEEKLY,
+  CHANGE_WEEKLY_PAGE,
+  TAGS_WEEKLY
 } from '../actions/types';
 
 const initialState = {
   all: [],
+  allAuthors: [],
+  allCategories: [],
+  allTags: [],
   error: false,
   loading: false,
   pageNumber: 1
@@ -14,13 +24,29 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_WEEKLY:
-      const allDelivered = [...state.all, action.payload];
-      const flattened = [].concat.apply([], allDelivered);
-
+    case FETCH_ALL_WEEKLY:
       return {
         ...state,
-        all: flattened,
+        all: action.payload
+      };
+    case FETCH_ALL_AUTHORS:
+      return {
+        ...state,
+        allAuthors: action.payload
+      };
+    case FETCH_ALL_CATEGORIES:
+      return {
+        ...state,
+        allCategories: action.payload
+      };
+    case FETCH_ALL_TAGS:
+      return {
+        ...state,
+        allTags: action.payload
+      };
+    case FETCH_WEEKLY:
+      return {
+        ...state,
         [`${action.pageNumber}`]: action.payload,
         loading: false,
         totalPages: action.totalPages
@@ -28,7 +54,23 @@ export default (state = initialState, action) => {
     case CHANGE_WEEKLY_PAGE:
       return {
         ...state,
-        pageNumber: action.payload
+        pageNumber: Number(action.payload)
+          ? action.payload
+          : action.payload === 'next'
+            ? state.pageNumber + 1
+            : state.pageNumber - 1
+      };
+    case AUTHORS_WEEKLY:
+      return {
+        ...state
+      };
+    case CATEGORIES_WEEKLY:
+      return {
+        ...state
+      };
+    case TAGS_WEEKLY:
+      return {
+        ...state
       };
     case LOADING_WEEKLY:
       return {

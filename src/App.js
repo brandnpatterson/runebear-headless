@@ -8,9 +8,12 @@ import Header from './components/Header';
 import Loading from './components/Loading';
 
 import About from './components/pages/About';
+import Author from './components/pages/Author';
 import Quarterly from './components/pages/Quarterly';
 import Home from './components/pages/Home';
 import Weekly from './components/pages/Weekly';
+import WeeklyCategory from './components/pages/WeeklyCategory';
+import WeeklyTag from './components/pages/WeeklyTag';
 import WeeklyPost from './components/pages/WeeklyPost';
 import Submit from './components/pages/Submit';
 
@@ -24,6 +27,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.fetchPages();
+    this.props.fetchWeeklyPage();
   }
 
   componentDidUpdate() {
@@ -40,6 +44,42 @@ class App extends React.Component {
 
   render() {
     const { loading } = this.props.pages;
+
+    const filterByAuthor = match => {
+      return (
+        this.props.weekly.allAuthors &&
+        this.props.weekly.allAuthors.filter(author => {
+          return author.slug === match.params.author;
+        })
+      );
+    };
+
+    const filterByCategory = match => {
+      return (
+        this.props.weekly.allCategories &&
+        this.props.weekly.allCategories.filter(category => {
+          return category.slug === match.params.category;
+        })
+      );
+    };
+
+    const filterByPost = match => {
+      return (
+        this.props.weekly.all &&
+        this.props.weekly.all.filter(
+          post => post.slug === match.params.weeklyPost
+        )
+      );
+    };
+
+    const filterByTag = match => {
+      return (
+        this.props.weekly.allTags &&
+        this.props.weekly.allTags.filter(tag => {
+          return tag.slug === match.params.tagName;
+        })
+      );
+    };
 
     return (
       <StyledComponent>
@@ -58,12 +98,39 @@ class App extends React.Component {
                 exact
                 path={`/weekly/:weeklyPost`}
                 component={({ match }) => {
+                  return <WeeklyPost weeklyPost={filterByPost(match)} />;
+                }}
+              />
+              <Route
+                exact
+                path={`/weekly/authors/:author`}
+                component={({ match }) => {
                   return (
-                    <WeeklyPost
-                      weeklyPost={this.props.weekly.all.filter(
-                        post => post.slug === match.params.weeklyPost
-                      )}
+                    <Author
+                      match={match}
+                      weeklyByAuthor={filterByAuthor(match)}
                     />
+                  );
+                }}
+              />
+              <Route
+                exact
+                path={`/weekly/categories/:category`}
+                component={({ match }) => {
+                  return (
+                    <WeeklyCategory
+                      match={match}
+                      weeklyByCategory={filterByCategory(match)}
+                    />
+                  );
+                }}
+              />
+              <Route
+                exact
+                path={`/weekly/tags/:tagName`}
+                component={({ match }) => {
+                  return (
+                    <WeeklyTag match={match} weeklyByTag={filterByTag(match)} />
                   );
                 }}
               />
@@ -78,7 +145,6 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
   pages: state.pages,
-  request: state.request,
   weekly: state.weekly
 });
 

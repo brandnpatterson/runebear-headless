@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Loading from '../Loading';
+import WeeklyPagination from './WeeklyPagination';
 import StyledPost from '../StyledPost';
 import page from '../page';
 import styled from 'styled-components';
@@ -12,19 +13,6 @@ class Weekly extends Component {
   componentDidMount() {
     document.title = 'Weekly | Rune Bear';
   }
-
-  onClick = e => {
-    const { weekly } = this.props;
-    const targetValue = e.target.textContent;
-
-    if (weekly[targetValue]) {
-      this.props.changeWeeklyPage(Number(e.target.textContent));
-    } else {
-      this.props.fetchWeeklyPage(Number(e.target.textContent));
-    }
-
-    window.scrollTo(0, 0);
-  };
 
   render() {
     const { __html, weekly, weeklyLoading, weeklyCurrentPage } = this.props;
@@ -49,6 +37,9 @@ class Weekly extends Component {
               Math.min(trimmed.length, trimmed.lastIndexOf(' '))
             );
 
+            const categories = post._embedded['wp:term'][0];
+            const tags = post._embedded['wp:term'][1];
+            const authors = post._embedded['wp:term'][2];
             return (
               <StyledPost key={post.id}>
                 <h2 className="card-title">{post.title.rendered}</h2>
@@ -60,30 +51,43 @@ class Weekly extends Component {
                 </div>
                 <div className="card-footer">
                   <div className="card-tags">
-                    <p>Author</p>
-                    <p>#links</p>
-                    <p>#tags</p>
+                    {authors &&
+                      authors.map(author => {
+                        return (
+                          <Link
+                            key={author.slug}
+                            to={`/weekly/authors/${author.slug}`}
+                          >
+                            <p className="card-author">{author.name}</p>
+                          </Link>
+                        );
+                      })}
+                    {categories &&
+                      categories.map(category => {
+                        return (
+                          <Link
+                            key={category.slug}
+                            to={`/weekly/categories/${category.slug}`}
+                          >
+                            <p className="card-author">#{category.name}</p>
+                          </Link>
+                        );
+                      })}
+                    {tags &&
+                      tags.map(tag => {
+                        return (
+                          <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
+                            <p className="card-author">#{tag.name}</p>
+                          </Link>
+                        );
+                      })}
                   </div>
                 </div>
               </StyledPost>
             );
           })
         )}
-        <StyledPagination>
-          <nav className="pagination" aria-label="pagination">
-            <ul className="pagination-list">
-              <li onClick={this.onClick} className="pagination-link">
-                1
-              </li>
-              <li onClick={this.onClick} className="pagination-link">
-                2
-              </li>
-              <li onClick={this.onClick} className="pagination-link">
-                3
-              </li>
-            </ul>
-          </nav>
-        </StyledPagination>
+        <WeeklyPagination />
       </StyledWeeklyWrapper>
     );
   }
@@ -110,11 +114,5 @@ const StyledWeeklyPosts = styled.div`
 
   @media ${mediumUp} {
     max-width: 900px;
-  }
-`;
-
-const StyledPagination = styled.div`
-  .is-current {
-    pointer-events: none;
   }
 `;

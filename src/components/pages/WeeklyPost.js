@@ -19,32 +19,32 @@ class WeeklyPost extends React.Component {
   }
 
   render() {
-    const { weeklyPosts } = this.props;
+    const { weekly } = this.props;
 
-    let post = this.props.weeklyPost[0];
+    const post = this.props.weeklyPost[0];
 
-    let nextArr = [];
-    let prevArr = [];
+    const nextArr = [];
+    const prevArr = [];
 
     if (post && post.id) {
-      weeklyPosts.map((p, i, { length }) => {
+      weekly.map((p, i, { length }) => {
         if (post.id === p.id) {
           if (i + 1 === length) {
-            return nextArr.push(weeklyPosts[0].slug);
+            return nextArr.push(weekly[0].slug);
           } else {
-            return nextArr.push(weeklyPosts[i + 1].slug);
+            return nextArr.push(weekly[i + 1].slug);
           }
         }
 
         return false;
       });
 
-      weeklyPosts.map((p, i, { length }) => {
+      weekly.map((p, i, { length }) => {
         if (post.id === p.id) {
           if (i === 0) {
-            return prevArr.push(weeklyPosts[length - 1].slug);
+            return prevArr.push(weekly[length - 1].slug);
           } else {
-            return prevArr.push(weeklyPosts[i - 1].slug);
+            return prevArr.push(weekly[i - 1].slug);
           }
         }
 
@@ -52,16 +52,16 @@ class WeeklyPost extends React.Component {
       });
     }
 
-    let next = nextArr[0];
-    let prev = prevArr[0];
+    const next = nextArr[0];
+    const prev = prevArr[0];
 
-    let PrevArrow = () => (
+    const PrevArrow = () => (
       <Link onClick={this.shiftUp} to={`/weekly/${prev}`}>
         <span className="left-arrow">{'<<<'}</span>
       </Link>
     );
 
-    let NextArrow = () => (
+    const NextArrow = () => (
       <Link onClick={this.shiftUp} to={`/weekly/${next}`}>
         <span className="right-arrow">{'>>>'}</span>
       </Link>
@@ -107,44 +107,51 @@ class WeeklyPost extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  weeklyPosts: state.weekly.all
+  weekly: state.weekly.all
 });
 
 export default connect(mapStateToProps)(WeeklyPost);
 
-let StyledWeeklyWrapper = styled.div`
+const StyledWeeklyWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin-bottom: 100px;
   text-align: left;
+
   .authors-header {
     display: flex;
     justify-content: center;
   }
+
   .authors-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     width: 200px;
   }
+
   .weekly-post-complete {
     padding-top: 25px;
   }
+
   .card-tags {
     display: flex;
     margin-top: 25px;
   }
+
   .card-title {
     font-weight: bold;
     margin-bottom: 25px;
     text-align: center;
     text-transform: uppercase;
+
     @media ${mediumUp} {
       margin-bottom: 0;
     }
   }
+
   .arrow-wrapper {
     display: flex;
     justify-content: space-between;
@@ -152,22 +159,27 @@ let StyledWeeklyWrapper = styled.div`
     padding-right: 15px;
     width: 100%;
   }
+
   .arrow-wrapper-top {
     margin-bottom: 50px;
+
     @media ${mediumUp} {
       position: absolute;
       top: 500px;
       width: 1000px;
     }
   }
+
   .arrow-wrapper-bottom {
     border-top: 1px solid ${gray};
     margin-bottom: 75px;
     padding-top: 50px;
+
     @media ${mediumUp} {
       display: none;
     }
   }
+
   .left-arrow,
   .right-arrow {
     border: 1px solid ${gray};
