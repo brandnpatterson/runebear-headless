@@ -40,8 +40,15 @@ class Header extends Component {
       } else {
         location = headerItem.toLowerCase().replace(/\s+/g, '-');
       }
+
+      setTimeout(() => {
+        Array.from(document.querySelectorAll('.navbar-item')).map(i => {
+          i.classList.remove('hotfix');
+        });
+      }, 700);
+
       return (
-        <div key={i} onClick={this.toggleActive} className="navbar-item">
+        <div key={i} onClick={this.toggleActive} className="navbar-item hotfix">
           <Link to={'/' + location}>{headerItem}</Link>
         </div>
       );
@@ -91,6 +98,10 @@ class Header extends Component {
 }
 
 let StyledHeader = styled.header`
+  .hotfix {
+    pointer-events: none;
+  }
+
   .navbar {
     margin-bottom: 50px;
   }
