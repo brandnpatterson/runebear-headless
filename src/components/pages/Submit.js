@@ -15,7 +15,7 @@ const Submit = ({ __html }) => {
 
   return (
     <StyledSubmit
-      className="submit flex-center"
+      className="submit columns"
       dangerouslySetInnerHTML={{ __html }}
     />
   );
@@ -26,17 +26,8 @@ Submit.propTypes = propTypes;
 export default page(Submit);
 
 const StyledSubmit = styled.div`
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-
-  .flex-center {
-    justify-content: center;
-  }
-
   @media ${mediumUp} {
-    flex-direction: row !important;
+    margin: 0 auto;
   }
 
   @media ${largeUp} {
