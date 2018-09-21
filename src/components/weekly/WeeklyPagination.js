@@ -3,6 +3,7 @@ import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { changeWeeklyPage } from '../../actions';
 import styled from 'styled-components';
+import { smallOnly } from '../../util/media';
 
 class WeeklyPagination extends Component {
   static propTypes = {
@@ -134,6 +135,11 @@ export default connect(
 )(WeeklyPagination);
 
 const StyledPagination = styled.div`
+  .pagination-list {
+    @media ${smallOnly} {
+      margin-left: 0 !important;
+    }
+  }
   .pagination-previous,
   .pagination-next {
     margin-top: 8px;
