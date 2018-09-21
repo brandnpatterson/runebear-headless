@@ -41,16 +41,6 @@ class Header extends Component {
   renderHeader() {
     const { pages } = this.props;
 
-    if (this._mounted) {
-      window.addEventListener('resize', () => {
-        if (window.innerWidth > 1023) {
-          this.setState({
-            isActive: false
-          });
-        }
-      });
-    }
-
     const header = Object.keys(pages)
       .filter(page => page !== 'footer')
       .filter(page => page !== 'loading')
