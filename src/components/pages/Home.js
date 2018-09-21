@@ -24,7 +24,10 @@ Home.propTypes = propTypes;
 export default page(Home);
 
 const StyledHome = styled.div`
-  margin-top: 73px;
+  @media ${mediumUp} {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
 
   .images-wrapper p {
     @media ${smallOnly} {

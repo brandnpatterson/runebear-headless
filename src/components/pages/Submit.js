@@ -31,6 +31,10 @@ const StyledSubmit = styled.div`
   flex-direction: column;
   margin: 0 auto;
 
+  .flex-center {
+    justify-content: center;
+  }
+
   @media ${mediumUp} {
     flex-direction: row !important;
   }
