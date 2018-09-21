@@ -49,6 +49,8 @@ const StyledSubmit = styled.div`
     flex-direction: column;
     padding: 0 30px 50px;
     width: 100%;
+    box-shadow: none !important;
+
     @media ${mediumUp} {
       border: 1px solid ${gray};
       margin: 50px 30px;
