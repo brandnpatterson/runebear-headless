@@ -141,53 +141,55 @@ class App extends React.Component {
           {loading ? (
             <Loading />
           ) : (
-            <div>
+            <div className="wrapper">
               <Header />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/" component={Home} />
-              <Route exact path="/quarterly" component={Quarterly} />
-              <Route exact path="/submit" component={Submit} />
-              <Route exact path="/weekly" component={WeeklyPosts} />
-              <Route
-                exact
-                path={`/weekly/:weeklyPost`}
-                component={({ match }) => {
-                  return <WeeklyByPost weeklyByPost={filterByPost(match)} />;
-                }}
-              />
-              <Route
-                exact
-                path={`/weekly/authors/:author`}
-                component={({ match }) => {
-                  return (
-                    <WeeklyByAuthor weeklyByAuthor={filterByAuthor(match)} />
-                  );
-                }}
-              />
-              <Route
-                exact
-                path={`/weekly/categories/:category`}
-                component={({ match }) => {
-                  return (
-                    <WeeklyByCategory
-                      match={match}
-                      weeklyByCategory={filterByCategory(match)}
-                    />
-                  );
-                }}
-              />
-              <Route
-                exact
-                path={`/weekly/tags/:tag`}
-                component={({ match }) => {
-                  return (
-                    <WeeklyByTag
-                      match={match}
-                      weeklyByTag={filterByTag(match)}
-                    />
-                  );
-                }}
-              />
+              <div className="content">
+                <Route exact path="/about" component={About} />
+                <Route exact path="/" component={Home} />
+                <Route exact path="/quarterly" component={Quarterly} />
+                <Route exact path="/submit" component={Submit} />
+                <Route exact path="/weekly" component={WeeklyPosts} />
+                <Route
+                  exact
+                  path={`/weekly/:weeklyPost`}
+                  component={({ match }) => {
+                    return <WeeklyByPost weeklyByPost={filterByPost(match)} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/authors/:author`}
+                  component={({ match }) => {
+                    return (
+                      <WeeklyByAuthor weeklyByAuthor={filterByAuthor(match)} />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/categories/:category`}
+                  component={({ match }) => {
+                    return (
+                      <WeeklyByCategory
+                        match={match}
+                        weeklyByCategory={filterByCategory(match)}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/tags/:tag`}
+                  component={({ match }) => {
+                    return (
+                      <WeeklyByTag
+                        match={match}
+                        weeklyByTag={filterByTag(match)}
+                      />
+                    );
+                  }}
+                />
+              </div>
               <Footer />
             </div>
           )}
@@ -234,13 +236,6 @@ const StyledComponent = styled.div`
 
   .image-wrapper img:nth-child(2) {
     margin-bottom: 50px;
-  }
-
-  .loading {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    margin-top: 250px;
   }
 
   .subtitle {

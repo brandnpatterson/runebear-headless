@@ -28,6 +28,16 @@ if (module.hot) {
 }
 
 injectGlobal`
+  .wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .content {
+    flex: 1;
+  }
+
   h1,
   h2,
   h3,
