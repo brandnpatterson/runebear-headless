@@ -45,7 +45,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { loading } = this.props.weekly;
+    const { loading } = this.props.pages;
 
     const filterByAuthor = match => {
       const author = this.props.weekly.allAuthors.filter(author => {
