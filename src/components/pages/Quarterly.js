@@ -32,7 +32,7 @@ const StyledQuarterly = styled.div`
 
   @media ${mediumUp} {
     flex-direction: row;
-    margin: 207px auto 0;
+    margin: 147px auto 60px;
     max-width: 800px;
   }
 
