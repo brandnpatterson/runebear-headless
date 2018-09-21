@@ -25,6 +25,7 @@ Quarterly.propTypes = propTypes;
 export default page(Quarterly);
 
 const StyledQuarterly = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -32,7 +33,7 @@ const StyledQuarterly = styled.div`
 
   @media ${mediumUp} {
     flex-direction: row;
-    margin: 147px auto 60px;
+    margin: 128px auto 0;
     max-width: 800px;
   }
 
