@@ -134,6 +134,11 @@ export default connect(
 )(WeeklyPagination);
 
 const StyledPagination = styled.div`
+  .pagination-previous,
+  .pagination-next {
+    margin-top: 8px;
+  }
+
   .is-current {
     pointer-events: none;
   }
