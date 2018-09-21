@@ -1,33 +1,40 @@
-import React from 'react';
-import { string } from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { blue, dark, light } from '../util/color';
 import { mediumUp } from '../util/media';
 
-let propTypes = {
-  footer: string.isRequired
-};
+class Footer extends Component {
+  render() {
+    const { footer } = this.props.pages;
+    const __html = footer && footer.content && footer.content.rendered;
 
-let Footer = ({ footer }) => {
-  let thisYear = new Date().getFullYear();
+    const thisYear = new Date().getFullYear();
 
-  return (
-    <StyledFooter>
-      <div className="content" dangerouslySetInnerHTML={{ __html: footer }} />
-      <a
-        className="copyright"
-        href="https://github.com/brandnpatterson"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        &copy;
-        {thisYear} Brandon Patterson. All Rights Reserved.
-      </a>
-    </StyledFooter>
-  );
-};
+    return (
+      <StyledFooter>
+        <div className="content" dangerouslySetInnerHTML={{ __html }} />
+        <a
+          className="copyright"
+          href="https://github.com/brandnpatterson"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          &copy;
+          {thisYear} Brandon Patterson. All Rights Reserved.
+        </a>
+      </StyledFooter>
+    );
+  }
+}
 
-let StyledFooter = styled.footer`
+const mapStateToProps = state => ({
+  pages: state.pages
+});
+
+export default connect(mapStateToProps)(Footer);
+
+const StyledFooter = styled.footer`
   background: ${dark};
   color: ${light};
   display: flex;
@@ -68,7 +75,6 @@ let StyledFooter = styled.footer`
     font-size: 14px;
     margin-left: 10px;
     text-align: left;
-
     @media ${mediumUp} {
       font-size: 18px;
       margin: 25px 0 50px 60px;
@@ -79,7 +85,3 @@ let StyledFooter = styled.footer`
     color: ${blue};
   }
 `;
-
-Footer.propTypes = propTypes;
-
-export default Footer;

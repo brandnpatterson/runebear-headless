@@ -1,476 +1,248 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import styled from 'styled-components';
-import { mediumUp, tiny } from './util/media';
-import { getTaxonomy, getPages, getWeeklyPosts } from './api';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fetchPages, fetchWeeklyPage } from './actions';
 
-import About from './components/pages/About';
-import Author from './components/pages/Author';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Home from './components/pages/Home';
-import Loading from './components/common/Loading';
-import NotFound from './components/NotFound';
+import Loading from './components/Loading';
+
+import About from './components/pages/About';
 import Quarterly from './components/pages/Quarterly';
+import Home from './components/pages/Home';
+import WeeklyPosts from './components/pages/WeeklyPosts';
+import WeeklyByAuthor from './components/pages/WeeklyByAuthor';
+import WeeklyByCategory from './components/pages/WeeklyByCategory';
+import WeeklyByTag from './components/pages/WeeklyByTag';
+import WeeklyByPost from './components/pages/WeeklyByPost';
 import Submit from './components/pages/Submit';
-import Weekly from './components/weekly/WeeklyTag';
-import WeeklyCategory from './components/weekly/WeeklyCategory';
-import WeeklyPost from './components/weekly/WeeklyPost';
-import WeeklyPosts from './components/weekly/WeeklyPosts';
+
+import styled from 'styled-components';
+import { mediumUp, tiny } from './util/media';
+
+import { associateFilter } from './util';
 
 class App extends React.Component {
   state = {
-    authors: [],
-    pages: null,
-    header: null,
-    loading: true,
-    footer: null,
-    weekly_category_type: null,
-    weekly_total_pages: null,
-    weekly_page: 1,
-    weekly_pages: {},
-    weekly_posts: null,
-    weekly_posts_all: null,
-    weekly_requests_complete: false,
-    weekly_tags: null
+    initialUpdate: false
   };
 
   componentDidMount() {
-    getPages().then(data => {
-      this.setState({
-        pages: data.pages,
-        header: data.header,
-        loading: false,
-        footer: data.footer
-      });
-
-      this.getWeeklyPostsRequest();
-    });
+    this.props.fetchPages();
+    this.props.fetchWeeklyPage();
   }
 
-  onSelectWeeklyPage = page => {
-    window.scrollTo(0, 0);
+  componentDidUpdate() {
+    if (this.state.initialUpdate === false && this.props.weekly.totalPages) {
+      for (let i = 1; i < this.props.weekly.totalPages + 1; i++) {
+        if (!this.props.weekly[i]) {
+          this.props.fetchWeeklyPage(i);
+        }
+      }
 
-    this.setState({
-      weekly_page: page,
-      weekly_posts: this.state.weekly_pages[page]
-    });
-  };
-
-  onNextWeeklyPage = () => {
-    let nextPage = this.state.weekly_page + 1;
-
-    if (nextPage <= this.state.weekly_total_pages) {
-      window.scrollTo(0, 0);
-
-      this.setState({
-        weekly_page: nextPage,
-        weekly_posts: this.state.weekly_pages[nextPage]
-      });
+      this.setState({ initialUpdate: true });
     }
-  };
-
-  onPreviousWeeklyPage = () => {
-    let prevPage = this.state.weekly_page - 1;
-
-    if (prevPage !== 0) {
-      window.scrollTo(0, 0);
-
-      this.setState({
-        weekly_page: prevPage,
-        weekly_posts: this.state.weekly_pages[prevPage]
-      });
-    }
-  };
-
-  getWeeklyPostsRequest = () => {
-    let allAuthors = [];
-    let allCategories = [];
-    let allTags = [];
-
-    getWeeklyPosts()
-      .then(weeklyPosts => {
-        this.setState({
-          weekly_posts_all: weeklyPosts
-        });
-      })
-      .then(() => {
-        let { weekly_posts_all } = this.state;
-
-        if (weekly_posts_all.length === 0) {
-          return;
-        } else {
-          return weekly_posts_all.map((post, index) => {
-            let categoryType = [];
-            let tagNames = [];
-
-            getTaxonomy('tags', post.id)
-              .then(data => {
-                if (data) {
-                  return data.map(tag => {
-                    tagNames.push(tag.name);
-                    allTags.push(tag.name);
-                    allTags = [...new Set(allTags)].sort();
-
-                    return (post.tagNames = tagNames);
-                  });
-                } else {
-                  return allTags.push('');
-                }
-              })
-              .then(() => {
-                this.setState({
-                  weekly_tags: allTags
-                });
-              });
-
-            getTaxonomy('categories', post.id)
-              .then(data => {
-                if (data) {
-                  return data.map(tag => {
-                    categoryType.push(tag.name);
-                    allCategories.push(tag.name);
-                    allCategories = [...new Set(allCategories)].sort();
-
-                    return (post.categoryType = categoryType);
-                  });
-                } else {
-                  return allCategories.push('');
-                }
-              })
-              .then(() => {
-                this.setState({
-                  weekly_category_type: allCategories
-                });
-              });
-
-            return getTaxonomy('post_author', post.id).then(data => {
-              if (data && data[0] && data[0].name) {
-                let checkAndAdd = name => {
-                  let found = allAuthors.some(el => el.name === name);
-
-                  if (!found) {
-                    allAuthors.push({
-                      name: data[0].name,
-                      description: data[0].description,
-                      slug: data[0].slug
-                    });
-                  }
-                };
-
-                checkAndAdd(data[0].name);
-
-                if (data[1]) {
-                  let checkAndAddSecond = name => {
-                    let found = allAuthors.some(el => el.name === name);
-
-                    if (!found) {
-                      allAuthors.push({
-                        name: data[1].name,
-                        description: data[1].description,
-                        slug: data[1].slug
-                      });
-                    }
-                  };
-
-                  checkAndAddSecond(data[1].name);
-                }
-
-                post.authors = [];
-                post.authorSlugs = [];
-
-                data.forEach(d => {
-                  post.authors.push(d.name);
-                  post.authorSlugs.push(d.slug);
-                });
-
-                post.authorDesc = data[0].description;
-              } else {
-                post.authors = [];
-                post.authorSlugs = [];
-                post.authorDesc = '';
-              }
-            });
-          });
-        }
-      })
-      .then(() => {
-        let { weekly_pages, weekly_posts_all } = this.state;
-        let newArr = Array.from(weekly_posts_all);
-
-        let i = 0;
-        while (newArr.length) {
-          weekly_pages[i + 1] = newArr.splice(0, 4);
-          i++;
-        }
-
-        this.setState({
-          authors: allAuthors,
-          weekly_requests_complete: true,
-          weekly_total_pages: Object.keys(this.state.weekly_pages).length
-        });
-
-        if (this.state.weekly_posts === null) {
-          this.setState({ weekly_posts: this.state.weekly_pages[1] });
-        }
-      });
-  };
+  }
 
   render() {
-    let { weekly_posts_all, weekly_requests_complete } = this.state;
+    const { loading } = this.props.pages;
 
-    let filterByAuthor = match =>
-      weekly_posts_all &&
-      weekly_posts_all.filter(post => {
-        let slugs;
-        if (post.authorSlugs) {
-          slugs = post.authorSlugs.map(slug => slug);
-
-          return (
-            slugs[0] === match.params.author || slugs[1] === match.params.author
-          );
-        }
-
-        return false;
+    const filterByAuthor = match => {
+      const author = this.props.weekly.allAuthors.filter(author => {
+        return author.slug === match.params.author;
       });
 
-    let filterByPost = match =>
-      weekly_posts_all &&
-      weekly_posts_all.filter(post => post.slug === match.params.weeklyPost);
-
-    let filterByCategory = match => {
-      let matchParam = match.params.category;
-
-      return weekly_posts_all.filter(post => {
-        if (post.categoryType && post.categoryType.indexOf(matchParam) > -1) {
-          return post;
-        } else return null;
+      const posts = associateFilter({
+        haystack: this.props.weekly.all,
+        needle: author,
+        hayProp: 'post_author'
       });
+
+      return {
+        author,
+        posts
+      };
     };
 
-    let filterByTag = match => {
-      let matchParam = match.params.tagName;
+    const filterByCategory = match => {
+      const categories = this.props.weekly.allCategories.filter(category => {
+        return category.slug === match.params.category;
+      });
 
-      return (
-        weekly_posts_all &&
-        weekly_posts_all.filter(post => {
-          if (post.tagNames && post.tagNames.indexOf(matchParam) > -1) {
-            return post;
-          } else return null;
-        })
-      );
+      const posts = associateFilter({
+        haystack: this.props.weekly.all,
+        needle: categories,
+        hayProp: 'categories'
+      });
+
+      return {
+        categories,
+        posts
+      };
+    };
+
+    const filterByPost = match => {
+      const post = this.props.weekly.all.filter(post => {
+        return post.slug === match.params.weeklyPost;
+      });
+
+      const authors = associateFilter({
+        haystack: this.props.weekly.allAuthors,
+        needle: post,
+        needleProp: 'post_author'
+      });
+
+      const categories = associateFilter({
+        haystack: this.props.weekly.allCategories,
+        needle: post,
+        needleProp: 'categories'
+      });
+
+      const tags = associateFilter({
+        haystack: this.props.weekly.allTags,
+        needle: post,
+        needleProp: 'tags'
+      });
+
+      return {
+        authors,
+        categories,
+        post: post[0],
+        tags
+      };
+    };
+
+    const filterByTag = match => {
+      const tags = this.props.weekly.allTags.filter(tag => {
+        return tag.slug === match.params.tag;
+      });
+
+      const posts = associateFilter({
+        haystack: this.props.weekly.all,
+        needle: tags,
+        hayProp: 'tags'
+      });
+
+      return {
+        posts,
+        tags
+      };
     };
 
     return (
-      <Router>
-        <div id="router-container">
-          {this.state.header ? (
-            <div>
-              <Header
-                header={this.state.header}
-                onSelectWeeklyPage={this.onSelectWeeklyPage}
-              />
-              <Switch>
-                {this.state.pages &&
-                  this.state.pages.map(page => {
-                    let path = () =>
-                      page.title.rendered === 'Home' ? '/' : '/' + page.slug;
-
-                    let Component = () => {
-                      if (page.title.rendered === 'About')
-                        return (
-                          <About
-                            __html={page.content.rendered}
-                            pageClass={page.slug}
-                            pageTitle={page.title.rendered}
-                          />
-                        );
-                      if (page.title.rendered === 'Home')
-                        return (
-                          <Home
-                            __html={page.content.rendered}
-                            pageClass={page.slug}
-                            pageTitle={page.title.rendered}
-                          />
-                        );
-                      if (page.title.rendered === 'Quarterly')
-                        return (
-                          <Quarterly
-                            __html={page.content.rendered}
-                            pageClass={page.slug}
-                            pageTitle={page.title.rendered}
-                          />
-                        );
-                      if (page.title.rendered === 'Submit')
-                        return (
-                          <Submit
-                            __html={page.content.rendered}
-                            pageClass={page.slug}
-                            pageTitle={page.title.rendered}
-                          />
-                        );
-                      if (page.title.rendered === 'Weekly')
-                        if (weekly_requests_complete) {
-                          return (
-                            this.state.weekly_posts && (
-                              <WeeklyPosts
-                                __html={page.content.rendered}
-                                onNextWeeklyPage={this.onNextWeeklyPage}
-                                onPreviousWeeklyPage={this.onPreviousWeeklyPage}
-                                onSelectWeeklyPage={this.onSelectWeeklyPage}
-                                clearWeeklyPosts={this.clearWeeklyPosts}
-                                pageClass={page.slug}
-                                pageTitle={page.title.rendered}
-                                weeklyPage={this.state.weekly_page}
-                                weeklyPosts={this.state.weekly_posts}
-                                weeklyTotalPages={this.state.weekly_total_pages}
-                              />
-                            )
-                          );
-                        } else {
-                          return <Loading />;
-                        }
-                    };
-                    return (
-                      <Route
-                        key={page.id}
-                        exact
-                        path={path()}
-                        component={() => {
-                          return (
-                            <StyledComponent className="flex-center">
-                              <Component />
-                            </StyledComponent>
-                          );
-                        }}
-                      />
-                    );
-                  })}
-                {weekly_requests_complete ? (
-                  <Route
-                    exact
-                    path={`/weekly/:weeklyPost`}
-                    component={({ match }) => {
-                      return (
-                        <WeeklyPost
-                          weeklyPost={filterByPost(match)}
-                          weeklyPosts={this.state.weekly_posts_all}
-                        />
-                      );
-                    }}
-                  />
-                ) : (
-                  <Loading />
-                )}
-                {weekly_requests_complete ? (
-                  <Route
-                    exact
-                    path={`/weekly/authors/:author`}
-                    component={({ match }) => {
-                      return (
-                        <Author
-                          match={match}
-                          weeklyByAuthor={filterByAuthor(match)}
-                        />
-                      );
-                    }}
-                  />
-                ) : (
-                  <Loading />
-                )}
-                {weekly_requests_complete ? (
-                  <Route
-                    exact
-                    path={`/weekly/categories/:category`}
-                    component={({ match }) => {
-                      return (
-                        <WeeklyCategory
-                          match={match}
-                          categoryType={this.state.weekly_category_type}
-                          weeklyByCategory={filterByCategory(match)}
-                        />
-                      );
-                    }}
-                  />
-                ) : (
-                  <Loading />
-                )}
-                {weekly_requests_complete ? (
-                  <Route
-                    exact
-                    path={`/weekly/tags/:tagName`}
-                    component={({ match }) => {
-                      return (
-                        <Weekly
-                          match={match}
-                          tags={this.state.weekly_tags}
-                          weeklyByTag={filterByTag(match)}
-                        />
-                      );
-                    }}
-                  />
-                ) : (
-                  <Loading />
-                )}
-                {weekly_requests_complete && (
-                  <Route path="*" component={NotFound} />
-                )}
-              </Switch>
-              <Footer footer={this.state.footer} />
-            </div>
-          ) : (
+      <StyledComponent>
+        <Router>
+          {loading ? (
             <Loading />
+          ) : (
+            <div>
+              <Header />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/" component={Home} />
+              <Route exact path="/quarterly" component={Quarterly} />
+              <Route exact path="/submit" component={Submit} />
+              <Route exact path="/weekly" component={WeeklyPosts} />
+              <Route
+                exact
+                path={`/weekly/:weeklyPost`}
+                component={({ match }) => {
+                  return <WeeklyByPost weeklyByPost={filterByPost(match)} />;
+                }}
+              />
+              <Route
+                exact
+                path={`/weekly/authors/:author`}
+                component={({ match }) => {
+                  return (
+                    <WeeklyByAuthor
+                      categories={this.props.weekly.allCategories}
+                      tags={this.props.weekly.allTags}
+                      match={match}
+                      weeklyByAuthor={filterByAuthor(match)}
+                    />
+                  );
+                }}
+              />
+              <Route
+                exact
+                path={`/weekly/categories/:category`}
+                component={({ match }) => {
+                  return (
+                    <WeeklyByCategory
+                      allAuthors={this.props.weekly.allAuthors}
+                      match={match}
+                      weeklyByCategory={filterByCategory(match)}
+                    />
+                  );
+                }}
+              />
+              <Route
+                exact
+                path={`/weekly/tags/:tag`}
+                component={({ match }) => {
+                  return (
+                    <WeeklyByTag
+                      allAuthors={this.props.weekly.allAuthors}
+                      match={match}
+                      weeklyByTag={filterByTag(match)}
+                    />
+                  );
+                }}
+              />
+              <Footer />
+            </div>
           )}
-        </div>
-      </Router>
+        </Router>
+      </StyledComponent>
     );
   }
 }
 
-let StyledComponent = styled.div`
+const mapStateToProps = state => ({
+  pages: state.pages,
+  weekly: state.weekly
+});
+
+const mapDispatchToProps = { fetchPages, fetchWeeklyPage };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
+const StyledComponent = styled.div`
   justify-content: space-around;
   min-height: 600px;
   width: 100%;
-
   @media ${mediumUp} {
     width: 100%;
   }
-
   .image-wrapper {
     display: flex;
-
     @media ${tiny} {
       flex-direction: column;
     }
   }
-
   .image-wrapper img {
     margin: 20px;
-
     @media ${mediumUp} {
       margin: 20px 50px;
     }
   }
-
   .image-wrapper img:nth-child(2) {
     margin-bottom: 50px;
   }
-
   .loading {
     display: flex;
     height: 100vh;
     justify-content: center;
     margin-top: 250px;
   }
-
   .subtitle {
     max-width: 300px;
     text-align: center;
-
     @media ${mediumUp} {
       width: 550px;
     }
   }
 `;
-
-export default App;

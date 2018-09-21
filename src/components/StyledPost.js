@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { gray } from '../util/color';
 import { mediumUp } from '../util/media';
 
-let StyledPost = styled.div`
+const StyledPost = styled.div`
   align-items: left;
   border-top: 1px solid ${gray};
   display: flex;
@@ -14,8 +14,8 @@ let StyledPost = styled.div`
 
   @media ${mediumUp} {
     border: 1px solid ${gray};
-    margin: 50px;
-    padding: 100px 50px 50px;
+    margin: 50px auto;
+    padding: 50px;
     width: 700px;
   }
 

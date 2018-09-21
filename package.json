@@ -1,14 +1,14 @@
 {
   "name": "runebear",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "build": "react-app-rewired build && npm run create-cname",
-    "create-cname": "echo 'test-runebear.surge.sh' > build/CNAME",
+    "create-cname": "echo 'test-runebear-redux.surge.sh' > build/CNAME",
     "deploy": "npm run build && surge build",
     "dev": "npm run stylelint && npm start",
     "start": "react-app-rewired start",
-    "stylelint": "stylelint src/**/*.js",
+    "stylelint": "stylelint src/**/**/*.js",
     "test": "react-app-rewired test --env=jsdom"
   },
   "dependencies": {
@@ -16,10 +16,16 @@
     "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-dom": "^16.4.0",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.1.2",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^3.2.5"
   },
   "devDependencies": {
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "moxios": "^0.4.0",
     "react-app-rewire-hot-loader": "^1.0.1",
     "react-app-rewired": "^1.5.2",
     "react-hot-loader": "^4.3.3",

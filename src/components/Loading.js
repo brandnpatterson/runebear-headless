@@ -1,6 +1,6 @@
 import React from 'react';
 
-let Loading = () => {
+const Loading = () => {
   return (
     <div
       className="loading"

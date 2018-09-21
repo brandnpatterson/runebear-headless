@@ -1,27 +1,30 @@
-import React from 'react';
-import { string } from 'prop-types';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { gray } from '../../util/color';
 import { mediumUp, largeUp } from '../../util/media';
 
-let propTypes = {
-  __html: string.isRequired,
-  pageClass: string.isRequired,
-  pageTitle: string.isRequired
-};
+import page from '../page';
 
-let Submit = ({ __html, pageClass, pageTitle }) => {
-  document.title = `${pageTitle} | Rune Bear`;
+class Submit extends Component {
+  componentDidMount() {
+    document.title = 'Submit | Rune Bear';
+  }
 
-  return (
-    <StyledSubmit
-      className={`${pageClass} flex-center`}
-      dangerouslySetInnerHTML={{ __html }}
-    />
-  );
-};
+  render() {
+    const __html = this.props.__html;
 
-let StyledSubmit = styled.div`
+    return (
+      <StyledSubmit
+        className="submit flex-center"
+        dangerouslySetInnerHTML={{ __html }}
+      />
+    );
+  }
+}
+
+export default page(Submit);
+
+const StyledSubmit = styled.div`
   align-items: flex-start;
   display: flex;
   flex-direction: column;
@@ -41,7 +44,6 @@ let StyledSubmit = styled.div`
     flex-direction: column;
     padding: 0 30px 50px;
     width: 100%;
-
     @media ${mediumUp} {
       border: 1px solid ${gray};
       margin: 50px 30px;
@@ -61,7 +63,3 @@ let StyledSubmit = styled.div`
     margin-bottom: 24px;
   }
 `;
-
-Submit.propTypes = propTypes;
-
-export default Submit;

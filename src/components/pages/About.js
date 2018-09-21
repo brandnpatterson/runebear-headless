@@ -1,27 +1,32 @@
-import React from 'react';
-import { string } from 'prop-types';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { black, gray } from '../../util/color';
 import { mediumUp } from '../../util/media';
 
-let propTypes = {
-  __html: string.isRequired,
-  pageClass: string.isRequired,
-  pageTitle: string.isRequired
-};
+import page from '../page';
 
-let About = ({ __html, pageClass, pageTitle }) => {
-  document.title = `${pageTitle} | Rune Bear`;
+class About extends Component {
+  componentDidMount() {
+    document.title = 'About | Rune Bear';
+  }
 
-  return (
-    <StyledAbout
-      className={`${pageClass} flex-center`}
-      dangerouslySetInnerHTML={{ __html }}
-    />
-  );
-};
+  render() {
+    const __html = this.props.__html;
 
-let StyledAbout = styled.div`
+    return (
+      <StyledAbout>
+        <div
+          className="about flex-center"
+          dangerouslySetInnerHTML={{ __html }}
+        />
+      </StyledAbout>
+    );
+  }
+}
+
+export default page(About);
+
+const StyledAbout = styled.div`
   .container {
     border-top: 1px solid ${gray};
     margin: 50px auto;
@@ -69,7 +74,3 @@ let StyledAbout = styled.div`
     width: 300px;
   }
 `;
-
-About.propTypes = propTypes;
-
-export default About;

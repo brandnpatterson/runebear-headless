@@ -1,24 +1,23 @@
 import React from 'react';
 import { render } from 'react-dom';
+import Store from './Store';
+import App from './App';
+import { AppContainer } from 'react-hot-loader';
 import { injectGlobal } from 'styled-components';
 import { black } from './util/color';
 import { garamond } from './util/font';
 import { mediumUp } from './util/media';
 
-import App from './App';
-import { AppContainer } from 'react-hot-loader';
-// import registerServiceWorker from './registerServiceWorker';
-
-let renderApp = () => {
+const renderApp = () => {
   render(
-    <AppContainer>
-      <App />
-    </AppContainer>,
+    <Store>
+      <AppContainer>
+        <App />
+      </AppContainer>
+    </Store>,
     document.getElementById('root')
   );
 };
-
-// registerServiceWorker();
 
 renderApp();
 
@@ -36,39 +35,33 @@ injectGlobal`
     color: ${black};
     font-family: ${garamond};
   }
-
   strong {
     color: ${black};
   }
-
   h1 {
     font-size: 26px;
     @media ${mediumUp} {
       font-size: 30px;
     }
   }
-
   h2 {
     font-size: 22px;
     @media ${mediumUp} {
       font-size: 24px;
     }
   }
-
   h3 {
     font-size: 20px;
     @media ${mediumUp} {
       font-size: 22px;
     }
   }
-
   h4 {
     font-size: 18px;
     @media ${mediumUp} {
       font-size: 20px;
     }
   }
-
   img {
     height: 200px;
     width: 200px;
@@ -83,7 +76,6 @@ injectGlobal`
     display: flex;
     flex-direction: column;
   }
-
   {/* .featured-hero is defined in the wordpress CMS on Pages */}
   .featured-hero {
     align-items: center;
@@ -95,15 +87,12 @@ injectGlobal`
       flex-direction: row;
       width: 650px;
     }
-
     h1 {
       font-size: 70px;
-
       @media ${mediumUp} {
         font-size: 100px;
       }
     }
-
     img {
       height: 150px;
       width: 150px;

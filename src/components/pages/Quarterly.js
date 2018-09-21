@@ -1,26 +1,29 @@
-import React from 'react';
-import { string } from 'prop-types';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
 
-let propTypes = {
-  __html: string.isRequired,
-  pageClass: string.isRequired,
-  pageTitle: string.isRequired
-};
+import page from '../page';
 
-let Quarterly = ({ __html, pageClass, pageTitle }) => {
-  document.title = `${pageTitle} | Rune Bear`;
+class Quarterly extends Component {
+  componentDidMount() {
+    document.title = 'Quarterly | Rune Bear';
+  }
 
-  return (
-    <StyledQuarterly
-      className={pageClass}
-      dangerouslySetInnerHTML={{ __html }}
-    />
-  );
-};
+  render() {
+    const __html = this.props.__html;
 
-let StyledQuarterly = styled.div`
+    return (
+      <StyledQuarterly
+        className="quarterly"
+        dangerouslySetInnerHTML={{ __html }}
+      />
+    );
+  }
+}
+
+export default page(Quarterly);
+
+const StyledQuarterly = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -28,8 +31,8 @@ let StyledQuarterly = styled.div`
 
   @media ${mediumUp} {
     flex-direction: row;
-    margin-top: 120px;
-    max-width: 900px;
+    margin: 207px auto 0;
+    max-width: 800px;
   }
 
   .speech-bubble-wrapper {
@@ -54,7 +57,3 @@ let StyledQuarterly = styled.div`
     }
   }
 `;
-
-Quarterly.propTypes = propTypes;
-
-export default Quarterly;

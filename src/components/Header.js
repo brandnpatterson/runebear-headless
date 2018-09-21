@@ -1,107 +1,112 @@
 import React, { Component } from 'react';
-import { array, func } from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { changeWeeklyPage } from '../actions';
 import styled from 'styled-components';
 import { dark, light } from '../util/color';
 import { mediumUp } from '../util/media';
 
 class Header extends Component {
-  static propTypes = {
-    header: array.isRequired,
-    onSelectWeeklyPage: func.isRequired
-  };
-
   state = {
-    isActive: false,
-    requestMade: false
+    _mounted: false,
+    isActive: false
   };
 
   componentDidMount() {
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1023) {
-        this.setState({
-          isActive: false
-        });
-      }
-    });
+    this._mounted = true;
   }
 
-  setHeader = () => {
-    let { header } = this.props;
-
-    let location;
-    return header.map((headerItem, i) => {
-      headerItem = headerItem.toUpperCase();
-
-      // home page
-      if (headerItem === 'HOME') {
-        location = '';
-        // any other page
-      } else {
-        location = headerItem.toLowerCase().replace(/\s+/g, '-');
-      }
-
-      setTimeout(() => {
-        Array.from(document.querySelectorAll('.navbar-item')).map(i => {
-          i.classList.remove('hotfix');
-        });
-      }, 700);
-
-      return (
-        <div key={i} onClick={this.toggleActive} className="navbar-item hotfix">
-          <Link to={'/' + location}>{headerItem}</Link>
-        </div>
-      );
-    });
-  };
+  componentWillUnmount() {
+    this._mounted = false;
+  }
 
   toggleActive = () => {
-    // toggle active state only if screen is small
+    if (this.props.weekly.pageNumber !== 1) {
+      this.props.changeWeeklyPage(1);
+    }
+
     if (window.innerWidth <= 1023) {
       this.setState({
         isActive: !this.state.isActive
       });
     }
-
-    this.props.onSelectWeeklyPage(1);
   };
 
+  renderHeader() {
+    const { pages } = this.props;
+
+    if (this._mounted) {
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 1023) {
+          this.setState({
+            isActive: false
+          });
+        }
+      });
+    }
+
+    const header = Object.keys(pages)
+      .filter(page => page !== 'footer')
+      .filter(page => page !== 'loading')
+      .sort((a, b) => pages[a].id - pages[b].id);
+
+    return header.map(page => {
+      const location = page === 'home' ? '' : page;
+
+      return (
+        <div key={page} onClick={this.toggleActive} className="navbar-item">
+          <Link to={'/' + location}>{page.toUpperCase()}</Link>
+        </div>
+      );
+    });
+  }
+
   render() {
-    let { isActive } = this.state;
+    const { isActive } = this.state;
 
     return (
       <StyledHeader>
-        <nav className="navbar" aria-label="main navigation">
-          <div
-            onClick={this.toggleActive}
-            className={
-              'navbar-burger is-large ' + (isActive ? 'is-active' : '')
-            }
-            data-target="navMenu"
-          >
-            <span />
-            <span />
-            <span />
-          </div>
-          <div
-            className={
-              'navbar-menu navbar-target ' + (isActive ? 'is-active' : '')
-            }
-            id="navMenu"
-          >
-            <div className="navbar-items">{this.setHeader()}</div>
-          </div>
-        </nav>
+        <div>
+          <nav className="navbar" aria-label="main navigation">
+            <div
+              onClick={this.toggleActive}
+              data-target="navMenu"
+              className={
+                'navbar-burger is-large ' + (isActive ? 'is-active' : '')
+              }
+            >
+              <span />
+              <span />
+              <span />
+            </div>
+            <div
+              id="navMenu"
+              className={
+                'navbar-menu navbar-target ' + (isActive ? 'is-active' : '')
+              }
+            >
+              <div className="navbar-items">{this.renderHeader()}</div>
+            </div>
+          </nav>
+        </div>
       </StyledHeader>
     );
   }
 }
 
-let StyledHeader = styled.header`
-  .hotfix {
-    pointer-events: none;
-  }
+const mapStateToProps = state => ({
+  pages: state.pages,
+  weekly: state.weekly
+});
 
+const mapDispatchToProps = { changeWeeklyPage };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);
+
+const StyledHeader = styled.header`
   .navbar {
     margin-bottom: 50px;
   }
@@ -173,5 +178,3 @@ let StyledHeader = styled.header`
     top: 60px;
   }
 `;
-
-export default Header;

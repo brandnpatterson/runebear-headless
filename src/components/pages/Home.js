@@ -1,27 +1,32 @@
-import React from 'react';
-import { string } from 'prop-types';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { mediumUp, smallOnly } from '../../util/media';
 
-let propTypes = {
-  __html: string.isRequired,
-  pageClass: string.isRequired,
-  pageTitle: string.isRequired
-};
+import page from '../page';
 
-let Home = ({ __html, pageClass, pageTitle }) => {
-  document.title = `${pageTitle} | Rune Bear`;
+class Home extends Component {
+  componentDidMount() {
+    document.title = 'Rune Bear';
+  }
 
-  return (
-    <StyledHome
-      className={`${pageClass} flex-center`}
-      dangerouslySetInnerHTML={{ __html }}
-    />
-  );
-};
+  render() {
+    const __html = this.props.__html;
 
-let StyledHome = styled.div`
-  margin-top: -100px;
+    return (
+      <StyledHome>
+        <div
+          className="home flex-center"
+          dangerouslySetInnerHTML={{ __html }}
+        />
+      </StyledHome>
+    );
+  }
+}
+
+export default page(Home);
+
+const StyledHome = styled.div`
+  margin-top: 73px;
 
   .images-wrapper p {
     @media ${smallOnly} {
@@ -34,13 +39,8 @@ let StyledHome = styled.div`
   .home-subtitle {
     text-align: center;
     width: 300px;
-
     @media ${mediumUp} {
       width: 450px;
     }
   }
 `;
-
-Home.propTypes = propTypes;
-
-export default Home;
