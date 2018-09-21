@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
 
@@ -32,13 +33,13 @@ class WeeklyByAuthor extends React.Component {
             );
 
             const categories = associateFilter({
-              haystack: this.props.categories,
+              haystack: this.props.weekly.allCategories,
               needle: [post],
               needleProp: 'categories'
             });
 
             const tags = associateFilter({
-              haystack: this.props.tags,
+              haystack: this.props.weekly.allTags,
               needle: [post],
               needleProp: 'tags'
             });
@@ -62,7 +63,11 @@ class WeeklyByAuthor extends React.Component {
   }
 }
 
-export default WeeklyByAuthor;
+const mapStateToProps = state => ({
+  weekly: state.weekly
+});
+
+export default connect(mapStateToProps)(WeeklyByAuthor);
 
 const StyledAuthor = styled.div`
   justify-content: space-around;

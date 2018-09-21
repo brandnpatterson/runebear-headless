@@ -45,7 +45,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { loading } = this.props.pages;
+    const { loading } = this.props.weekly;
 
     const filterByAuthor = match => {
       const author = this.props.weekly.allAuthors.filter(author => {
@@ -154,12 +154,7 @@ class App extends React.Component {
                 path={`/weekly/authors/:author`}
                 component={({ match }) => {
                   return (
-                    <WeeklyByAuthor
-                      categories={this.props.weekly.allCategories}
-                      tags={this.props.weekly.allTags}
-                      match={match}
-                      weeklyByAuthor={filterByAuthor(match)}
-                    />
+                    <WeeklyByAuthor weeklyByAuthor={filterByAuthor(match)} />
                   );
                 }}
               />
@@ -169,7 +164,6 @@ class App extends React.Component {
                 component={({ match }) => {
                   return (
                     <WeeklyByCategory
-                      allAuthors={this.props.weekly.allAuthors}
                       match={match}
                       weeklyByCategory={filterByCategory(match)}
                     />
@@ -182,7 +176,6 @@ class App extends React.Component {
                 component={({ match }) => {
                   return (
                     <WeeklyByTag
-                      allAuthors={this.props.weekly.allAuthors}
                       match={match}
                       weeklyByTag={filterByTag(match)}
                     />

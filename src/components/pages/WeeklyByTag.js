@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import WeeklyPostSingle from './WeeklyPostSingle';
@@ -10,7 +11,8 @@ class WeeklyByTag extends React.Component {
   }
 
   render() {
-    const { allAuthors, match, weeklyByTag } = this.props;
+    const { match, weeklyByTag } = this.props;
+    const { allAuthors } = this.props.weekly;
 
     const posts = weeklyByTag.posts;
 
@@ -50,6 +52,12 @@ class WeeklyByTag extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  weekly: state.weekly
+});
+
+export default connect(mapStateToProps)(WeeklyByTag);
+
 const StyledWeeklyTag = styled.div`
   justify-content: space-around;
   margin-bottom: 100px;
@@ -70,5 +78,3 @@ const StyledWeeklyTag = styled.div`
     text-transform: uppercase;
   }
 `;
-
-export default WeeklyByTag;
