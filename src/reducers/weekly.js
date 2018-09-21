@@ -7,7 +7,7 @@ import {
   FETCH_WEEKLY,
   LOADING_WEEKLY,
   CHANGE_WEEKLY_PAGE
-} from '../actions/types';
+} from '../actions';
 
 const initialState = {
   all: [],

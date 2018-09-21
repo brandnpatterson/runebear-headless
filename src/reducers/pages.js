@@ -1,4 +1,4 @@
-import { FETCH_ALL_PAGES, LOADING_PAGES } from '../actions/types';
+import { FETCH_ALL_PAGES, LOADING_PAGES } from '../actions';
 
 const initialState = {
   loading: false
