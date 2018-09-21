@@ -2,7 +2,7 @@ import React from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import { gray } from '../../util/color';
-import { mediumUp, largeUp } from '../../util/media';
+import { mediumUp, middleMediumDown, largeUp } from '../../util/media';
 
 import page from '../page';
 
@@ -26,6 +26,10 @@ Submit.propTypes = propTypes;
 export default page(Submit);
 
 const StyledSubmit = styled.div`
+  @media ${middleMediumDown} {
+    flex-direction: column !important;
+  }
+
   @media ${mediumUp} {
     margin: 0 auto;
   }
@@ -40,7 +44,12 @@ const StyledSubmit = styled.div`
     flex-direction: column;
     padding: 0 30px 50px;
     width: 100%;
-    box-shadow: none !important;
+
+    @media ${middleMediumDown} {
+      box-shadow: none !important;
+      margin: 0 auto;
+      max-width: 90%;
+    }
 
     @media ${mediumUp} {
       border: 1px solid ${gray};
