@@ -21,8 +21,6 @@ class WeeklyPosts extends Component {
   render() {
     const { __html, weekly, weeklyLoading, weeklyCurrentPage } = this.props;
 
-    console.log(this.props);
-
     return (
       <StyledWeeklyWrapper className="flex-center">
         {weeklyLoading ? (
