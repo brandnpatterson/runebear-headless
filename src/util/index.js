@@ -1,39 +1,19 @@
 export const associateFilter = ({ haystack, hayProp, needle, needleProp }) => {
   const arr = [];
 
-  haystack.filter(haySingle => {
-    return needle.filter(needleSingle => {
+  haystack.forEach(haySingle => {
+    needle.forEach(needleSingle => {
       if (needleProp) {
-        return needleSingle[needleProp].filter(value => {
-          if (haySingle.id === value) {
-            return arr.push(haySingle);
-          }
-
-          return null;
-        });
+        needleSingle[needleProp].forEach(
+          value => haySingle.id === value && arr.push(haySingle)
+        );
       } else if (hayProp) {
-        return haySingle[hayProp].forEach(value => {
-          if (needleSingle.id === value) {
-            return arr.push(haySingle);
-          }
-
-          return null;
-        });
-      } else {
-        return null;
+        haySingle[hayProp].forEach(
+          value => needleSingle.id === value && arr.push(haySingle)
+        );
       }
     });
   });
 
   return arr;
-};
-
-export const unique = arr => {
-  let obj = {};
-  return Object.keys(
-    arr.reduce((prev, next) => {
-      if (!obj[next.id]) obj[next.id] = next;
-      return obj;
-    }, obj)
-  ).map(i => obj[i]);
 };
