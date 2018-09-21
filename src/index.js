@@ -38,6 +38,10 @@ injectGlobal`
     flex: 1;
   }
 
+  li {
+    list-style-type: none;
+  }
+
   h1,
   h2,
   h3,
