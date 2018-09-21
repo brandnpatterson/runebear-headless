@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { changeWeeklyPage } from '../../actions';
 import styled from 'styled-components';
 
 class WeeklyPagination extends Component {
+  static propTypes = {
+    changeWeeklyPage: func.isRequired,
+    weekly: object
+  };
+
   onPageSelect = e => {
     const { weekly } = this.props;
     const targetValue = e.target.textContent;

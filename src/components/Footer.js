@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import { object } from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { blue, dark, light } from '../util/color';
 import { mediumUp } from '../util/media';
 
 class Footer extends Component {
+  static propTypes = {
+    footer: object
+  };
+
   render() {
     const { footer } = this.props.pages;
     const __html = footer && footer.content && footer.content.rendered;

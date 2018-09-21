@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 import { mediumUp, smallOnly } from '../../util/media';
 
 import page from '../page';
 
-class Home extends Component {
-  componentDidMount() {
-    document.title = 'Rune Bear';
-  }
+const propTypes = {
+  __html: string
+};
 
-  render() {
-    const __html = this.props.__html;
+const Home = ({ __html }) => {
+  document.title = 'Rune Bear';
 
-    return (
-      <StyledHome>
-        <div
-          className="home flex-center"
-          dangerouslySetInnerHTML={{ __html }}
-        />
-      </StyledHome>
-    );
-  }
-}
+  return (
+    <StyledHome>
+      <div className="home flex-center" dangerouslySetInnerHTML={{ __html }} />
+    </StyledHome>
+  );
+};
+
+Home.propTypes = propTypes;
 
 export default page(Home);
 

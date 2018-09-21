@@ -19,6 +19,10 @@ const StyledPost = styled.div`
     width: 700px;
   }
 
+  .categories-and-tags {
+    display: flex;
+  }
+
   .card-title {
     font-weight: bold;
     position: absolute;

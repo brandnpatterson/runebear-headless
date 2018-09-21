@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { changeWeeklyPage, fetchWeeklyPage } from '../actions';
 
 export default ChildComponent => {
   class ComposedComponent extends Component {
+    static propTypes = {
+      pages: object
+    };
+
     state = {
       page: {}
     };

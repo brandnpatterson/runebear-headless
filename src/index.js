@@ -35,33 +35,39 @@ injectGlobal`
     color: ${black};
     font-family: ${garamond};
   }
+
   strong {
     color: ${black};
   }
+
   h1 {
     font-size: 26px;
     @media ${mediumUp} {
       font-size: 30px;
     }
   }
+
   h2 {
     font-size: 22px;
     @media ${mediumUp} {
       font-size: 24px;
     }
   }
+
   h3 {
     font-size: 20px;
     @media ${mediumUp} {
       font-size: 22px;
     }
   }
+
   h4 {
     font-size: 18px;
     @media ${mediumUp} {
       font-size: 20px;
     }
   }
+
   img {
     height: 200px;
     width: 200px;
@@ -76,6 +82,7 @@ injectGlobal`
     display: flex;
     flex-direction: column;
   }
+
   {/* .featured-hero is defined in the wordpress CMS on Pages */}
   .featured-hero {
     align-items: center;
@@ -87,12 +94,15 @@ injectGlobal`
       flex-direction: row;
       width: 650px;
     }
+
     h1 {
       font-size: 70px;
+      
       @media ${mediumUp} {
         font-size: 100px;
       }
     }
+
     img {
       height: 150px;
       width: 150px;

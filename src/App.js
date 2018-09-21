@@ -1,28 +1,34 @@
 import React from 'react';
+import { func, object } from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchPages, fetchWeeklyPage } from './actions';
+import { associateFilter } from './util';
+import { mediumUp, tiny } from './util/media';
+import styled from 'styled-components';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Loading from './components/Loading';
 
 import About from './components/pages/About';
-import Quarterly from './components/pages/Quarterly';
 import Home from './components/pages/Home';
-import WeeklyPosts from './components/pages/WeeklyPosts';
-import WeeklyByAuthor from './components/pages/WeeklyByAuthor';
-import WeeklyByCategory from './components/pages/WeeklyByCategory';
-import WeeklyByTag from './components/pages/WeeklyByTag';
-import WeeklyByPost from './components/pages/WeeklyByPost';
+import Quarterly from './components/pages/Quarterly';
 import Submit from './components/pages/Submit';
-
-import styled from 'styled-components';
-import { mediumUp, tiny } from './util/media';
-
-import { associateFilter } from './util';
+import WeeklyPosts from './components/weekly/WeeklyPosts';
+import WeeklyByAuthor from './components/weekly/WeeklyByAuthor';
+import WeeklyByCategory from './components/weekly/WeeklyByCategory';
+import WeeklyByTag from './components/weekly/WeeklyByTag';
+import WeeklyByPost from './components/weekly/WeeklyByPost';
 
 class App extends React.Component {
+  static propTypes = {
+    fetchPages: func.isRequired,
+    fetchWeeklyPage: func.isRequired,
+    pages: object.isRequired,
+    weekly: object.isRequired
+  };
+
   state = {
     initialUpdate: false
   };
@@ -207,30 +213,36 @@ const StyledComponent = styled.div`
   justify-content: space-around;
   min-height: 600px;
   width: 100%;
+
   @media ${mediumUp} {
     width: 100%;
   }
+
   .image-wrapper {
     display: flex;
     @media ${tiny} {
       flex-direction: column;
     }
   }
+
   .image-wrapper img {
     margin: 20px;
     @media ${mediumUp} {
       margin: 20px 50px;
     }
   }
+
   .image-wrapper img:nth-child(2) {
     margin-bottom: 50px;
   }
+
   .loading {
     display: flex;
     height: 100vh;
     justify-content: center;
     margin-top: 250px;
   }
+
   .subtitle {
     max-width: 300px;
     text-align: center;

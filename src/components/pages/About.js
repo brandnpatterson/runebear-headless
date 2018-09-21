@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 import { black, gray } from '../../util/color';
 import { mediumUp } from '../../util/media';
 
 import page from '../page';
 
-class About extends Component {
-  componentDidMount() {
-    document.title = 'About | Rune Bear';
-  }
+const propTypes = {
+  __html: string
+};
 
-  render() {
-    const __html = this.props.__html;
+const About = ({ __html }) => {
+  document.title = 'About | Rune Bear';
 
-    return (
-      <StyledAbout>
-        <div
-          className="about flex-center"
-          dangerouslySetInnerHTML={{ __html }}
-        />
-      </StyledAbout>
-    );
-  }
-}
+  return (
+    <StyledAbout>
+      <div className="about flex-center" dangerouslySetInnerHTML={{ __html }} />
+    </StyledAbout>
+  );
+};
+
+About.propTypes = propTypes;
 
 export default page(About);
 

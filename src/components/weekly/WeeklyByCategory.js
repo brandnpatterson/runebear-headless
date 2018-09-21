@@ -1,26 +1,34 @@
 import React from 'react';
+import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
+import { associateFilter } from '../../util';
 import styled from 'styled-components';
 
 import WeeklyPostSingle from './WeeklyPostSingle';
-import { associateFilter } from '../../util';
 
-class WeeklyByTag extends React.Component {
+class WeeklyByCategory extends React.Component {
+  static propTypes = {
+    dispatch: func.isRequired,
+    match: object.isRequired,
+    weekly: object,
+    weeklyByCategory: object
+  };
+
   componentDidMount() {
     window.scrollTo(0, 0);
   }
 
   render() {
-    const { match, weeklyByTag } = this.props;
+    const { match, weeklyByCategory } = this.props;
     const { allAuthors } = this.props.weekly;
 
-    const posts = weeklyByTag.posts;
+    const posts = weeklyByCategory.posts;
 
     return (
-      <StyledWeeklyTag className="flex-center">
+      <StyledWeeklyCategory className="flex-center">
         <div className="categories-header">
           <h1>
-            <strong>{match.params.tag.toUpperCase()}</strong>
+            <strong>{match.params.category.toUpperCase()}</strong>
           </h1>
         </div>
         {posts.map(post => {
@@ -47,7 +55,7 @@ class WeeklyByTag extends React.Component {
             />
           );
         })}
-      </StyledWeeklyTag>
+      </StyledWeeklyCategory>
     );
   }
 }
@@ -56,9 +64,9 @@ const mapStateToProps = state => ({
   weekly: state.weekly
 });
 
-export default connect(mapStateToProps)(WeeklyByTag);
+export default connect(mapStateToProps)(WeeklyByCategory);
 
-const StyledWeeklyTag = styled.div`
+const StyledWeeklyCategory = styled.div`
   justify-content: space-around;
   margin-bottom: 100px;
   text-align: left;

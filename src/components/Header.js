@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { changeWeeklyPage } from '../actions';
@@ -7,6 +8,11 @@ import { dark, light } from '../util/color';
 import { mediumUp } from '../util/media';
 
 class Header extends Component {
+  static propTypes = {
+    pages: object,
+    weekly: object
+  };
+
   state = {
     _mounted: false,
     isActive: false

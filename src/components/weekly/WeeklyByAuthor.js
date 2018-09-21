@@ -1,13 +1,20 @@
 import React from 'react';
+import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { associateFilter } from '../../util';
 import { mediumUp } from '../../util/media';
 
 import Loading from '../Loading';
 import WeeklyPostSingle from './WeeklyPostSingle';
-import { associateFilter } from '../../util';
 
 class WeeklyByAuthor extends React.Component {
+  static propTypes = {
+    dispatch: func.isRequired,
+    weekly: object,
+    weeklyByAuthor: object
+  };
+
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -85,10 +92,6 @@ const StyledAuthor = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
     width: 200px;
-  }
-
-  .card-tags {
-    display: flex;
   }
 
   .card-title {

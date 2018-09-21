@@ -1,25 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
 
 import page from '../page';
 
-class Quarterly extends Component {
-  componentDidMount() {
-    document.title = 'Quarterly | Rune Bear';
-  }
+const propTypes = {
+  __html: string
+};
 
-  render() {
-    const __html = this.props.__html;
+const Quarterly = ({ __html }) => {
+  document.title = 'Quarterly | Rune Bear';
 
-    return (
-      <StyledQuarterly
-        className="quarterly"
-        dangerouslySetInnerHTML={{ __html }}
-      />
-    );
-  }
-}
+  return (
+    <StyledQuarterly
+      className="quarterly"
+      dangerouslySetInnerHTML={{ __html }}
+    />
+  );
+};
+
+Quarterly.propTypes = propTypes;
 
 export default page(Quarterly);
 

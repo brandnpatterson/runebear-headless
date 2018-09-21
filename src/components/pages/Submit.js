@@ -1,26 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 import { gray } from '../../util/color';
 import { mediumUp, largeUp } from '../../util/media';
 
 import page from '../page';
 
-class Submit extends Component {
-  componentDidMount() {
-    document.title = 'Submit | Rune Bear';
-  }
+const propTypes = {
+  __html: string
+};
 
-  render() {
-    const __html = this.props.__html;
+const Submit = ({ __html }) => {
+  document.title = 'Submit | Rune Bear';
 
-    return (
-      <StyledSubmit
-        className="submit flex-center"
-        dangerouslySetInnerHTML={{ __html }}
-      />
-    );
-  }
-}
+  return (
+    <StyledSubmit
+      className="submit flex-center"
+      dangerouslySetInnerHTML={{ __html }}
+    />
+  );
+};
+
+Submit.propTypes = propTypes;
 
 export default page(Submit);
 

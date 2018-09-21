@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { object } from 'prop-types';
+import { func, object } from 'prop-types';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { gray } from '../../util/color';
 import { mediumUp } from '../../util/media';
@@ -12,6 +11,8 @@ import WeeklyPostSingle from './WeeklyPostSingle';
 
 class WeeklyByPost extends React.Component {
   static propTypes = {
+    dispatch: func.isRequired,
+    weely: object,
     weeklyByPost: object
   };
 
@@ -124,10 +125,6 @@ const StyledWeeklyWrapper = styled.div`
   justify-content: space-around;
   margin-bottom: 100px;
   text-align: left;
-
-  .categories-and-tags {
-    display: flex;
-  }
 
   .authors-header {
     display: flex;

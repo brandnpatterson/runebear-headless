@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
+import { string } from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { mediumUp } from '../../util/media';
-
 import page from '../page';
+import { mediumUp } from '../../util/media';
+import styled from 'styled-components';
+
 import Loading from '../Loading';
 import WeeklyPagination from './WeeklyPagination';
 import WeeklyPostSingle from './WeeklyPostSingle';
 
 class WeeklyPosts extends Component {
+  static propTypes = {
+    __html: string
+  };
+
   componentDidMount() {
     document.title = 'Weekly | Rune Bear';
   }
 
   render() {
     const { __html, weekly, weeklyLoading, weeklyCurrentPage } = this.props;
+
+    console.log(this.props);
 
     return (
       <StyledWeeklyWrapper className="flex-center">
@@ -67,10 +74,6 @@ export default connect(mapStateToProps)(page(WeeklyPosts));
 
 const StyledWeeklyWrapper = styled.div`
   margin-bottom: 40px;
-
-  .categories-and-tags {
-    display: flex;
-  }
 
   .card-content {
     padding-top: 74px;
