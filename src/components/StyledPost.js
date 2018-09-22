@@ -9,7 +9,7 @@ const StyledPost = styled.div`
   flex-direction: column;
   margin-top: 50px;
   min-height: 400px;
-  padding: 100px 0 50px;
+  padding: 50px;
   position: relative;
 
   @media ${mediumUp} {
@@ -37,7 +37,9 @@ const StyledPost = styled.div`
   }
 
   .card-content {
-    padding-top: 74px;
+    @media ${mediumUp} {
+      padding-top: 74px;
+    }
   }
 
   .card-read-more {
