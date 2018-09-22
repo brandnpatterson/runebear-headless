@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "react-app-rewired build && npm run create-cname",
-    "create-cname": "echo 'test-runebear-redux.surge.sh' > build/CNAME",
+    "create-cname": "echo 'runebear-test.surge.sh' > build/CNAME",
     "deploy": "npm run build && surge build",
     "dev": "npm run stylelint && npm start",
     "start": "react-app-rewired start",
