@@ -2,6 +2,7 @@ import React from 'react';
 import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { blue, dark2 } from '../../util/color';
 import { mediumUp } from '../../util/media';
 import { associateFilter } from '../../util';
 
@@ -124,14 +125,23 @@ const StyledAuthor = styled.div`
       margin: 0 auto;
       width: 800px;
     }
+  }
 
-    .author-links {
-      margin-left: 8%;
+  .author-links {
+    margin-top: -15px;
+    margin-left: 8%;
 
-      @media ${mediumUp} {
-        margin-left: 51px;
-      }
+    @media ${mediumUp} {
+      margin-left: 51px;
     }
+  }
+
+  .author-links a {
+    color: ${dark2};
+  }
+
+  .author-links a:hover {
+    color: ${blue};
   }
 
   .authors-list {

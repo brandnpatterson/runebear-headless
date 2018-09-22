@@ -25,8 +25,8 @@ export default page(Home);
 
 const StyledHome = styled.div`
   @media ${mediumUp} {
-    margin-top: 40px;
     margin-bottom: 40px;
+    margin-top: 40px;
   }
 
   .images-wrapper p {

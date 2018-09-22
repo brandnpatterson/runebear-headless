@@ -140,6 +140,7 @@ const StyledPagination = styled.div`
       margin-left: 0 !important;
     }
   }
+
   .pagination-previous,
   .pagination-next {
     margin-top: 8px;
