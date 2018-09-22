@@ -25,33 +25,32 @@ class WeeklyByAuthor extends React.Component {
     const author = weeklyByAuthor.author[0];
     const posts = weeklyByAuthor.posts;
 
+    const authorLinkList = {
+      66: 'http://www.andreablythe.com',
+      67: 'http://www.lauramadelinewiseman.com'
+    };
+
+    const authorLinks = link => {
+      return (
+        <p className="author-links">
+          Learn more at{' '}
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            {link}{' '}
+          </a>{' '}
+        </p>
+      );
+    };
+
     return author ? (
       <StyledAuthor>
         <div>
           <div className="author-text-wrapper">
             <h1 className="card-title">{author.name}</h1>
             <p className="card-author-description">{author.description}</p>
-            {author.slug === 'andrea-blythe' && (
-              <p className="author-links">
-                Learn more at{' '}
-                <a
-                  href="http://www.andreablythe.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  www.andreablythe.com{' '}
-                </a>{' '}
-                and{' '}
-                <a
-                  href="http://www.lauramadelinewiseman.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  www.lauramadelinewiseman.com
-                </a>
-                .
-              </p>
-            )}
+            {author.slug === 'andrea-blythe' &&
+              authorLinks(authorLinkList['66'])}
+            {author.slug === 'laura-madeline-wiseman' &&
+              authorLinks(authorLinkList['67'])}
           </div>
         </div>
         {posts &&
