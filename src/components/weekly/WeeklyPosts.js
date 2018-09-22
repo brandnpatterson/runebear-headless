@@ -72,6 +72,10 @@ export default connect(mapStateToProps)(page(WeeklyPosts));
 
 const StyledWeeklyWrapper = styled.div`
   margin-bottom: 40px;
+
+  .card-content {
+    padding-top: 100px;
+  }
 `;
 
 const StyledWeeklyPosts = styled.div`
