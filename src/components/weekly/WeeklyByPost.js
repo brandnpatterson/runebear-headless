@@ -145,6 +145,7 @@ const StyledWeeklyWrapper = styled.div`
   .card-title {
     font-weight: bold;
     margin-bottom: 25px;
+    margin-top: 0;
     text-align: center;
     text-transform: uppercase;
 

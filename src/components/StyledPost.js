@@ -4,18 +4,16 @@ import { mediumUp } from '../util/media';
 
 const StyledPost = styled.div`
   align-items: left;
-  border-top: 1px solid ${gray};
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
   min-height: 400px;
-  padding: 50px;
+  padding: 0 0;
   position: relative;
 
   @media ${mediumUp} {
     border: 1px solid ${gray};
     margin: 50px auto;
-    padding: 50px;
+    padding: 50px 0;
     width: 700px;
   }
 
