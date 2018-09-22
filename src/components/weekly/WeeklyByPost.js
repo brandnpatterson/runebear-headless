@@ -20,6 +20,10 @@ class WeeklyByPost extends React.Component {
     window.scrollTo(0, 0);
   }
 
+  shiftUp = () => {
+    window.scrollTo(0, 0);
+  };
+
   render() {
     const { weekly, weeklyByPost } = this.props;
 
