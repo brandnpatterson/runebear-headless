@@ -30,13 +30,21 @@ class WeeklyByAuthor extends React.Component {
       67: 'http://www.lauramadelinewiseman.com'
     };
 
-    const authorLinks = link => {
+    const authorLinks = (author, secondAuthor) => {
       return (
         <p className="author-links">
           Learn more at{' '}
-          <a href={link} target="_blank" rel="noopener noreferrer">
-            {link}{' '}
-          </a>{' '}
+          <a href={author} target="_blank" rel="noopener noreferrer">
+            {author}{' '}
+          </a>
+          {secondAuthor && (
+            <span>
+              and{' '}
+              <a href={secondAuthor} target="_blank" rel="noopener noreferrer">
+                {secondAuthor}{' '}
+              </a>
+            </span>
+          )}
         </p>
       );
     };
@@ -47,10 +55,10 @@ class WeeklyByAuthor extends React.Component {
           <div className="author-text-wrapper">
             <h1 className="card-title">{author.name}</h1>
             <p className="card-author-description">{author.description}</p>
-            {author.slug === 'andrea-blythe' &&
-              authorLinks(authorLinkList['66'])}
-            {author.slug === 'laura-madeline-wiseman' &&
-              authorLinks(authorLinkList['67'])}
+            {author.id === 66 &&
+              authorLinks(authorLinkList[66], authorLinkList[67])}
+            {author.id === 67 &&
+              authorLinks(authorLinkList[66], authorLinkList[67])}
           </div>
         </div>
         {posts &&
