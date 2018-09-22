@@ -74,7 +74,11 @@ const StyledWeeklyWrapper = styled.div`
   margin-bottom: 40px;
 
   .card-content {
-    padding-top: 100px;
+    padding-top: 125px;
+
+    @media ${mediumUp} {
+      padding-top: 100px;
+    }
   }
 `;
 
