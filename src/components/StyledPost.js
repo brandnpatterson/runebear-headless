@@ -36,7 +36,7 @@ const StyledPost = styled.div`
 
   .card-content {
     @media ${mediumUp} {
-      padding-top: 74px;
+      padding: 90px 74px 15px !important;
     }
   }
 
@@ -51,6 +51,11 @@ const StyledPost = styled.div`
     flex-direction: column;
     margin-left: 22px;
     min-height: 48px;
+
+    @media ${mediumUp} {
+      margin-bottom: 5px;
+      margin-left: 75px;
+    }
   }
 `;
 

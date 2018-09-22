@@ -73,10 +73,8 @@ export default connect(mapStateToProps)(page(WeeklyPosts));
 const StyledWeeklyWrapper = styled.div`
   margin-bottom: 40px;
 
-  .card-content {
-    @media ${mediumUp} {
-      padding-top: 100px;
-    }
+  .card-title {
+    margin-top: 10px;
   }
 `;
 

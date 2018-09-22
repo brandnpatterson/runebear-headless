@@ -155,7 +155,7 @@ const StyledWeeklyWrapper = styled.div`
   }
 
   .card-content {
-    padding: 1.5rem;
+    padding: 15px 74px 15px !important;
   }
 
   .arrow-wrapper {
