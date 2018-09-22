@@ -128,8 +128,8 @@ const StyledAuthor = styled.div`
   }
 
   .author-links {
-    margin-top: -15px;
     margin-left: 8%;
+    margin-top: -15px;
 
     @media ${mediumUp} {
       margin-left: 51px;

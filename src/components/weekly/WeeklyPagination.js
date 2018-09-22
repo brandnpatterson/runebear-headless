@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { changeWeeklyPage } from '../../actions';
-import styled from 'styled-components';
-import { smallOnly } from '../../util/media';
 
 class WeeklyPagination extends Component {
   static propTypes = {
@@ -54,8 +52,8 @@ class WeeklyPagination extends Component {
       return (
         <a
           className="pagination-next"
-          onClick={this.onNextPage}
           disabled={isDisabled}
+          onClick={this.onNextPage}
         >
           Next page
         </a>
@@ -69,7 +67,6 @@ class WeeklyPagination extends Component {
       return (
         <a
           className="pagination-previous"
-          title="This is the first page"
           disabled={isDisabled}
           onClick={this.onPreviousPage}
         >
@@ -93,7 +90,12 @@ class WeeklyPagination extends Component {
                   ? ' is-current'
                   : '')
               }
-              aria-label="Page 1"
+              style={
+                page === Number(this.props.weekly.pageNumber)
+                  ? { pointerEvents: 'none' }
+                  : null
+              }
+              aria-label={`Page ${page}`}
               aria-current="page"
               onClick={this.onPageSelect}
               data-id={page}
@@ -108,7 +110,7 @@ class WeeklyPagination extends Component {
     };
 
     return (
-      <StyledPagination>
+      <div>
         {this.props.weekly.totalPages >= 2 && (
           <nav className="pagination" aria-label="pagination">
             <ul className="pagination-list">
@@ -118,7 +120,7 @@ class WeeklyPagination extends Component {
             <NextButton />
           </nav>
         )}
-      </StyledPagination>
+      </div>
     );
   }
 }
@@ -133,20 +135,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(WeeklyPagination);
-
-const StyledPagination = styled.div`
-  .pagination-list {
-    @media ${smallOnly} {
-      margin-left: 0 !important;
-    }
-  }
-
-  .pagination-previous,
-  .pagination-next {
-    margin-top: 8px;
-  }
-
-  .is-current {
-    pointer-events: none;
-  }
-`;

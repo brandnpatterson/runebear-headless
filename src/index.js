@@ -8,6 +8,8 @@ import { black } from './util/color';
 import { garamond } from './util/font';
 import { mediumUp } from './util/media';
 
+// import './debug-css.js';
+
 const renderApp = () => {
   render(
     <Store>

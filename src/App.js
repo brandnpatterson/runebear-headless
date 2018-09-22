@@ -143,7 +143,7 @@ class App extends React.Component {
           ) : (
             <div className="wrapper">
               <Header />
-              <div className="content">
+              <div>
                 <Route exact path="/about" component={About} />
                 <Route exact path="/" component={Home} />
                 <Route exact path="/quarterly" component={Quarterly} />
