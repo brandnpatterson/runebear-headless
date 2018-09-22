@@ -7,7 +7,7 @@ const StyledPost = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 400px;
-  padding: 0 0;
+  padding: 90px 0;
   position: relative;
 
   @media ${mediumUp} {
