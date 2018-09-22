@@ -46,7 +46,6 @@ injectGlobal`
   h2,
   h3,
   h4 {
-    color: ${black};
     font-family: ${garamond};
   }
 

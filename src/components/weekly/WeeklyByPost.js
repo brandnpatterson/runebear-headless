@@ -138,10 +138,6 @@ const StyledWeeklyWrapper = styled.div`
     width: 200px;
   }
 
-  .weekly-post-complete {
-    padding-top: 25px;
-  }
-
   .card-title {
     font-weight: bold;
     margin-bottom: 25px;
@@ -151,6 +147,10 @@ const StyledWeeklyWrapper = styled.div`
     @media ${mediumUp} {
       margin-bottom: 0;
     }
+  }
+
+  .card-content {
+    padding: 1.5rem;
   }
 
   .arrow-wrapper {

@@ -2,8 +2,8 @@ import React from 'react';
 import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { associateFilter } from '../../util';
 import { mediumUp } from '../../util/media';
+import { associateFilter } from '../../util';
 
 import Loading from '../Loading';
 import WeeklyPostSingle from './WeeklyPostSingle';
@@ -28,8 +28,31 @@ class WeeklyByAuthor extends React.Component {
     return author ? (
       <StyledAuthor>
         <div>
-          <h1 className="card-title">{author.name}</h1>
-          <p className="card-author-description">{author.description}</p>
+          <div className="author-text-wrapper">
+            <h1 className="card-title">{author.name}</h1>
+            <p className="card-author-description">{author.description}</p>
+            {author.slug === 'andrea-blythe' && (
+              <p className="author-links">
+                Learn more at{' '}
+                <a
+                  href="http://www.andreablythe.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  www.andreablythe.com{' '}
+                </a>{' '}
+                and{' '}
+                <a
+                  href="http://www.lauramadelinewiseman.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  www.lauramadelinewiseman.com
+                </a>
+                .
+              </p>
+            )}
+          </div>
         </div>
         {posts &&
           posts.map(post => {
@@ -87,6 +110,23 @@ const StyledAuthor = styled.div`
     justify-content: center;
   }
 
+  .author-text-wrapper {
+    @media ${mediumUp} {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      width: 800px;
+    }
+
+    .author-links {
+      margin-left: 8%;
+
+      @media ${mediumUp} {
+        margin-left: 51px;
+      }
+    }
+  }
+
   .authors-list {
     display: flex;
     flex-wrap: wrap;
@@ -103,9 +143,10 @@ const StyledAuthor = styled.div`
 
   .card-author-description {
     margin: 0 auto;
-    max-width: 697.5px;
+    max-width: 85%;
 
     @media ${mediumUp} {
+      max-width: 697.5px;
       width: 775px;
     }
   }

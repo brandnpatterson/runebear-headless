@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { string } from 'prop-types';
 import { connect } from 'react-redux';
-import page from '../page';
-import { mediumUp } from '../../util/media';
 import styled from 'styled-components';
+import { mediumUp } from '../../util/media';
 
 import Loading from '../Loading';
+import page from '../page';
 import WeeklyPagination from './WeeklyPagination';
 import WeeklyPostSingle from './WeeklyPostSingle';
 
@@ -72,10 +72,6 @@ export default connect(mapStateToProps)(page(WeeklyPosts));
 
 const StyledWeeklyWrapper = styled.div`
   margin-bottom: 40px;
-
-  .card-content {
-    padding-top: 74px;
-  }
 `;
 
 const StyledWeeklyPosts = styled.div`

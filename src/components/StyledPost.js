@@ -26,10 +26,18 @@ const StyledPost = styled.div`
   .card-title {
     font-weight: bold;
     position: absolute;
-    right: 70px;
+    right: 10%;
     text-align: right;
     text-transform: uppercase;
     top: 40px;
+
+    @media ${mediumUp} {
+      right: 70px;
+    }
+  }
+
+  .card-content {
+    padding-top: 74px;
   }
 
   .card-read-more {

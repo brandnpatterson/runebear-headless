@@ -1,8 +1,8 @@
 import React from 'react';
 import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
-import { associateFilter } from '../../util';
 import styled from 'styled-components';
+import { associateFilter } from '../../util';
 
 import WeeklyPostSingle from './WeeklyPostSingle';
 
@@ -74,10 +74,6 @@ const StyledWeeklyTag = styled.div`
   .categories-header {
     display: flex;
     justify-content: center;
-  }
-
-  .card-content {
-    padding-top: 74px;
   }
 
   .card-title {
