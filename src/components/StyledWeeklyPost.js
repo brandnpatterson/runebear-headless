@@ -30,7 +30,7 @@ const StyledWeeklyByPost = styled.div`
     margin-top: 50px;
 
     @media ${mediumUp} {
-      margin: 15px;
+      margin: 15px 25px;
     }
   }
 
@@ -49,9 +49,11 @@ const StyledWeeklyByPost = styled.div`
     flex-direction: column;
     margin-left: 22px;
     min-height: 48px;
+  }
 
+  .card-tags {
     @media ${mediumUp} {
-      margin-bottom: 5px;
+      margin-bottom: 15px;
     }
   }
 `;
