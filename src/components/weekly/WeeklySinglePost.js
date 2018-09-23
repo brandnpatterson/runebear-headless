@@ -100,7 +100,10 @@ class WeeklySinglePost extends React.Component {
                             to={`/weekly/categories/${category.slug}`}
                           >
                             <p className="card-categories">
-                              #{category.name}
+                              #
+                              {category.name
+                                .replace(/\s/g, '')
+                                .replace(/-/g, '')}
                               &nbsp;
                             </p>
                           </Link>
@@ -111,7 +114,7 @@ class WeeklySinglePost extends React.Component {
                         return (
                           <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
                             <p className="card-tags">
-                              #{tag.name}
+                              #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
                               &nbsp;
                             </p>
                           </Link>
