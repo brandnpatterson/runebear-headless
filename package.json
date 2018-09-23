@@ -3,13 +3,13 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "build": "react-app-rewired build && npm run create-cname",
+    "build": "react-scripts build && npm run create-cname",
     "create-cname": "echo 'runebear-test.surge.sh' > build/CNAME",
     "deploy": "npm run build && surge build",
     "dev": "npm run stylelint && npm start",
-    "start": "react-app-rewired start",
+    "start": "react-scripts start",
     "stylelint": "stylelint src/**/**/*.js",
-    "test": "react-app-rewired test --env=jsdom"
+    "test": "react-scripts test --env=jsdom"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -26,9 +26,6 @@
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "moxios": "^0.4.0",
-    "react-app-rewire-hot-loader": "^1.0.1",
-    "react-app-rewired": "^1.5.2",
-    "react-hot-loader": "^4.3.3",
     "react-scripts": "1.1.0",
     "stylelint": "^9.2.1",
     "stylelint-config-recommended": "^2.1.0",

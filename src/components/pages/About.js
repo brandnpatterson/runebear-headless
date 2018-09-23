@@ -1,32 +1,33 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import { black, gray } from '../../util/color';
 import { mediumUp } from '../../util/media';
 
-import page from '../page';
-
 const propTypes = {
   __html: string
 };
 
-const About = ({ __html }) => {
-  document.title = 'About | Rune Bear';
+const About = props => {
+  document.title = 'Rune Bear';
 
-  return (
-    <StyledAbout>
-      <div className="about flex-center" dangerouslySetInnerHTML={{ __html }} />
-    </StyledAbout>
-  );
+  const __html = props.pages.about && props.pages.about.content.rendered;
+
+  return <StyledAbout dangerouslySetInnerHTML={{ __html }} />;
 };
 
 About.propTypes = propTypes;
 
-export default page(About);
+const mapStateToProps = state => ({
+  pages: state.pages
+});
+
+export default connect(mapStateToProps)(About);
 
 const StyledAbout = styled.div`
   .container {
-    border-top: 1px solid ${gray};
     margin: 50px auto;
     max-width: 950px;
     padding: 30px 50px 50px;

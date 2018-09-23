@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { string } from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { mediumUp } from '../../util/media';
 
 import Loading from '../Loading';
-import page from '../page';
 import WeeklyPagination from './WeeklyPagination';
-import WeeklyPostSingle from './WeeklyPostSingle';
+import WeeklyPost from '../WeeklyPost';
 
 class WeeklyPosts extends Component {
   static propTypes = {
@@ -19,20 +16,21 @@ class WeeklyPosts extends Component {
   }
 
   render() {
-    const { __html, weekly, weeklyLoading, weeklyCurrentPage } = this.props;
+    const { weekly } = this.props;
+    const { pageNumber } = this.props.weekly;
+
+    const __html =
+      this.props.pages.weekly && this.props.pages.weekly.content.rendered;
 
     return (
-      <StyledWeeklyWrapper className="flex-center">
-        {weeklyLoading ? (
+      <div>
+        {false ? (
           <Loading />
         ) : (
           <div>
-            <StyledWeeklyPosts
-              className="weekly"
-              dangerouslySetInnerHTML={{ __html }}
-            />
-            {weekly &&
-              weekly[weeklyCurrentPage].map(post => {
+            <div dangerouslySetInnerHTML={{ __html }} />
+            {weekly[pageNumber] &&
+              weekly[pageNumber].map(post => {
                 let trimmed = post.content.rendered.substr(0, 345);
                 const excerpt = trimmed.substr(
                   0,
@@ -44,7 +42,7 @@ class WeeklyPosts extends Component {
                 const authors = post._embedded['wp:term'][2];
 
                 return (
-                  <WeeklyPostSingle
+                  <WeeklyPost
                     authors={authors}
                     categories={categories}
                     content={excerpt}
@@ -59,31 +57,14 @@ class WeeklyPosts extends Component {
           </div>
         )}
         <WeeklyPagination />
-      </StyledWeeklyWrapper>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  pages: state.pages,
   weekly: state.weekly
 });
 
-export default connect(mapStateToProps)(page(WeeklyPosts));
-
-const StyledWeeklyWrapper = styled.div`
-  margin-bottom: 40px;
-
-  .card-title {
-    margin-top: 10px;
-  }
-`;
-
-const StyledWeeklyPosts = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-
-  @media ${mediumUp} {
-    max-width: 900px;
-  }
-`;
+export default connect(mapStateToProps)(WeeklyPosts);

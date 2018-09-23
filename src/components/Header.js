@@ -114,6 +114,8 @@ const StyledHeader = styled.header`
   }
 
   .navbar-burger {
+    margin-top: 12px;
+    margin-right: 12px;
     position: relative;
     z-index: 3;
   }

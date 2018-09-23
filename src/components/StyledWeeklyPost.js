@@ -2,18 +2,19 @@ import styled from 'styled-components';
 import { gray } from '../util/color';
 import { mediumUp } from '../util/media';
 
-const StyledPost = styled.div`
+const StyledWeeklyByPost = styled.div`
   align-items: left;
   display: flex;
   flex-direction: column;
   min-height: 400px;
-  padding: 90px 0;
+  max-width: 700px;
   position: relative;
 
   @media ${mediumUp} {
     border: 1px solid ${gray};
     margin: 50px auto;
-    padding: 50px 0;
+    max-width: 700px;
+    padding: 50px 50px 15px;
     width: 700px;
   }
 
@@ -23,21 +24,18 @@ const StyledPost = styled.div`
 
   .card-title {
     font-weight: bold;
-    position: absolute;
-    right: 10%;
     text-align: right;
     text-transform: uppercase;
-    top: 40px;
+    margin-right: 10px;
+    margin-top: 50px;
 
     @media ${mediumUp} {
-      right: 70px;
+      margin: 15px;
     }
   }
 
   .card-content {
-    @media ${mediumUp} {
-      padding: 90px 74px 15px !important;
-    }
+    min-width: 95%;
   }
 
   .card-read-more {
@@ -54,9 +52,8 @@ const StyledPost = styled.div`
 
     @media ${mediumUp} {
       margin-bottom: 5px;
-      margin-left: 75px;
     }
   }
 `;
 
-export default StyledPost;
+export default StyledWeeklyByPost;

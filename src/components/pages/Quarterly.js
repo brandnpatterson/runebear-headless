@@ -1,28 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
-
-import page from '../page';
-
 const propTypes = {
   __html: string
 };
 
-const Quarterly = ({ __html }) => {
-  document.title = 'Quarterly | Rune Bear';
+const Quarterly = props => {
+  document.title = 'Rune Bear';
 
-  return (
-    <StyledQuarterly
-      className="quarterly"
-      dangerouslySetInnerHTML={{ __html }}
-    />
-  );
+  const __html =
+    props.pages.quarterly && props.pages.quarterly.content.rendered;
+
+  return <StyledQuarterly dangerouslySetInnerHTML={{ __html }} />;
 };
 
 Quarterly.propTypes = propTypes;
 
-export default page(Quarterly);
+const mapStateToProps = state => ({
+  pages: state.pages
+});
+
+export default connect(mapStateToProps)(Quarterly);
 
 const StyledQuarterly = styled.div`
   align-items: center;

@@ -3,7 +3,7 @@ import { object } from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { blue, dark, light } from '../util/color';
-import { mediumUp } from '../util/media';
+import { mediumDown, mediumUp } from '../util/media';
 
 class Footer extends Component {
   static propTypes = {
@@ -18,7 +18,7 @@ class Footer extends Component {
 
     return (
       <StyledFooter>
-        <div className="content" dangerouslySetInnerHTML={{ __html }} />
+        <div dangerouslySetInnerHTML={{ __html }} />
         <a
           className="copyright"
           href="https://github.com/brandnpatterson"
@@ -47,6 +47,10 @@ const StyledFooter = styled.footer`
   justify-content: flex-end;
   margin-top: 20px;
 
+  @media ${mediumDown} {
+    padding-bottom: 30px;
+  }
+
   a {
     color: ${blue};
   }
@@ -56,13 +60,13 @@ const StyledFooter = styled.footer`
     font-size: 14px;
     max-width: 400px;
     padding: 30px 0 0 10px;
+    text-align: left;
     width: 90%;
 
     @media ${mediumUp} {
       font-size: 18px;
       margin: 25px 0 0 40px;
       max-width: 500px;
-      text-align: center;
       width: 530px;
     }
   }

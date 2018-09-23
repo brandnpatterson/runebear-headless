@@ -1,10 +1,9 @@
 import React from 'react';
 import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { associateFilter } from '../../util';
+import { associateFilter } from '../../util/associateFilter';
 
-import WeeklyPostSingle from './WeeklyPostSingle';
+import WeeklyPost from '../WeeklyPost';
 
 class WeeklyByCategory extends React.Component {
   static propTypes = {
@@ -25,12 +24,12 @@ class WeeklyByCategory extends React.Component {
     const posts = weeklyByCategory.posts;
 
     return (
-      <StyledWeeklyCategory className="flex-center">
-        <div className="categories-header">
-          <h1>
+      <div>
+        <header>
+          <h1 style={{ textAlign: 'center' }}>
             <strong>{match.params.category.toUpperCase()}</strong>
           </h1>
-        </div>
+        </header>
         {posts.map(post => {
           let trimmed = post.content.rendered.substr(0, 345);
           const excerpt = trimmed.substr(
@@ -45,7 +44,7 @@ class WeeklyByCategory extends React.Component {
           });
 
           return (
-            <WeeklyPostSingle
+            <WeeklyPost
               authors={authors}
               content={excerpt}
               key={post.id}
@@ -55,7 +54,7 @@ class WeeklyByCategory extends React.Component {
             />
           );
         })}
-      </StyledWeeklyCategory>
+      </div>
     );
   }
 }
@@ -65,20 +64,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(WeeklyByCategory);
-
-const StyledWeeklyCategory = styled.div`
-  justify-content: space-around;
-  margin-bottom: 100px;
-  text-align: left;
-
-  .categories-header {
-    display: flex;
-    justify-content: center;
-  }
-
-  .card-title {
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-  }
-`;

@@ -3,7 +3,6 @@ import React from 'react';
 const Loading = () => {
   return (
     <div
-      className="loading"
       style={{
         marginTop: '250px',
         display: 'flex',

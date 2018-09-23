@@ -3,23 +3,24 @@ import { func, object } from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchPages, fetchWeeklyPage } from './actions';
-import { associateFilter } from './util';
-import { mediumUp, tiny } from './util/media';
+import { associateFilter } from './util/associateFilter';
 import styled from 'styled-components';
-
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Loading from './components/Loading';
+import { black } from './util/color';
+import { garamond } from './util/font';
+import { mediumUp } from './util/media';
 
 import About from './components/pages/About';
+import Footer from './components/Footer';
+import Header from './components/Header';
 import Home from './components/pages/Home';
+import Loading from './components/Loading';
 import Quarterly from './components/pages/Quarterly';
 import Submit from './components/pages/Submit';
 import WeeklyPosts from './components/weekly/WeeklyPosts';
 import WeeklyByAuthor from './components/weekly/WeeklyByAuthor';
 import WeeklyByCategory from './components/weekly/WeeklyByCategory';
 import WeeklyByTag from './components/weekly/WeeklyByTag';
-import WeeklyByPost from './components/weekly/WeeklyByPost';
+import WeeklySinglePost from './components/weekly/WeeklySinglePost';
 
 class App extends React.Component {
   static propTypes = {
@@ -136,14 +137,14 @@ class App extends React.Component {
     };
 
     return (
-      <StyledComponent>
+      <StyledApp>
         <Router>
           {loading ? (
             <Loading />
           ) : (
             <div className="wrapper">
               <Header />
-              <div>
+              <div className="content">
                 <Route exact path="/about" component={About} />
                 <Route exact path="/" component={Home} />
                 <Route exact path="/quarterly" component={Quarterly} />
@@ -153,7 +154,11 @@ class App extends React.Component {
                   exact
                   path={`/weekly/:weeklyPost`}
                   component={({ match }) => {
-                    return <WeeklyByPost weeklyByPost={filterByPost(match)} />;
+                    return (
+                      <WeeklySinglePost
+                        weeklySinglePost={filterByPost(match)}
+                      />
+                    );
                   }}
                 />
                 <Route
@@ -194,7 +199,7 @@ class App extends React.Component {
             </div>
           )}
         </Router>
-      </StyledComponent>
+      </StyledApp>
     );
   }
 }
@@ -211,38 +216,98 @@ export default connect(
   mapDispatchToProps
 )(App);
 
-const StyledComponent = styled.div`
-  justify-content: space-around;
-  min-height: 600px;
-  width: 100%;
-
-  @media ${mediumUp} {
-    width: 100%;
-  }
-
-  .image-wrapper {
+const StyledApp = styled.div`
+  .wrapper {
     display: flex;
-    @media ${tiny} {
-      flex-direction: column;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+
+  li {
+    list-style-type: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: ${garamond};
+  }
+
+  h1 {
+    font-size: 26px;
+    @media ${mediumUp} {
+      font-size: 30px;
     }
   }
 
-  .image-wrapper img {
-    margin: 20px;
+  h2 {
+    font-size: 22px;
     @media ${mediumUp} {
-      margin: 20px 50px;
+      font-size: 24px;
     }
   }
 
-  .image-wrapper img:nth-child(2) {
-    margin-bottom: 50px;
+  h3 {
+    font-size: 20px;
+    @media ${mediumUp} {
+      font-size: 22px;
+    }
   }
 
-  .subtitle {
-    max-width: 300px;
-    text-align: center;
+  h4 {
+    font-size: 18px;
     @media ${mediumUp} {
-      width: 550px;
+      font-size: 20px;
+    }
+  }
+
+  img {
+    height: 200px;
+    width: 200px;
+    @media ${mediumUp} {
+      height: 400px;
+      width: 400px;
+    }
+  }
+
+   {
+    /* .featured-hero is defined in the wordpress CMS on Pages */
+  }
+  .featured-hero {
+    align-items: center;
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 0 auto;
+    justify-content: space-between;
+
+    @media ${mediumUp} {
+      flex-direction: row;
+      max-width: 630px;
+    }
+
+    h1 {
+      font-size: 70px;
+
+      @media ${mediumUp} {
+        font-size: 100px;
+        margin-top: 30px;
+      }
+    }
+
+    img {
+      height: 150px;
+      width: 150px;
+    }
+
+    strong {
+      color: ${black};
     }
   }
 `;

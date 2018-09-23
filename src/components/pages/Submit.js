@@ -1,36 +1,35 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import { gray } from '../../util/color';
-import { mediumUp, middleMediumDown, largeUp } from '../../util/media';
-
-import page from '../page';
-
+import { mediumUp, largeUp } from '../../util/media';
 const propTypes = {
   __html: string
 };
 
-const Submit = ({ __html }) => {
-  document.title = 'Submit | Rune Bear';
+const Submit = props => {
+  document.title = 'Rune Bear';
 
-  return (
-    <StyledSubmit
-      className="submit columns"
-      dangerouslySetInnerHTML={{ __html }}
-    />
-  );
+  const __html = props.pages.submit && props.pages.submit.content.rendered;
+
+  return <StyledSubmit dangerouslySetInnerHTML={{ __html }} />;
 };
 
 Submit.propTypes = propTypes;
 
-export default page(Submit);
+const mapStateToProps = state => ({
+  pages: state.pages
+});
+
+export default connect(mapStateToProps)(Submit);
 
 const StyledSubmit = styled.div`
-  @media ${middleMediumDown} {
-    flex-direction: column !important;
-  }
+  display: flex;
+  flex-direction: column;
 
   @media ${mediumUp} {
+    flex-direction: row;
     margin: 0 auto;
   }
 
@@ -40,16 +39,13 @@ const StyledSubmit = styled.div`
 
   .card {
     align-items: left;
+    box-shadow: none !important;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+    max-width: 90%;
     padding: 0 30px 50px;
     width: 100%;
-
-    @media ${middleMediumDown} {
-      box-shadow: none !important;
-      margin: 0 auto;
-      max-width: 90%;
-    }
 
     @media ${mediumUp} {
       border: 1px solid ${gray};

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { changeWeeklyPage } from '../../actions';
+import { smallOnly } from '../../util/media';
+import styled from 'styled-components';
 
 class WeeklyPagination extends Component {
   static propTypes = {
@@ -110,7 +112,7 @@ class WeeklyPagination extends Component {
     };
 
     return (
-      <div>
+      <StyledPagination>
         {this.props.weekly.totalPages >= 2 && (
           <nav className="pagination" aria-label="pagination">
             <ul className="pagination-list">
@@ -120,7 +122,7 @@ class WeeklyPagination extends Component {
             <NextButton />
           </nav>
         )}
-      </div>
+      </StyledPagination>
     );
   }
 }
@@ -135,3 +137,9 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(WeeklyPagination);
+
+const StyledPagination = styled.div`
+  @media ${smallOnly} {
+    margin: 50px auto 0;
+  }
+`;

@@ -1,45 +1,48 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { string } from 'prop-types';
 import styled from 'styled-components';
-import { mediumUp, smallOnly } from '../../util/media';
-
-import page from '../page';
+import { mediumUp } from '../../util/media';
 
 const propTypes = {
   __html: string
 };
 
-const Home = ({ __html }) => {
+const Home = props => {
   document.title = 'Rune Bear';
 
-  return (
-    <StyledHome>
-      <div className="home flex-center" dangerouslySetInnerHTML={{ __html }} />
-    </StyledHome>
-  );
+  const __html = props.pages.home && props.pages.home.content.rendered;
+
+  return <StyledHome dangerouslySetInnerHTML={{ __html }} />;
 };
 
 Home.propTypes = propTypes;
 
-export default page(Home);
+const mapStateToProps = state => ({
+  pages: state.pages
+});
+
+export default connect(mapStateToProps)(Home);
 
 const StyledHome = styled.div`
-  @media ${mediumUp} {
-    margin-bottom: 40px;
-    margin-top: 40px;
-  }
+  p {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 
-  .images-wrapper p {
-    @media ${smallOnly} {
+    @media ${mediumUp} {
       align-items: center;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
     }
   }
 
   .home-subtitle {
+    display: block;
+    margin: 0 auto;
     text-align: center;
     width: 300px;
+
     @media ${mediumUp} {
       width: 450px;
     }

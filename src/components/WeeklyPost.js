@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import StyledPost from '../StyledPost';
+import StyledWeeklyPost from './StyledWeeklyPost';
 
-const WeeklyPostSingle = ({
+const WeeklyPost = ({
   authors,
   categories,
   content,
@@ -13,7 +13,7 @@ const WeeklyPostSingle = ({
   title
 }) => {
   return (
-    <StyledPost key={post.id}>
+    <StyledWeeklyPost key={post.id}>
       {title && <h2 className="card-title">{post.title.rendered}</h2>}
       <div className="card-content">
         <p dangerouslySetInnerHTML={{ __html: content }} />
@@ -65,8 +65,8 @@ const WeeklyPostSingle = ({
           </div>
         </div>
       </div>
-    </StyledPost>
+    </StyledWeeklyPost>
   );
 };
 
-export default WeeklyPostSingle;
+export default WeeklyPost;
