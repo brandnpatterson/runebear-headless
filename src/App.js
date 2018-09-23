@@ -144,7 +144,7 @@ class App extends React.Component {
           ) : (
             <div className="wrapper">
               <Header />
-              <div className="content">
+              <div className="main-content">
                 <Route exact path="/about" component={About} />
                 <Route exact path="/" component={Home} />
                 <Route exact path="/quarterly" component={Quarterly} />
@@ -223,7 +223,7 @@ const StyledApp = styled.div`
     flex-direction: column;
   }
 
-  .content {
+  .main-content {
     display: flex;
     flex: 1;
     justify-content: center;
@@ -309,5 +309,11 @@ const StyledApp = styled.div`
     strong {
       color: ${black};
     }
+  }
+
+  .pagination {
+    display: flex;
+    margin: 50px auto 100px;
+    width: 400px;
   }
 `;
