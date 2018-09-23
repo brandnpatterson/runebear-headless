@@ -14,7 +14,7 @@ const WeeklyPost = ({
 }) => {
   return (
     <StyledWeeklyPost key={post.id}>
-      {title && <h2 className="card-title">{post.title.rendered}</h2>}
+      {title && <h2>{post.title.rendered}</h2>}
       <div className="card-content">
         <p dangerouslySetInnerHTML={{ __html: content }} />
         {readMore && (

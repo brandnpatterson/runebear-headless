@@ -284,7 +284,7 @@ const StyledApp = styled.div`
     align-items: center;
     display: flex;
     flex-direction: column-reverse;
-    margin: 0 auto;
+    margin: 0 auto 100px;
     justify-content: space-between;
 
     @media ${mediumUp} {

@@ -22,20 +22,21 @@ const StyledWeeklyByPost = styled.div`
     display: flex;
   }
 
-  .card-title {
+  h2 {
     font-weight: bold;
+    position: absolute;
+    right: 20px;
     text-align: right;
     text-transform: uppercase;
-    margin-right: 10px;
-    margin-top: 50px;
 
     @media ${mediumUp} {
-      margin: 15px 25px;
+      right: 70px;
     }
   }
 
   .card-content {
     min-width: 95%;
+    padding-top: 80px;
   }
 
   .card-read-more {
