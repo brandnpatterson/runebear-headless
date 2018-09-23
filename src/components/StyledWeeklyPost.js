@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import { gray } from '../util/color';
-import { mediumUp } from '../util/media';
+import { mediumUp, smallOnly } from '../util/media';
 
 const StyledWeeklyByPost = styled.div`
   align-items: left;
   display: flex;
   flex-direction: column;
-  min-height: 400px;
   max-width: 700px;
   position: relative;
 
@@ -48,8 +47,13 @@ const StyledWeeklyByPost = styled.div`
     border: 0;
     display: flex;
     flex-direction: column;
+    margin-bottom: 15px;
     margin-left: 22px;
     min-height: 48px;
+
+    @media ${smallOnly} {
+      margin-bottom: 100px;
+    }
   }
 
   .card-tags {

@@ -330,4 +330,10 @@ const StyledApp = styled.div`
       color: ${dark2};
     }
   }
+
+  .filter-page {
+    @media ${mediumUp} {
+      margin-bottom: 100px;
+    }
+  }
 `;

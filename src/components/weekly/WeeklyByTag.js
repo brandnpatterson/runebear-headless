@@ -24,7 +24,7 @@ class WeeklyByTag extends React.Component {
     const posts = weeklyByTag.posts;
 
     return (
-      <div>
+      <div className="filter-page">
         <header className="filter-header">
           <h1 style={{ textAlign: 'center' }}>
             <strong>{match.params.tag.toUpperCase()}</strong>

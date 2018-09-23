@@ -24,7 +24,7 @@ class WeeklyByCategory extends React.Component {
     const posts = weeklyByCategory.posts;
 
     return (
-      <div>
+      <div className="filter-page">
         <header className="filter-header">
           <h1 style={{ textAlign: 'center' }}>
             <strong>{match.params.category.toUpperCase()}</strong>
