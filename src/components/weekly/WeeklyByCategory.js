@@ -25,7 +25,7 @@ class WeeklyByCategory extends React.Component {
 
     return (
       <div>
-        <header>
+        <header className="filter-header">
           <h1 style={{ textAlign: 'center' }}>
             <strong>{match.params.category.toUpperCase()}</strong>
           </h1>

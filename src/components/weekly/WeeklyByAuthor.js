@@ -49,8 +49,8 @@ class WeeklyByAuthor extends React.Component {
 
     return author ? (
       <div>
-        <header style={{ maxWidth: '700px', padding: '1.5rem' }}>
-          <h1 style={{ textAlign: 'center' }}>
+        <header className="filter-header">
+          <h1 style={{ textAlign: 'center', marginBottom: '50px' }}>
             <strong>{author.name.toUpperCase()}</strong>
           </h1>
           <div>
