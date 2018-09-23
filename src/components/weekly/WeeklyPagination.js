@@ -115,7 +115,7 @@ class WeeklyPagination extends Component {
       <StyledPagination>
         {this.props.weekly.totalPages >= 2 && (
           <nav className="pagination" aria-label="pagination">
-            <ul className="pagination-list">
+            <ul>
               <Pagination />
             </ul>
             <PreviousButton />

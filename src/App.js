@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { fetchPages, fetchWeeklyPage } from './actions';
 import { associateFilter } from './util/associateFilter';
 import styled from 'styled-components';
-import { black, dark2 } from './util/color';
+import { black, blue, dark2 } from './util/color';
 import { garamond } from './util/font';
 import { mediumUp } from './util/media';
 
@@ -313,8 +313,12 @@ const StyledApp = styled.div`
 
   .pagination {
     display: flex;
+    justify-content: center;
     margin: 50px auto 100px;
-    width: 400px;
+
+    ul {
+      display: flex;
+    }
   }
 
   .filter-header {
@@ -335,5 +339,13 @@ const StyledApp = styled.div`
     @media ${mediumUp} {
       margin-bottom: 100px;
     }
+  }
+
+  .author-links a {
+    color: ${dark2};
+  }
+
+  .author-links a:hover {
+    color: ${blue};
   }
 `;
