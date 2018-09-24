@@ -277,9 +277,7 @@ const StyledApp = styled.div`
     }
   }
 
-   {
-    /* .featured-hero is defined in the wordpress CMS on Pages */
-  }
+  /* .featured-hero is defined in the wordpress CMS on Pages */
   .featured-hero {
     align-items: center;
     display: flex;
