@@ -27,7 +27,7 @@ class WeeklyByTag extends React.Component {
       <div className="filter-page">
         <header className="filter-header">
           <h1 style={{ textAlign: 'center' }}>
-            <strong>{match.params.tag.toUpperCase()}</strong>
+            <strong>{match.params.tag.toUpperCase().replace(/-/g, ' ')}</strong>
           </h1>
         </header>
         {posts.map(post => {
