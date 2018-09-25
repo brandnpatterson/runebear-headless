@@ -1,8 +1,8 @@
 import React from 'react';
-import { func, object } from 'prop-types';
+// import { func, object } from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { fetchPages, fetchWeeklyPage } from './actions';
+// import { connect } from 'react-redux';
+import { fetchAll } from './api';
 import { associateFilter } from './util/associateFilter';
 import styled from 'styled-components';
 import { black, blue, dark2 } from './util/color';
@@ -23,36 +23,54 @@ import WeeklyByTag from './components/weekly/WeeklyByTag';
 import WeeklySinglePost from './components/weekly/WeeklySinglePost';
 
 class App extends React.Component {
-  static propTypes = {
-    fetchPages: func.isRequired,
-    fetchWeeklyPage: func.isRequired,
-    pages: object.isRequired,
-    weekly: object.isRequired
-  };
+  // static propTypes = {
+  //   fetchPages: func.isRequired,
+  //   fetchWeeklyPage: func.isRequired,
+  //   pages: object.isRequired,
+  //   weekly: object.isRequired
+  // };
 
   state = {
-    initialUpdate: false
+    initialUpdate: false,
+    loading: true,
+    pages: {},
+    weekly: {}
   };
 
   componentDidMount() {
-    this.props.fetchPages();
-    this.props.fetchWeeklyPage();
+    fetchAll().then(data => {
+      this.setState({ loading: false });
+
+      console.log(data);
+    });
   }
 
   componentDidUpdate() {
-    if (this.state.initialUpdate === false && this.props.weekly.totalPages) {
-      for (let i = 1; i < this.props.weekly.totalPages + 1; i++) {
-        if (!this.props.weekly[i]) {
-          this.props.fetchWeeklyPage(i);
-        }
-      }
-
-      this.setState({ initialUpdate: true });
-    }
+    // if (this.state.initialUpdate === false && this.props.weekly.totalPages) {
+    //   for (let i = 1; i < this.props.weekly.totalPages + 1; i++) {
+    //     if (!this.props.weekly[i]) {
+    //       this.props.fetchWeeklyPage(i);
+    //     }
+    //   }
+    //   this.setState({ initialUpdate: true });
+    // }
   }
 
+  // Change Weekly Page
+  // export const changeWeeklyPage = (newPage, pagination) => dispatch => {
+  //   if (pagination) {
+  //     if (pagination === 'next') {
+  //       dispatch({ type: CHANGE_WEEKLY_PAGE, payload: 'next' });
+  //     } else {
+  //       dispatch({ type: CHANGE_WEEKLY_PAGE, payload: 'prev' });
+  //     }
+  //   } else {
+  //     dispatch({ type: CHANGE_WEEKLY_PAGE, payload: newPage });
+  //   }
+  // };
+
   render() {
-    const { loading } = this.props.pages;
+    const { loading } = this.state;
 
     const filterByAuthor = match => {
       const author = this.props.weekly.allAuthors.filter(author => {
@@ -204,17 +222,7 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  pages: state.pages,
-  weekly: state.weekly
-});
-
-const mapDispatchToProps = { fetchPages, fetchWeeklyPage };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default App;
 
 const StyledApp = styled.div`
   .wrapper {
