@@ -8,7 +8,7 @@ const propTypes = {
 };
 
 const Quarterly = ({ page }) => {
-  document.title = 'Rune Bear';
+  document.title = 'Quarterly | Rune Bear';
 
   const __html = page && page.content.rendered;
 

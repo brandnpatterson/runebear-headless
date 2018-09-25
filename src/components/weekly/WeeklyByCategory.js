@@ -1,66 +1,57 @@
 import React from 'react';
-import { func, object } from 'prop-types';
-import { connect } from 'react-redux';
-import { associateFilter } from '../../util/associateFilter';
+import { object } from 'prop-types';
+import { associateFilter, firstLetterUpper } from '../../util';
 
-import WeeklyPost from '../WeeklyPost';
+import WeeklyPost from './WeeklyPost';
 
-class WeeklyByCategory extends React.Component {
-  static propTypes = {
-    dispatch: func.isRequired,
-    match: object.isRequired,
-    weekly: object,
-    weeklyByCategory: object
-  };
+const propTypes = {
+  match: object.isRequired,
+  weekly: object.isRequired,
+  weeklyByCategory: object.isRequired
+};
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
+const WeeklyByCategory = ({ match, weekly, weeklyByCategory }) => {
+  const category = match.params.category.replace(/-/g, '').replace(/-/g, '');
+  const posts = weeklyByCategory.posts;
 
-  render() {
-    const { match, weeklyByCategory } = this.props;
-    const { allAuthors } = this.props.weekly;
+  document.title = `${firstLetterUpper(category)} | Rune Bear`;
+  window.scrollTo(0, 0);
 
-    const posts = weeklyByCategory.posts;
+  return (
+    <div className="filter-page">
+      <header className="filter-header">
+        <h1 style={{ textAlign: 'center' }}>
+          <strong>{category.toUpperCase()}</strong>
+        </h1>
+      </header>
+      {posts.map(post => {
+        let trimmed = post.content.rendered.substr(0, 345);
+        const excerpt = trimmed.substr(
+          0,
+          Math.min(trimmed.length, trimmed.lastIndexOf(' '))
+        );
 
-    return (
-      <div className="filter-page">
-        <header className="filter-header">
-          <h1 style={{ textAlign: 'center' }}>
-            <strong>{match.params.category.toUpperCase().replace(/-/g, '')}</strong>
-          </h1>
-        </header>
-        {posts.map(post => {
-          let trimmed = post.content.rendered.substr(0, 345);
-          const excerpt = trimmed.substr(
-            0,
-            Math.min(trimmed.length, trimmed.lastIndexOf(' '))
-          );
+        const authors = associateFilter({
+          haystack: weekly.authors,
+          needle: [post],
+          needleProp: 'post_author'
+        });
 
-          const authors = associateFilter({
-            haystack: allAuthors,
-            needle: [post],
-            needleProp: 'post_author'
-          });
+        return (
+          <WeeklyPost
+            authors={authors}
+            content={excerpt}
+            key={post.id}
+            post={post}
+            readMore={true}
+            title={true}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
-          return (
-            <WeeklyPost
-              authors={authors}
-              content={excerpt}
-              key={post.id}
-              post={post}
-              readMore={true}
-              title={true}
-            />
-          );
-        })}
-      </div>
-    );
-  }
-}
+WeeklyByCategory.propTypes = propTypes;
 
-const mapStateToProps = state => ({
-  weekly: state.weekly
-});
-
-export default connect(mapStateToProps)(WeeklyByCategory);
+export default WeeklyByCategory;

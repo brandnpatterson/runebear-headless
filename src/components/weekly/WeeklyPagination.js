@@ -16,7 +16,7 @@ class WeeklyPagination extends Component {
     if (weekly[targetValue]) {
       this.props.changeWeeklyPage(Number(e.target.textContent));
     } else {
-      this.props.fetchWeeklyPage(Number(e.target.textContent));
+      this.props.changeWeeklyPage(Number(e.target.textContent));
     }
     window.scrollTo(0, 0);
   };
@@ -70,7 +70,7 @@ class WeeklyPagination extends Component {
     const Pagination = () => {
       const listItems = [];
 
-      for (var i = 0; i < this.props.weekly.totalPages; i++) {
+      for (var i = 0; i < this.props.weekly.totalPages + 1; i++) {
         const page = i + 1;
 
         listItems.push(
@@ -101,7 +101,7 @@ class WeeklyPagination extends Component {
 
     return (
       <StyledPagination>
-        {this.props.weekly.totalPages >= 2 && (
+        {this.props.weekly.totalPages >= 1 && (
           <nav className="pagination" aria-label="pagination">
             <ul>
               <Pagination />

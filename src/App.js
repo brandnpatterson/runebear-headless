@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { fetchAll } from './api';
-import { associateFilter } from './util/associateFilter';
+import { associateFilter } from './util';
 import styled from 'styled-components';
 import { black, blue, dark2 } from './util/color';
 import { garamond } from './util/font';
@@ -14,12 +14,12 @@ import Home from './components/pages/Home';
 import Loading from './components/Loading';
 import Quarterly from './components/pages/Quarterly';
 import Submit from './components/pages/Submit';
-import WeeklyPagination from './components/weekly/WeeklyPagination';
-import WeeklyPosts from './components/weekly/WeeklyPosts';
 import WeeklyByAuthor from './components/weekly/WeeklyByAuthor';
 import WeeklyByCategory from './components/weekly/WeeklyByCategory';
 import WeeklyByTag from './components/weekly/WeeklyByTag';
-import WeeklySinglePost from './components/weekly/WeeklySinglePost';
+import WeeklyBySinglePost from './components/weekly/WeeklyBySinglePost';
+import WeeklyPagination from './components/weekly/WeeklyPagination';
+import WeeklyPosts from './components/weekly/WeeklyPosts';
 
 class App extends React.Component {
   state = {
@@ -39,96 +39,102 @@ class App extends React.Component {
     });
   }
 
-  changeWeeklyPage = () => {
-    this.setState({
-      weeklyPage: 2
+  changeWeeklyPage = newPage => {
+    let { weeklyPage } = this.state;
+
+    if (newPage === 'next') {
+      this.setState({ weeklyPage: weeklyPage + 1 });
+    } else if (newPage === 'prev') {
+      this.setState({ weeklyPage: weeklyPage - 1 });
+    } else {
+      this.setState({ weeklyPage: newPage });
+    }
+  };
+
+  filterByAuthor = match => {
+    const author = this.state.weekly.authors.filter(author => {
+      return author.slug === match.params.author;
     });
+
+    const posts = associateFilter({
+      haystack: this.state.weekly.posts,
+      needle: author,
+      hayProp: 'post_author'
+    });
+
+    return {
+      author,
+      posts
+    };
+  };
+
+  filterByCategory = match => {
+    const categories = this.state.weekly.categories.filter(category => {
+      return category.slug === match.params.category;
+    });
+
+    const posts = associateFilter({
+      haystack: this.state.weekly.posts,
+      needle: categories,
+      hayProp: 'categories'
+    });
+
+    return {
+      categories,
+      posts
+    };
+  };
+
+  filterByPost = match => {
+    const post = this.state.weekly.posts.filter(post => {
+      return post.slug === match.params.weeklyPost;
+    });
+
+    const authors = associateFilter({
+      haystack: this.state.weekly.authors,
+      needle: post,
+      needleProp: 'post_author'
+    });
+
+    const categories = associateFilter({
+      haystack: this.state.weekly.categories,
+      needle: post,
+      needleProp: 'categories'
+    });
+
+    const tags = associateFilter({
+      haystack: this.state.weekly.tags,
+      needle: post,
+      needleProp: 'tags'
+    });
+
+    return {
+      authors,
+      categories,
+      post: post[0],
+      tags
+    };
+  };
+
+  filterByTag = match => {
+    const tags = this.state.weekly.tags.filter(tag => {
+      return tag.slug === match.params.tag;
+    });
+
+    const posts = associateFilter({
+      haystack: this.state.weekly.posts,
+      needle: tags,
+      hayProp: 'tags'
+    });
+
+    return {
+      posts,
+      tags
+    };
   };
 
   render() {
     const { loading } = this.state;
-
-    const filterByAuthor = match => {
-      const author = this.props.weekly.allAuthors.filter(author => {
-        return author.slug === match.params.author;
-      });
-
-      const posts = associateFilter({
-        haystack: this.props.weekly.all,
-        needle: author,
-        hayProp: 'post_author'
-      });
-
-      return {
-        author,
-        posts
-      };
-    };
-
-    const filterByCategory = match => {
-      const categories = this.props.weekly.allCategories.filter(category => {
-        return category.slug === match.params.category;
-      });
-
-      const posts = associateFilter({
-        haystack: this.props.weekly.all,
-        needle: categories,
-        hayProp: 'categories'
-      });
-
-      return {
-        categories,
-        posts
-      };
-    };
-
-    const filterByPost = match => {
-      const post = this.props.weekly.all.filter(post => {
-        return post.slug === match.params.weeklyPost;
-      });
-
-      const authors = associateFilter({
-        haystack: this.props.weekly.allAuthors,
-        needle: post,
-        needleProp: 'post_author'
-      });
-
-      const categories = associateFilter({
-        haystack: this.props.weekly.allCategories,
-        needle: post,
-        needleProp: 'categories'
-      });
-
-      const tags = associateFilter({
-        haystack: this.props.weekly.allTags,
-        needle: post,
-        needleProp: 'tags'
-      });
-
-      return {
-        authors,
-        categories,
-        post: post[0],
-        tags
-      };
-    };
-
-    const filterByTag = match => {
-      const tags = this.props.weekly.allTags.filter(tag => {
-        return tag.slug === match.params.tag;
-      });
-
-      const posts = associateFilter({
-        haystack: this.props.weekly.all,
-        needle: tags,
-        hayProp: 'tags'
-      });
-
-      return {
-        posts,
-        tags
-      };
-    };
 
     return (
       <StyledApp>
@@ -137,7 +143,11 @@ class App extends React.Component {
             <Loading />
           ) : (
             <div className="wrapper">
-              <Header pages={this.state.pages} weekly={this.state.weekly} />
+              <Header
+                changeWeeklyPage={this.changeWeeklyPage}
+                pages={this.state.pages}
+                weekly={this.state.weekly}
+              />
               <div className="main-content">
                 <Route
                   exact
@@ -192,8 +202,9 @@ class App extends React.Component {
                   path={`/weekly/:weeklyPost`}
                   component={({ match }) => {
                     return (
-                      <WeeklySinglePost
-                        weeklySinglePost={filterByPost(match)}
+                      <WeeklyBySinglePost
+                        weekly={this.state.weekly}
+                        WeeklyBySinglePost={this.filterByPost(match)}
                       />
                     );
                   }}
@@ -203,7 +214,10 @@ class App extends React.Component {
                   path={`/weekly/authors/:author`}
                   component={({ match }) => {
                     return (
-                      <WeeklyByAuthor weeklyByAuthor={filterByAuthor(match)} />
+                      <WeeklyByAuthor
+                        weekly={this.state.weekly}
+                        weeklyByAuthor={this.filterByAuthor(match)}
+                      />
                     );
                   }}
                 />
@@ -214,7 +228,8 @@ class App extends React.Component {
                     return (
                       <WeeklyByCategory
                         match={match}
-                        weeklyByCategory={filterByCategory(match)}
+                        weekly={this.state.weekly}
+                        weeklyByCategory={this.filterByCategory(match)}
                       />
                     );
                   }}
@@ -226,13 +241,14 @@ class App extends React.Component {
                     return (
                       <WeeklyByTag
                         match={match}
-                        weeklyByTag={filterByTag(match)}
+                        weekly={this.state.weekly}
+                        weeklyByTag={this.filterByTag(match)}
                       />
                     );
                   }}
                 />
               </div>
-              <Footer />
+              <Footer footer={this.state.pages.footer} />
             </div>
           )}
         </Router>
@@ -240,8 +256,6 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;
 
 const StyledApp = styled.div`
   .wrapper {
@@ -322,7 +336,6 @@ const StyledApp = styled.div`
 
       @media ${mediumUp} {
         font-size: 100px;
-        margin-top: 30px;
       }
     }
 
@@ -374,3 +387,5 @@ const StyledApp = styled.div`
     color: ${blue};
   }
 `;
+
+export default App;

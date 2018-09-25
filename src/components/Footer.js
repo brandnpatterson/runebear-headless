@@ -1,43 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { object } from 'prop-types';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { blue, dark, light } from '../util/color';
 import { mediumDown, mediumUp } from '../util/media';
 
-class Footer extends Component {
-  static propTypes = {
-    footer: object
-  };
+const propTypes = {
+  footer: object
+};
 
-  render() {
-    const { footer } = this.props.pages;
-    const __html = footer && footer.content && footer.content.rendered;
+const Footer = ({ footer }) => {
+  const thisYear = new Date().getFullYear();
 
-    const thisYear = new Date().getFullYear();
-
-    return (
-      <StyledFooter>
-        <div dangerouslySetInnerHTML={{ __html }} />
-        <a
-          className="copyright"
-          href="https://github.com/brandnpatterson"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          &copy;
-          {thisYear} Brandon Patterson. All Rights Reserved.
-        </a>
-      </StyledFooter>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  pages: state.pages
-});
-
-export default connect(mapStateToProps)(Footer);
+  return (
+    <StyledFooter>
+      <div dangerouslySetInnerHTML={{ __html: footer.content.rendered }} />
+      <a
+        className="copyright"
+        href="https://github.com/brandnpatterson"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        &copy;
+        {thisYear} Brandon Patterson. All Rights Reserved.
+      </a>
+    </StyledFooter>
+  );
+};
 
 const StyledFooter = styled.footer`
   background: ${dark};
@@ -65,7 +53,7 @@ const StyledFooter = styled.footer`
 
     @media ${mediumUp} {
       font-size: 18px;
-      margin: 25px 0 0 40px;
+      margin: 25px 0 0 35px;
       max-width: 500px;
       width: 530px;
     }
@@ -84,9 +72,10 @@ const StyledFooter = styled.footer`
     font-size: 14px;
     margin-left: 10px;
     text-align: left;
+
     @media ${mediumUp} {
       font-size: 18px;
-      margin: 25px 0 50px 60px;
+      margin: 25px 0 50px 45px;
     }
   }
 
@@ -94,3 +83,7 @@ const StyledFooter = styled.footer`
     color: ${blue};
   }
 `;
+
+Footer.propTypes = propTypes;
+
+export default Footer;

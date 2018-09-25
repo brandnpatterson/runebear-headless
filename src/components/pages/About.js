@@ -9,7 +9,7 @@ const propTypes = {
 };
 
 const About = ({ page }) => {
-  document.title = 'Rune Bear';
+  document.title = 'About | Rune Bear';
 
   const __html = page && page.content.rendered;
 
@@ -17,6 +17,8 @@ const About = ({ page }) => {
 };
 
 const StyledAbout = styled.div`
+  margin-bottom: 100px;
+
   .container {
     margin: 50px auto;
     max-width: 950px;

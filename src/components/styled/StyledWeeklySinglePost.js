@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { gray } from '../util/color';
-import { mediumUp } from '../util/media';
+import { gray } from '../../util/color';
+import { mediumUp } from '../../util/media';
 
 const StyledWeeklySinglePost = styled.div`
   align-items: center;

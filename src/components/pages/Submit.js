@@ -9,7 +9,7 @@ const propTypes = {
 };
 
 const Submit = ({ page }) => {
-  document.title = 'Rune Bear';
+  document.title = 'Submit | Rune Bear';
 
   const __html = page && page.content.rendered;
 
@@ -19,10 +19,10 @@ const Submit = ({ page }) => {
 const StyledSubmit = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 100px;
 
   @media ${mediumUp} {
     flex-direction: row;
-    margin: 0 auto;
   }
 
   @media ${largeUp} {
