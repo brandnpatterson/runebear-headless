@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { changeWeeklyPage } from '../actions';
 import styled from 'styled-components';
 import { dark, light } from '../util/color';
 import { mediumUp } from '../util/media';
@@ -90,18 +88,6 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  pages: state.pages,
-  weekly: state.weekly
-});
-
-const mapDispatchToProps = { changeWeeklyPage };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
-
 const StyledHeader = styled.header`
   .navbar {
     margin-bottom: 50px;
@@ -176,3 +162,5 @@ const StyledHeader = styled.header`
     top: 60px;
   }
 `;
+
+export default Header;

@@ -1,29 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
-import { string } from 'prop-types';
+import { object } from 'prop-types';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
+
 const propTypes = {
-  __html: string
+  page: object.isRequired
 };
 
-const Quarterly = props => {
+const Quarterly = ({ page }) => {
   document.title = 'Rune Bear';
 
-  const __html =
-    props.pages.quarterly && props.pages.quarterly.content.rendered;
+  const __html = page && page.content.rendered;
 
   return <StyledQuarterly dangerouslySetInnerHTML={{ __html }} />;
 };
-
-Quarterly.propTypes = propTypes;
-
-const mapStateToProps = state => ({
-  pages: state.pages
-});
-
-export default connect(mapStateToProps)(Quarterly);
 
 const StyledQuarterly = styled.div`
   align-items: center;
@@ -60,3 +50,7 @@ const StyledQuarterly = styled.div`
     }
   }
 `;
+
+Quarterly.propTypes = propTypes;
+
+export default Quarterly;

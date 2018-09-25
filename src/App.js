@@ -1,7 +1,5 @@
 import React from 'react';
-// import { func, object } from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-// import { connect } from 'react-redux';
 import { fetchAll } from './api';
 import { associateFilter } from './util/associateFilter';
 import styled from 'styled-components';
@@ -16,6 +14,7 @@ import Home from './components/pages/Home';
 import Loading from './components/Loading';
 import Quarterly from './components/pages/Quarterly';
 import Submit from './components/pages/Submit';
+import WeeklyPagination from './components/weekly/WeeklyPagination';
 import WeeklyPosts from './components/weekly/WeeklyPosts';
 import WeeklyByAuthor from './components/weekly/WeeklyByAuthor';
 import WeeklyByCategory from './components/weekly/WeeklyByCategory';
@@ -23,51 +22,28 @@ import WeeklyByTag from './components/weekly/WeeklyByTag';
 import WeeklySinglePost from './components/weekly/WeeklySinglePost';
 
 class App extends React.Component {
-  // static propTypes = {
-  //   fetchPages: func.isRequired,
-  //   fetchWeeklyPage: func.isRequired,
-  //   pages: object.isRequired,
-  //   weekly: object.isRequired
-  // };
-
   state = {
-    initialUpdate: false,
     loading: true,
     pages: {},
-    weekly: {}
+    weekly: {},
+    weeklyPage: 1
   };
 
   componentDidMount() {
     fetchAll().then(data => {
-      this.setState({ loading: false });
-
-      console.log(data);
+      this.setState({
+        loading: false,
+        pages: data.pages,
+        weekly: data.weekly
+      });
     });
   }
 
-  componentDidUpdate() {
-    // if (this.state.initialUpdate === false && this.props.weekly.totalPages) {
-    //   for (let i = 1; i < this.props.weekly.totalPages + 1; i++) {
-    //     if (!this.props.weekly[i]) {
-    //       this.props.fetchWeeklyPage(i);
-    //     }
-    //   }
-    //   this.setState({ initialUpdate: true });
-    // }
-  }
-
-  // Change Weekly Page
-  // export const changeWeeklyPage = (newPage, pagination) => dispatch => {
-  //   if (pagination) {
-  //     if (pagination === 'next') {
-  //       dispatch({ type: CHANGE_WEEKLY_PAGE, payload: 'next' });
-  //     } else {
-  //       dispatch({ type: CHANGE_WEEKLY_PAGE, payload: 'prev' });
-  //     }
-  //   } else {
-  //     dispatch({ type: CHANGE_WEEKLY_PAGE, payload: newPage });
-  //   }
-  // };
+  changeWeeklyPage = () => {
+    this.setState({
+      weeklyPage: 2
+    });
+  };
 
   render() {
     const { loading } = this.state;
@@ -161,13 +137,56 @@ class App extends React.Component {
             <Loading />
           ) : (
             <div className="wrapper">
-              <Header />
+              <Header pages={this.state.pages} weekly={this.state.weekly} />
               <div className="main-content">
-                <Route exact path="/about" component={About} />
-                <Route exact path="/" component={Home} />
-                <Route exact path="/quarterly" component={Quarterly} />
-                <Route exact path="/submit" component={Submit} />
-                <Route exact path="/weekly" component={WeeklyPosts} />
+                <Route
+                  exact
+                  path="/about"
+                  component={() => {
+                    return <About page={this.state.pages.about} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/"
+                  component={() => {
+                    return <Home page={this.state.pages.home} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/quarterly"
+                  component={() => {
+                    return <Quarterly page={this.state.pages.quarterly} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/submit"
+                  component={() => {
+                    return <Submit page={this.state.pages.submit} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/weekly"
+                  component={() => {
+                    return (
+                      <div>
+                        <WeeklyPosts
+                          page={this.state.pages.weekly}
+                          weekly={this.state.weekly}
+                          weeklyPage={this.state.weeklyPage}
+                        />
+                        <WeeklyPagination
+                          changeWeeklyPage={this.changeWeeklyPage}
+                          weekly={this.state.weekly}
+                          weeklyPage={this.state.weeklyPage}
+                        />
+                      </div>
+                    );
+                  }}
+                />
                 <Route
                   exact
                   path={`/weekly/:weeklyPost`}

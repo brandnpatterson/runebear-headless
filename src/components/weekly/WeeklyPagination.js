@@ -1,45 +1,38 @@
 import React, { Component } from 'react';
-import { func, object } from 'prop-types';
-import { connect } from 'react-redux';
-import { changeWeeklyPage } from '../../actions';
+import { func, number, object } from 'prop-types';
 import { smallOnly } from '../../util/media';
 import styled from 'styled-components';
 
 class WeeklyPagination extends Component {
   static propTypes = {
     changeWeeklyPage: func.isRequired,
-    weekly: object
+    weekly: object.isRequired,
+    weeklyPage: number.isRequired
   };
 
   onPageSelect = e => {
     const { weekly } = this.props;
     const targetValue = e.target.textContent;
-
     if (weekly[targetValue]) {
       this.props.changeWeeklyPage(Number(e.target.textContent));
     } else {
       this.props.fetchWeeklyPage(Number(e.target.textContent));
     }
-
     window.scrollTo(0, 0);
   };
 
   onNextPage = () => {
-    let nextPage = this.props.weekly.pageNumber + 1;
-
+    let nextPage = this.props.weeklyPage + 1;
     if (nextPage <= this.props.weekly.totalPages) {
-      this.props.changeWeeklyPage(null, 'next');
-
+      this.props.changeWeeklyPage('next');
       window.scrollTo(0, 0);
     }
   };
 
   onPreviousPage = () => {
-    let prevPage = this.props.weekly.pageNumber - 1;
-
+    let prevPage = this.props.weeklyPage - 1;
     if (prevPage !== 0) {
-      this.props.changeWeeklyPage(null, 'prev');
-
+      this.props.changeWeeklyPage('prev');
       window.scrollTo(0, 0);
     }
   };
@@ -47,9 +40,7 @@ class WeeklyPagination extends Component {
   render() {
     const NextButton = () => {
       const isDisabled =
-        this.props.weekly.pageNumber === this.props.weekly.totalPages
-          ? true
-          : false;
+        this.props.weeklyPage === this.props.weekly.totalPages ? true : false;
 
       return (
         <a
@@ -63,8 +54,7 @@ class WeeklyPagination extends Component {
     };
 
     const PreviousButton = () => {
-      const isDisabled =
-        Number(this.props.weekly.pageNumber) === 1 ? true : false;
+      const isDisabled = Number(this.props.weeklyPage) === 1 ? true : false;
 
       return (
         <a
@@ -88,12 +78,10 @@ class WeeklyPagination extends Component {
             <a
               className={
                 'pagination-link' +
-                (page === Number(this.props.weekly.pageNumber)
-                  ? ' is-current'
-                  : '')
+                (page === Number(this.props.weeklyPage) ? ' is-current' : '')
               }
               style={
-                page === Number(this.props.weekly.pageNumber)
+                page === Number(this.props.weeklyPage)
                   ? { pointerEvents: 'none' }
                   : null
               }
@@ -127,19 +115,10 @@ class WeeklyPagination extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  weekly: state.weekly
-});
-
-const mapDispatchToProps = { changeWeeklyPage };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WeeklyPagination);
-
 const StyledPagination = styled.div`
   @media ${smallOnly} {
     margin: 50px auto 0;
   }
 `;
+
+export default WeeklyPagination;

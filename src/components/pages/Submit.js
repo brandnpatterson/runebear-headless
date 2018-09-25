@@ -1,28 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { string } from 'prop-types';
+import { object } from 'prop-types';
 import styled from 'styled-components';
 import { gray } from '../../util/color';
 import { mediumUp, largeUp } from '../../util/media';
+
 const propTypes = {
-  __html: string
+  page: object.isRequired
 };
 
-const Submit = props => {
+const Submit = ({ page }) => {
   document.title = 'Rune Bear';
 
-  const __html = props.pages.submit && props.pages.submit.content.rendered;
+  const __html = page && page.content.rendered;
 
   return <StyledSubmit dangerouslySetInnerHTML={{ __html }} />;
 };
-
-Submit.propTypes = propTypes;
-
-const mapStateToProps = state => ({
-  pages: state.pages
-});
-
-export default connect(mapStateToProps)(Submit);
 
 const StyledSubmit = styled.div`
   display: flex;
@@ -66,3 +58,7 @@ const StyledSubmit = styled.div`
     margin-bottom: 24px;
   }
 `;
+
+Submit.propTypes = propTypes;
+
+export default Submit;

@@ -1,70 +1,59 @@
 import React, { Component } from 'react';
-import { string } from 'prop-types';
-import { connect } from 'react-redux';
+import { number, object } from 'prop-types';
 
-import Loading from '../Loading';
-import WeeklyPagination from './WeeklyPagination';
 import WeeklyPost from '../WeeklyPost';
 
-class WeeklyPosts extends Component {
-  static propTypes = {
-    __html: string
-  };
+const propTypes = {
+  page: object.isRequired,
+  weekly: object.isRequired,
+  weeklyPage: number.isRequired
+};
 
-  componentDidMount() {
-    document.title = 'Weekly | Rune Bear';
+class WeeklyPosts extends Component {
+  componentDidUpdate() {
+    console.log('update');
   }
 
   render() {
-    const { weekly } = this.props;
-    const { pageNumber } = this.props.weekly;
+    const { page, weekly, weeklyPage } = this.props;
 
-    const __html =
-      this.props.pages.weekly && this.props.pages.weekly.content.rendered;
+    document.title = 'Weekly | Rune Bear';
+
+    const __html = page && page.content.rendered;
 
     return (
       <div>
-        {false ? (
-          <Loading />
-        ) : (
-          <div>
-            <div dangerouslySetInnerHTML={{ __html }} />
-            {weekly[pageNumber] &&
-              weekly[pageNumber].map(post => {
-                let trimmed = post.content.rendered.substr(0, 345);
-                const excerpt = trimmed.substr(
-                  0,
-                  Math.min(trimmed.length, trimmed.lastIndexOf(' '))
-                );
+        <div dangerouslySetInnerHTML={{ __html }} />
+        {weekly[weeklyPage] &&
+          weekly[weeklyPage].map(post => {
+            let trimmed = post.content.rendered.substr(0, 345);
+            const excerpt = trimmed.substr(
+              0,
+              Math.min(trimmed.length, trimmed.lastIndexOf(' '))
+            );
 
-                const categories = post._embedded['wp:term'][0];
-                const tags = post._embedded['wp:term'][1];
-                const authors = post._embedded['wp:term'][2];
+            const categories = post._embedded['wp:term'][0];
+            const tags = post._embedded['wp:term'][1];
+            const authors = post._embedded['wp:term'][2];
 
-                return (
-                  <WeeklyPost
-                    authors={authors}
-                    categories={categories}
-                    content={excerpt}
-                    key={post.id}
-                    post={post}
-                    readMore={true}
-                    tags={tags}
-                    title={true}
-                  />
-                );
-              })}
-          </div>
-        )}
-        <WeeklyPagination />
+            return (
+              <WeeklyPost
+                authors={authors}
+                categories={categories}
+                content={excerpt}
+                key={post.id}
+                post={post}
+                readMore={true}
+                tags={tags}
+                title={true}
+              />
+            );
+          })}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  pages: state.pages,
-  weekly: state.weekly
-});
+WeeklyPosts.propTypes = propTypes;
 
-export default connect(mapStateToProps)(WeeklyPosts);
+export default WeeklyPosts;

@@ -1,28 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { string } from 'prop-types';
+import { object } from 'prop-types';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
 
 const propTypes = {
-  __html: string
+  page: object.isRequired
 };
 
-const Home = props => {
+const Home = ({ page }) => {
   document.title = 'Rune Bear';
 
-  const __html = props.pages.home && props.pages.home.content.rendered;
+  const __html = page && page.content.rendered;
 
   return <StyledHome dangerouslySetInnerHTML={{ __html }} />;
 };
-
-Home.propTypes = propTypes;
-
-const mapStateToProps = state => ({
-  pages: state.pages
-});
-
-export default connect(mapStateToProps)(Home);
 
 const StyledHome = styled.div`
   p {
@@ -48,3 +39,7 @@ const StyledHome = styled.div`
     }
   }
 `;
+
+Home.propTypes = propTypes;
+
+export default Home;

@@ -2,20 +2,40 @@ import axios from 'axios';
 
 const endpoint = req => `https://admin.runebear.com/wp-json/wp/v2/${req}`;
 
-// Fetch Current Profile
-
+// Fetch Requests
 export const fetchAll = () => {
-  return Promise.all([
-    fetchAllPages(),
-    fetchWeeklyPage(),
-    fetchAllWeeklyPages(),
-    fetchAllAuthors(),
-    fetchAllCategories(),
-    fetchAllTags()
-  ]).then(values => {
-    values.forEach(item => {
-      console.log(item);
-    });
+  return new Promise((resolve, reject) => {
+    return Promise.all([
+      fetchAllPages(),
+      fetchAllWeeklyPages(),
+      fetchAllAuthors(),
+      fetchAllCategories(),
+      fetchAllTags()
+    ])
+      .then(values => {
+        const pages = {};
+        let page = 1;
+
+        values[0].map(page => (pages[page.slug] = page));
+
+        const weekly = {
+          posts: values[1],
+          authors: values[2],
+          categories: values[3],
+          totalPages: null,
+          tags: values[4]
+        };
+
+        while (page < 5) {
+          weekly[page] = weekly.posts.slice(0, 4);
+          weekly.totalPages = page;
+
+          page++;
+        }
+
+        resolve({ pages, weekly });
+      })
+      .catch(err => reject(err));
   });
 };
 
