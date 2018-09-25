@@ -70,7 +70,7 @@ class WeeklyPagination extends Component {
     const Pagination = () => {
       const listItems = [];
 
-      for (var i = 0; i < this.props.weekly.totalPages + 1; i++) {
+      for (var i = 0; i < this.props.weekly.totalPages; i++) {
         const page = i + 1;
 
         listItems.push(
