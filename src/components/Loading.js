@@ -37,10 +37,10 @@ class Loading extends React.Component {
     };
 
     if (window.innerWidth <= 1024) {
-      if (this.state.width <= 190) {
+      if (this.state.width <= 200) {
         runTimer();
       }
-    } else if (this.state.width <= 290) {
+    } else if (this.state.width <= 300) {
       runTimer();
     }
   };

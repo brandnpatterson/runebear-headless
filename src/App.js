@@ -287,7 +287,7 @@ const StyledApp = styled.div`
     width: 100vw;
 
     @media ${smallOnly} {
-      padding-top: 80px;
+      padding-top: 70px;
     }
   }
 
