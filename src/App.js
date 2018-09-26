@@ -227,6 +227,8 @@ class App extends React.Component {
                   exact
                   path={`/weekly/tags/:tag`}
                   render={({ match }) => {
+                    window.scrollTo(0, 0);
+
                     return (
                       <WeeklyByTag
                         match={match}

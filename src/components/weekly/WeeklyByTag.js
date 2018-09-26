@@ -10,7 +10,7 @@ const propTypes = {
 };
 
 const WeeklyByTag = ({ match, posts }) => {
-  const tag = match.params.tag.replace(/-/g, '').replace(/-/g, '');
+  const tag = match.params.tag.replace(/-/g, ' ');
 
   document.title = `${firstLetterUpper(tag)} | Rune Bear`;
 

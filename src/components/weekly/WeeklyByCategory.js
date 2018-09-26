@@ -10,7 +10,7 @@ const propTypes = {
 };
 
 const WeeklyByCategory = ({ match, posts }) => {
-  const category = match.params.category.replace(/-/g, '').replace(/-/g, '');
+  const category = match.params.category.replace(/-/g, ' ');
 
   document.title = `${firstLetterUpper(category)} | Rune Bear`;
 
