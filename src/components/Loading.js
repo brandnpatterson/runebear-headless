@@ -29,10 +29,20 @@ class Loading extends React.Component {
   }
 
   timer = () => {
-    this.setState({
-      height: this.state.height + 1,
-      width: this.state.width + 1
-    });
+    const runTimer = () => {
+      this.setState({
+        height: this.state.height + 1,
+        width: this.state.width + 1
+      });
+    };
+
+    if (window.innerWidth <= 1024) {
+      if (this.state.width <= 190) {
+        runTimer();
+      }
+    } else if (this.state.width <= 290) {
+      runTimer();
+    }
   };
 
   render() {
