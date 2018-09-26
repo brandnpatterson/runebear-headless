@@ -204,7 +204,7 @@ class App extends React.Component {
                     return (
                       <WeeklyBySinglePost
                         weekly={this.state.weekly}
-                        WeeklyBySinglePost={this.filterByPost(match)}
+                        weeklyBySinglePost={this.filterByPost(match)}
                       />
                     );
                   }}
