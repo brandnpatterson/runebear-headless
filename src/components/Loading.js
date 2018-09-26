@@ -50,7 +50,7 @@ class Loading extends React.Component {
       <div className="loading-screen">
         <img
           style={{ width: this.state.width, height: this.state.height }}
-          src="runebear-logo.png"
+          src="/runebear-logo.png"
           alt="Runebear Logo"
         />
         <h2>Loading...</h2>

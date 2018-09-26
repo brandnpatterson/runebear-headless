@@ -48,7 +48,7 @@ const WeeklyBySinglePost = ({ weekly, post }) => {
   const authors = post._embedded['wp:term'][2];
 
   return (
-    <StyledWeeklySinglePost>
+    <StyledWeeklySinglePost style={{ marginTop: '50px' }}>
       <div className="arrow-wrapper-top arrow-wrapper">
         <PrevArrow />
         <NextArrow />

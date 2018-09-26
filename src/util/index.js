@@ -4,10 +4,11 @@ export const associateFilter = ({ filterBy, group, groupProp }) => {
   group &&
     group.forEach(groupSingle => {
       filterBy &&
-        filterBy.forEach(filterBySingle => {
-          groupSingle[groupProp].forEach(
-            value => filterBySingle.filterBy === value && arr.push(groupSingle)
-          );
+        filterBy.forEach(idSingle => {
+          groupProp &&
+            groupSingle[groupProp].forEach(
+              value => idSingle.id === value && arr.push(groupSingle)
+            );
         });
     });
 
