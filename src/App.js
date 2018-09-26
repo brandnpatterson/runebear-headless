@@ -282,12 +282,19 @@ const StyledApp = styled.div`
     display: flex;
     flex-direction: column;
     padding-top: 120px;
+    position: relative;
     height: 100vh;
     width: 100vw;
   }
 
   .loading-screen h2 {
     margin-left: 10px;
+    position: absolute;
+    top: 350px;
+
+    @media ${mediumUp} {
+      top: 500px;
+    }
   }
 
   .main-content {

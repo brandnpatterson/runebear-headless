@@ -14,6 +14,8 @@ const Home = ({ page }) => {
 };
 
 const StyledHome = styled.div`
+  margin-bottom: 50px;
+
   p {
     align-items: center;
     display: flex;
@@ -24,6 +26,10 @@ const StyledHome = styled.div`
       display: flex;
       flex-direction: row;
     }
+  }
+
+  .images-wrapper {
+    margin: 20px auto;
   }
 
   .home-subtitle {
