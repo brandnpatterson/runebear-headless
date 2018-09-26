@@ -5,7 +5,7 @@ import { associateFilter } from './util';
 import styled from 'styled-components';
 import { black, blue, dark, dark2, white } from './util/color';
 import { garamond } from './util/font';
-import { mediumUp } from './util/media';
+import { mediumUp, smallOnly } from './util/media';
 
 import About from './components/pages/About';
 import Footer from './components/Footer';
@@ -285,15 +285,19 @@ const StyledApp = styled.div`
     position: relative;
     height: 100vh;
     width: 100vw;
+
+    @media ${smallOnly} {
+      padding-top: 80px;
+    }
   }
 
   .loading-screen h2 {
     margin-left: 10px;
     position: absolute;
-    top: 350px;
+    top: 300px;
 
     @media ${mediumUp} {
-      top: 500px;
+      top: 450px;
     }
   }
 
@@ -301,6 +305,10 @@ const StyledApp = styled.div`
     display: flex;
     flex: 1;
     justify-content: center;
+
+    @media ${smallOnly} {
+      margin-top: -50px;
+    }
   }
 
   li {
