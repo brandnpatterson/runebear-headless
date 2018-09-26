@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { fetchAll } from './api';
 import { associateFilter } from './util';
 import styled from 'styled-components';
-import { black, blue, dark2 } from './util/color';
+import { black, blue, dark, dark2, white } from './util/color';
 import { garamond } from './util/font';
 import { mediumUp } from './util/media';
 
@@ -25,6 +25,7 @@ class App extends React.Component {
   state = {
     loading: true,
     pages: {},
+    showWrapper: false,
     weekly: {},
     weeklyPage: 1
   };
@@ -36,6 +37,10 @@ class App extends React.Component {
         pages: data.pages,
         weekly: data.weekly
       });
+
+      setTimeout(() => {
+        this.setState({ showWrapper: true });
+      }, 0);
     });
   }
 
@@ -105,7 +110,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, showWrapper } = this.state;
 
     return (
       <StyledApp>
@@ -113,7 +118,7 @@ class App extends React.Component {
           {loading ? (
             <Loading />
           ) : (
-            <div className="wrapper">
+            <div className={'wrapper ' + (showWrapper ? 'show' : '')}>
               <Header
                 changeWeeklyPage={this.changeWeeklyPage}
                 pages={this.state.pages}
@@ -243,8 +248,46 @@ class App extends React.Component {
 const StyledApp = styled.div`
   .wrapper {
     display: flex;
-    min-height: 100vh;
     flex-direction: column;
+    min-height: 100vh;
+    opacity: 0;
+    transition: 1.5s;
+    visibility: hidden;
+  }
+
+  .wrapper.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .btn {
+    background-color: #ddd;
+    border: none;
+    color: black;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition: 0.3s;
+  }
+
+  .btn:hover {
+    color: white;
+  }
+
+  .loading-screen {
+    align-items: center;
+    background: ${dark};
+    color: ${white};
+    display: flex;
+    flex-direction: column;
+    padding-top: 120px;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .loading-screen h2 {
+    margin-left: 10px;
   }
 
   .main-content {
