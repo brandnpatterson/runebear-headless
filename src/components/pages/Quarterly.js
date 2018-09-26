@@ -8,11 +8,11 @@ const propTypes = {
 };
 
 const Quarterly = ({ page }) => {
-  document.title = 'Quarterly | Rune Bear';
-
-  const __html = page && page.content.rendered;
-
-  return <StyledQuarterly dangerouslySetInnerHTML={{ __html }} />;
+  return (
+    <StyledQuarterly
+      dangerouslySetInnerHTML={{ __html: page.content.rendered }}
+    />
+  );
 };
 
 const StyledQuarterly = styled.div`

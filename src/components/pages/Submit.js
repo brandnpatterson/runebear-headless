@@ -9,11 +9,9 @@ const propTypes = {
 };
 
 const Submit = ({ page }) => {
-  document.title = 'Submit | Rune Bear';
-
-  const __html = page && page.content.rendered;
-
-  return <StyledSubmit dangerouslySetInnerHTML={{ __html }} />;
+  return (
+    <StyledSubmit dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+  );
 };
 
 const StyledSubmit = styled.div`

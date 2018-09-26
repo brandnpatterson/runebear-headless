@@ -9,11 +9,9 @@ const propTypes = {
 };
 
 const About = ({ page }) => {
-  document.title = 'About | Rune Bear';
-
-  const __html = page && page.content.rendered;
-
-  return <StyledAbout dangerouslySetInnerHTML={{ __html }} />;
+  return (
+    <StyledAbout dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+  );
 };
 
 const StyledAbout = styled.div`

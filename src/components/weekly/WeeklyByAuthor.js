@@ -1,6 +1,6 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { associateFilter, firstLetterUpper } from '../../util';
+import { firstLetterUpper } from '../../util';
 
 import WeeklyPost from './WeeklyPost';
 
@@ -9,7 +9,7 @@ const propTypes = {
   weeklyByAuthor: object
 };
 
-const WeeklyByAuthor = ({ weekly, weeklyByAuthor }) => {
+const WeeklyByAuthor = ({ weeklyByAuthor }) => {
   const author = weeklyByAuthor.author[0];
   const posts = weeklyByAuthor.posts;
   const authorLinkList = {
@@ -18,7 +18,6 @@ const WeeklyByAuthor = ({ weekly, weeklyByAuthor }) => {
   };
 
   document.title = `${firstLetterUpper(author.name)} | Rune Bear`;
-  window.scrollTo(0, 0);
 
   const authorLinks = (author, secondAuthor) => {
     return (
@@ -60,17 +59,8 @@ const WeeklyByAuthor = ({ weekly, weeklyByAuthor }) => {
           Math.min(trimmed.length, trimmed.lastIndexOf(' '))
         );
 
-        const categories = associateFilter({
-          haystack: weekly.categories,
-          needle: [post],
-          needleProp: 'categories'
-        });
-
-        const tags = associateFilter({
-          haystack: weekly.tags,
-          needle: [post],
-          needleProp: 'tags'
-        });
+        const categories = post._embedded['wp:term'][0];
+        const tags = post._embedded['wp:term'][1];
 
         return (
           <WeeklyPost
@@ -79,8 +69,6 @@ const WeeklyByAuthor = ({ weekly, weeklyByAuthor }) => {
             key={post.id}
             post={post}
             tags={tags}
-            readMore={true}
-            title={true}
           />
         );
       })}

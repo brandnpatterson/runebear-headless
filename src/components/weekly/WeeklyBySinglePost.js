@@ -6,15 +6,11 @@ import { firstLetterUpper } from '../../util';
 import StyledWeeklySinglePost from '../styled/StyledWeeklySinglePost';
 
 const propTypes = {
-  weekly: object.isRequired,
-  WeeklyBySinglePost: object
+  weekly: object.isRequired
 };
 
-const WeeklyBySinglePost = ({ weekly, weeklyBySinglePost }) => {
-  const { authors, categories, post, tags } = weeklyBySinglePost;
-
+const WeeklyBySinglePost = ({ weekly, post }) => {
   document.title = `${firstLetterUpper(post.title.rendered)} | Rune Bear`;
-  window.scrollTo(0, 0);
 
   let next;
   let prev;
@@ -47,6 +43,10 @@ const WeeklyBySinglePost = ({ weekly, weeklyBySinglePost }) => {
     </Link>
   );
 
+  const categories = post._embedded['wp:term'][0];
+  const tags = post._embedded['wp:term'][1];
+  const authors = post._embedded['wp:term'][2];
+
   return (
     <StyledWeeklySinglePost>
       <div className="arrow-wrapper-top arrow-wrapper">
@@ -58,14 +58,14 @@ const WeeklyBySinglePost = ({ weekly, weeklyBySinglePost }) => {
         <div className="card-content">
           <p
             dangerouslySetInnerHTML={{
-              __html: weeklyBySinglePost.post.content.rendered
+              __html: post.content.rendered
             }}
           />
         </div>
         <div className="card-footer">
-          <div className="card-tags">
-            <div className="categories-and-tags">
-              {categories.map(category => {
+          <div className="categories-and-tags">
+            {categories &&
+              categories.map(category => {
                 return (
                   <Link
                     key={category.slug}
@@ -78,18 +78,17 @@ const WeeklyBySinglePost = ({ weekly, weeklyBySinglePost }) => {
                   </Link>
                 );
               })}
-              {tags &&
-                tags.map(tag => {
-                  return (
-                    <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
-                      <p className="card-tags">
-                        #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
-                        &nbsp;
-                      </p>
-                    </Link>
-                  );
-                })}
-            </div>
+            {tags &&
+              tags.map(tag => {
+                return (
+                  <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
+                    <p className="card-tags">
+                      #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
+                      &nbsp;
+                    </p>
+                  </Link>
+                );
+              })}
           </div>
         </div>
       </div>

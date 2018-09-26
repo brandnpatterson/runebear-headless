@@ -10,14 +10,9 @@ const propTypes = {
 };
 
 const WeeklyPosts = ({ page, weekly, weeklyPage }) => {
-  const __html = page.content.rendered;
-
-  document.title = 'Weekly | Rune Bear';
-  window.scrollTo(0, 0);
-
   return (
     <div>
-      <div dangerouslySetInnerHTML={{ __html }} />
+      <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
       {weekly[weeklyPage].map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         const excerpt = trimmed.substr(
@@ -25,20 +20,14 @@ const WeeklyPosts = ({ page, weekly, weeklyPage }) => {
           Math.min(trimmed.length, trimmed.lastIndexOf(' '))
         );
 
-        const categories = post._embedded['wp:term'][0];
-        const tags = post._embedded['wp:term'][1];
-        const authors = post._embedded['wp:term'][2];
-
         return (
           <WeeklyPost
-            authors={authors}
-            categories={categories}
+            authors={post._embedded['wp:term'][2]}
+            categories={post._embedded['wp:term'][0]}
             content={excerpt}
             key={post.id}
             post={post}
-            readMore={true}
-            tags={tags}
-            title={true}
+            tags={post._embedded['wp:term'][1]}
           />
         );
       })}

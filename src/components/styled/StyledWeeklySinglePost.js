@@ -12,7 +12,7 @@ const StyledWeeklySinglePost = styled.div`
   .card-title {
     font-weight: bold;
     margin-bottom: 25px;
-    margin-top: 0;
+    margin-top: 25px;
     text-align: center;
     text-transform: uppercase;
   }
@@ -49,6 +49,10 @@ const StyledWeeklySinglePost = styled.div`
 
   .card-authors {
     margin: 50px auto;
+  }
+
+  .categories-and-tags {
+    display: flex;
   }
 
   .arrow-wrapper {

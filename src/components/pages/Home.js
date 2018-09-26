@@ -8,11 +8,9 @@ const propTypes = {
 };
 
 const Home = ({ page }) => {
-  document.title = 'Rune Bear';
-
-  const __html = page && page.content.rendered;
-
-  return <StyledHome dangerouslySetInnerHTML={{ __html }} />;
+  return (
+    <StyledHome dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+  );
 };
 
 const StyledHome = styled.div`

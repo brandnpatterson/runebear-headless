@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const endpoint = req => `https://admin.runebear.com/wp-json/wp/v2/${req}`;
+const endpoint = req =>
+  `https://admin.runebear.com/wp-json/wp/v2/${req}?per_page=100&_embed`;
 
 // Fetch Requests
 export const fetchAll = () => {
@@ -61,7 +62,7 @@ const fetchAllPages = () => {
 const fetchAllWeeklyPages = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${endpoint('weekly_posts')}?per_page=100&_embed`)
+      .get(`${endpoint('weekly_posts')}`)
       .then(res => {
         resolve(res.data);
       })
@@ -73,7 +74,7 @@ const fetchAllWeeklyPages = () => {
 const fetchAllAuthors = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${endpoint('post_author')}?per_page=100`)
+      .get(`${endpoint('post_author')}`)
       .then(res => {
         resolve(res.data);
       })
@@ -85,7 +86,7 @@ const fetchAllAuthors = () => {
 const fetchAllCategories = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${endpoint('categories')}?per_page=100`)
+      .get(`${endpoint('categories')}`)
       .then(res => {
         resolve(res.data);
       })
@@ -97,7 +98,7 @@ const fetchAllCategories = () => {
 const fetchAllTags = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${endpoint('tags')}?per_page=100`)
+      .get(`${endpoint('tags')}`)
       .then(res => {
         resolve(res.data);
       })

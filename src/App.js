@@ -57,9 +57,9 @@ class App extends React.Component {
     });
 
     const posts = associateFilter({
-      haystack: this.state.weekly.posts,
-      needle: author,
-      hayProp: 'post_author'
+      group: this.state.weekly.posts,
+      id: author,
+      groupProp: 'post_author'
     });
 
     return {
@@ -69,20 +69,17 @@ class App extends React.Component {
   };
 
   filterByCategory = match => {
-    const categories = this.state.weekly.categories.filter(category => {
+    const category = this.state.weekly.categories.filter(category => {
       return category.slug === match.params.category;
     });
 
     const posts = associateFilter({
-      haystack: this.state.weekly.posts,
-      needle: categories,
-      hayProp: 'categories'
+      group: this.state.weekly.posts,
+      id: category,
+      groupProp: 'categories'
     });
 
-    return {
-      categories,
-      posts
-    };
+    return posts;
   };
 
   filterByPost = match => {
@@ -90,47 +87,21 @@ class App extends React.Component {
       return post.slug === match.params.weeklyPost;
     });
 
-    const authors = associateFilter({
-      haystack: this.state.weekly.authors,
-      needle: post,
-      needleProp: 'post_author'
-    });
-
-    const categories = associateFilter({
-      haystack: this.state.weekly.categories,
-      needle: post,
-      needleProp: 'categories'
-    });
-
-    const tags = associateFilter({
-      haystack: this.state.weekly.tags,
-      needle: post,
-      needleProp: 'tags'
-    });
-
-    return {
-      authors,
-      categories,
-      post: post[0],
-      tags
-    };
+    return post[0];
   };
 
   filterByTag = match => {
-    const tags = this.state.weekly.tags.filter(tag => {
+    const tag = this.state.weekly.tags.filter(tag => {
       return tag.slug === match.params.tag;
     });
 
     const posts = associateFilter({
-      haystack: this.state.weekly.posts,
-      needle: tags,
-      hayProp: 'tags'
+      group: this.state.weekly.posts,
+      id: tag,
+      groupProp: 'tags'
     });
 
-    return {
-      posts,
-      tags
-    };
+    return posts;
   };
 
   render() {
@@ -152,35 +123,46 @@ class App extends React.Component {
                 <Route
                   exact
                   path="/about"
-                  component={() => {
+                  render={() => {
+                    document.title = 'About | Rune Bear';
+
                     return <About page={this.state.pages.about} />;
                   }}
                 />
                 <Route
                   exact
                   path="/"
-                  component={() => {
+                  render={() => {
+                    document.title = 'Rune Bear';
+
                     return <Home page={this.state.pages.home} />;
                   }}
                 />
                 <Route
                   exact
                   path="/quarterly"
-                  component={() => {
+                  render={() => {
+                    document.title = 'Quarterly | Rune Bear';
+
                     return <Quarterly page={this.state.pages.quarterly} />;
                   }}
                 />
                 <Route
                   exact
                   path="/submit"
-                  component={() => {
+                  render={() => {
+                    document.title = 'Submit | Rune Bear';
+
                     return <Submit page={this.state.pages.submit} />;
                   }}
                 />
                 <Route
                   exact
                   path="/weekly"
-                  component={() => {
+                  render={() => {
+                    document.title = 'Weekly | Rune Bear';
+                    window.scrollTo(0, 0);
+
                     return (
                       <div>
                         <WeeklyPosts
@@ -200,11 +182,11 @@ class App extends React.Component {
                 <Route
                   exact
                   path={`/weekly/:weeklyPost`}
-                  component={({ match }) => {
+                  render={({ match }) => {
                     return (
                       <WeeklyBySinglePost
+                        post={this.filterByPost(match)}
                         weekly={this.state.weekly}
-                        weeklyBySinglePost={this.filterByPost(match)}
                       />
                     );
                   }}
@@ -212,10 +194,11 @@ class App extends React.Component {
                 <Route
                   exact
                   path={`/weekly/authors/:author`}
-                  component={({ match }) => {
+                  render={({ match }) => {
+                    window.scrollTo(0, 0);
+
                     return (
                       <WeeklyByAuthor
-                        weekly={this.state.weekly}
                         weeklyByAuthor={this.filterByAuthor(match)}
                       />
                     );
@@ -224,12 +207,13 @@ class App extends React.Component {
                 <Route
                   exact
                   path={`/weekly/categories/:category`}
-                  component={({ match }) => {
+                  render={({ match }) => {
+                    window.scrollTo(0, 0);
+
                     return (
                       <WeeklyByCategory
                         match={match}
-                        weekly={this.state.weekly}
-                        weeklyByCategory={this.filterByCategory(match)}
+                        posts={this.filterByCategory(match)}
                       />
                     );
                   }}
@@ -237,12 +221,11 @@ class App extends React.Component {
                 <Route
                   exact
                   path={`/weekly/tags/:tag`}
-                  component={({ match }) => {
+                  render={({ match }) => {
                     return (
                       <WeeklyByTag
                         match={match}
-                        weekly={this.state.weekly}
-                        weeklyByTag={this.filterByTag(match)}
+                        posts={this.filterByTag(match)}
                       />
                     );
                   }}

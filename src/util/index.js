@@ -1,17 +1,17 @@
-export const associateFilter = ({ haystack, hayProp, needle, needleProp }) => {
+export const associateFilter = ({ group, groupProp, id, idProp }) => {
   const arr = [];
 
-  haystack &&
-    haystack.forEach(haySingle => {
-      needle &&
-        needle.forEach(needleSingle => {
-          if (needleProp) {
-            needleSingle[needleProp].forEach(
-              value => haySingle.id === value && arr.push(haySingle)
+  group &&
+    group.forEach(groupSingle => {
+      id &&
+        id.forEach(idSingle => {
+          if (idProp) {
+            idSingle[idProp].forEach(
+              value => groupSingle.id === value && arr.push(groupSingle)
             );
-          } else if (hayProp) {
-            haySingle[hayProp].forEach(
-              value => needleSingle.id === value && arr.push(haySingle)
+          } else if (groupProp) {
+            groupSingle[groupProp].forEach(
+              value => idSingle.id === value && arr.push(groupSingle)
             );
           }
         });
