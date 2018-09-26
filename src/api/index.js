@@ -4,14 +4,14 @@ const endpoint = req =>
   `https://admin.runebear.com/wp-json/wp/v2/${req}?per_page=100&_embed`;
 
 // Fetch Requests
-export const fetchAll = () => {
+export const fetchRequests = () => {
   return new Promise((resolve, reject) => {
     return Promise.all([
-      fetchAllPages(),
-      fetchAllWeeklyPages(),
-      fetchAllAuthors(),
-      fetchAllCategories(),
-      fetchAllTags()
+      fetchAll('pages'),
+      fetchAll('weekly_posts'),
+      fetchAll('post_author'),
+      fetchAll('categories'),
+      fetchAll('tags')
     ])
       .then(values => {
         const pages = {};
@@ -46,62 +46,11 @@ export const fetchAll = () => {
   });
 };
 
-// Fetch All Pages
-const fetchAllPages = () => {
+const fetchAll = req => {
   return new Promise((resolve, reject) => {
     axios
-      .get(endpoint('pages'))
-      .then(res => {
-        resolve(res.data);
-      })
-      .catch(err => reject(err));
-  });
-};
-
-// Fetch All Weekly Posts
-const fetchAllWeeklyPages = () => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(`${endpoint('weekly_posts')}`)
-      .then(res => {
-        resolve(res.data);
-      })
-      .catch(err => reject(err));
-  });
-};
-
-// Fetch All Authors
-const fetchAllAuthors = () => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(`${endpoint('post_author')}`)
-      .then(res => {
-        resolve(res.data);
-      })
-      .catch(err => reject(err));
-  });
-};
-
-// Fetch All Categories
-const fetchAllCategories = () => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(`${endpoint('categories')}`)
-      .then(res => {
-        resolve(res.data);
-      })
-      .catch(err => reject(err));
-  });
-};
-
-// Fetch All Tags
-const fetchAllTags = () => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(`${endpoint('tags')}`)
-      .then(res => {
-        resolve(res.data);
-      })
+      .get(endpoint(req))
+      .then(res => resolve(res.data))
       .catch(err => reject(err));
   });
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { fetchAll } from './api';
+import { fetchRequests } from './api';
 import { associateFilter } from './util';
 import styled from 'styled-components';
 import { black, blue, dark2, white } from './util/color';
@@ -31,7 +31,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    fetchAll().then(data => {
+    fetchRequests().then(data => {
       this.setState({
         loading: false,
         pages: data.pages,
