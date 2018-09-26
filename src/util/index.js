@@ -1,19 +1,13 @@
-export const associateFilter = ({ group, groupProp, id, idProp }) => {
+export const associateFilter = ({ filterBy, group, groupProp }) => {
   const arr = [];
 
   group &&
     group.forEach(groupSingle => {
-      id &&
-        id.forEach(idSingle => {
-          if (idProp) {
-            idSingle[idProp].forEach(
-              value => groupSingle.id === value && arr.push(groupSingle)
-            );
-          } else if (groupProp) {
-            groupSingle[groupProp].forEach(
-              value => idSingle.id === value && arr.push(groupSingle)
-            );
-          }
+      filterBy &&
+        filterBy.forEach(filterBySingle => {
+          groupSingle[groupProp].forEach(
+            value => filterBySingle.filterBy === value && arr.push(groupSingle)
+          );
         });
     });
 

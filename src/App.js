@@ -62,8 +62,8 @@ class App extends React.Component {
     });
 
     const posts = associateFilter({
+      filterBy: author,
       group: this.state.weekly.posts,
-      id: author,
       groupProp: 'post_author'
     });
 
@@ -79,8 +79,8 @@ class App extends React.Component {
     });
 
     const posts = associateFilter({
+      filterBy: category,
       group: this.state.weekly.posts,
-      id: category,
       groupProp: 'categories'
     });
 
@@ -101,8 +101,8 @@ class App extends React.Component {
     });
 
     const posts = associateFilter({
+      filterBy: tag,
       group: this.state.weekly.posts,
-      id: tag,
       groupProp: 'tags'
     });
 
