@@ -29,7 +29,11 @@ const StyledHome = styled.div`
   }
 
   .images-wrapper {
-    margin: 20px auto;
+    margin: 0 auto 20px;
+
+    @media ${mediumUp} {
+      margin-top: 20px;
+    }
   }
 
   .home-subtitle {
