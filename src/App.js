@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { fetchAll } from './api';
 import { associateFilter } from './util';
 import styled from 'styled-components';
-import { black, blue, dark, dark2, white } from './util/color';
+import { black, blue, dark2, white } from './util/color';
 import { garamond } from './util/font';
 import { mediumUp, smallOnly } from './util/media';
 
@@ -279,7 +279,6 @@ const StyledApp = styled.div`
 
   .loading-screen {
     align-items: center;
-    background: ${dark};
     color: ${white};
     display: flex;
     flex-direction: column;
@@ -294,7 +293,6 @@ const StyledApp = styled.div`
   }
 
   .loading-screen h2 {
-    margin-left: 10px;
     position: absolute;
     top: 300px;
 
@@ -403,13 +401,8 @@ const StyledApp = styled.div`
   }
 
   .filter-header {
-    margin-bottom: 80px;
     max-width: 700px;
-    padding: 1.5rem;
-
-    @media ${mediumUp} {
-      margin-bottom: 0;
-    }
+    padding: 24px 24px 73px 24px;
 
     strong {
       color: ${dark2};
@@ -418,7 +411,7 @@ const StyledApp = styled.div`
 
   .filter-page {
     @media ${mediumUp} {
-      margin-bottom: 100px;
+      margin-bottom: 50px;
     }
   }
 

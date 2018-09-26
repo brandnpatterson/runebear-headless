@@ -1,12 +1,41 @@
 import React from 'react';
+import { dark, white } from '../util/color';
 
 class Loading extends React.Component {
   state = {
+    background: null,
+    backgroundGroup: [
+      {
+        alt: 'Runebear Logo',
+        backgroundColor: dark,
+        color: white,
+        image: '/runebear-logo.png'
+      },
+      {
+        alt: 'Runebear Word',
+        backgroundColor: white,
+        color: dark,
+        image: '/runebear-word.png'
+      }
+    ],
+    backgroundInterval: null,
+    color: null,
     height: null,
+    image: null,
+    text: 'Loading.',
+    textInterval: null,
     width: null
   };
 
   componentDidMount() {
+    const groupIndex = Math.round(Math.random());
+
+    this.setState({
+      background: this.state.backgroundGroup[groupIndex].backgroundColor,
+      color: this.state.backgroundGroup[groupIndex].color,
+      image: this.state.backgroundGroup[groupIndex].image
+    });
+
     if (window.innerWidth <= 1024) {
       this.setState({
         height: 150,
@@ -20,15 +49,17 @@ class Loading extends React.Component {
     }
 
     this.setState({
-      intervalId: setInterval(this.timer, 20)
+      backgroundInterval: setInterval(this.backgroundTimer, 20),
+      textInterval: setInterval(this.textTimer, 500)
     });
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.intervalId);
+    clearInterval(this.state.backgroundInterval);
+    clearInterval(this.state.textInterval);
   }
 
-  timer = () => {
+  backgroundTimer = () => {
     const runTimer = () => {
       this.setState({
         height: this.state.height + 1,
@@ -45,15 +76,25 @@ class Loading extends React.Component {
     }
   };
 
+  textTimer = () => {
+    this.setState({
+      text:
+        this.state.text !== 'Loading...' ? this.state.text + '.' : 'Loading...'
+    });
+  };
+
   render() {
     return (
-      <div className="loading-screen">
+      <div
+        className="loading-screen"
+        style={{ background: this.state.background }}
+      >
         <img
           style={{ width: this.state.width, height: this.state.height }}
-          src="/runebear-logo.png"
+          src={this.state.image}
           alt="Runebear Logo"
         />
-        <h2>Loading...</h2>
+        <h2 style={{ color: this.state.color }}>{this.state.text}</h2>
       </div>
     );
   }

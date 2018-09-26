@@ -48,19 +48,19 @@ const WeeklyBySinglePost = ({ weekly, post }) => {
   const authors = post._embedded['wp:term'][2];
 
   return (
-    <StyledWeeklySinglePost style={{ marginTop: '50px' }}>
+    <StyledWeeklySinglePost>
       <div className="arrow-wrapper-top arrow-wrapper">
         <PrevArrow />
         <NextArrow />
       </div>
-      <h1 className="card-title">{post.title.rendered}</h1>
+      <header className="filter-header">
+        <h1 style={{ textAlign: 'center' }}>
+          <strong>{post.title.rendered.toUpperCase()}</strong>
+        </h1>
+      </header>
       <div className="card-wrapper" key={post.id}>
         <div className="card-content">
-          <p
-            dangerouslySetInnerHTML={{
-              __html: post.content.rendered
-            }}
-          />
+          <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
         </div>
         <div className="card-footer">
           <div className="categories-and-tags">

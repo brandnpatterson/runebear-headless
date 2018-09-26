@@ -11,7 +11,7 @@ const StyledWeeklyByPost = styled.div`
 
   @media ${mediumUp} {
     border: 1px solid ${gray};
-    margin: 50px auto;
+    margin: 0 auto 50px;
     max-width: 700px;
     padding: 50px 50px 15px;
     width: 700px;

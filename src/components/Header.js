@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { dark, light } from '../util/color';
+import { blue, dark, light } from '../util/color';
 import { mediumUp } from '../util/media';
 
 class Header extends Component {
@@ -12,17 +12,8 @@ class Header extends Component {
   };
 
   state = {
-    _mounted: false,
     isActive: false
   };
-
-  componentDidMount() {
-    this._mounted = true;
-  }
-
-  componentWillUnmount() {
-    this._mounted = false;
-  }
 
   toggleActive = () => {
     if (this.props.weekly.pageNumber !== 1) {
@@ -48,9 +39,14 @@ class Header extends Component {
       const location = page === 'home' ? '' : page;
 
       return (
-        <div key={page} onClick={this.toggleActive} className="navbar-item">
-          <Link to={'/' + location}>{page.toUpperCase()}</Link>
-        </div>
+        <Link
+          key={page}
+          onClick={this.toggleActive}
+          className="navbar-item"
+          to={'/' + location}
+        >
+          {page.toUpperCase()}
+        </Link>
       );
     });
   }
@@ -60,29 +56,27 @@ class Header extends Component {
 
     return (
       <StyledHeader>
-        <div>
-          <nav className="navbar" aria-label="main navigation">
-            <div
-              onClick={this.toggleActive}
-              data-target="navMenu"
-              className={
-                'navbar-burger is-large ' + (isActive ? 'is-active' : '')
-              }
-            >
-              <span />
-              <span />
-              <span />
-            </div>
-            <div
-              id="navMenu"
-              className={
-                'navbar-menu navbar-target ' + (isActive ? 'is-active' : '')
-              }
-            >
-              <div className="navbar-items">{this.renderHeader()}</div>
-            </div>
-          </nav>
-        </div>
+        <nav className="navbar" aria-label="main navigation">
+          <div
+            onClick={this.toggleActive}
+            data-target="navMenu"
+            className={
+              'navbar-burger is-large ' + (isActive ? 'is-active' : '')
+            }
+          >
+            <span />
+            <span />
+            <span />
+          </div>
+          <div
+            id="navMenu"
+            className={
+              'navbar-menu navbar-target ' + (isActive ? 'is-active' : '')
+            }
+          >
+            <div className="navbar-items">{this.renderHeader()}</div>
+          </div>
+        </nav>
       </StyledHeader>
     );
   }
@@ -95,12 +89,11 @@ const StyledHeader = styled.header`
 
   .navbar-menu {
     background: ${dark};
-    position: relative;
     z-index: 2;
   }
 
   .navbar-burger {
-    margin-top: 12px;
+    padding-top: 12px !important;
     margin-right: 12px;
     position: relative;
     z-index: 3;
@@ -134,8 +127,10 @@ const StyledHeader = styled.header`
     font-size: 25px;
   }
 
-  .navbar-items a:hover {
-    color: ${light};
+  .navbar-item:hover,
+  .navbar-item:active {
+    background: ${dark};
+    color: ${blue};
   }
 
   .navbar-items .navbar-item {

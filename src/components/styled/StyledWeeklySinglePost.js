@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { gray } from '../../util/color';
-import { mediumUp } from '../../util/media';
+import { mediumUp, smallOnly } from '../../util/media';
 
 const StyledWeeklySinglePost = styled.div`
   align-items: center;
@@ -9,23 +9,24 @@ const StyledWeeklySinglePost = styled.div`
   justify-content: space-around;
   text-align: left;
 
+  @media ${smallOnly} {
+    margin-top: 50px;
+  }
+
   .card-title {
     font-weight: bold;
-    margin-bottom: 25px;
-    margin-top: 25px;
     text-align: center;
     text-transform: uppercase;
   }
 
   .card-wrapper {
     @media ${mediumUp} {
-      width: 700px;
-      border-width: 1px;
-      border-style: solid;
       border-color: ${gray};
       border-image: initial;
-      margin: 50px auto;
-      padding: 50px 0px;
+      border-style: solid;
+      border-width: 1px;
+      padding: 50px 0;
+      width: 700px;
     }
   }
 
