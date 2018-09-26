@@ -3,7 +3,7 @@ import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { blue, dark, light } from '../util/color';
-import { mediumUp } from '../util/media';
+import { mediumUp, smallOnly } from '../util/media';
 
 class Header extends Component {
   static propTypes = {
@@ -85,6 +85,10 @@ class Header extends Component {
 const StyledHeader = styled.header`
   .navbar {
     margin-bottom: 50px;
+
+    @media ${smallOnly} {
+      margin-top: -2px;
+    }
   }
 
   .navbar-menu {
@@ -130,7 +134,13 @@ const StyledHeader = styled.header`
   .navbar-item:hover,
   .navbar-item:active {
     background: ${dark};
-    color: ${blue};
+  }
+
+  @media ${smallOnly} {
+    .navbar-item:hover,
+    .navbar-item:active {
+      color: ${blue};
+    }
   }
 
   .navbar-items .navbar-item {
