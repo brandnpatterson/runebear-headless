@@ -1,7 +1,7 @@
 import React from 'react';
 import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { firstLetterUpper } from '../../util';
+import { firstUpper } from '../../util';
 
 import StyledWeeklySinglePost from '../styled/StyledWeeklySinglePost';
 
@@ -10,7 +10,7 @@ const propTypes = {
 };
 
 const WeeklyBySinglePost = ({ weekly, post }) => {
-  document.title = `${firstLetterUpper(post.title.rendered)} | Rune Bear`;
+  document.title = `${firstUpper(post.title.rendered)} | Rune Bear`;
 
   let next;
   let prev;

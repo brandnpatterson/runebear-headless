@@ -25,7 +25,6 @@ class App extends React.Component {
   state = {
     loading: true,
     pages: {},
-    showWrapper: false,
     weekly: {},
     weeklyPage: 1
   };
@@ -33,13 +32,14 @@ class App extends React.Component {
   componentDidMount() {
     fetchRequests().then(data => {
       this.setState({
-        loading: false,
         pages: data.pages,
         weekly: data.weekly
       });
 
       setTimeout(() => {
-        this.setState({ showWrapper: true });
+        this.setState({
+          loading: false
+        });
       }, 0);
     });
   }
@@ -110,7 +110,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { loading, showWrapper } = this.state;
+    const { loading } = this.state;
 
     return (
       <StyledApp>
@@ -118,7 +118,7 @@ class App extends React.Component {
           {loading ? (
             <Loading />
           ) : (
-            <div className={'wrapper ' + (showWrapper ? 'show' : '')}>
+            <div className={'wrapper ' + (loading ? '' : 'show')}>
               <Header
                 changeWeeklyPage={this.changeWeeklyPage}
                 pages={this.state.pages}
@@ -238,7 +238,7 @@ class App extends React.Component {
                   }}
                 />
               </div>
-              <Footer footer={this.state.pages.footer} />
+              <Footer __html={this.state.pages.footer.content.rendered} />
             </div>
           )}
         </Router>

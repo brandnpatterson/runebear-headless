@@ -8,12 +8,12 @@ const propTypes = {
   footer: object
 };
 
-const Footer = ({ footer }) => {
+const Footer = ({ __html }) => {
   const thisYear = new Date().getFullYear();
 
   return (
     <StyledFooter>
-      <div dangerouslySetInnerHTML={{ __html: footer.content.rendered }} />
+      <div dangerouslySetInnerHTML={{ __html }} />
       <a
         className="copyright"
         href="https://github.com/brandnpatterson"

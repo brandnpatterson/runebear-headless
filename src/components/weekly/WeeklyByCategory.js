@@ -1,6 +1,6 @@
 import React from 'react';
 import { array, object } from 'prop-types';
-import { firstLetterUpper } from '../../util';
+import { firstUpper } from '../../util';
 
 import WeeklyPost from './WeeklyPost';
 
@@ -12,7 +12,7 @@ const propTypes = {
 const WeeklyByCategory = ({ match, posts }) => {
   const category = match.params.category.replace(/-/g, ' ');
 
-  document.title = `${firstLetterUpper(category)} | Rune Bear`;
+  document.title = `${firstUpper(category)} | Rune Bear`;
 
   return (
     <div className="filter-page">

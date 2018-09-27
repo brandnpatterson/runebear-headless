@@ -1,6 +1,6 @@
 import React from 'react';
 import { array, object } from 'prop-types';
-import { firstLetterUpper } from '../../util';
+import { firstUpper } from '../../util';
 
 import WeeklyPost from './WeeklyPost';
 
@@ -12,7 +12,7 @@ const propTypes = {
 const WeeklyByTag = ({ match, posts }) => {
   const tag = match.params.tag.replace(/-/g, ' ');
 
-  document.title = `${firstLetterUpper(tag)} | Rune Bear`;
+  document.title = `${firstUpper(tag)} | Rune Bear`;
 
   return (
     <div className="filter-page">

@@ -13,32 +13,35 @@ export const fetchRequests = () => {
       fetchAll('categories'),
       fetchAll('tags')
     ])
-      .then(values => {
+      .then(data => {
         const pages = {};
-        let page = 1;
-        const posts = values[1];
-
-        values[0].map(page => (pages[page.slug] = page));
-
         const weekly = {
-          authors: values[2],
-          categories: values[3],
-          posts,
+          authors: data[2],
+          categories: data[3],
+          posts: data[1],
           totalPages: null,
-          tags: values[4]
+          tags: data[4]
         };
 
-        let indexOne = 0;
-        let indexTwo = 4;
+        data[0].map(page => (pages[page.slug] = page));
 
-        while (page < 5) {
-          weekly[page] = values[1].slice(indexOne, indexTwo);
-          weekly.totalPages = page;
+        const processWeekly = () => {
+          const total = Math.ceil(weekly.posts.length / 4) + 1;
+          let page = 1;
+          let beginSlice = 0;
+          let endSlice = 4;
 
-          indexOne = indexOne + 4;
-          indexTwo = indexTwo + 4;
-          page++;
-        }
+          while (page < total) {
+            weekly[page] = data[1].slice(beginSlice, endSlice);
+            weekly.totalPages = page;
+
+            beginSlice = beginSlice + 4;
+            endSlice = endSlice + 4;
+            page++;
+          }
+        };
+
+        processWeekly();
 
         resolve({ pages, weekly });
       })

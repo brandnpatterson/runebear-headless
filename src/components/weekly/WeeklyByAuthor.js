@@ -1,6 +1,6 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { firstLetterUpper } from '../../util';
+import { firstUpper } from '../../util';
 
 import WeeklyPost from './WeeklyPost';
 
@@ -17,7 +17,7 @@ const WeeklyByAuthor = ({ weeklyByAuthor }) => {
     67: 'http://www.lauramadelinewiseman.com'
   };
 
-  document.title = `${firstLetterUpper(author.name)} | Rune Bear`;
+  document.title = `${firstUpper(author.name)} | Rune Bear`;
 
   const authorLinks = (author, secondAuthor) => {
     return (
