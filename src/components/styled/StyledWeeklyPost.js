@@ -6,11 +6,13 @@ const StyledWeeklyByPost = styled.div`
   align-items: left;
   display: flex;
   flex-direction: column;
+  font-size: 14px;
   max-width: 700px;
   position: relative;
 
   @media ${mediumUp} {
     border: 1px solid ${gray};
+    font-size: 16px;
     margin: 0 auto 50px;
     max-width: 700px;
     padding: 50px 50px 15px;
@@ -34,8 +36,12 @@ const StyledWeeklyByPost = styled.div`
   }
 
   .card-content {
-    min-width: 95%;
-    padding-top: 80px;
+    margin: 0 auto;
+    padding: 55px 20px 0;
+
+    @media ${mediumUp} {
+      padding-top: 70px;
+    }
   }
 
   .card-read-more {

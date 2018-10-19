@@ -6,11 +6,17 @@ const StyledWeeklySinglePost = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  font-size: 14px;
   justify-content: space-around;
   text-align: left;
+  width: 100%;
 
   @media ${smallOnly} {
     margin-top: 50px;
+  }
+
+  @media ${mediumUp} {
+    font-size: 16px;
   }
 
   .card-title {
@@ -31,6 +37,8 @@ const StyledWeeklySinglePost = styled.div`
   }
 
   .card-content {
+    padding: 0 20px;
+
     @media ${mediumUp} {
       padding: 30px 74px 15px;
     }

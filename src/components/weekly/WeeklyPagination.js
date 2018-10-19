@@ -112,10 +112,10 @@ const StyledPagination = styled.div`
 
   .cursor-default {
     cursor: default;
+  }
 
-    &:hover {
-      border: 1px solid #dbdbdb;
-    }
+  .cursor-default:hover {
+    border: 1px solid #dbdbdb;
   }
 `;
 
