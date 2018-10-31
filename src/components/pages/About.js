@@ -5,12 +5,12 @@ import { black, gray } from '../../util/color';
 import { mediumUp } from '../../util/media';
 
 const propTypes = {
-  page: object.isRequired
+  route: object.isRequired
 };
 
-const About = ({ page }) => {
+const About = ({ route }) => {
   return (
-    <StyledAbout dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+    <StyledAbout dangerouslySetInnerHTML={{ __html: route.content.rendered }} />
   );
 };
 

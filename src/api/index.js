@@ -14,7 +14,7 @@ export const fetchRequests = () => {
       fetchAll('tags')
     ])
       .then(data => {
-        const pages = {};
+        const routes = {};
         const weekly = {
           authors: data[2],
           categories: data[3],
@@ -22,8 +22,13 @@ export const fetchRequests = () => {
           totalPages: null,
           tags: data[4]
         };
+        const filterPagesBy = {
+          weekly: {}
+        };
 
-        data[0].map(page => (pages[page.slug] = page));
+        data[0].forEach(page => {
+          routes[page.slug] = page;
+        });
 
         const processWeekly = () => {
           const total = Math.ceil(weekly.posts.length / 4) + 1;
@@ -32,8 +37,8 @@ export const fetchRequests = () => {
           let endSlice = 4;
 
           while (page < total) {
-            weekly[page] = data[1].slice(beginSlice, endSlice);
-            weekly.totalPages = page;
+            filterPagesBy.weekly[page] = data[1].slice(beginSlice, endSlice);
+            filterPagesBy.weekly.totalPages = page;
 
             beginSlice = beginSlice + 4;
             endSlice = endSlice + 4;
@@ -43,7 +48,7 @@ export const fetchRequests = () => {
 
         processWeekly();
 
-        resolve({ pages, weekly });
+        resolve({ filterPagesBy, routes, weekly });
       })
       .catch(err => reject(err));
   });

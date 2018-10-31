@@ -5,12 +5,12 @@ import { gray } from '../../util/color';
 import { mediumUp, largeUp } from '../../util/media';
 
 const propTypes = {
-  page: object.isRequired
+  route: object.isRequired
 };
 
-const Submit = ({ page }) => {
+const Submit = ({ route }) => {
   return (
-    <StyledSubmit dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+    <StyledSubmit dangerouslySetInnerHTML={{ __html: route.content.rendered }} />
   );
 };
 

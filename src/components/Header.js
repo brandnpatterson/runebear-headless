@@ -7,7 +7,7 @@ import { mediumUp, smallOnly } from '../util/media';
 
 class Header extends Component {
   static propTypes = {
-    pages: object,
+    routes: object,
     weekly: object
   };
 
@@ -28,12 +28,12 @@ class Header extends Component {
   };
 
   renderHeader() {
-    const { pages } = this.props;
+    const { routes } = this.props;
 
-    const header = Object.keys(pages)
+    const header = Object.keys(routes)
       .filter(page => page !== 'footer')
       .filter(page => page !== 'loading')
-      .sort((a, b) => pages[a].id - pages[b].id);
+      .sort((a, b) => routes[a].id - routes[b].id);
 
     return header.map(page => {
       const location = page === 'home' ? '' : page;

@@ -23,8 +23,9 @@ import WeeklyPosts from './components/weekly/WeeklyPosts';
 
 class App extends React.Component {
   state = {
+    filterPagesBy: null,
     loading: true,
-    pages: {},
+    routes: {},
     weekly: {},
     weeklyPage: 1
   };
@@ -32,8 +33,9 @@ class App extends React.Component {
   componentDidMount() {
     fetchRequests().then(data => {
       this.setState({
-        pages: data.pages,
-        weekly: data.weekly
+        routes: data.routes,
+        weekly: data.weekly,
+        filterPagesBy: data.filterPagesBy
       });
 
       setTimeout(() => {
@@ -112,6 +114,8 @@ class App extends React.Component {
   render() {
     const { loading } = this.state;
 
+    console.log(this.state);
+
     return (
       <StyledApp>
         <Router>
@@ -121,7 +125,7 @@ class App extends React.Component {
             <div className={'wrapper ' + (loading ? '' : 'show')}>
               <Header
                 changeWeeklyPage={this.changeWeeklyPage}
-                pages={this.state.pages}
+                routes={this.state.routes}
                 weekly={this.state.weekly}
               />
               <div className="main-content">
@@ -131,7 +135,7 @@ class App extends React.Component {
                   render={() => {
                     document.title = 'About | Rune Bear';
 
-                    return <About page={this.state.pages.about} />;
+                    return <About route={this.state.routes.about} />;
                   }}
                 />
                 <Route
@@ -140,7 +144,7 @@ class App extends React.Component {
                   render={() => {
                     document.title = 'Rune Bear';
 
-                    return <Home page={this.state.pages.home} />;
+                    return <Home route={this.state.routes.home} />;
                   }}
                 />
                 <Route
@@ -149,7 +153,7 @@ class App extends React.Component {
                   render={() => {
                     document.title = 'Quarterly | Rune Bear';
 
-                    return <Quarterly page={this.state.pages.quarterly} />;
+                    return <Quarterly route={this.state.routes.quarterly} />;
                   }}
                 />
                 <Route
@@ -158,7 +162,7 @@ class App extends React.Component {
                   render={() => {
                     document.title = 'Submit | Rune Bear';
 
-                    return <Submit page={this.state.pages.submit} />;
+                    return <Submit route={this.state.routes.submit} />;
                   }}
                 />
                 <Route
@@ -171,8 +175,8 @@ class App extends React.Component {
                     return (
                       <div>
                         <WeeklyPosts
-                          page={this.state.pages.weekly}
-                          weekly={this.state.weekly}
+                          filterPagesBy={this.state.filterPagesBy.weekly}
+                          route={this.state.routes.weekly}
                           weeklyPage={this.state.weeklyPage}
                         />
                         <WeeklyPagination
@@ -238,7 +242,7 @@ class App extends React.Component {
                   }}
                 />
               </div>
-              <Footer __html={this.state.pages.footer.content.rendered} />
+              <Footer __html={this.state.routes.footer.content.rendered} />
             </div>
           )}
         </Router>

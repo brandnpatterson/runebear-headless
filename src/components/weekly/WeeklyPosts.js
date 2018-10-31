@@ -4,16 +4,16 @@ import { number, object } from 'prop-types';
 import WeeklyPost from './WeeklyPost';
 
 const propTypes = {
-  page: object.isRequired,
-  weekly: object.isRequired,
+  filterPagesBy: object.isRequired,
+  route: object.isRequired,
   weeklyPage: number.isRequired
 };
 
-const WeeklyPosts = ({ page, weekly, weeklyPage }) => {
+const WeeklyPosts = ({ route, filterPagesBy, weeklyPage }) => {
   return (
     <div>
-      <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
-      {weekly[weeklyPage].map(post => {
+      <div dangerouslySetInnerHTML={{ __html: route.content.rendered }} />
+      {filterPagesBy[weeklyPage].map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         const excerpt = trimmed.substr(
           0,

@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
 
 const propTypes = {
-  page: object.isRequired
+  route: object.isRequired
 };
 
-const Home = ({ page }) => {
+const Home = ({ route }) => {
   return (
-    <StyledHome dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+    <StyledHome dangerouslySetInnerHTML={{ __html: route.content.rendered }} />
   );
 };
 

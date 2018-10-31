@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
 
 const propTypes = {
-  page: object.isRequired
+  route: object.isRequired
 };
 
-const Quarterly = ({ page }) => {
+const Quarterly = ({ route }) => {
   return (
     <StyledQuarterly
-      dangerouslySetInnerHTML={{ __html: page.content.rendered }}
+      dangerouslySetInnerHTML={{ __html: route.content.rendered }}
     />
   );
 };
