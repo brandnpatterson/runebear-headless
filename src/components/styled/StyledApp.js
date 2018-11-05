@@ -4,69 +4,6 @@ import { garamond } from '../../util/font';
 import { mediumUp, smallOnly } from '../../util/media';
 
 const StyledApp = styled.div`
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    opacity: 0;
-    transition: 1.5s;
-    visibility: hidden;
-  }
-
-  .wrapper.show {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .btn {
-    background-color: #ddd;
-    border: none;
-    color: black;
-    padding: 16px 32px;
-    text-align: center;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition: 0.3s;
-  }
-
-  .btn:hover {
-    color: white;
-  }
-
-  .loading-screen {
-    align-items: center;
-    color: ${white};
-    display: flex;
-    flex-direction: column;
-    padding-top: 120px;
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-
-    @media ${smallOnly} {
-      padding-top: 70px;
-    }
-  }
-
-  .loading-screen h2 {
-    position: absolute;
-    top: 300px;
-
-    @media ${mediumUp} {
-      top: 450px;
-    }
-  }
-
-  .main-content {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-
-    @media ${smallOnly} {
-      margin-top: -50px;
-    }
-  }
-
   li {
     list-style-type: none;
   }
@@ -115,54 +52,117 @@ const StyledApp = styled.div`
     }
   }
 
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    opacity: 0;
+    transition: 1.5s;
+    visibility: hidden;
+  }
+
+  .wrapper.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .btn {
+    background-color: #ddd;
+    border: 0;
+    color: ${black};
+    font-size: 16px;
+    margin: 4px 2px;
+    padding: 16px 32px;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  .btn:hover {
+    color: ${white};
+  }
+
+  .loading-screen {
+    align-items: center;
+    color: ${white};
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding-top: 120px;
+    position: relative;
+    width: 100vw;
+
+    @media ${smallOnly} {
+      padding-top: 70px;
+    }
+  }
+
+  .loading-screen h2 {
+    position: absolute;
+    top: 300px;
+
+    @media ${mediumUp} {
+      top: 450px;
+    }
+  }
+
+  .main-content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+
+    @media ${smallOnly} {
+      margin-top: -50px;
+    }
+  }
+
   /* .featured-hero is defined in the wordpress CMS on Pages */
   .featured-hero {
     align-items: center;
     display: flex;
     flex-direction: column-reverse;
-    margin: 0 auto 100px;
     justify-content: space-between;
+    margin: 0 auto 100px;
 
     @media ${mediumUp} {
       flex-direction: row;
       max-width: 630px;
     }
+  }
 
-    h1 {
-      font-size: 70px;
+  .featured-hero h1 {
+    font-size: 70px;
 
-      @media ${mediumUp} {
-        font-size: 100px;
-      }
+    @media ${mediumUp} {
+      font-size: 100px;
     }
+  }
 
-    img {
-      height: 150px;
-      width: 150px;
-    }
+  .featured-hero img {
+    height: 150px;
+    width: 150px;
+  }
 
-    strong {
-      color: ${black};
-    }
+  .featured-hero strong {
+    color: ${black};
   }
 
   .pagination {
     display: flex;
     justify-content: center;
     margin: 50px auto 100px;
+  }
 
-    ul {
-      display: flex;
-    }
+  .pagination ul {
+    display: flex;
   }
 
   .filter-header {
     max-width: 700px;
-    padding: 24px 24px 73px 24px;
+    padding: 24px 24px 73px;
+  }
 
-    strong {
-      color: ${dark2};
-    }
+  .filter-header strong {
+    color: ${dark2};
   }
 
   .filter-page {
