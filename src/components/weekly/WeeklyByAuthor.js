@@ -1,80 +1,75 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { firstUpper } from '../../util';
 
 import WeeklyPost from './WeeklyPost';
+import Pagination from '../Pagination';
+import { setPageIndexes } from '../../util';
 
 const propTypes = {
-  weekly: object,
-  weeklyByAuthor: object
+  weeklyByAuthor: object.isRequired
 };
 
-const WeeklyByAuthor = ({ weeklyByAuthor }) => {
-  const author = weeklyByAuthor.author[0];
-  const posts = weeklyByAuthor.posts;
-  const authorLinkList = {
-    66: 'http://www.andreablythe.com',
-    67: 'http://www.lauramadelinewiseman.com'
+class WeeklyByAuthor extends React.Component {
+  state = {
+    currentPage: 1
   };
 
-  document.title = `${firstUpper(author.name)} | Rune Bear`;
+  changePage = (newPage = 1) => {
+    let { currentPage } = this.state;
 
-  const authorLinks = (author, secondAuthor) => {
+    if (newPage === 'next') {
+      this.setState({ currentPage: currentPage + 1 });
+    } else if (newPage === 'prev') {
+      this.setState({ currentPage: currentPage - 1 });
+    } else {
+      this.setState({ currentPage: newPage });
+    }
+  };
+
+  render() {
+    const { weeklyByAuthor } = this.props;
+    const author = weeklyByAuthor.author[0];
+    const links = author.acf.links;
+    setPageIndexes(weeklyByAuthor);
+
     return (
-      <p className="author-links">
-        Learn more at{' '}
-        <a href={author} target="_blank" rel="noopener noreferrer">
-          {author}{' '}
-        </a>
-        {secondAuthor && (
-          <span>
-            and{' '}
-            <a href={secondAuthor} target="_blank" rel="noopener noreferrer">
-              {secondAuthor}{' '}
-            </a>
-          </span>
-        )}
-      </p>
+      <div className="filter-page">
+        <header className="filter-header">
+          <h1 style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <strong>{author.name.toUpperCase()}</strong>
+          </h1>
+          <div>
+            <p>{author.description}</p>
+            <p dangerouslySetInnerHTML={{ __html: links }} />
+          </div>
+        </header>
+        {weeklyByAuthor[this.state.currentPage].map(post => {
+          let trimmed = post.content.rendered.substr(0, 345);
+          const excerpt = trimmed.substr(
+            0,
+            Math.min(trimmed.length, trimmed.lastIndexOf(' '))
+          );
+
+          return (
+            <WeeklyPost
+              authors={post._embedded['wp:term'][2]}
+              categories={post._embedded['wp:term'][0]}
+              content={excerpt}
+              key={post.id}
+              post={post}
+              tags={post._embedded['wp:term'][1]}
+            />
+          );
+        })}
+        <Pagination
+          changePage={this.changePage}
+          currentPage={this.state.currentPage}
+          pages={weeklyByAuthor}
+        />
+      </div>
     );
-  };
-
-  return (
-    <div className="filter-page">
-      <header className="filter-header">
-        <h1 style={{ textAlign: 'center', marginBottom: '50px' }}>
-          <strong>{author.name.toUpperCase()}</strong>
-        </h1>
-        <div>
-          <p>{author.description}</p>
-          {author.id === 66 &&
-            authorLinks(authorLinkList[66], authorLinkList[67])}
-          {author.id === 67 &&
-            authorLinks(authorLinkList[66], authorLinkList[67])}
-        </div>
-      </header>
-      {posts.map(post => {
-        let trimmed = post.content.rendered.substr(0, 345);
-        const excerpt = trimmed.substr(
-          0,
-          Math.min(trimmed.length, trimmed.lastIndexOf(' '))
-        );
-
-        const categories = post._embedded['wp:term'][0];
-        const tags = post._embedded['wp:term'][1];
-
-        return (
-          <WeeklyPost
-            categories={categories}
-            content={excerpt}
-            key={post.id}
-            post={post}
-            tags={tags}
-          />
-        );
-      })}
-    </div>
-  );
-};
+  }
+}
 
 WeeklyByAuthor.propTypes = propTypes;
 

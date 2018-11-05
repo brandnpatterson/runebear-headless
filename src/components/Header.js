@@ -16,10 +16,6 @@ class Header extends Component {
   };
 
   toggleActive = () => {
-    if (this.props.weekly.pageNumber !== 1) {
-      this.props.changeWeeklyPage(1);
-    }
-
     if (window.innerWidth <= 1023) {
       this.setState({
         isActive: !this.state.isActive

@@ -12,17 +12,23 @@ export const associateFilter = ({ filterBy, group, groupProp }) => {
   return arr;
 };
 
-export const firstUpper = str => {
-  return str
-    .toLowerCase()
-    .split(' ')
-    .map(word => {
-      return word[0].toUpperCase() + word.substr(1);
-    })
-    .join(' ');
+export const createPages = pages => {
+  const total = Math.ceil(pages.posts.length / 4) + 1;
+  let page = 1;
+  let beginSlice = 0;
+  let endSlice = 4;
+
+  while (page < total) {
+    pages[page] = pages.posts.slice(beginSlice, endSlice);
+    pages.totalPages = page;
+
+    beginSlice = beginSlice + 4;
+    endSlice = endSlice + 4;
+    page++;
+  }
 };
 
-export const pagination = (c, m) => {
+export const ellipses = (c, m) => {
   const delta = 2;
   const range = [];
   const rangeWithDots = [];
@@ -53,4 +59,30 @@ export const pagination = (c, m) => {
   }
 
   return rangeWithDots;
+};
+
+export const firstUpper = str => {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => {
+      return word[0].toUpperCase() + word.substr(1);
+    })
+    .join(' ');
+};
+
+export const setPageIndexes = pages => {
+  const total = Math.ceil(pages.posts.length / 4) + 1;
+  let page = 1;
+  let beginSlice = 0;
+  let endSlice = 4;
+
+  while (page < total) {
+    pages[page] = pages.posts.slice(beginSlice, endSlice);
+    pages.totalPages = page;
+
+    beginSlice = beginSlice + 4;
+    endSlice = endSlice + 4;
+    page++;
+  }
 };

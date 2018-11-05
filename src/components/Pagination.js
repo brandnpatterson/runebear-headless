@@ -1,44 +1,44 @@
 import React from 'react';
 import { func, number, object } from 'prop-types';
-import { smallOnly } from '../../util/media';
-import { pagination } from '../../util';
+import { smallOnly } from '../util/media';
+import { ellipses } from '../util';
 import styled from 'styled-components';
 
 const propTypes = {
-  changeWeeklyPage: func.isRequired,
-  weekly: object.isRequired,
-  weeklyPage: number.isRequired
+  currentPage: number.isRequired,
+  changePage: func.isRequired,
+  pages: object.isRequired
 };
 
-const WeeklyPagination = ({ changeWeeklyPage, weekly, weeklyPage }) => {
+const Pagination = ({ changePage, pages, currentPage }) => {
   const onPageSelect = e => {
     const targetValue = e.target.textContent;
-    if (weekly[targetValue]) {
-      changeWeeklyPage(Number(e.target.textContent));
+    if (pages[targetValue]) {
+      changePage(Number(e.target.textContent));
     } else {
-      changeWeeklyPage(Number(e.target.textContent));
+      changePage(Number(e.target.textContent));
     }
     window.scrollTo(0, 0);
   };
 
   const onNextPage = () => {
-    let nextPage = weeklyPage + 1;
-    if (nextPage <= weekly.totalPages) {
-      changeWeeklyPage('next');
+    let nextPage = currentPage + 1;
+    if (nextPage <= pages.totalPages) {
+      changePage('next');
       window.scrollTo(0, 0);
     }
   };
 
   const onPreviousPage = () => {
-    let prevPage = weeklyPage - 1;
+    let prevPage = currentPage - 1;
     if (prevPage !== 0) {
-      changeWeeklyPage('prev');
+      changePage('prev');
       window.scrollTo(0, 0);
     }
   };
 
   const NextButton = () => {
-    const isDisabled = weeklyPage === weekly.totalPages ? true : false;
+    const isDisabled = currentPage === pages.totalPages ? true : false;
 
     return (
       <a className="pagination-next" disabled={isDisabled} onClick={onNextPage}>
@@ -48,7 +48,7 @@ const WeeklyPagination = ({ changeWeeklyPage, weekly, weeklyPage }) => {
   };
 
   const PreviousButton = () => {
-    const isDisabled = weeklyPage === 1 ? true : false;
+    const isDisabled = currentPage === 1 ? true : false;
 
     return (
       <a
@@ -62,22 +62,22 @@ const WeeklyPagination = ({ changeWeeklyPage, weekly, weeklyPage }) => {
   };
 
   const Pagination = () => {
-    let pages = [];
+    let allPages = [];
 
-    for (let i = 1, l = weekly.totalPages; i <= l; i++) {
-      pages.push(pagination(i, l));
+    for (let i = 1, l = pages.totalPages; i <= l; i++) {
+      allPages.push(ellipses(i, l));
     }
 
-    return pages[weeklyPage - 1].map((page, index) => {
+    return allPages[currentPage - 1].map((page, index) => {
       return (
         <li key={page !== '...' ? page : `${index}-index`}>
           <a
             className={
               'pagination-link ' +
-              (page === weeklyPage ? 'is-current' : '') +
+              (page === currentPage ? 'is-current' : '') +
               (page === '...' ? 'cursor-default' : '')
             }
-            style={page === weeklyPage ? { pointerEvents: 'none' } : null}
+            style={page === currentPage ? { pointerEvents: 'none' } : null}
             aria-label={`Page ${page}`}
             aria-current="page"
             onClick={page === '...' ? null : onPageSelect}
@@ -92,7 +92,7 @@ const WeeklyPagination = ({ changeWeeklyPage, weekly, weeklyPage }) => {
 
   return (
     <StyledPagination>
-      {weekly.totalPages >= 1 && (
+      {pages.totalPages > 1 && (
         <nav className="pagination" aria-label="pagination">
           <ul>
             <Pagination />
@@ -119,6 +119,6 @@ const StyledPagination = styled.div`
   }
 `;
 
-WeeklyPagination.propTypes = propTypes;
+Pagination.propTypes = propTypes;
 
-export default WeeklyPagination;
+export default Pagination;

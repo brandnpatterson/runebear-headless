@@ -10,7 +10,9 @@ const propTypes = {
 
 const Submit = ({ route }) => {
   return (
-    <StyledSubmit dangerouslySetInnerHTML={{ __html: route.content.rendered }} />
+    <StyledSubmit
+      dangerouslySetInnerHTML={{ __html: route.content.rendered }}
+    />
   );
 };
 

@@ -16,39 +16,17 @@ export const fetchRequests = () => {
       .then(data => {
         const routes = {};
         const weekly = {
+          posts: data[1],
           authors: data[2],
           categories: data[3],
-          posts: data[1],
-          totalPages: null,
           tags: data[4]
-        };
-        const filterPagesBy = {
-          weekly: {}
         };
 
         data[0].forEach(page => {
           routes[page.slug] = page;
         });
 
-        const processWeekly = () => {
-          const total = Math.ceil(weekly.posts.length / 4) + 1;
-          let page = 1;
-          let beginSlice = 0;
-          let endSlice = 4;
-
-          while (page < total) {
-            filterPagesBy.weekly[page] = data[1].slice(beginSlice, endSlice);
-            filterPagesBy.weekly.totalPages = page;
-
-            beginSlice = beginSlice + 4;
-            endSlice = endSlice + 4;
-            page++;
-          }
-        };
-
-        processWeekly();
-
-        resolve({ filterPagesBy, routes, weekly });
+        resolve({ routes, weekly });
       })
       .catch(err => reject(err));
   });
