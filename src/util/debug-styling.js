@@ -1,6 +1,6 @@
-/* debug.css | MIT License | zaydek.github.com/debug.css */ if (
-  !('is_debugging' in window)
-) {
+/* debug.css | MIT License | zaydek.github.com/debug.css */
+
+if (!('is_debugging' in window)) {
   window.is_debugging = false;
   var debug_el = document.createElement('style');
   debug_el.append(
@@ -9,16 +9,19 @@
     )
   );
 }
+
 function enable_debugger() {
   if (!window.is_debugging) {
     document.head.appendChild(debug_el);
     window.is_debugging = true;
   }
 }
+
 function disable_debugger() {
   if (window.is_debugging) {
     document.head.removeChild(debug_el);
     window.is_debugging = false;
   }
 }
+
 !window.is_debugging ? enable_debugger() : disable_debugger();
