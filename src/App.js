@@ -13,8 +13,8 @@ import StyledApp from './components/styled/StyledApp';
 import Submit from './components/pages/Submit';
 import WeeklyByAuthor from './components/weekly/WeeklyByAuthor';
 import WeeklyByCategory from './components/weekly/WeeklyByCategory';
-import WeeklyByTag from './components/weekly/WeeklyByTag';
 import WeeklyBySinglePost from './components/weekly/WeeklyBySinglePost';
+import WeeklyByTag from './components/weekly/WeeklyByTag';
 import WeeklyPosts from './components/weekly/WeeklyPosts';
 
 class App extends React.Component {
