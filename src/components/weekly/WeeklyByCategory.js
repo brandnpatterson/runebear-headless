@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { object } from 'prop-types';
 
 import WeeklyPost from './WeeklyPost';
@@ -10,62 +10,56 @@ const propTypes = {
   weeklyByCategory: object.isRequired
 };
 
-class WeeklyByCategory extends React.Component {
-  state = {
-    currentPage: 1
-  };
+const WeeklyByCategory = ({ match, weeklyByCategory }) => {
+  const [currentPage, setCurrentPage] = useState(1);
 
-  changePage = (newPage = 1) => {
-    let { currentPage } = this.state;
+  const category = match.params.category.replace(/-/g, ' ');
 
+  setPageIndexes(weeklyByCategory);
+
+  const changePage = (newPage = 1) => {
     if (newPage === 'next') {
-      this.setState({ currentPage: currentPage + 1 });
+      setCurrentPage(currentPage + 1);
     } else if (newPage === 'prev') {
-      this.setState({ currentPage: currentPage - 1 });
+      setCurrentPage(currentPage - 1);
     } else {
-      this.setState({ currentPage: newPage });
+      setCurrentPage(newPage);
     }
   };
 
-  render() {
-    const { match, weeklyByCategory } = this.props;
-    const category = match.params.category.replace(/-/g, ' ');
-    setPageIndexes(weeklyByCategory);
+  return (
+    <div className="filter-page">
+      <header className="filter-header">
+        <h1 style={{ textAlign: 'center' }}>
+          <strong>{category.toUpperCase()}</strong>
+        </h1>
+      </header>
+      {weeklyByCategory[currentPage].map(post => {
+        let trimmed = post.content.rendered.substr(0, 345);
+        const excerpt = trimmed.substr(
+          0,
+          Math.min(trimmed.length, trimmed.lastIndexOf(' '))
+        );
 
-    return (
-      <div className="filter-page">
-        <header className="filter-header">
-          <h1 style={{ textAlign: 'center' }}>
-            <strong>{category.toUpperCase()}</strong>
-          </h1>
-        </header>
-        {weeklyByCategory[this.state.currentPage].map(post => {
-          let trimmed = post.content.rendered.substr(0, 345);
-          const excerpt = trimmed.substr(
-            0,
-            Math.min(trimmed.length, trimmed.lastIndexOf(' '))
-          );
-
-          return (
-            <WeeklyPost
-              authors={post._embedded['wp:term'][2]}
-              categories={post._embedded['wp:term'][0]}
-              content={excerpt}
-              key={post.id}
-              post={post}
-              tags={post._embedded['wp:term'][1]}
-            />
-          );
-        })}
-        <Pagination
-          changePage={this.changePage}
-          currentPage={this.state.currentPage}
-          pages={weeklyByCategory}
-        />
-      </div>
-    );
-  }
-}
+        return (
+          <WeeklyPost
+            authors={post._embedded['wp:term'][2]}
+            categories={post._embedded['wp:term'][0]}
+            content={excerpt}
+            key={post.id}
+            post={post}
+            tags={post._embedded['wp:term'][1]}
+          />
+        );
+      })}
+      <Pagination
+        changePage={changePage}
+        currentPage={currentPage}
+        pages={weeklyByCategory}
+      />
+    </div>
+  );
+};
 
 WeeklyByCategory.propTypes = propTypes;
 

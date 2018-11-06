@@ -15,42 +15,37 @@ const WeeklyPost = ({ authors, categories, content, post, tags }) => {
       </div>
       <div className="card-footer">
         <div className="card-tags">
-          {authors &&
-            authors.map(author => {
+          {authors.map(author => {
+            return (
+              <p key={author.id} className="card-author">
+                <Link to={`/weekly/authors/${author.slug}`}>{author.name}</Link>
+              </p>
+            );
+          })}
+          <div className="categories-and-tags">
+            {categories.map(category => {
               return (
-                <p key={author.id} className="card-author">
-                  <Link to={`/weekly/authors/${author.slug}`}>
-                    {author.name}
-                  </Link>
-                </p>
+                <Link
+                  key={category.slug}
+                  to={`/weekly/categories/${category.slug}`}
+                >
+                  <p className="card-categories">
+                    #{category.name.replace(/\s/g, '').replace(/-/g, '')}
+                    &nbsp;
+                  </p>
+                </Link>
               );
             })}
-          <div className="categories-and-tags">
-            {categories &&
-              categories.map(category => {
-                return (
-                  <Link
-                    key={category.slug}
-                    to={`/weekly/categories/${category.slug}`}
-                  >
-                    <p className="card-categories">
-                      #{category.name.replace(/\s/g, '').replace(/-/g, '')}
-                      &nbsp;
-                    </p>
-                  </Link>
-                );
-              })}
-            {tags &&
-              tags.map(tag => {
-                return (
-                  <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
-                    <p className="card-tags">
-                      #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
-                      &nbsp;
-                    </p>
-                  </Link>
-                );
-              })}
+            {tags.map(tag => {
+              return (
+                <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
+                  <p className="card-tags">
+                    #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
+                    &nbsp;
+                  </p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -87,6 +87,8 @@ class App extends React.Component {
   };
 
   render() {
+    const { loading, routes, weekly } = this.state;
+
     const setDocument = params => {
       window.scrollTo(0, 0);
       document.title = `${firstUpper(params.replace(/-/g, ' '))} | Rune Bear`;
@@ -95,11 +97,11 @@ class App extends React.Component {
     return (
       <StyledApp>
         <Router>
-          {this.state.loading ? (
+          {loading ? (
             <Loading />
           ) : (
-            <div className={'wrapper ' + (this.state.loading ? '' : 'show')}>
-              <Header routes={this.state.routes} weekly={this.state.weekly} />
+            <div className={'wrapper ' + (loading ? '' : 'show')}>
+              <Header routes={routes} weekly={weekly} />
               <div className="main-content">
                 <Route
                   exact
@@ -107,7 +109,7 @@ class App extends React.Component {
                   render={() => {
                     document.title = 'About | Rune Bear';
 
-                    return <About route={this.state.routes.about} />;
+                    return <About route={routes.about} />;
                   }}
                 />
                 <Route
@@ -116,7 +118,7 @@ class App extends React.Component {
                   render={() => {
                     document.title = 'Rune Bear';
 
-                    return <Home route={this.state.routes.home} />;
+                    return <Home route={routes.home} />;
                   }}
                 />
                 <Route
@@ -125,7 +127,7 @@ class App extends React.Component {
                   render={() => {
                     document.title = 'Quarterly | Rune Bear';
 
-                    return <Quarterly route={this.state.routes.quarterly} />;
+                    return <Quarterly route={routes.quarterly} />;
                   }}
                 />
                 <Route
@@ -134,7 +136,7 @@ class App extends React.Component {
                   render={() => {
                     document.title = 'Submit | Rune Bear';
 
-                    return <Submit route={this.state.routes.submit} />;
+                    return <Submit route={routes.submit} />;
                   }}
                 />
                 <Route
@@ -146,10 +148,7 @@ class App extends React.Component {
 
                     return (
                       <div>
-                        <WeeklyPosts
-                          route={this.state.routes.weekly}
-                          weekly={this.state.weekly}
-                        />
+                        <WeeklyPosts route={routes.weekly} weekly={weekly} />
                       </div>
                     );
                   }}
@@ -161,7 +160,7 @@ class App extends React.Component {
                     return (
                       <WeeklyBySinglePost
                         post={this.filterByPost(match)}
-                        weekly={this.state.weekly}
+                        weekly={weekly}
                       />
                     );
                   }}
@@ -208,7 +207,7 @@ class App extends React.Component {
                   }}
                 />
               </div>
-              <Footer __html={this.state.routes.footer.content.rendered} />
+              <Footer __html={routes.footer.content.rendered} />
             </div>
           )}
         </Router>

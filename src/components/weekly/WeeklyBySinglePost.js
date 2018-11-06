@@ -6,6 +6,7 @@ import { firstUpper } from '../../util';
 import StyledWeeklySinglePost from '../styled/StyledWeeklySinglePost';
 
 const propTypes = {
+  post: object.isRequired,
   weekly: object.isRequired
 };
 
@@ -64,31 +65,29 @@ const WeeklyBySinglePost = ({ weekly, post }) => {
         </div>
         <div className="card-footer">
           <div className="categories-and-tags">
-            {categories &&
-              categories.map(category => {
-                return (
-                  <Link
-                    key={category.slug}
-                    to={`/weekly/categories/${category.slug}`}
-                  >
-                    <p className="card-categories">
-                      #{category.name.replace(/\s/g, '').replace(/-/g, '')}
-                      &nbsp;
-                    </p>
-                  </Link>
-                );
-              })}
-            {tags &&
-              tags.map(tag => {
-                return (
-                  <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
-                    <p className="card-tags">
-                      #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
-                      &nbsp;
-                    </p>
-                  </Link>
-                );
-              })}
+            {categories.map(category => {
+              return (
+                <Link
+                  key={category.slug}
+                  to={`/weekly/categories/${category.slug}`}
+                >
+                  <p className="card-categories">
+                    #{category.name.replace(/\s/g, '').replace(/-/g, '')}
+                    &nbsp;
+                  </p>
+                </Link>
+              );
+            })}
+            {tags.map(tag => {
+              return (
+                <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
+                  <p className="card-tags">
+                    #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
+                    &nbsp;
+                  </p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
