@@ -40,7 +40,10 @@ class WeeklyByAuthor extends React.Component {
           </h1>
           <div>
             <p>{author.description}</p>
-            <p dangerouslySetInnerHTML={{ __html: links }} />
+            <p
+              className="author-links"
+              dangerouslySetInnerHTML={{ __html: links }}
+            />
           </div>
         </header>
         {weeklyByAuthor[this.state.currentPage].map(post => {
