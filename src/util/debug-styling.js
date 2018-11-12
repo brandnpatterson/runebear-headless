@@ -1,5 +1,4 @@
 /* debug.css | MIT License | zaydek.github.com/debug.css */
-
 if (!('is_debugging' in window)) {
   window.is_debugging = false;
   var debug_el = document.createElement('style');

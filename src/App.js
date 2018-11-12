@@ -19,6 +19,7 @@ import WeeklyPosts from './components/weekly/WeeklyPosts';
 
 class App extends React.Component {
   state = {
+    currentPage: 1,
     loading: true,
     routes: {},
     weekly: {}
@@ -34,6 +35,22 @@ class App extends React.Component {
     });
   }
 
+  changePage = (newPage = 1) => {
+    if (newPage === 'next') {
+      this.setState({
+        currentPage: this.state.currentPage + 1
+      });
+    } else if (newPage === 'prev') {
+      this.setState({
+        currentPage: this.state.currentPage - 1
+      });
+    } else {
+      this.setState({
+        currentPage: newPage
+      });
+    }
+  };
+
   filterByAuthor = match => {
     const author = this.state.weekly.authors.filter(author => {
       return author.slug === match.params.author;
@@ -45,7 +62,10 @@ class App extends React.Component {
       groupProp: 'post_author'
     });
 
-    return { author, posts };
+    return {
+      author,
+      posts
+    };
   };
 
   filterByCategory = match => {
@@ -59,7 +79,9 @@ class App extends React.Component {
       groupProp: 'categories'
     });
 
-    return { posts };
+    return {
+      posts
+    };
   };
 
   filterByPost = match => {
@@ -101,7 +123,11 @@ class App extends React.Component {
             <Loading />
           ) : (
             <div className={'wrapper ' + (loading ? '' : 'show')}>
-              <Header routes={routes} weekly={weekly} />
+              <Header
+                changePage={this.changePage}
+                routes={routes}
+                weekly={weekly}
+              />
               <div className="main-content">
                 <Route
                   exact
@@ -148,7 +174,12 @@ class App extends React.Component {
 
                     return (
                       <div>
-                        <WeeklyPosts route={routes.weekly} weekly={weekly} />
+                        <WeeklyPosts
+                          changePage={this.changePage}
+                          currentPage={this.state.currentPage}
+                          route={routes.weekly}
+                          weekly={weekly}
+                        />
                       </div>
                     );
                   }}
@@ -172,9 +203,13 @@ class App extends React.Component {
                     setDocument(match.params.author);
 
                     return (
-                      <WeeklyByAuthor
-                        weeklyByAuthor={this.filterByAuthor(match)}
-                      />
+                      <div>
+                        <WeeklyByAuthor
+                          changePage={this.changePage}
+                          currentPage={this.state.currentPage}
+                          weeklyByAuthor={this.filterByAuthor(match)}
+                        />
+                      </div>
                     );
                   }}
                 />
@@ -185,10 +220,14 @@ class App extends React.Component {
                     setDocument(match.params.category);
 
                     return (
-                      <WeeklyByCategory
-                        match={match}
-                        weeklyByCategory={this.filterByCategory(match)}
-                      />
+                      <div>
+                        <WeeklyByCategory
+                          changePage={this.changePage}
+                          currentPage={this.state.currentPage}
+                          match={match}
+                          weeklyByCategory={this.filterByCategory(match)}
+                        />
+                      </div>
                     );
                   }}
                 />
@@ -199,10 +238,14 @@ class App extends React.Component {
                     setDocument(match.params.tag);
 
                     return (
-                      <WeeklyByTag
-                        match={match}
-                        weeklyByTag={this.filterByTag(match)}
-                      />
+                      <div>
+                        <WeeklyByTag
+                          changePage={this.changePage}
+                          currentPage={this.state.currentPage}
+                          match={match}
+                          weeklyByTag={this.filterByTag(match)}
+                        />
+                      </div>
                     );
                   }}
                 />

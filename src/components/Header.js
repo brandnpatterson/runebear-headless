@@ -10,10 +10,12 @@ const propTypes = {
   weekly: object
 };
 
-const Header = ({ routes }) => {
+const Header = ({ changePage, routes }) => {
   const [isActive, setIsActive] = useState(false);
 
   const toggleActive = () => {
+    changePage();
+
     if (window.innerWidth <= 1023) {
       setIsActive(!isActive);
     }

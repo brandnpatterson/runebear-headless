@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { object } from 'prop-types';
 
-import WeeklyPost from './WeeklyPost';
 import Pagination from '../Pagination';
+import WeeklyPost from './WeeklyPost';
 import { setPageIndexes } from '../../util';
 
 const propTypes = {
@@ -10,25 +10,13 @@ const propTypes = {
   weekly: object.isRequired
 };
 
-const WeeklyPosts = ({ route, weekly }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
+const WeeklyPosts = ({ currentPage, changePage, route, weekly }) => {
   setPageIndexes(weekly);
-
-  const changePage = (newPage = 1) => {
-    if (newPage === 'next') {
-      setCurrentPage(currentPage + 1);
-    } else if (newPage === 'prev') {
-      setCurrentPage(currentPage - 1);
-    } else {
-      setCurrentPage(newPage);
-    }
-  };
 
   return (
     <div>
       <div dangerouslySetInnerHTML={{ __html: route.content.rendered }} />
-      {weekly[currentPage].map(post => {
+      {weekly[currentPage ? currentPage : 1].map(post => {
         let trimmed = post.content.rendered.substr(0, 345);
         const excerpt = trimmed.substr(
           0,
@@ -39,6 +27,7 @@ const WeeklyPosts = ({ route, weekly }) => {
           <WeeklyPost
             authors={post._embedded['wp:term'][2]}
             categories={post._embedded['wp:term'][0]}
+            changePage={changePage}
             content={excerpt}
             key={post.id}
             post={post}

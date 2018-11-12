@@ -1,31 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { object } from 'prop-types';
 
-import WeeklyPost from './WeeklyPost';
 import Pagination from '../Pagination';
+import WeeklyPost from './WeeklyPost';
 import { setPageIndexes } from '../../util';
 
 const propTypes = {
   weeklyByAuthor: object.isRequired
 };
 
-const WeeklyByAuthor = ({ weeklyByAuthor }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
+const WeeklyByAuthor = ({ changePage, currentPage, weeklyByAuthor }) => {
   const author = weeklyByAuthor.author[0];
   const links = author.acf.links;
 
   setPageIndexes(weeklyByAuthor);
-
-  const changePage = (newPage = 1) => {
-    if (newPage === 'next') {
-      setCurrentPage(currentPage + 1);
-    } else if (newPage === 'prev') {
-      setCurrentPage(currentPage - 1);
-    } else {
-      setCurrentPage(newPage);
-    }
-  };
 
   return (
     <div className="filter-page">
@@ -52,6 +40,7 @@ const WeeklyByAuthor = ({ weeklyByAuthor }) => {
           <WeeklyPost
             authors={post._embedded['wp:term'][2]}
             categories={post._embedded['wp:term'][0]}
+            changePage={changePage}
             content={excerpt}
             key={post.id}
             post={post}
