@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { fetchRequests } from './api';
-import { associateFilter, firstUpper } from './util';
+import { associateFilter, firstUpper, setPageIndexes } from './util';
 
 import About from './components/pages/About';
 import Footer from './components/Footer';
@@ -62,10 +62,10 @@ class App extends React.Component {
       groupProp: 'post_author'
     });
 
-    return {
+    return setPageIndexes({
       author,
       posts
-    };
+    });
   };
 
   filterByCategory = match => {
@@ -79,12 +79,16 @@ class App extends React.Component {
       groupProp: 'categories'
     });
 
-    return {
+    return setPageIndexes({
       posts
-    };
+    });
   };
 
-  filterByPost = match => {
+  filterByPost = posts => {
+    return setPageIndexes(posts);
+  };
+
+  filterBySinglePost = match => {
     const post = this.state.weekly.posts.filter(post => {
       return post.slug === match.params.weeklyPost;
     });
@@ -103,9 +107,9 @@ class App extends React.Component {
       groupProp: 'tags'
     });
 
-    return {
+    return setPageIndexes({
       posts
-    };
+    });
   };
 
   render() {
@@ -178,7 +182,7 @@ class App extends React.Component {
                           changePage={this.changePage}
                           currentPage={this.state.currentPage}
                           route={routes.weekly}
-                          weekly={weekly}
+                          weekly={this.filterByPost(weekly)}
                         />
                       </div>
                     );
@@ -190,7 +194,7 @@ class App extends React.Component {
                   render={({ match }) => {
                     return (
                       <WeeklyBySinglePost
-                        post={this.filterByPost(match)}
+                        post={this.filterBySinglePost(match)}
                         weekly={weekly}
                       />
                     );

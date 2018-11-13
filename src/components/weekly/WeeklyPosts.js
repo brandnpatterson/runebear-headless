@@ -3,7 +3,6 @@ import { object } from 'prop-types';
 
 import Pagination from '../Pagination';
 import WeeklyPost from './WeeklyPost';
-import { setPageIndexes } from '../../util';
 
 const propTypes = {
   route: object.isRequired,
@@ -11,8 +10,6 @@ const propTypes = {
 };
 
 const WeeklyPosts = ({ currentPage, changePage, route, weekly }) => {
-  setPageIndexes(weekly);
-
   return (
     <div>
       <div dangerouslySetInnerHTML={{ __html: route.content.rendered }} />

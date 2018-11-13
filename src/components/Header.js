@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,69 +10,79 @@ const propTypes = {
   weekly: object
 };
 
-const Header = ({ changePage, routes }) => {
-  const [isActive, setIsActive] = useState(false);
-
-  const toggleActive = () => {
-    changePage();
-
-    if (window.innerWidth <= 1023) {
-      setIsActive(!isActive);
-    }
+class Header extends Component {
+  state = {
+    isActive: false
   };
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 1023) {
-      isActive === true && setIsActive(false);
-    }
-  });
+  render() {
+    const { isActive } = this.state;
 
-  const renderHeader = () => {
-    const header = Object.keys(routes)
-      .filter(page => page !== 'footer')
-      .filter(page => page !== 'loading')
-      .sort((a, b) => routes[a].id - routes[b].id);
+    const toggleActive = () => {
+      this.props.changePage();
 
-    return header.map(page => {
-      const location = page === 'home' ? '' : page;
+      if (window.innerWidth <= 1023) {
+        this.setState({ isActive: !isActive });
+      }
+    };
 
-      return (
-        <Link
-          key={page}
-          onClick={toggleActive}
-          className="navbar-item"
-          to={'/' + location}
-        >
-          {page.toUpperCase()}
-        </Link>
-      );
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1023) {
+        isActive === true && this.setState({ isActive: false });
+      }
     });
-  };
 
-  return (
-    <StyledHeader>
-      <nav className="navbar" aria-label="main navigation">
-        <div
-          onClick={toggleActive}
-          data-target="navMenu"
-          className={'navbar-burger is-large ' + (isActive ? 'is-active' : '')}
-        >
-          <span />
-          <span />
-          <span />
-        </div>
-        <div
-          id="navMenu"
-          className={
-            'navbar-menu navbar-target ' + (isActive ? 'is-active' : '')
-          }
-        >
-          <div className="navbar-items">{renderHeader()}</div>
-        </div>
-      </nav>
-    </StyledHeader>
-  );
-};
+    const renderHeader = () => {
+      const { routes } = this.props;
+
+      const header = Object.keys(routes)
+        .filter(page => page !== 'footer')
+        .filter(page => page !== 'loading')
+        .sort((a, b) => routes[a].id - routes[b].id);
+
+      return header.map(page => {
+        const location = page === 'home' ? '' : page;
+
+        return (
+          <Link
+            key={page}
+            onClick={toggleActive}
+            className="navbar-item"
+            to={'/' + location}
+          >
+            {page.toUpperCase()}
+          </Link>
+        );
+      });
+    };
+
+    return (
+      <StyledHeader>
+        <nav className="navbar" aria-label="main navigation">
+          <div
+            onClick={toggleActive}
+            data-target="navMenu"
+            className={
+              'navbar-burger is-large ' + (isActive ? 'is-active' : '')
+            }
+          >
+            <span />
+            <span />
+            <span />
+          </div>
+          <div
+            id="navMenu"
+            className={
+              'navbar-menu navbar-target ' + (isActive ? 'is-active' : '')
+            }
+          >
+            <div className="navbar-items">{renderHeader()}</div>
+          </div>
+        </nav>
+      </StyledHeader>
+    );
+  }
+}
 
 const StyledHeader = styled.header`
   .navbar {

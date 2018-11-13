@@ -3,7 +3,6 @@ import { object } from 'prop-types';
 
 import Pagination from '../Pagination';
 import WeeklyPost from './WeeklyPost';
-import { setPageIndexes } from '../../util';
 
 const propTypes = {
   match: object.isRequired,
@@ -12,8 +11,6 @@ const propTypes = {
 
 const WeeklyByTag = ({ changePage, currentPage, match, weeklyByTag }) => {
   const tag = match.params.tag.replace(/-/g, ' ');
-
-  setPageIndexes(weeklyByTag);
 
   return (
     <div className="filter-page">

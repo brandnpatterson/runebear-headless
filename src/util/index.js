@@ -12,22 +12,6 @@ export const associateFilter = ({ filterBy, group, groupProp }) => {
   return arr;
 };
 
-export const createPages = pages => {
-  const total = Math.ceil(pages.posts.length / 4) + 1;
-  let page = 1;
-  let beginSlice = 0;
-  let endSlice = 4;
-
-  while (page < total) {
-    pages[page] = pages.posts.slice(beginSlice, endSlice);
-    pages.totalPages = page;
-
-    beginSlice = beginSlice + 4;
-    endSlice = endSlice + 4;
-    page++;
-  }
-};
-
 export const ellipses = (c, m) => {
   const delta = 2;
   const range = [];
@@ -85,4 +69,6 @@ export const setPageIndexes = pages => {
     endSlice = endSlice + 4;
     page++;
   }
+
+  return pages;
 };

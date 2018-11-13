@@ -3,7 +3,6 @@ import { object } from 'prop-types';
 
 import Pagination from '../Pagination';
 import WeeklyPost from './WeeklyPost';
-import { setPageIndexes } from '../../util';
 
 const propTypes = {
   weeklyByAuthor: object.isRequired
@@ -12,8 +11,6 @@ const propTypes = {
 const WeeklyByAuthor = ({ changePage, currentPage, weeklyByAuthor }) => {
   const author = weeklyByAuthor.author[0];
   const links = author.acf.links;
-
-  setPageIndexes(weeklyByAuthor);
 
   return (
     <div className="filter-page">
