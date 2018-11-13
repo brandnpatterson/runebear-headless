@@ -29,12 +29,10 @@ const WeeklyByTag = ({ changePage, currentPage, match, weeklyByTag }) => {
         return (
           <WeeklyPost
             authors={post._embedded['wp:term'][2]}
-            categories={post._embedded['wp:term'][0]}
             changePage={changePage}
             content={excerpt}
             key={post.id}
             post={post}
-            tags={post._embedded['wp:term'][1]}
           />
         );
       })}

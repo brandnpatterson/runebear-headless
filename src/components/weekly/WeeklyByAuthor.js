@@ -35,7 +35,6 @@ const WeeklyByAuthor = ({ changePage, currentPage, weeklyByAuthor }) => {
 
         return (
           <WeeklyPost
-            authors={post._embedded['wp:term'][2]}
             categories={post._embedded['wp:term'][0]}
             changePage={changePage}
             content={excerpt}

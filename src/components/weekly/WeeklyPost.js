@@ -22,42 +22,45 @@ const WeeklyPost = ({
       </div>
       <div className="card-footer">
         <div className="card-tags">
-          {authors.map(author => {
-            return (
-              <p onClick={() => changePage()} key={author.id}>
-                <Link
-                  to={`/weekly/authors/${author.slug}`}
-                  className="card-author"
-                >
-                  {author.name}
-                </Link>
-              </p>
-            );
-          })}
-          <div className="categories-and-tags">
-            {categories.map(category => {
+          {authors &&
+            authors.map(author => {
               return (
-                <p onClick={() => changePage()} key={category.slug}>
+                <p onClick={() => changePage()} key={author.id}>
                   <Link
-                    to={`/weekly/categories/${category.slug}`}
-                    className="card-categories"
+                    to={`/weekly/authors/${author.slug}`}
+                    className="card-author"
                   >
-                    #{category.name.replace(/\s/g, '').replace(/-/g, '')}
-                    &nbsp;
+                    {author.name}
                   </Link>
                 </p>
               );
             })}
-            {tags.map(tag => {
-              return (
-                <p onClick={() => changePage()} key={tag.slug}>
-                  <Link to={`/weekly/tags/${tag.slug}`} className="card-tags">
-                    #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
-                    &nbsp;
-                  </Link>
-                </p>
-              );
-            })}
+          <div className="categories-and-tags">
+            {categories &&
+              categories.map(category => {
+                return (
+                  <p onClick={() => changePage()} key={category.slug}>
+                    <Link
+                      to={`/weekly/categories/${category.slug}`}
+                      className="card-categories"
+                    >
+                      #{category.name.replace(/\s/g, '').replace(/-/g, '')}
+                      &nbsp;
+                    </Link>
+                  </p>
+                );
+              })}
+            {tags &&
+              tags.map(tag => {
+                return (
+                  <p onClick={() => changePage()} key={tag.slug}>
+                    <Link to={`/weekly/tags/${tag.slug}`} className="card-tags">
+                      #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
+                      &nbsp;
+                    </Link>
+                  </p>
+                );
+              })}
           </div>
         </div>
       </div>
