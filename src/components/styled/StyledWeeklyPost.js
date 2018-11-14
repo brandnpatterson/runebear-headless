@@ -44,6 +44,10 @@ const StyledWeeklyByPost = styled.div`
     }
   }
 
+  .card-authors {
+    min-height: 24px;
+  }
+
   .card-read-more {
     display: block;
     text-align: right;

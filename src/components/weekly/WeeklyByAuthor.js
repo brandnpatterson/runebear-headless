@@ -1,10 +1,12 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { func, number, object } from 'prop-types';
 
 import Pagination from '../Pagination';
 import WeeklyPost from './WeeklyPost';
 
 const propTypes = {
+  changePage: func.isRequired,
+  currentPage: number.isRequired,
   weeklyByAuthor: object.isRequired
 };
 
