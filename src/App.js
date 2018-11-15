@@ -194,6 +194,7 @@ class App extends React.Component {
                     render={({ match }) => {
                       return (
                         <WeeklyBySinglePost
+                          currentPage={this.state.currentPage}
                           post={this.filterBySinglePost(match)}
                           weekly={weekly}
                         />

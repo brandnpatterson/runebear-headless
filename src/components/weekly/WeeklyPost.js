@@ -26,7 +26,11 @@ const WeeklyPost = ({
       <h2>{post.title.rendered}</h2>
       <div className="card-content">
         <p dangerouslySetInnerHTML={{ __html: content }} />
-        <Link className="card-read-more" to={`/weekly/${post.slug}`}>
+        <Link
+          onClick={() => changePage()}
+          className="card-read-more"
+          to={`/weekly/${post.slug}`}
+        >
           ...Read more {post.title.rendered}
         </Link>
       </div>
