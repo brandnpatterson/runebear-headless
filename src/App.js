@@ -177,14 +177,12 @@ class App extends React.Component {
                     window.scrollTo(0, 0);
 
                     return (
-                      <div>
-                        <WeeklyPosts
-                          changePage={this.changePage}
-                          currentPage={this.state.currentPage}
-                          route={routes.weekly}
-                          weekly={this.filterByPost(weekly)}
-                        />
-                      </div>
+                      <WeeklyPosts
+                        changePage={this.changePage}
+                        currentPage={this.state.currentPage}
+                        route={routes.weekly}
+                        weekly={this.filterByPost(weekly)}
+                      />
                     );
                   }}
                 />
@@ -207,13 +205,11 @@ class App extends React.Component {
                     setDocument(match.params.author);
 
                     return (
-                      <div>
-                        <WeeklyByAuthor
-                          changePage={this.changePage}
-                          currentPage={this.state.currentPage}
-                          weeklyByAuthor={this.filterByAuthor(match)}
-                        />
-                      </div>
+                      <WeeklyByAuthor
+                        changePage={this.changePage}
+                        currentPage={this.state.currentPage}
+                        weeklyByAuthor={this.filterByAuthor(match)}
+                      />
                     );
                   }}
                 />
@@ -224,14 +220,12 @@ class App extends React.Component {
                     setDocument(match.params.category);
 
                     return (
-                      <div>
-                        <WeeklyByCategory
-                          changePage={this.changePage}
-                          currentPage={this.state.currentPage}
-                          match={match}
-                          weeklyByCategory={this.filterByCategory(match)}
-                        />
-                      </div>
+                      <WeeklyByCategory
+                        changePage={this.changePage}
+                        currentPage={this.state.currentPage}
+                        match={match}
+                        weeklyByCategory={this.filterByCategory(match)}
+                      />
                     );
                   }}
                 />
@@ -242,14 +236,12 @@ class App extends React.Component {
                     setDocument(match.params.tag);
 
                     return (
-                      <div>
-                        <WeeklyByTag
-                          changePage={this.changePage}
-                          currentPage={this.state.currentPage}
-                          match={match}
-                          weeklyByTag={this.filterByTag(match)}
-                        />
-                      </div>
+                      <WeeklyByTag
+                        changePage={this.changePage}
+                        currentPage={this.state.currentPage}
+                        match={match}
+                        weeklyByTag={this.filterByTag(match)}
+                      />
                     );
                   }}
                 />
