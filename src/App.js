@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { fetchRequests } from './api';
 import { associateFilter, firstUpper, setPageIndexes } from './util';
 
@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Home from './components/pages/Home';
 import Loading from './components/Loading';
+import NotFound from './components/NotFound';
 import Quarterly from './components/pages/Quarterly';
 import StyledApp from './components/styled/StyledApp';
 import Submit from './components/pages/Submit';
@@ -133,118 +134,121 @@ class App extends React.Component {
                 weekly={weekly}
               />
               <div className="main-content">
-                <Route
-                  exact
-                  path="/about"
-                  render={() => {
-                    document.title = 'About | Rune Bear';
+                <Switch>
+                  <Route
+                    exact
+                    path="/about"
+                    render={() => {
+                      document.title = 'About | Rune Bear';
 
-                    return <About route={routes.about} />;
-                  }}
-                />
-                <Route
-                  exact
-                  path="/"
-                  render={() => {
-                    document.title = 'Rune Bear';
+                      return <About route={routes.about} />;
+                    }}
+                  />
+                  <Route
+                    exact
+                    path="/"
+                    render={() => {
+                      document.title = 'Rune Bear';
 
-                    return <Home route={routes.home} />;
-                  }}
-                />
-                <Route
-                  exact
-                  path="/quarterly"
-                  render={() => {
-                    document.title = 'Quarterly | Rune Bear';
+                      return <Home route={routes.home} />;
+                    }}
+                  />
+                  <Route
+                    exact
+                    path="/quarterly"
+                    render={() => {
+                      document.title = 'Quarterly | Rune Bear';
 
-                    return <Quarterly route={routes.quarterly} />;
-                  }}
-                />
-                <Route
-                  exact
-                  path="/submit"
-                  render={() => {
-                    document.title = 'Submit | Rune Bear';
+                      return <Quarterly route={routes.quarterly} />;
+                    }}
+                  />
+                  <Route
+                    exact
+                    path="/submit"
+                    render={() => {
+                      document.title = 'Submit | Rune Bear';
 
-                    return <Submit route={routes.submit} />;
-                  }}
-                />
-                <Route
-                  exact
-                  path="/weekly"
-                  render={() => {
-                    document.title = 'Weekly | Rune Bear';
-                    window.scrollTo(0, 0);
+                      return <Submit route={routes.submit} />;
+                    }}
+                  />
+                  <Route
+                    exact
+                    path="/weekly"
+                    render={() => {
+                      document.title = 'Weekly | Rune Bear';
+                      window.scrollTo(0, 0);
 
-                    return (
-                      <WeeklyPosts
-                        changePage={this.changePage}
-                        currentPage={this.state.currentPage}
-                        route={routes.weekly}
-                        weekly={this.filterByPost(weekly)}
-                      />
-                    );
-                  }}
-                />
-                <Route
-                  exact
-                  path={`/weekly/:weeklyPost`}
-                  render={({ match }) => {
-                    return (
-                      <WeeklyBySinglePost
-                        post={this.filterBySinglePost(match)}
-                        weekly={weekly}
-                      />
-                    );
-                  }}
-                />
-                <Route
-                  exact
-                  path={`/weekly/authors/:author`}
-                  render={({ match }) => {
-                    setDocument(match.params.author);
+                      return (
+                        <WeeklyPosts
+                          changePage={this.changePage}
+                          currentPage={this.state.currentPage}
+                          route={routes.weekly}
+                          weekly={this.filterByPost(weekly)}
+                        />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={`/weekly/:weeklyPost`}
+                    render={({ match }) => {
+                      return (
+                        <WeeklyBySinglePost
+                          post={this.filterBySinglePost(match)}
+                          weekly={weekly}
+                        />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={`/weekly/authors/:author`}
+                    render={({ match }) => {
+                      setDocument(match.params.author);
 
-                    return (
-                      <WeeklyByAuthor
-                        changePage={this.changePage}
-                        currentPage={this.state.currentPage}
-                        weeklyByAuthor={this.filterByAuthor(match)}
-                      />
-                    );
-                  }}
-                />
-                <Route
-                  exact
-                  path={`/weekly/categories/:category`}
-                  render={({ match }) => {
-                    setDocument(match.params.category);
+                      return (
+                        <WeeklyByAuthor
+                          changePage={this.changePage}
+                          currentPage={this.state.currentPage}
+                          weeklyByAuthor={this.filterByAuthor(match)}
+                        />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={`/weekly/categories/:category`}
+                    render={({ match }) => {
+                      setDocument(match.params.category);
 
-                    return (
-                      <WeeklyByCategory
-                        changePage={this.changePage}
-                        currentPage={this.state.currentPage}
-                        match={match}
-                        weeklyByCategory={this.filterByCategory(match)}
-                      />
-                    );
-                  }}
-                />
-                <Route
-                  exact
-                  path={`/weekly/tags/:tag`}
-                  render={({ match }) => {
-                    setDocument(match.params.tag);
+                      return (
+                        <WeeklyByCategory
+                          changePage={this.changePage}
+                          currentPage={this.state.currentPage}
+                          match={match}
+                          weeklyByCategory={this.filterByCategory(match)}
+                        />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={`/weekly/tags/:tag`}
+                    render={({ match }) => {
+                      setDocument(match.params.tag);
 
-                    return (
-                      <WeeklyByTag
-                        changePage={this.changePage}
-                        currentPage={this.state.currentPage}
-                        match={match}
-                        weeklyByTag={this.filterByTag(match)}
-                      />
-                    );
-                  }}
-                />
+                      return (
+                        <WeeklyByTag
+                          changePage={this.changePage}
+                          currentPage={this.state.currentPage}
+                          match={match}
+                          weeklyByTag={this.filterByTag(match)}
+                        />
+                      );
+                    }}
+                  />
+                  <Route render={NotFound} />
+                </Switch>
               </div>
               <Footer __html={routes.footer.content.rendered} />
             </div>
