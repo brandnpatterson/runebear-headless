@@ -1,6 +1,5 @@
 import React from 'react';
 import { func, number, object } from 'prop-types';
-
 import Pagination from '../Pagination';
 import WeeklyPost from './WeeklyPost';
 
@@ -22,17 +21,11 @@ const WeeklyByTag = ({ changePage, currentPage, match, weeklyByTag }) => {
         </h1>
       </header>
       {weeklyByTag[currentPage].map(post => {
-        let trimmed = post.content.rendered.substr(0, 345);
-        const excerpt = trimmed.substr(
-          0,
-          Math.min(trimmed.length, trimmed.lastIndexOf(' '))
-        );
-
         return (
           <WeeklyPost
             authors={post._embedded['wp:term'][2]}
             changePage={changePage}
-            content={excerpt}
+            content={post.excerpt.rendered}
             key={post.id}
             post={post}
           />
