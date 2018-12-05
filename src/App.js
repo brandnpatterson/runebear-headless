@@ -56,17 +56,17 @@ class App extends React.Component {
     const posts = [];
 
     const indexed = pages => {
-      const total = Math.ceil(pages.posts.length / 4) + 1;
       let page = 1;
-      let beginSlice = 0;
-      let endSlice = 4;
+      let begin = 0;
+      let end = 4;
+      const total = Math.ceil(pages.posts.length / end) + 1;
 
       while (page < total) {
-        pages[page] = pages.posts.slice(beginSlice, endSlice);
+        pages[page] = pages.posts.slice(begin, end);
         pages.totalPages = page;
 
-        beginSlice = beginSlice + 4;
-        endSlice = endSlice + 4;
+        begin = begin + 4;
+        end = end + 4;
         page++;
       }
 
@@ -81,11 +81,9 @@ class App extends React.Component {
 
         filtered
           .filter(i => i.slug === match)
-          .forEach(idSingle => {
-            this.state.weekly.posts.forEach(groupSingle => {
-              groupSingle[taxonomy].forEach(
-                value => value === idSingle.id && posts.push(groupSingle)
-              );
+          .forEach(tax => {
+            this.state.weekly.posts.forEach(post => {
+              post[taxonomy].forEach(id => id === tax.id && posts.push(post));
             });
           });
 
