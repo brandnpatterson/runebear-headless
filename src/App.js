@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { fetchRequests } from './api';
-import { associateFilter, firstUpper, setPageIndexes } from './util';
+import { firstUpper } from './util';
 
 import About from './components/pages/About';
 import Footer from './components/Footer';
@@ -52,69 +52,57 @@ class App extends React.Component {
     }
   };
 
-  filterByAuthor = match => {
-    const author = this.state.weekly.authors.filter(author => {
-      return author.slug === match.params.author;
-    });
+  filterBy = (match, filtered) => {
+    const posts = [];
 
-    const posts = associateFilter({
-      filterBy: author,
-      group: this.state.weekly.posts,
-      groupProp: 'post_author'
-    });
+    const indexed = pages => {
+      const total = Math.ceil(pages.posts.length / 4) + 1;
+      let page = 1;
+      let beginSlice = 0;
+      let endSlice = 4;
 
-    return setPageIndexes({
-      author,
-      posts
-    });
-  };
+      while (page < total) {
+        pages[page] = pages.posts.slice(beginSlice, endSlice);
+        pages.totalPages = page;
 
-  filterByCategory = match => {
-    const category = this.state.weekly.categories.filter(category => {
-      return category.slug === match.params.category;
-    });
+        beginSlice = beginSlice + 4;
+        endSlice = endSlice + 4;
+        page++;
+      }
 
-    const posts = associateFilter({
-      filterBy: category,
-      group: this.state.weekly.posts,
-      groupProp: 'categories'
-    });
+      return pages;
+    };
 
-    return setPageIndexes({
-      posts
-    });
-  };
+    if (match) {
+      if (filtered) {
+        const taxonomy = window.location.pathname
+          .split('/')[2]
+          .replace(/-/g, '_');
 
-  filterByPost = posts => {
-    return setPageIndexes(posts);
-  };
+        filtered
+          .filter(i => i.slug === match)
+          .forEach(idSingle => {
+            this.state.weekly.posts.forEach(groupSingle => {
+              groupSingle[taxonomy].forEach(
+                value => value === idSingle.id && posts.push(groupSingle)
+              );
+            });
+          });
 
-  filterBySinglePost = match => {
-    const post = this.state.weekly.posts.filter(post => {
-      return post.slug === match.params.weeklyPost;
-    });
-
-    return post[0];
-  };
-
-  filterByTag = match => {
-    const tag = this.state.weekly.tags.filter(tag => {
-      return tag.slug === match.params.tag;
-    });
-
-    const posts = associateFilter({
-      filterBy: tag,
-      group: this.state.weekly.posts,
-      groupProp: 'tags'
-    });
-
-    return setPageIndexes({
-      posts
-    });
+        return indexed({
+          filtered,
+          posts
+        });
+      } else {
+        return this.state.weekly.posts.filter(post => post.slug === match)[0];
+      }
+    } else {
+      return indexed(this.state.weekly);
+    }
   };
 
   render() {
-    const { loading, routes, weekly } = this.state;
+    const { currentPage, loading, routes, weekly } = this.state;
 
     const setDocument = params => {
       window.scrollTo(0, 0);
@@ -181,9 +169,9 @@ class App extends React.Component {
                       return (
                         <WeeklyPosts
                           changePage={this.changePage}
-                          currentPage={this.state.currentPage}
+                          currentPage={currentPage}
                           route={routes.weekly}
-                          weekly={this.filterByPost(weekly)}
+                          weekly={this.filterBy()}
                         />
                       );
                     }}
@@ -194,8 +182,8 @@ class App extends React.Component {
                     render={({ match }) => {
                       return (
                         <WeeklyBySinglePost
-                          currentPage={this.state.currentPage}
-                          post={this.filterBySinglePost(match)}
+                          currentPage={currentPage}
+                          post={this.filterBy(match.params.weeklyPost)}
                           weekly={weekly}
                         />
                       );
@@ -203,15 +191,18 @@ class App extends React.Component {
                   />
                   <Route
                     exact
-                    path={`/weekly/authors/:author`}
+                    path={`/weekly/post-author/:author`}
                     render={({ match }) => {
                       setDocument(match.params.author);
 
                       return (
                         <WeeklyByAuthor
                           changePage={this.changePage}
-                          currentPage={this.state.currentPage}
-                          weeklyByAuthor={this.filterByAuthor(match)}
+                          currentPage={currentPage}
+                          weeklyByAuthor={this.filterBy(
+                            match.params.author,
+                            weekly.authors
+                          )}
                         />
                       );
                     }}
@@ -225,9 +216,12 @@ class App extends React.Component {
                       return (
                         <WeeklyByCategory
                           changePage={this.changePage}
-                          currentPage={this.state.currentPage}
+                          currentPage={currentPage}
                           match={match}
-                          weeklyByCategory={this.filterByCategory(match)}
+                          weeklyByCategory={this.filterBy(
+                            match.params.category,
+                            weekly.categories
+                          )}
                         />
                       );
                     }}
@@ -241,9 +235,12 @@ class App extends React.Component {
                       return (
                         <WeeklyByTag
                           changePage={this.changePage}
-                          currentPage={this.state.currentPage}
+                          currentPage={currentPage}
                           match={match}
-                          weeklyByTag={this.filterByTag(match)}
+                          weeklyByTag={this.filterBy(
+                            match.params.tag,
+                            weekly.tags
+                          )}
                         />
                       );
                     }}

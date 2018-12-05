@@ -41,7 +41,7 @@ const WeeklyPost = ({
               return (
                 <p onClick={() => changePage()} key={author.id}>
                   <Link
-                    to={`/weekly/authors/${author.slug}`}
+                    to={`/weekly/post-author/${author.slug}`}
                     className="card-author"
                   >
                     {author.name}

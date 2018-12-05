@@ -96,7 +96,9 @@ const WeeklyBySinglePost = ({ weekly, post }) => {
           return (
             <p key={author.id}>
               All from &nbsp;
-              <Link to={`/weekly/authors/${author.slug}`}>{author.name}</Link>
+              <Link to={`/weekly/post-author/${author.slug}`}>
+                {author.name}
+              </Link>
             </p>
           );
         })}

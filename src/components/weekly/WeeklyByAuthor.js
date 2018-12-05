@@ -10,7 +10,7 @@ const propTypes = {
 };
 
 const WeeklyByAuthor = ({ changePage, currentPage, weeklyByAuthor }) => {
-  const author = weeklyByAuthor.author[0];
+  const author = weeklyByAuthor.filtered[0];
   const links = author.acf.links;
 
   return (
