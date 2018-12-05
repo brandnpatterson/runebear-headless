@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { object } from 'prop-types';
+import { func, object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { blue, dark, light } from '../util/color';
 import { mediumUp, smallOnly } from '../util/media';
 
 const propTypes = {
+  changePage: func.isRequired,
   routes: object,
   weekly: object
 };
@@ -34,6 +35,7 @@ class Header extends Component {
 
     const renderHeader = () => {
       const { routes } = this.props;
+      console.log(routes);
 
       const header = Object.keys(routes)
         .filter(page => page !== 'footer')

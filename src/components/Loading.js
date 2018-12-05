@@ -4,7 +4,7 @@ import { dark, white } from '../util/color';
 class Loading extends React.Component {
   state = {
     background: null,
-    backgroundGroup: [
+    groups: [
       {
         alt: 'Runebear Logo',
         backgroundColor: dark,
@@ -28,12 +28,12 @@ class Loading extends React.Component {
   };
 
   componentDidMount() {
-    const groupIndex = Math.round(Math.random());
+    const i = Math.round(Math.random());
 
     this.setState({
-      background: this.state.backgroundGroup[groupIndex].backgroundColor,
-      color: this.state.backgroundGroup[groupIndex].color,
-      image: this.state.backgroundGroup[groupIndex].image
+      background: this.state.groups[i].backgroundColor,
+      color: this.state.groups[i].color,
+      image: this.state.groups[i].image
     });
 
     if (window.innerWidth <= 1024) {

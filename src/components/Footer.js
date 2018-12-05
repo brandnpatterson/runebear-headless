@@ -1,11 +1,11 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 import { blue, dark, light } from '../util/color';
 import { mediumDown, mediumUp } from '../util/media';
 
 const propTypes = {
-  footer: object
+  __html: string.isRequired
 };
 
 const Footer = ({ __html }) => {

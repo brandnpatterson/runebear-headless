@@ -5,12 +5,12 @@ import { ellipses } from '../util';
 import styled from 'styled-components';
 
 const propTypes = {
-  currentPage: number.isRequired,
   changePage: func.isRequired,
+  currentPage: number.isRequired,
   pages: object.isRequired
 };
 
-const Pagination = ({ changePage, pages, currentPage }) => {
+const Pagination = ({ changePage, currentPage, pages }) => {
   const onPageSelect = e => {
     const targetValue = e.target.textContent;
     if (pages[targetValue]) {

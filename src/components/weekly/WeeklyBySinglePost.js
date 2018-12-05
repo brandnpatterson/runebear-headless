@@ -10,7 +10,7 @@ const propTypes = {
   weekly: object.isRequired
 };
 
-const WeeklyBySinglePost = ({ weekly, post }) => {
+const WeeklyBySinglePost = ({ post, weekly }) => {
   document.title = `${firstUpper(post.title.rendered)} | Rune Bear`;
 
   let next;
