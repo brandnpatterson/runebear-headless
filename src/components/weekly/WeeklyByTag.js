@@ -1,16 +1,23 @@
 import React from 'react';
-import { func, number, object } from 'prop-types';
+import { array, func, number, object } from 'prop-types';
 import Pagination from '../Pagination';
 import WeeklyPost from './WeeklyPost';
 
 const propTypes = {
   changePage: func.isRequired,
+  currentGroup: array.isRequired,
   currentPage: number.isRequired,
   match: object.isRequired,
   weeklyByTag: object.isRequired
 };
 
-const WeeklyByTag = ({ changePage, currentPage, match, weeklyByTag }) => {
+const WeeklyByTag = ({
+  changePage,
+  currentGroup,
+  currentPage,
+  match,
+  weeklyByTag
+}) => {
   const tag = match.params.tag.replace(/-/g, ' ');
 
   return (
@@ -20,21 +27,28 @@ const WeeklyByTag = ({ changePage, currentPage, match, weeklyByTag }) => {
           <strong>{tag.toUpperCase()}</strong>
         </h1>
       </header>
-      {weeklyByTag[currentPage].map(post => {
-        return (
-          <WeeklyPost
-            authors={post._embedded['wp:term'][2]}
-            changePage={changePage}
-            content={post.excerpt.rendered}
-            key={post.id}
-            post={post}
-          />
-        );
+      {currentGroup.map(index => {
+        if (weeklyByTag.posts[index]) {
+          const post = weeklyByTag.posts[index];
+
+          return (
+            <WeeklyPost
+              authors={post._embedded['wp:term'][2]}
+              categories={post._embedded['wp:term'][0]}
+              changePage={changePage}
+              content={post.excerpt.rendered}
+              key={post.id}
+              post={post}
+              tags={post._embedded['wp:term'][1]}
+            />
+          );
+        } else return null;
       })}
       <Pagination
         changePage={changePage}
+        currentGroup={currentGroup}
         currentPage={currentPage}
-        pages={weeklyByTag}
+        posts={weeklyByTag.posts}
       />
     </div>
   );

@@ -35,7 +35,6 @@ class Header extends Component {
 
     const renderHeader = () => {
       const { routes } = this.props;
-      console.log(routes);
 
       const header = Object.keys(routes)
         .filter(page => page !== 'footer')

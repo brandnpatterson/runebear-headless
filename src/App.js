@@ -20,8 +20,10 @@ import WeeklyPosts from './components/weekly/WeeklyPosts';
 
 class App extends React.Component {
   state = {
+    currentGroup: [0, 1, 2, 3],
     currentPage: 1,
     loading: true,
+    pageLength: 4,
     routes: {},
     weekly: {}
   };
@@ -37,16 +39,29 @@ class App extends React.Component {
   }
 
   changePage = (newPage = 1) => {
+    const { currentGroup, currentPage, pageLength } = this.state;
+
     if (newPage === 'next') {
+      const newGroup = currentGroup.map(c => c + pageLength);
+
       this.setState({
-        currentPage: this.state.currentPage + 1
+        currentGroup: newGroup,
+        currentPage: currentPage + 1
       });
     } else if (newPage === 'prev') {
+      const newGroup = currentGroup.map(c => c - pageLength);
+
       this.setState({
-        currentPage: this.state.currentPage - 1
+        currentGroup: newGroup,
+        currentPage: currentPage - 1
       });
     } else {
+      const newGroup = [0, 1, 2, 3].map(c => {
+        return c + newPage * pageLength - pageLength;
+      });
+
       this.setState({
+        currentGroup: newGroup,
         currentPage: newPage
       });
     }
@@ -55,56 +70,37 @@ class App extends React.Component {
   filterBy = (match, filtered) => {
     const posts = [];
 
-    const indexed = pages => {
-      let page = 1;
-      let begin = 0;
-      let end = 4;
-      const total = Math.ceil(pages.posts.length / end) + 1;
-
-      while (page < total) {
-        pages[page] = pages.posts.slice(begin, end);
-        pages.totalPages = page;
-
-        begin = begin + 4;
-        end = end + 4;
-        page++;
-      }
-
-      return pages;
-    };
-
-    if (match) {
-      if (filtered) {
-        const taxonomy = window.location.pathname
-          .split('/')[2]
-          .replace(/-/g, '_');
-
-        filtered
-          .filter(i => i.slug === match)
-          .forEach(tax => {
-            this.state.weekly.posts.forEach(post => {
-              post[taxonomy].forEach(id => id === tax.id && posts.push(post));
-            });
-          });
-
-        return indexed({
-          filtered,
-          posts
-        });
-      } else {
-        return this.state.weekly.posts.filter(post => post.slug === match)[0];
-      }
-    } else {
-      return indexed(this.state.weekly);
+    if (!match) {
+      return this.state.weekly;
     }
+
+    if (!filtered) {
+      return this.state.weekly.posts.filter(post => post.slug === match)[0];
+    }
+
+    const taxonomy = window.location.pathname.split('/')[2].replace(/-/g, '_');
+
+    filtered
+      .filter(i => i.slug === match)
+      .forEach(tax => {
+        this.state.weekly.posts.forEach(post => {
+          post[taxonomy].forEach(id => id === tax.id && posts.push(post));
+        });
+      });
+
+    return {
+      filtered,
+      posts
+    };
   };
 
   render() {
-    const { currentPage, loading, routes, weekly } = this.state;
+    const { currentGroup, currentPage, loading, routes, weekly } = this.state;
+    const siteName = 'Rune Bear';
 
     const setDocument = params => {
       window.scrollTo(0, 0);
-      document.title = `${firstUpper(params.replace(/-/g, ' '))} | Rune Bear`;
+      document.title = `${firstUpper(params.replace(/-/g, ' '))} | ${siteName}`;
     };
 
     return (
@@ -125,7 +121,7 @@ class App extends React.Component {
                     exact
                     path="/about"
                     render={() => {
-                      document.title = 'About | Rune Bear';
+                      document.title = `About | ${siteName}`;
 
                       return <About route={routes.about} />;
                     }}
@@ -134,7 +130,7 @@ class App extends React.Component {
                     exact
                     path="/"
                     render={() => {
-                      document.title = 'Rune Bear';
+                      document.title = `${siteName}`;
 
                       return <Home route={routes.home} />;
                     }}
@@ -143,7 +139,7 @@ class App extends React.Component {
                     exact
                     path="/quarterly"
                     render={() => {
-                      document.title = 'Quarterly | Rune Bear';
+                      document.title = `Quarterly | ${siteName}`;
 
                       return <Quarterly route={routes.quarterly} />;
                     }}
@@ -152,7 +148,7 @@ class App extends React.Component {
                     exact
                     path="/submit"
                     render={() => {
-                      document.title = 'Submit | Rune Bear';
+                      document.title = `Submit | ${siteName}`;
 
                       return <Submit route={routes.submit} />;
                     }}
@@ -161,12 +157,13 @@ class App extends React.Component {
                     exact
                     path="/weekly"
                     render={() => {
-                      document.title = 'Weekly | Rune Bear';
+                      document.title = `Weekly | ${siteName}`;
                       window.scrollTo(0, 0);
 
                       return (
                         <WeeklyPosts
                           changePage={this.changePage}
+                          currentGroup={currentGroup}
                           currentPage={currentPage}
                           route={routes.weekly}
                           weekly={this.filterBy()}
@@ -180,7 +177,6 @@ class App extends React.Component {
                     render={({ match }) => {
                       return (
                         <WeeklyBySinglePost
-                          currentPage={currentPage}
                           post={this.filterBy(match.params.weeklyPost)}
                           weekly={weekly}
                         />
@@ -196,6 +192,7 @@ class App extends React.Component {
                       return (
                         <WeeklyByAuthor
                           changePage={this.changePage}
+                          currentGroup={currentGroup}
                           currentPage={currentPage}
                           weeklyByAuthor={this.filterBy(
                             match.params.author,
@@ -214,6 +211,7 @@ class App extends React.Component {
                       return (
                         <WeeklyByCategory
                           changePage={this.changePage}
+                          currentGroup={currentGroup}
                           currentPage={currentPage}
                           match={match}
                           weeklyByCategory={this.filterBy(
@@ -233,6 +231,7 @@ class App extends React.Component {
                       return (
                         <WeeklyByTag
                           changePage={this.changePage}
+                          currentGroup={currentGroup}
                           currentPage={currentPage}
                           match={match}
                           weeklyByTag={this.filterBy(
