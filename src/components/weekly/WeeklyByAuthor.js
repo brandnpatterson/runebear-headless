@@ -16,7 +16,7 @@ const WeeklyByAuthor = ({
   currentPage,
   weeklyByAuthor
 }) => {
-  const author = weeklyByAuthor.filtered[0];
+  const author = weeklyByAuthor.fromState[0];
   const links = author.acf.links;
 
   return (

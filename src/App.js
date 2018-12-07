@@ -67,20 +67,20 @@ class App extends React.Component {
     }
   };
 
-  filterBy = (match, filtered) => {
+  filterPosts = (match, fromState) => {
     const posts = [];
 
     if (!match) {
       return this.state.weekly;
     }
 
-    if (!filtered) {
+    if (!fromState) {
       return this.state.weekly.posts.filter(post => post.slug === match)[0];
     }
 
     const taxonomy = window.location.pathname.split('/')[2].replace(/-/g, '_');
 
-    filtered
+    fromState
       .filter(i => i.slug === match)
       .forEach(tax => {
         this.state.weekly.posts.forEach(post => {
@@ -89,7 +89,7 @@ class App extends React.Component {
       });
 
     return {
-      filtered,
+      fromState,
       posts
     };
   };
@@ -166,7 +166,7 @@ class App extends React.Component {
                           currentGroup={currentGroup}
                           currentPage={currentPage}
                           route={routes.weekly}
-                          weekly={this.filterBy()}
+                          weekly={this.filterPosts()}
                         />
                       );
                     }}
@@ -177,7 +177,7 @@ class App extends React.Component {
                     render={({ match }) => {
                       return (
                         <WeeklyBySinglePost
-                          post={this.filterBy(match.params.weeklyPost)}
+                          post={this.filterPosts(match.params.weeklyPost)}
                           weekly={weekly}
                         />
                       );
@@ -194,7 +194,7 @@ class App extends React.Component {
                           changePage={this.changePage}
                           currentGroup={currentGroup}
                           currentPage={currentPage}
-                          weeklyByAuthor={this.filterBy(
+                          weeklyByAuthor={this.filterPosts(
                             match.params.author,
                             weekly.authors
                           )}
@@ -214,7 +214,7 @@ class App extends React.Component {
                           currentGroup={currentGroup}
                           currentPage={currentPage}
                           match={match}
-                          weeklyByCategory={this.filterBy(
+                          weeklyByCategory={this.filterPosts(
                             match.params.category,
                             weekly.categories
                           )}
@@ -234,7 +234,7 @@ class App extends React.Component {
                           currentGroup={currentGroup}
                           currentPage={currentPage}
                           match={match}
-                          weeklyByTag={this.filterBy(
+                          weeklyByTag={this.filterPosts(
                             match.params.tag,
                             weekly.tags
                           )}
