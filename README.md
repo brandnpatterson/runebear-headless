@@ -13,7 +13,7 @@
 - [React Router](https://reacttraining.com/react-router/) - Declarative routing for React
 - [Prop Types](https://github.com/facebook/prop-types) - Runtime type checking for React props
 - [Styled Components](https://www.styled-components.com/) - Visual primitives for the component age
-- [Stylelint](https://stylelint.io/) - Lints Styled Components
+- [Stylelint](https://stylelint.io/) - Linter for Styles
 - [Axios](https://github.com/axios/axios) - Promise based HTTP client
 
 ## Authors
