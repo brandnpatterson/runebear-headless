@@ -15,7 +15,7 @@ const StyledWeeklyByPost = styled.div`
     font-size: 16px;
     margin: 0 auto 50px;
     max-width: 700px;
-    padding: 50px 50px 15px;
+    padding: 50px;
     width: 700px;
   }
 
