@@ -29,6 +29,10 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+    if (window.location.search !== '') {
+      window.location.href = window.location.origin;
+    }
+
     fetchRequests().then(data => {
       this.setState({
         routes: data.routes,
