@@ -33,13 +33,13 @@ const WeeklyByCategory = ({
 
           return (
             <WeeklyPost
-              authors={post._embedded['wp:term'][2]}
-              categories={post._embedded['wp:term'][0]}
+              authors={post._embedded && post._embedded['wp:term'][2]}
+              categories={post._embedded && post._embedded['wp:term'][0]}
               changePage={changePage}
               content={post.excerpt.rendered}
               key={post.id}
               post={post}
-              tags={post._embedded['wp:term'][1]}
+              tags={post._embedded && post._embedded['wp:term'][1]}
             />
           );
         } else return null;
