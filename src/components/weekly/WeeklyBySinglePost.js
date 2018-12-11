@@ -44,9 +44,9 @@ const WeeklyBySinglePost = ({ post, weekly }) => {
     </Link>
   );
 
-  const categories = post._embedded['wp:term'][0];
-  const tags = post._embedded['wp:term'][1];
-  const authors = post._embedded['wp:term'][2];
+  const categories = post._embedded && post._embedded['wp:term'][0];
+  const tags = post._embedded && post._embedded['wp:term'][1];
+  const authors = post._embedded && post._embedded['wp:term'][2];
 
   return (
     <StyledWeeklySinglePost>
