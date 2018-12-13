@@ -193,6 +193,14 @@ class App extends React.Component {
                     render={({ match }) => {
                       setDocument(match.params.author);
 
+                      let author;
+                      let auth;
+                      for (auth in weekly.authors) {
+                        if (weekly.authors[auth].slug === match.params.author) {
+                          author = weekly.authors[auth];
+                        }
+                      }
+
                       return (
                         <WeeklyByAuthor
                           changePage={this.changePage}
@@ -200,7 +208,7 @@ class App extends React.Component {
                           currentPage={currentPage}
                           weeklyByAuthor={this.filterPosts(
                             match.params.author,
-                            weekly.authors
+                            [author]
                           )}
                         />
                       );
