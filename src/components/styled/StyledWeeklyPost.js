@@ -6,17 +6,17 @@ const StyledWeeklyByPost = styled.div`
   align-items: left;
   display: flex;
   flex-direction: column;
-  font-size: 14px;
-  max-width: 700px;
+  font-size: 0.875rem;
+  max-width: 43.75rem;
   position: relative;
 
   @media ${mediumUp} {
-    border: 1px solid ${gray};
-    font-size: 16px;
-    margin: 0 auto 50px;
-    max-width: 700px;
-    padding: 50px;
-    width: 700px;
+    border: 0.0625rem solid ${gray};
+    font-size: 1rem;
+    margin: 0 auto 3.125rem;
+    max-width: 43.75rem;
+    padding: 3.125rem;
+    width: 43.75rem;
   }
 
   .categories-and-tags {
@@ -26,26 +26,26 @@ const StyledWeeklyByPost = styled.div`
   h2 {
     font-weight: bold;
     position: absolute;
-    right: 20px;
+    right: 1.25rem;
     text-align: right;
     text-transform: uppercase;
 
     @media ${mediumUp} {
-      right: 70px;
+      right: 4.375rem;
     }
   }
 
   .card-content {
     margin: 0;
-    padding: 55px 20px 0;
+    padding: 3.438rem 1.25rem 0;
 
     @media ${mediumUp} {
-      padding-top: 70px;
+      padding-top: 4.375rem;
     }
   }
 
   .card-authors {
-    min-height: 24px;
+    min-height: 1.5rem;
   }
 
   .card-read-more {
@@ -57,18 +57,18 @@ const StyledWeeklyByPost = styled.div`
     border: 0;
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
-    margin-left: 22px;
-    min-height: 48px;
+    margin-bottom: 0.9375rem;
+    margin-left: 1.375rem;
+    min-height: 3rem;
 
     @media ${smallOnly} {
-      margin-bottom: 100px;
+      margin-bottom: 6.25rem;
     }
   }
 
   .card-tags {
     @media ${mediumUp} {
-      margin-bottom: 15px;
+      margin-bottom: 0.9375rem;
     }
   }
 `;

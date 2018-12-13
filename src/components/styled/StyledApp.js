@@ -16,39 +16,39 @@ const StyledApp = styled.div`
   }
 
   h1 {
-    font-size: 26px;
+    font-size: 1.625rem;
     @media ${mediumUp} {
-      font-size: 30px;
+      font-size: 1.875rem;
     }
   }
 
   h2 {
-    font-size: 22px;
+    font-size: 1.375rem;
     @media ${mediumUp} {
-      font-size: 24px;
+      font-size: 1.5rem;
     }
   }
 
   h3 {
-    font-size: 20px;
+    font-size: 1.25rem;
     @media ${mediumUp} {
-      font-size: 22px;
+      font-size: 1.375rem;
     }
   }
 
   h4 {
-    font-size: 18px;
+    font-size: 1.125rem;
     @media ${mediumUp} {
-      font-size: 20px;
+      font-size: 1.25rem;
     }
   }
 
   img {
-    height: 200px;
-    width: 200px;
+    height: 12.5rem;
+    width: 12.5rem;
     @media ${mediumUp} {
-      height: 400px;
-      width: 400px;
+      height: 25rem;
+      width: 25rem;
     }
   }
 
@@ -70,9 +70,9 @@ const StyledApp = styled.div`
     background-color: #ddd;
     border: 0;
     color: ${black};
-    font-size: 16px;
-    margin: 4px 2px;
-    padding: 16px 32px;
+    font-size: 1rem;
+    margin: 0.25rem 0.125rem;
+    padding: 1rem 2rem;
     text-align: center;
     transition: 0.3s;
   }
@@ -87,21 +87,21 @@ const StyledApp = styled.div`
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding-top: 120px;
+    padding-top: 7.5rem;
     position: relative;
     width: 100vw;
 
     @media ${smallOnly} {
-      padding-top: 70px;
+      padding-top: 4.375rem;
     }
   }
 
   .loading-screen h2 {
     position: absolute;
-    top: 300px;
+    top: 18.75rem;
 
     @media ${mediumUp} {
-      top: 450px;
+      top: 28.13rem;
     }
   }
 
@@ -111,7 +111,7 @@ const StyledApp = styled.div`
     justify-content: center;
 
     @media ${smallOnly} {
-      margin-top: -50px;
+      margin-top: -3.125rem;
     }
   }
 
@@ -121,25 +121,25 @@ const StyledApp = styled.div`
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
-    margin: 0 auto 100px;
+    margin: 0 auto 6.25rem;
 
     @media ${mediumUp} {
       flex-direction: row;
-      max-width: 630px;
+      max-width: 39.38rem;
     }
   }
 
   .featured-hero h1 {
-    font-size: 70px;
+    font-size: 4.375rem;
 
     @media ${mediumUp} {
-      font-size: 100px;
+      font-size: 6.25rem;
     }
   }
 
   .featured-hero img {
-    height: 150px;
-    width: 150px;
+    height: 9.375rem;
+    width: 9.375rem;
   }
 
   .featured-hero strong {
@@ -149,7 +149,7 @@ const StyledApp = styled.div`
   .pagination {
     display: flex;
     justify-content: center;
-    margin: 50px auto 100px;
+    margin: 3.125rem auto 6.25rem;
   }
 
   .pagination ul {
@@ -157,8 +157,8 @@ const StyledApp = styled.div`
   }
 
   .filter-header {
-    max-width: 700px;
-    padding: 24px 24px 73px;
+    max-width: 43.75rem;
+    padding: 1.5rem 1.5rem 4.563rem;
   }
 
   .filter-header strong {
@@ -167,7 +167,7 @@ const StyledApp = styled.div`
 
   .filter-page {
     @media ${mediumUp} {
-      margin-bottom: 50px;
+      margin-bottom: 3.125rem;
     }
   }
 

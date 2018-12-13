@@ -19,7 +19,7 @@ const Submit = ({ route }) => {
 const StyledSubmit = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 100px;
+  margin-bottom: 6.25rem;
 
   @media ${mediumUp} {
     flex-direction: row;
@@ -36,26 +36,26 @@ const StyledSubmit = styled.div`
     flex-direction: column;
     margin: 0 auto;
     max-width: 90%;
-    padding: 0 30px 50px;
+    padding: 0 1.875rem 3.125rem;
     width: 100%;
 
     @media ${mediumUp} {
-      border: 1px solid ${gray};
-      margin: 50px 30px;
+      border: 0.0625rem solid ${gray};
+      margin: 3.125rem 1.875rem;
       width: 50%;
     }
   }
 
   .card h1 {
     display: block;
-    font-size: 110px;
+    font-size: 6.875rem;
     font-weight: bold;
-    margin: 30px auto;
+    margin: 1.875rem auto;
     padding-top: 0;
   }
 
   .card p {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
   }
 `;
 

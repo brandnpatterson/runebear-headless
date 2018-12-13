@@ -118,7 +118,7 @@ const Pagination = ({ changePage, currentGroup, currentPage, posts }) => {
 
 const StyledPagination = styled.div`
   @media ${smallOnly} {
-    margin: 50px auto 0;
+    margin: 3.125rem auto 0;
   }
 
   .cursor-default {
@@ -126,7 +126,7 @@ const StyledPagination = styled.div`
   }
 
   .cursor-default:hover {
-    border: 1px solid #dbdbdb;
+    border: 0.0625rem solid #dbdbdb;
   }
 `;
 

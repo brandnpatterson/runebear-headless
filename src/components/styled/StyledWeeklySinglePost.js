@@ -6,17 +6,17 @@ const StyledWeeklySinglePost = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  font-size: 0.875rem;
   justify-content: space-around;
   text-align: left;
   width: 100%;
 
   @media ${smallOnly} {
-    margin-top: 50px;
+    margin-top: 3.125rem;
   }
 
   @media ${mediumUp} {
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   .card-title {
@@ -30,34 +30,34 @@ const StyledWeeklySinglePost = styled.div`
       border-color: ${gray};
       border-image: initial;
       border-style: solid;
-      border-width: 1px;
-      padding: 50px 0;
-      width: 700px;
+      border-width: 0.0625rem;
+      padding: 3.125rem 0;
+      width: 43.75rem;
     }
   }
 
   .card-content {
-    padding: 0 20px;
+    padding: 0 1.25rem;
 
     @media ${mediumUp} {
-      padding: 30px 74px 15px;
+      padding: 1.875rem 4.625rem 0.9375rem;
     }
   }
 
   .card-footer {
     border: 0;
-    margin-top: 50px;
+    margin-top: 3.125rem;
     padding-left: 1.5rem;
 
     @media ${mediumUp} {
-      margin-top: 100px;
-      padding-bottom: 20px;
-      padding-left: 74px;
+      margin-top: 6.25rem;
+      padding-bottom: 1.25rem;
+      padding-left: 4.625rem;
     }
   }
 
   .card-authors {
-    margin: 50px auto;
+    margin: 3.125rem auto;
   }
 
   .categories-and-tags {
@@ -67,27 +67,27 @@ const StyledWeeklySinglePost = styled.div`
   .arrow-wrapper {
     display: flex;
     justify-content: space-between;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
     width: 100%;
   }
 
   .arrow-wrapper-top {
-    margin-bottom: 50px;
+    margin-bottom: 3.125rem;
 
     @media ${mediumUp} {
       position: absolute;
-      top: 500px;
-      width: 1000px;
+      top: 31.25rem;
+      width: 62.5rem;
     }
   }
 
   .left-arrow,
   .right-arrow {
-    border: 1px solid ${gray};
+    border: 0.0625rem solid ${gray};
     border-radius: 10%;
     cursor: pointer;
-    padding: 10px;
+    padding: 0.625rem;
   }
 `;
 

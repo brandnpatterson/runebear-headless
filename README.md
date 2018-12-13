@@ -1,9 +1,10 @@
 <div style="display: flex">
-  <img src="https://admin.runebear.com/wp-content/uploads/2018/05/runebear-logo.png" alt="Runebear Logo" width="250px" height="250px">
-  <img src="https://admin.runebear.com/wp-content/uploads/2018/05/runebear-word.png" alt="Runebear Text" width="250px" height="250px">
+  <img src="https://admin.runebear.com/wp-content/uploads/2018/05/runebear-logo.png" alt="Runebear Logo" width="15.63rem" height="15.63rem">
+  <img src="https://admin.runebear.com/wp-content/uploads/2018/05/runebear-word.png" alt="Runebear Text" width="15.63rem" height="15.63rem">
 </div>
 
 # Rune Bear
+
 <a href="http://runebear.com/">_Rune Bear_</a> is a digital literary magazine dedicated to the Strange, Surreal, Supernatural, and Speculative.
 
 ## Built With
@@ -17,7 +18,9 @@
 - [Axios](https://github.com/axios/axios) - Promise based HTTP client
 
 ## Authors
+
 **Brandon Patterson** - [brandnpatterson](https://github.com/brandnpatterson)
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

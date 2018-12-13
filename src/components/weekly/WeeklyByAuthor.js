@@ -22,7 +22,7 @@ const WeeklyByAuthor = ({
   return (
     <div className="filter-page">
       <header className="filter-header">
-        <h1 style={{ textAlign: 'center', marginBottom: '50px' }}>
+        <h1 style={{ textAlign: 'center', marginBottom: '3.125rem' }}>
           <strong>{author.name.toUpperCase()}</strong>
         </h1>
         <div>

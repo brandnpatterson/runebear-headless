@@ -33,10 +33,9 @@ const StyledFooter = styled.footer`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-top: 20px;
-
+  margin-top: 1.25rem;
   @media ${mediumDown} {
-    padding-bottom: 30px;
+    padding-bottom: 1.875rem;
   }
 
   a {
@@ -45,17 +44,17 @@ const StyledFooter = styled.footer`
 
   p {
     color: ${light};
-    font-size: 14px;
-    max-width: 400px;
-    padding: 30px 0 0 10px;
+    font-size: 0.875rem;
+    max-width: 25rem;
+    padding: 1.875rem 0 0 0.625rem;
     text-align: left;
     width: 90%;
 
     @media ${mediumUp} {
-      font-size: 18px;
-      margin: 25px 0 0 35px;
-      max-width: 500px;
-      width: 530px;
+      font-size: 1.125rem;
+      margin: 1.563rem 0 0 2.188rem;
+      max-width: 31.25rem;
+      width: 33.13rem;
     }
   }
 
@@ -69,13 +68,13 @@ const StyledFooter = styled.footer`
 
   .copyright {
     color: ${light};
-    font-size: 14px;
-    margin-left: 10px;
+    font-size: 0.875rem;
+    margin-left: 0.625rem;
     text-align: left;
 
     @media ${mediumUp} {
-      font-size: 18px;
-      margin: 25px 0 50px 45px;
+      font-size: 1.125rem;
+      margin: 1.563rem 0 3.125rem 2.813rem;
     }
   }
 

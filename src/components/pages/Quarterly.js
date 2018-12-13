@@ -24,8 +24,8 @@ const StyledQuarterly = styled.div`
 
   @media ${mediumUp} {
     flex-direction: row;
-    margin: 128px auto 0;
-    max-width: 800px;
+    margin: 8rem auto 0;
+    max-width: 50rem;
   }
 
   .speech-bubble-wrapper {
@@ -34,19 +34,19 @@ const StyledQuarterly = styled.div`
 
   .speech-bubble {
     @media ${mediumUp} {
-      margin-top: -120px;
+      margin-top: -7.5rem;
     }
   }
 
   .coming-soon-text {
-    left: 50px;
+    left: 3.125rem;
     position: absolute;
-    top: 70px;
+    top: 4.375rem;
 
     @media ${mediumUp} {
-      font-size: 30px;
-      left: 110px;
-      top: 25px;
+      font-size: 1.875rem;
+      left: 6.875rem;
+      top: 1.563rem;
     }
   }
 `;

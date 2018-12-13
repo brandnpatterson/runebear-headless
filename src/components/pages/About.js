@@ -15,39 +15,39 @@ const About = ({ route }) => {
 };
 
 const StyledAbout = styled.div`
-  margin-bottom: 100px;
+  margin-bottom: 6.25rem;
 
   .container {
-    margin: 50px auto;
-    max-width: 950px;
-    padding: 30px 50px 50px;
+    margin: 3.125rem auto;
+    max-width: 59.38rem;
+    padding: 1.875rem 3.125rem 3.125rem;
     width: 100%;
 
     @media ${mediumUp} {
-      border: 1px solid ${gray};
+      border: 0.0625rem solid ${gray};
     }
 
     @media ${mediumUp} {
       display: flex;
       justify-content: space-around;
-      width: 1100px;
+      width: 68.75rem;
     }
   }
 
   .container p {
     @media ${mediumUp} {
-      padding-top: 10px;
+      padding-top: 0.625rem;
     }
   }
 
   .content-inner h1 {
-    font-size: 26px;
+    font-size: 1.625rem;
     margin-bottom: 0;
   }
 
   .content-inner h2 {
-    font-size: 20px;
-    margin-bottom: 30px;
+    font-size: 1.25rem;
+    margin-bottom: 1.875rem;
   }
 
   .content-inner h1,
@@ -58,9 +58,9 @@ const StyledAbout = styled.div`
 
   hr {
     background: ${black};
-    height: 3px;
-    margin-top: 30px;
-    width: 300px;
+    height: 0.1875rem;
+    margin-top: 1.875rem;
+    width: 18.75rem;
   }
 `;
 

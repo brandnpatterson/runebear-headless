@@ -87,10 +87,10 @@ class Header extends Component {
 
 const StyledHeader = styled.header`
   .navbar {
-    margin-bottom: 50px;
+    margin-bottom: 3.125rem;
 
     @media ${smallOnly} {
-      margin-top: -2px;
+      margin-top: -0.125rem;
     }
   }
 
@@ -100,8 +100,8 @@ const StyledHeader = styled.header`
   }
 
   .navbar-burger {
-    padding-top: 12px !important;
-    margin-right: 12px;
+    padding-top: 0.75rem !important;
+    margin-right: 0.75rem;
     position: relative;
     z-index: 3;
   }
@@ -119,8 +119,8 @@ const StyledHeader = styled.header`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    margin: 20px 0;
-    max-width: 1100px;
+    margin: 1.25rem 0;
+    max-width: 68.75rem;
 
     @media ${mediumUp} {
       flex-direction: row;
@@ -131,7 +131,7 @@ const StyledHeader = styled.header`
   .navbar-items a {
     color: ${light};
     font-family: serif;
-    font-size: 25px;
+    font-size: 1.5625rem;
   }
 
   .navbar-item:hover,
@@ -148,14 +148,14 @@ const StyledHeader = styled.header`
 
   .navbar-items .navbar-item {
     @media ${mediumUp} {
-      margin: 0 35px;
+      margin: 0 2.1875rem;
     }
   }
 
   .navbar-target.is-active {
-    padding-top: 20px;
+    padding-top: 1.25rem;
     position: relative;
-    top: -50px;
+    top: -3.125rem;
   }
 
   .runebear-logo.is-active {
@@ -167,7 +167,7 @@ const StyledHeader = styled.header`
     position: absolute;
     right: 0;
     text-align: right;
-    top: 60px;
+    top: 3.75rem;
   }
 `;
 

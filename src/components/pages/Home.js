@@ -14,7 +14,7 @@ const Home = ({ route }) => {
 };
 
 const StyledHome = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 3.125rem;
 
   p {
     align-items: center;
@@ -29,10 +29,10 @@ const StyledHome = styled.div`
   }
 
   .images-wrapper {
-    margin: 0 auto 20px;
+    margin: 0 auto 1.25rem;
 
     @media ${mediumUp} {
-      margin-top: 20px;
+      margin-top: 1.25rem;
     }
   }
 
@@ -40,10 +40,10 @@ const StyledHome = styled.div`
     display: block;
     margin: 0 auto;
     text-align: center;
-    width: 300px;
+    width: 18.75rem;
 
     @media ${mediumUp} {
-      width: 450px;
+      width: 28.13rem;
     }
   }
 `;
