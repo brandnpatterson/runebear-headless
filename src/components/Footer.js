@@ -1,19 +1,21 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { array } from 'prop-types';
 import styled from 'styled-components';
 import { blue, dark, light } from '../util/color';
 import { mediumDown, mediumUp } from '../util/media';
 
 const propTypes = {
-  __html: string.isRequired
+  pages: array.isRequired
 };
 
-const Footer = ({ __html }) => {
-  const thisYear = new Date().getFullYear();
+const Footer = ({ pages }) => {
+  const page = pages.filter(p => p.slug === 'footer')[0];
 
   return (
     <StyledFooter>
-      <div dangerouslySetInnerHTML={{ __html }} />
+      <div
+        dangerouslySetInnerHTML={{ __html: page && page.content.rendered }}
+      />
       <a
         className="copyright"
         href="https://github.com/brandnpatterson"
@@ -21,7 +23,7 @@ const Footer = ({ __html }) => {
         rel="noopener noreferrer"
       >
         &copy;
-        {thisYear} Brandon Patterson. All Rights Reserved.
+        {new Date().getFullYear()} Brandon Patterson. All Rights Reserved.
       </a>
     </StyledFooter>
   );

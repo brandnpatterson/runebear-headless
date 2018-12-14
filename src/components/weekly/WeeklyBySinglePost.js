@@ -1,5 +1,5 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { array, object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { firstUpper } from '../../util';
 
@@ -7,27 +7,27 @@ import StyledWeeklySinglePost from '../styled/StyledWeeklySinglePost';
 
 const propTypes = {
   post: object.isRequired,
-  weekly: object.isRequired
+  posts: array.isRequired
 };
 
-const WeeklyBySinglePost = ({ post, weekly }) => {
+const WeeklyBySinglePost = ({ post, posts }) => {
   document.title = `${firstUpper(post.title.rendered)} | Rune Bear`;
 
   let next;
   let prev;
 
-  weekly.posts.forEach((_post, index) => {
+  posts.forEach((_post, index) => {
     if (_post.id === post.id) {
-      if (weekly.posts[index + 1]) {
-        next = weekly.posts[index + 1];
+      if (posts[index + 1]) {
+        next = posts[index + 1];
       } else {
-        next = weekly.posts[0];
+        next = posts[0];
       }
 
-      if (weekly.posts[index - 1]) {
-        prev = weekly.posts[index - 1];
+      if (posts[index - 1]) {
+        prev = posts[index - 1];
       } else {
-        prev = weekly.posts[weekly.posts.length - 1];
+        prev = posts[posts.length - 1];
       }
     }
   });

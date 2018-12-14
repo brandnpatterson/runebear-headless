@@ -20,6 +20,8 @@
     "styled-components": "^3.2.5"
   },
   "devDependencies": {
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "react-scripts": "1.1.0",
     "stylelint": "^9.2.1",
     "stylelint-config-recommended": "^2.1.0",

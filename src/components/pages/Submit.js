@@ -1,17 +1,19 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { array } from 'prop-types';
 import styled from 'styled-components';
 import { gray } from '../../util/color';
 import { mediumUp, largeUp } from '../../util/media';
 
 const propTypes = {
-  route: object.isRequired
+  pages: array.isRequired
 };
 
-const Submit = ({ route }) => {
+const Submit = ({ pages }) => {
+  const page = pages.filter(p => p.slug === 'submit')[0];
+
   return (
     <StyledSubmit
-      dangerouslySetInnerHTML={{ __html: route.content.rendered }}
+      dangerouslySetInnerHTML={{ __html: page && page.content.rendered }}
     />
   );
 };

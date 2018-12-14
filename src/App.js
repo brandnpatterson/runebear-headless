@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { fetchRequests } from './api';
+import { fetchAll } from './api';
 import { firstUpper } from './util';
 
 import About from './components/pages/About';
@@ -20,12 +20,15 @@ import WeeklyPosts from './components/weekly/WeeklyPosts';
 
 class App extends React.Component {
   state = {
+    categories: null,
     currentGroup: [0, 1, 2, 3],
     currentPage: 1,
     loading: true,
     pageLength: 4,
-    routes: {},
-    weekly: {}
+    pages: [],
+    post_author: [],
+    tags: [],
+    weekly_posts: []
   };
 
   componentDidMount() {
@@ -33,11 +36,22 @@ class App extends React.Component {
       window.location.href = window.location.origin;
     }
 
-    fetchRequests().then(data => {
+    const requests = Promise.all([
+      fetchAll('categories'),
+      fetchAll('pages'),
+      fetchAll('post_author'),
+      fetchAll('tags'),
+      fetchAll('weekly_posts')
+    ]).catch(err => console.error(err));
+
+    requests.then(data => {
       this.setState({
-        routes: data.routes,
-        loading: false,
-        weekly: data.weekly
+        categories: data[0],
+        pages: data[1],
+        post_author: data[2],
+        tags: data[3],
+        weekly_posts: data[4],
+        loading: false
       });
     });
   }
@@ -75,11 +89,11 @@ class App extends React.Component {
     const posts = [];
 
     if (!match) {
-      return this.state.weekly;
+      return this.state.weekly_posts;
     }
 
     if (!fromState) {
-      return this.state.weekly.posts.filter(post => post.slug === match)[0];
+      return this.state.weekly_posts.filter(post => post.slug === match)[0];
     }
 
     const taxonomy = window.location.pathname.split('/')[2].replace(/-/g, '_');
@@ -87,7 +101,7 @@ class App extends React.Component {
     fromState
       .filter(i => i.slug === match)
       .forEach(tax => {
-        this.state.weekly.posts.forEach(post => {
+        this.state.weekly_posts.forEach(post => {
           post[taxonomy].forEach(id => id === tax.id && posts.push(post));
         });
       });
@@ -99,7 +113,16 @@ class App extends React.Component {
   };
 
   render() {
-    const { currentGroup, currentPage, loading, routes, weekly } = this.state;
+    const {
+      categories,
+      currentGroup,
+      currentPage,
+      loading,
+      pages,
+      post_author,
+      tags,
+      weekly_posts
+    } = this.state;
     const siteName = 'Rune Bear';
 
     const setDocument = params => {
@@ -116,27 +139,28 @@ class App extends React.Component {
             <div className={'wrapper ' + (loading ? '' : 'show')}>
               <Header
                 changePage={this.changePage}
-                routes={routes}
-                weekly={weekly}
+                pages={pages
+                  .filter(page => page.slug !== 'footer')
+                  .sort((a, b) => a.id - b.id)}
               />
               <div className="main-content">
                 <Switch>
-                  <Route
-                    exact
-                    path="/about"
-                    render={() => {
-                      document.title = `About | ${siteName}`;
-
-                      return <About route={routes.about} />;
-                    }}
-                  />
                   <Route
                     exact
                     path="/"
                     render={() => {
                       document.title = `${siteName}`;
 
-                      return <Home route={routes.home} />;
+                      return <Home pages={pages} />;
+                    }}
+                  />
+                  <Route
+                    exact
+                    path="/about"
+                    render={() => {
+                      document.title = `About | ${siteName}`;
+
+                      return <About pages={pages} />;
                     }}
                   />
                   <Route
@@ -145,7 +169,7 @@ class App extends React.Component {
                     render={() => {
                       document.title = `Quarterly | ${siteName}`;
 
-                      return <Quarterly route={routes.quarterly} />;
+                      return <Quarterly pages={pages} />;
                     }}
                   />
                   <Route
@@ -154,7 +178,7 @@ class App extends React.Component {
                     render={() => {
                       document.title = `Submit | ${siteName}`;
 
-                      return <Submit route={routes.submit} />;
+                      return <Submit pages={pages} />;
                     }}
                   />
                   <Route
@@ -169,20 +193,20 @@ class App extends React.Component {
                           changePage={this.changePage}
                           currentGroup={currentGroup}
                           currentPage={currentPage}
-                          route={routes.weekly}
-                          weekly={this.filterPosts()}
+                          pages={pages}
+                          posts={this.filterPosts()}
                         />
                       );
                     }}
                   />
                   <Route
                     exact
-                    path={`/weekly/:weeklyPost`}
+                    path={`/weekly/:weeklySinglePost`}
                     render={({ match }) => {
                       return (
                         <WeeklyBySinglePost
-                          post={this.filterPosts(match.params.weeklyPost)}
-                          weekly={weekly}
+                          post={this.filterPosts(match.params.weeklySinglePost)}
+                          posts={weekly_posts}
                         />
                       );
                     }}
@@ -195,9 +219,9 @@ class App extends React.Component {
 
                       let author;
                       let auth;
-                      for (auth in weekly.authors) {
-                        if (weekly.authors[auth].slug === match.params.author) {
-                          author = weekly.authors[auth];
+                      for (auth in post_author) {
+                        if (post_author[auth].slug === match.params.author) {
+                          author = post_author[auth];
                         }
                       }
 
@@ -228,7 +252,7 @@ class App extends React.Component {
                           match={match}
                           weeklyByCategory={this.filterPosts(
                             match.params.category,
-                            weekly.categories
+                            categories
                           )}
                         />
                       );
@@ -246,10 +270,7 @@ class App extends React.Component {
                           currentGroup={currentGroup}
                           currentPage={currentPage}
                           match={match}
-                          weeklyByTag={this.filterPosts(
-                            match.params.tag,
-                            weekly.tags
-                          )}
+                          weeklyByTag={this.filterPosts(match.params.tag, tags)}
                         />
                       );
                     }}
@@ -257,7 +278,7 @@ class App extends React.Component {
                   <Route render={NotFound} />
                 </Switch>
               </div>
-              <Footer __html={routes.footer.content.rendered} />
+              <Footer pages={pages} />
             </div>
           )}
         </Router>

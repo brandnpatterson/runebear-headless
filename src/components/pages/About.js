@@ -1,16 +1,20 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { array } from 'prop-types';
 import styled from 'styled-components';
 import { black, gray } from '../../util/color';
 import { mediumUp } from '../../util/media';
 
 const propTypes = {
-  route: object.isRequired
+  pages: array.isRequired
 };
 
-const About = ({ route }) => {
+const About = ({ pages }) => {
+  const page = pages.filter(p => p.slug === 'about')[0];
+
   return (
-    <StyledAbout dangerouslySetInnerHTML={{ __html: route.content.rendered }} />
+    <StyledAbout
+      dangerouslySetInnerHTML={{ __html: page && page.content.rendered }}
+    />
   );
 };
 

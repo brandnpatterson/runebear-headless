@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object } from 'prop-types';
+import { array, func, object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { blue, dark, light } from '../util/color';
@@ -7,7 +7,7 @@ import { mediumUp, smallOnly } from '../util/media';
 
 const propTypes = {
   changePage: func.isRequired,
-  routes: object,
+  pages: array.isRequired,
   weekly: object
 };
 
@@ -33,25 +33,18 @@ class Header extends Component {
       }
     });
 
-    const renderHeader = () => {
-      const { routes } = this.props;
-
-      const header = Object.keys(routes)
-        .filter(page => page !== 'footer')
-        .filter(page => page !== 'loading')
-        .sort((a, b) => routes[a].id - routes[b].id);
-
-      return header.map(page => {
-        const location = page === 'home' ? '' : page;
+    const Navigation = () => {
+      return this.props.pages.map(page => {
+        const location = page.slug === 'home' ? '' : page.slug;
 
         return (
           <Link
-            key={page}
+            key={page.id}
             onClick={toggleActive}
             className="navbar-item"
             to={'/' + location}
           >
-            {page.toUpperCase()}
+            {page.slug.toUpperCase()}
           </Link>
         );
       });
@@ -77,7 +70,9 @@ class Header extends Component {
               'navbar-menu navbar-target ' + (isActive ? 'is-active' : '')
             }
           >
-            <div className="navbar-items">{renderHeader()}</div>
+            <div className="navbar-items">
+              <Navigation />
+            </div>
           </div>
         </nav>
       </StyledHeader>

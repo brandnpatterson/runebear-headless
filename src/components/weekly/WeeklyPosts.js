@@ -1,28 +1,32 @@
 import React from 'react';
-import { func, number, object } from 'prop-types';
+import { array, func, number } from 'prop-types';
 import Pagination from '../Pagination';
 import WeeklyPost from './WeeklyPost';
 
 const propTypes = {
   changePage: func.isRequired,
   currentPage: number.isRequired,
-  route: object.isRequired,
-  weekly: object.isRequired
+  pages: array.isRequired,
+  posts: array.isRequired
 };
 
 const WeeklyPosts = ({
   currentGroup,
   currentPage,
   changePage,
-  route,
-  weekly
+  pages,
+  posts
 }) => {
+  const page = pages.filter(p => p.slug === 'weekly')[0];
+
   return (
     <div>
-      <div dangerouslySetInnerHTML={{ __html: route.content.rendered }} />
+      <div
+        dangerouslySetInnerHTML={{ __html: page && page.content.rendered }}
+      />
       {currentGroup.map(index => {
-        if (weekly.posts[index]) {
-          const post = weekly.posts[index];
+        if (posts[index]) {
+          const post = posts[index];
 
           return (
             <WeeklyPost
@@ -41,7 +45,7 @@ const WeeklyPosts = ({
         changePage={changePage}
         currentGroup={currentGroup}
         currentPage={currentPage}
-        posts={weekly.posts}
+        posts={posts}
       />
     </div>
   );

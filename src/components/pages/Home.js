@@ -1,15 +1,19 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { array } from 'prop-types';
 import styled from 'styled-components';
 import { mediumUp } from '../../util/media';
 
 const propTypes = {
-  route: object.isRequired
+  pages: array.isRequired
 };
 
-const Home = ({ route }) => {
+const Home = ({ pages }) => {
+  const page = pages.filter(p => p.slug === 'home')[0];
+
   return (
-    <StyledHome dangerouslySetInnerHTML={{ __html: route.content.rendered }} />
+    <StyledHome
+      dangerouslySetInnerHTML={{ __html: page && page.content.rendered }}
+    />
   );
 };
 
