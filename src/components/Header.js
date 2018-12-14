@@ -41,7 +41,7 @@ class Header extends Component {
           <Link
             key={page.id}
             onClick={toggleActive}
-            className="navbar-item"
+            className={`navbar-item ${page.slug}`}
             to={'/' + location}
           >
             {page.slug.toUpperCase()}

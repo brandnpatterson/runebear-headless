@@ -131,8 +131,8 @@ class App extends React.Component {
     };
 
     return (
-      <StyledApp>
-        <Router>
+      <Router>
+        <StyledApp>
           {loading ? (
             <Loading />
           ) : (
@@ -281,8 +281,8 @@ class App extends React.Component {
               <Footer pages={pages} />
             </div>
           )}
-        </Router>
-      </StyledApp>
+        </StyledApp>
+      </Router>
     );
   }
 }
