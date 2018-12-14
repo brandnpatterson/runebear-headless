@@ -9,16 +9,18 @@
 
 ## Built With
 
-- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
-- [Create React App](https://facebook.github.io/create-react-app/) - Create React apps with no build configuration
-- [React Router](https://reacttraining.com/react-router/) - Declarative routing for React
-- [Prop Types](https://github.com/facebook/prop-types) - Runtime type checking for React props
-- [Styled Components](https://www.styled-components.com/) - Visual primitives for the component age
-- [Stylelint](https://stylelint.io/) - Linter for Styles
-- [Axios](https://github.com/axios/axios) - Promise based HTTP client
-- [Jest](https://jestjs.io/) - Snapshot, Unit, and Integration Testing Library
-- [Enzyme](https://airbnb.io/enzyme/) - Testing Library built for React Components
-- [Cypress](https://www.cypress.io/) - End to End Testing Client
+<ul class="built-with">
+  <li><a href="https://reactjs.org/" target="_blank">React</a> - A JavaScript library for building user interfaces</li>
+  <li><a href="https://facebook.github.io/create-react-app/" target="_blank">Create React App</a> - Create React apps with no build configuration</li>
+  <li><a href="https://reacttraining.com/react-router/" target="_blank">React Router</a> - Declarative routing for React</li>
+  <li><a href="https://github.com/facebook/prop-types" target="_blank">Prop Types</a> - Runtime type checking for React props</li>
+  <li><a href="https://www.styled-components.com/" target="_blank">Styled Components</a> - Visual primitives for the component age</li>
+  <li><a href="https://stylelint.io/" target="_blank">Stylelint</a> - Linter for Styles</li>
+  <li><a href="https://github.com/axios/axios" target="_blank">Axios</a> - Promise based HTTP client</li>
+  <li><a href="https://github.com/axios/axios" target="_blank">Jest</a> - Snapshot, Unit, and Integration Testing Library</li>
+  <li><a href="(https://github.com/axios/axios" target="_blank">Enzyme</a> - Testing Library built for React Components</li>
+  <li><a href="(https://github.com/axios/axios" target="_blank">Cypress</a> - End to End Testing Client</li>
+</ul>
 
 ## Authors
 
