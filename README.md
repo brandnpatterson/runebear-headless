@@ -16,6 +16,9 @@
 - [Styled Components](https://www.styled-components.com/) - Visual primitives for the component age
 - [Stylelint](https://stylelint.io/) - Linter for Styles
 - [Axios](https://github.com/axios/axios) - Promise based HTTP client
+- [Jest](https://jestjs.io/) - Snapshot, Unit, and Integration Testing Library
+- [Enzyme](https://airbnb.io/enzyme/) - Testing Library built for React Components
+- [Cypress](https://www.cypress.io/) - End to End Testing Client
 
 ## Authors
 
