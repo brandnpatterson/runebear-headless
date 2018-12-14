@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { fetchAll } from './api';
+import { fetchRequests } from './api';
 import { firstUpper } from './util';
 
 import About from './components/pages/About';
@@ -36,15 +36,7 @@ class App extends React.Component {
       window.location.href = window.location.origin;
     }
 
-    const requests = Promise.all([
-      fetchAll('categories'),
-      fetchAll('pages'),
-      fetchAll('post_author'),
-      fetchAll('tags'),
-      fetchAll('weekly_posts')
-    ]).catch(err => console.error(err));
-
-    requests.then(data => {
+    fetchRequests().then(data => {
       this.setState({
         categories: data[0],
         pages: data[1],

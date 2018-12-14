@@ -11,3 +11,13 @@ export const fetchAll = req => {
       .catch(err => reject(err));
   });
 };
+
+export const fetchRequests = () => {
+  return Promise.all([
+    fetchAll('categories'),
+    fetchAll('pages'),
+    fetchAll('post_author'),
+    fetchAll('tags'),
+    fetchAll('weekly_posts')
+  ]).catch(err => console.error(err));
+};
