@@ -45,7 +45,7 @@ it('fetches all http requests', async () => {
     fetchAll('weekly_posts')
   ]);
 
-  console.log(wrapper.html());
+  expect(wrapper.length).toBeGreaterThan(0);
 });
 
 afterEach(() => {
