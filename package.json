@@ -9,7 +9,7 @@
     "dev": "npm run stylelint && npm start",
     "start": "react-scripts start",
     "stylelint": "stylelint src/**/**/*.js",
-    "test:cypress": "cypress open",
+    "test:cypress": "npm start && cypress open",
     "test:jest": "react-scripts test --env=jsdom"
   },
   "dependencies": {

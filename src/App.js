@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { fetchRequests } from './api';
 import { firstUpper } from './util';
 
@@ -123,158 +123,155 @@ class App extends React.Component {
     };
 
     return (
-      <Router>
-        <StyledApp>
-          {loading ? (
-            <Loading />
-          ) : (
-            <div className={'wrapper ' + (loading ? '' : 'show')}>
-              <Header
-                changePage={this.changePage}
-                pages={pages
-                  .filter(page => page.slug !== 'footer')
-                  .sort((a, b) => a.id - b.id)}
-              />
-              <div className="main-content">
-                <Switch>
-                  <Route
-                    exact
-                    path="/"
-                    render={() => {
-                      document.title = `${siteName}`;
+      <StyledApp>
+        {loading ? (
+          <Loading />
+        ) : (
+          <div className={'wrapper ' + (loading ? '' : 'show')}>
+            <Header
+              changePage={this.changePage}
+              pages={pages
+                .filter(page => page.slug !== 'footer')
+                .sort((a, b) => a.id - b.id)}
+            />
+            <div className="main-content">
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={() => {
+                    document.title = `${siteName}`;
 
-                      return <Home pages={pages} />;
-                    }}
-                  />
-                  <Route
-                    exact
-                    path="/about"
-                    render={() => {
-                      document.title = `About | ${siteName}`;
+                    return <Home pages={pages} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/about"
+                  render={() => {
+                    document.title = `About | ${siteName}`;
 
-                      return <About pages={pages} />;
-                    }}
-                  />
-                  <Route
-                    exact
-                    path="/quarterly"
-                    render={() => {
-                      document.title = `Quarterly | ${siteName}`;
+                    return <About pages={pages} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/quarterly"
+                  render={() => {
+                    document.title = `Quarterly | ${siteName}`;
 
-                      return <Quarterly pages={pages} />;
-                    }}
-                  />
-                  <Route
-                    exact
-                    path="/submit"
-                    render={() => {
-                      document.title = `Submit | ${siteName}`;
+                    return <Quarterly pages={pages} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/submit"
+                  render={() => {
+                    document.title = `Submit | ${siteName}`;
 
-                      return <Submit pages={pages} />;
-                    }}
-                  />
-                  <Route
-                    exact
-                    path="/weekly"
-                    render={() => {
-                      document.title = `Weekly | ${siteName}`;
-                      window.scrollTo(0, 0);
+                    return <Submit pages={pages} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/weekly"
+                  render={() => {
+                    document.title = `Weekly | ${siteName}`;
+                    window.scrollTo(0, 0);
 
-                      return (
-                        <WeeklyPosts
-                          changePage={this.changePage}
-                          currentGroup={currentGroup}
-                          currentPage={currentPage}
-                          pages={pages}
-                          posts={this.filterPosts()}
-                        />
-                      );
-                    }}
-                  />
-                  <Route
-                    exact
-                    path={`/weekly/:weeklySinglePost`}
-                    render={({ match }) => {
-                      return (
-                        <WeeklyBySinglePost
-                          post={this.filterPosts(match.params.weeklySinglePost)}
-                          posts={weekly_posts}
-                        />
-                      );
-                    }}
-                  />
-                  <Route
-                    exact
-                    path={`/weekly/post-author/:author`}
-                    render={({ match }) => {
-                      setDocument(match.params.author);
+                    return (
+                      <WeeklyPosts
+                        changePage={this.changePage}
+                        currentGroup={currentGroup}
+                        currentPage={currentPage}
+                        pages={pages}
+                        posts={this.filterPosts()}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/:weeklySinglePost`}
+                  render={({ match }) => {
+                    return (
+                      <WeeklyBySinglePost
+                        post={this.filterPosts(match.params.weeklySinglePost)}
+                        posts={weekly_posts}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/post-author/:author`}
+                  render={({ match }) => {
+                    setDocument(match.params.author);
 
-                      let author;
-                      let auth;
-                      for (auth in post_author) {
-                        if (post_author[auth].slug === match.params.author) {
-                          author = post_author[auth];
-                        }
+                    let author;
+                    let auth;
+                    for (auth in post_author) {
+                      if (post_author[auth].slug === match.params.author) {
+                        author = post_author[auth];
                       }
+                    }
 
-                      return (
-                        <WeeklyByAuthor
-                          changePage={this.changePage}
-                          currentGroup={currentGroup}
-                          currentPage={currentPage}
-                          weeklyByAuthor={this.filterPosts(
-                            match.params.author,
-                            [author]
-                          )}
-                        />
-                      );
-                    }}
-                  />
-                  <Route
-                    exact
-                    path={`/weekly/categories/:category`}
-                    render={({ match }) => {
-                      setDocument(match.params.category);
+                    return (
+                      <WeeklyByAuthor
+                        changePage={this.changePage}
+                        currentGroup={currentGroup}
+                        currentPage={currentPage}
+                        weeklyByAuthor={this.filterPosts(match.params.author, [
+                          author
+                        ])}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/categories/:category`}
+                  render={({ match }) => {
+                    setDocument(match.params.category);
 
-                      return (
-                        <WeeklyByCategory
-                          changePage={this.changePage}
-                          currentGroup={currentGroup}
-                          currentPage={currentPage}
-                          match={match}
-                          weeklyByCategory={this.filterPosts(
-                            match.params.category,
-                            categories
-                          )}
-                        />
-                      );
-                    }}
-                  />
-                  <Route
-                    exact
-                    path={`/weekly/tags/:tag`}
-                    render={({ match }) => {
-                      setDocument(match.params.tag);
+                    return (
+                      <WeeklyByCategory
+                        changePage={this.changePage}
+                        currentGroup={currentGroup}
+                        currentPage={currentPage}
+                        match={match}
+                        weeklyByCategory={this.filterPosts(
+                          match.params.category,
+                          categories
+                        )}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path={`/weekly/tags/:tag`}
+                  render={({ match }) => {
+                    setDocument(match.params.tag);
 
-                      return (
-                        <WeeklyByTag
-                          changePage={this.changePage}
-                          currentGroup={currentGroup}
-                          currentPage={currentPage}
-                          match={match}
-                          weeklyByTag={this.filterPosts(match.params.tag, tags)}
-                        />
-                      );
-                    }}
-                  />
-                  <Route render={NotFound} />
-                </Switch>
-              </div>
-              <Footer pages={pages} />
+                    return (
+                      <WeeklyByTag
+                        changePage={this.changePage}
+                        currentGroup={currentGroup}
+                        currentPage={currentPage}
+                        match={match}
+                        weeklyByTag={this.filterPosts(match.params.tag, tags)}
+                      />
+                    );
+                  }}
+                />
+                <Route render={NotFound} />
+              </Switch>
             </div>
-          )}
-        </StyledApp>
-      </Router>
+            <Footer pages={pages} />
+          </div>
+        )}
+      </StyledApp>
     );
   }
 }
