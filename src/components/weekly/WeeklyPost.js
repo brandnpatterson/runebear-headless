@@ -7,7 +7,7 @@ import StyledWeeklyPost from '../styled/StyledWeeklyPost';
 const propTypes = {
   authors: array,
   categories: array,
-  changePage: func.isRequired,
+  changePage: func,
   content: string.isRequired,
   post: object.isRequired,
   tags: array
