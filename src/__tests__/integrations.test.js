@@ -14,7 +14,7 @@ import {
 } from '../__mockData__';
 import { fetchAll } from '../api';
 
-describe('Render Weekly Post', () => {
+describe('Render Weekly Posts', () => {
   let wrapper;
   const fetchMock = mockData => {
     mockAxios.get.mockImplementationOnce(() => {
@@ -46,20 +46,22 @@ describe('Render Weekly Post', () => {
     );
   });
 
-  it('contains a weekly post', () => {
-    const weeklyPost = shallow(
-      <WeeklyPost
-        authors={weekly_posts[0]._embedded['wp:term'][2]}
-        categories={weekly_posts[0]._embedded['wp:term'][0]}
-        changePage={() => console.log('change page')}
-        content={weekly_posts[0].excerpt.rendered}
-        key={weekly_posts[0].id}
-        post={weekly_posts[0]}
-        tags={weekly_posts[0]._embedded['wp:term'][1]}
-      />
-    );
+  it('renderd two weekly posts', () => {
+    const weeklyPost = weekly_posts.map(post => {
+      return shallow(
+        <WeeklyPost
+          authors={post._embedded['wp:term'][2]}
+          categories={post._embedded['wp:term'][0]}
+          changePage={() => console.log('change page')}
+          content={post.excerpt.rendered}
+          key={post.id}
+          post={post}
+          tags={post._embedded['wp:term'][1]}
+        />
+      );
+    });
 
-    expect(weeklyPost.length).toEqual(1);
+    expect(weeklyPost.length).toEqual(2);
   });
 
   afterEach(() => {
