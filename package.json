@@ -9,8 +9,8 @@
     "dev": "npm run stylelint && npm start",
     "start": "react-scripts start",
     "stylelint": "stylelint src/**/**/*.js",
-    "test:cypress": "cypress open",
-    "test:jest": "react-scripts test --env=jsdom"
+    "cypress": "cypress open",
+    "jest": "react-scripts test --env=jsdom"
   },
   "dependencies": {
     "axios": "^0.16.2",
