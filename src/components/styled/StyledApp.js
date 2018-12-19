@@ -107,7 +107,6 @@ const StyledApp = styled.div`
 
   .main-content {
     display: flex;
-    flex: 1;
     justify-content: center;
 
     @media ${smallOnly} {

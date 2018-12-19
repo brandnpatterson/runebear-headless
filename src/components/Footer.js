@@ -34,8 +34,8 @@ const StyledFooter = styled.footer`
   color: ${light};
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   margin-top: 1.25rem;
+
   @media ${mediumDown} {
     padding-bottom: 1.875rem;
   }
