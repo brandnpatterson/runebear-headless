@@ -43,7 +43,7 @@ class App extends React.Component {
         post_author: data[2],
         tags: data[3],
         weekly_posts: data[4],
-        loading: false
+        loading: true
       });
     });
   }

@@ -93,12 +93,16 @@ const StyledApp = styled.div`
   }
 
   .loading-screen h2 {
+    left: 0;
     position: absolute;
+    text-align: center;
     top: 27rem;
+    width: 100%;
   }
 
   .main-content {
     display: flex;
+    flex: 1 1 0;
     justify-content: center;
 
     @media ${smallOnly} {
