@@ -1,5 +1,6 @@
 import React from 'react';
 import App from '../App';
+import Loading from '../components/Loading';
 import WeeklyPost from '../components/weekly/WeeklyPost';
 import WeeklyPosts from '../components/weekly/WeeklyPosts';
 import { MemoryRouter, Route } from 'react-router';
@@ -14,7 +15,7 @@ import {
 } from '../__mockData__';
 import { fetchAll } from '../api';
 
-describe('Render Weekly Posts', () => {
+describe('<App />', () => {
   let wrapper;
   const fetchMock = mockData => {
     mockAxios.get.mockImplementationOnce(() => {
@@ -46,7 +47,7 @@ describe('Render Weekly Posts', () => {
     );
   });
 
-  it('renderd two weekly posts', () => {
+  it('renders two weekly posts', () => {
     const weeklyPost = weekly_posts.map(post => {
       return shallow(
         <WeeklyPost
@@ -62,6 +63,12 @@ describe('Render Weekly Posts', () => {
     });
 
     expect(weeklyPost.length).toEqual(2);
+  });
+
+  it('requests complete and loading is equal to false', () => {
+    const app = wrapper.find(App);
+
+    expect(app.state().loading).toEqual(false);
   });
 
   afterEach(() => {

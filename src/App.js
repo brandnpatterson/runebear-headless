@@ -43,7 +43,7 @@ class App extends React.Component {
         post_author: data[2],
         tags: data[3],
         weekly_posts: data[4],
-        loading: true
+        loading: false
       });
     });
   }
@@ -125,7 +125,7 @@ class App extends React.Component {
     return (
       <StyledApp>
         {loading ? (
-          <Loading />
+          <Loading className={loading ? 'visible' : ''} />
         ) : (
           <div className={'wrapper ' + (loading ? '' : 'show')}>
             <Header
