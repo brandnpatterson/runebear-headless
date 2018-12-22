@@ -8,7 +8,7 @@
     "deploy": "npm run build && surge build",
     "dev": "npm run stylelint && npm start",
     "start": "react-scripts start",
-    "stylelint": "stylelint src/**/**/*.js",
+    "stylelint": "stylelint src/**/*.js && stylelint src/**/**/*.js",
     "cypress": "cypress open",
     "jest": "react-scripts test --env=jsdom"
   },

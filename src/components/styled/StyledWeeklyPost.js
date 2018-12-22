@@ -37,6 +37,7 @@ const StyledWeeklyByPost = styled.div`
 
   .card-content {
     margin: 0;
+    min-width: 100%;
     padding: 3.438rem 1.25rem 0;
 
     @media ${mediumUp} {

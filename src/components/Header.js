@@ -95,8 +95,8 @@ const StyledHeader = styled.header`
   }
 
   .navbar-burger {
-    padding-top: 0.75rem !important;
     margin-right: 0.75rem;
+    padding-top: 0.75rem !important;
     position: relative;
     z-index: 3;
   }

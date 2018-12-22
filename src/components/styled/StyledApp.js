@@ -90,19 +90,11 @@ const StyledApp = styled.div`
     padding-top: 7.5rem;
     position: relative;
     width: 100vw;
-
-    @media ${smallOnly} {
-      padding-top: 4.375rem;
-    }
   }
 
   .loading-screen h2 {
     position: absolute;
-    top: 18.75rem;
-
-    @media ${mediumUp} {
-      top: 28.13rem;
-    }
+    top: 27rem;
   }
 
   .main-content {
