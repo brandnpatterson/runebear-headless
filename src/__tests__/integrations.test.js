@@ -65,7 +65,7 @@ describe('<App />', () => {
     expect(weeklyPost.length).toEqual(2);
   });
 
-  it('requests complete and loading is equal to false', () => {
+  it('completes requests and loading is equal to false', () => {
     const app = wrapper.find(App);
 
     expect(app.state().loading).toEqual(false);
