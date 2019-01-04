@@ -3,7 +3,7 @@ import { array, object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { firstUpper } from '../../util';
 
-import StyledWeeklySinglePost from '../styled/StyledWeeklySinglePost';
+import StyledWeeklySinglePost from '../../styled/StyledWeeklySinglePost';
 
 const propTypes = {
   post: object.isRequired,

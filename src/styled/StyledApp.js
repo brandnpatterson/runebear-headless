@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { black, blue, dark2, white } from '../../util/color';
-import { garamond } from '../../util/font';
-import { mediumUp, smallOnly } from '../../util/media';
+import { black, blue, dark2, white } from '../util/color';
+import { garamond } from '../util/font';
+import { mediumUp, smallOnly } from '../util/media';
 
 const StyledApp = styled.div`
   li {

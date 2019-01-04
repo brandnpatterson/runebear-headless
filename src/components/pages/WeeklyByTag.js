@@ -1,45 +1,43 @@
 import React from 'react';
 import { array, func, number, object } from 'prop-types';
 import Pagination from '../Pagination';
-import WeeklyPost from './WeeklyPost';
+import WeeklyPost from '../WeeklyPost';
 
 const propTypes = {
   changePage: func.isRequired,
   currentGroup: array.isRequired,
   currentPage: number.isRequired,
   match: object.isRequired,
-  weeklyByCategory: object.isRequired
+  weeklyByTag: object.isRequired
 };
 
-const WeeklyByCategory = ({
+const WeeklyByTag = ({
   changePage,
   currentGroup,
   currentPage,
   match,
-  weeklyByCategory
+  weeklyByTag
 }) => {
-  const category = match.params.category.replace(/-/g, ' ');
+  const tag = match.params.tag.replace(/-/g, ' ');
 
   return (
     <div className="filter-page">
       <header className="filter-header">
         <h1 style={{ textAlign: 'center' }}>
-          <strong>{category.toUpperCase()}</strong>
+          <strong>{tag.toUpperCase()}</strong>
         </h1>
       </header>
       {currentGroup.map(index => {
-        if (weeklyByCategory.posts[index]) {
-          const post = weeklyByCategory.posts[index];
+        if (weeklyByTag.posts[index]) {
+          const post = weeklyByTag.posts[index];
 
           return (
             <WeeklyPost
               authors={post._embedded && post._embedded['wp:term'][2]}
-              categories={post._embedded && post._embedded['wp:term'][0]}
               changePage={changePage}
               content={post.excerpt.rendered}
               key={post.id}
               post={post}
-              tags={post._embedded && post._embedded['wp:term'][1]}
             />
           );
         } else return null;
@@ -48,12 +46,12 @@ const WeeklyByCategory = ({
         changePage={changePage}
         currentGroup={currentGroup}
         currentPage={currentPage}
-        posts={weeklyByCategory.posts}
+        posts={weeklyByTag.posts}
       />
     </div>
   );
 };
 
-WeeklyByCategory.propTypes = propTypes;
+WeeklyByTag.propTypes = propTypes;
 
-export default WeeklyByCategory;
+export default WeeklyByTag;

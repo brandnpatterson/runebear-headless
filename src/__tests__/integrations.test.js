@@ -1,8 +1,7 @@
 import React from 'react';
 import App from '../App';
-import Loading from '../components/Loading';
-import WeeklyPost from '../components/weekly/WeeklyPost';
-import WeeklyPosts from '../components/weekly/WeeklyPosts';
+import WeeklyPost from '../components/WeeklyPost';
+import Weekly from '../components/pages/Weekly';
 import { MemoryRouter, Route } from 'react-router';
 import { mount, shallow } from 'enzyme';
 import mockAxios from 'axios';
@@ -41,7 +40,7 @@ describe('<App />', () => {
     wrapper = mount(
       <MemoryRouter initialEntries={['/weekly']} initialIndex={0}>
         <App>
-          <Route path="/weekly" render={() => <WeeklyPosts />} />
+          <Route path="/weekly" render={() => <Weekly />} />
         </App>
       </MemoryRouter>
     );

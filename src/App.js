@@ -10,13 +10,13 @@ import Home from './components/pages/Home';
 import Loading from './components/Loading';
 import NotFound from './components/NotFound';
 import Quarterly from './components/pages/Quarterly';
-import StyledApp from './components/styled/StyledApp';
+import StyledApp from './styled/StyledApp';
 import Submit from './components/pages/Submit';
-import WeeklyByAuthor from './components/weekly/WeeklyByAuthor';
-import WeeklyByCategory from './components/weekly/WeeklyByCategory';
-import WeeklyBySinglePost from './components/weekly/WeeklyBySinglePost';
-import WeeklyByTag from './components/weekly/WeeklyByTag';
-import WeeklyPosts from './components/weekly/WeeklyPosts';
+import Weekly from './components/pages/Weekly';
+import WeeklyByAuthor from './components/pages/WeeklyByAuthor';
+import WeeklyByCategory from './components/pages/WeeklyByCategory';
+import WeeklyBySinglePost from './components/pages/WeeklyBySinglePost';
+import WeeklyByTag from './components/pages/WeeklyByTag';
 
 class App extends React.Component {
   state = {
@@ -180,7 +180,7 @@ class App extends React.Component {
                     window.scrollTo(0, 0);
 
                     return (
-                      <WeeklyPosts
+                      <Weekly
                         changePage={this.changePage}
                         currentGroup={currentGroup}
                         currentPage={currentPage}

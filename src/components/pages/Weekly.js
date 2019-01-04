@@ -1,35 +1,26 @@
 import React from 'react';
-import { array, func, number, object } from 'prop-types';
+import { array, func, number } from 'prop-types';
 import Pagination from '../Pagination';
-import WeeklyPost from './WeeklyPost';
+import WeeklyPost from '../WeeklyPost';
 
 const propTypes = {
   changePage: func.isRequired,
-  currentGroup: array.isRequired,
   currentPage: number.isRequired,
-  match: object.isRequired,
-  weeklyByTag: object.isRequired
+  pages: array.isRequired,
+  posts: array.isRequired
 };
 
-const WeeklyByTag = ({
-  changePage,
-  currentGroup,
-  currentPage,
-  match,
-  weeklyByTag
-}) => {
-  const tag = match.params.tag.replace(/-/g, ' ');
+const Weekly = ({ currentGroup, currentPage, changePage, pages, posts }) => {
+  const page = pages.filter(p => p.slug === 'weekly')[0];
 
   return (
-    <div className="filter-page">
-      <header className="filter-header">
-        <h1 style={{ textAlign: 'center' }}>
-          <strong>{tag.toUpperCase()}</strong>
-        </h1>
-      </header>
+    <div>
+      <div
+        dangerouslySetInnerHTML={{ __html: page && page.content.rendered }}
+      />
       {currentGroup.map(index => {
-        if (weeklyByTag.posts[index]) {
-          const post = weeklyByTag.posts[index];
+        if (posts[index]) {
+          const post = posts[index];
 
           return (
             <WeeklyPost
@@ -48,12 +39,12 @@ const WeeklyByTag = ({
         changePage={changePage}
         currentGroup={currentGroup}
         currentPage={currentPage}
-        posts={weeklyByTag.posts}
+        posts={posts}
       />
     </div>
   );
 };
 
-WeeklyByTag.propTypes = propTypes;
+Weekly.propTypes = propTypes;
 
-export default WeeklyByTag;
+export default Weekly;
