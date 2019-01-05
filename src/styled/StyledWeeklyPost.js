@@ -6,12 +6,13 @@ const StyledWeeklyByPost = styled.div`
   align-items: left;
   display: flex;
   flex-direction: column;
-  font-size: 1rem;
+  font-size: 0.875rem;
   max-width: 43.75rem;
   position: relative;
 
   @media ${mediumUp} {
     border: 0.0625rem solid ${gray};
+    font-size: 1rem;
     margin: 0 auto 3.125rem;
     max-width: 43.75rem;
     padding: 3.125rem;

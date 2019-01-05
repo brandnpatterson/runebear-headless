@@ -156,6 +156,14 @@ const StyledApp = styled.div`
     padding: 1.5rem 1.5rem 4.563rem;
   }
 
+  .filter-header p {
+    font-size: 0.875rem;
+
+    @media ${mediumUp} {
+      font-size: 1rem;
+    }
+  }
+
   .filter-header strong {
     color: ${dark2};
   }
