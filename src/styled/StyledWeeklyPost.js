@@ -28,10 +28,6 @@ const StyledWeeklyByPost = styled.div`
     margin-right: 1.25rem;
     text-align: right;
     text-transform: uppercase;
-
-    @media ${mediumUp} {
-      margin-right: 1rem;
-    }
   }
 
   .card-content {
