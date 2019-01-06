@@ -36,7 +36,7 @@ const StyledWeeklyByPost = styled.div`
     padding: 0.5rem 1.25rem 0;
 
     @media ${mediumUp} {
-      padding-top: 4.375rem;
+      padding-top: 2.375rem;
     }
   }
 
