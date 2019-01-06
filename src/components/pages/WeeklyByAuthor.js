@@ -1,5 +1,7 @@
 import React from 'react';
 import { array, func, number, object } from 'prop-types';
+import styled from 'styled-components';
+import { blue, dark2 } from '../../util/color';
 import Pagination from '../Pagination';
 import WeeklyPost from '../WeeklyPost';
 
@@ -27,10 +29,7 @@ const WeeklyByAuthor = ({
         </h1>
         <div>
           <p>{author.description}</p>
-          <p
-            className="author-links"
-            dangerouslySetInnerHTML={{ __html: links }}
-          />
+          <StyledAuthorLinks dangerouslySetInnerHTML={{ __html: links }} />
         </div>
       </header>
       {currentGroup.map(index => {
@@ -58,6 +57,16 @@ const WeeklyByAuthor = ({
     </div>
   );
 };
+
+const StyledAuthorLinks = styled.p`
+  a {
+    color: ${dark2};
+
+    &:hover {
+      color: ${blue};
+    }
+  }
+`;
 
 WeeklyByAuthor.propTypes = propTypes;
 

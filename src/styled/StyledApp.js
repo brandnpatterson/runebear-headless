@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { black, blue, dark2, white } from '../util/color';
+import { black, dark2 } from '../util/color';
 import { garamond } from '../util/font';
 import { mediumUp, smallOnly } from '../util/media';
 
 const StyledApp = styled.div`
+  /* typography */
   li {
     list-style-type: none;
   }
@@ -51,6 +52,7 @@ const StyledApp = styled.div`
       width: 25rem;
     }
   }
+  /* ./typography */
 
   .wrapper {
     display: flex;
@@ -66,40 +68,6 @@ const StyledApp = styled.div`
     visibility: visible;
   }
 
-  .btn {
-    background-color: #ddd;
-    border: 0;
-    color: ${black};
-    font-size: 1rem;
-    margin: 0.25rem 0.125rem;
-    padding: 1rem 2rem;
-    text-align: center;
-    transition: 0.3s;
-  }
-
-  .btn:hover {
-    color: ${white};
-  }
-
-  .loading-screen {
-    align-items: center;
-    color: ${white};
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding-top: 7.5rem;
-    position: relative;
-    width: 100vw;
-  }
-
-  .loading-screen h2 {
-    left: 0;
-    position: absolute;
-    text-align: center;
-    top: 27rem;
-    width: 100%;
-  }
-
   .main-content {
     display: flex;
     flex: auto;
@@ -110,7 +78,6 @@ const StyledApp = styled.div`
     }
   }
 
-  /* .featured-hero is defined in the wordpress CMS on Pages */
   .featured-hero {
     align-items: center;
     display: flex;
@@ -141,16 +108,6 @@ const StyledApp = styled.div`
     color: ${black};
   }
 
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin: 3.125rem auto 6.25rem;
-  }
-
-  .pagination ul {
-    display: flex;
-  }
-
   .filter-header {
     max-width: 43.75rem;
     padding: 1.5rem 1.5rem 4.563rem;
@@ -172,14 +129,6 @@ const StyledApp = styled.div`
     @media ${mediumUp} {
       margin-bottom: 3.125rem;
     }
-  }
-
-  .author-links a {
-    color: ${dark2};
-  }
-
-  .author-links a:hover {
-    color: ${blue};
   }
 `;
 

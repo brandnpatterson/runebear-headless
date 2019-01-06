@@ -25,20 +25,19 @@ const StyledWeeklyByPost = styled.div`
 
   h2 {
     font-weight: bold;
-    position: absolute;
-    right: 1.25rem;
+    margin-right: 1.25rem;
     text-align: right;
     text-transform: uppercase;
 
     @media ${mediumUp} {
-      right: 4.375rem;
+      margin-right: 4.375rem;
     }
   }
 
   .card-content {
     margin: 0;
     min-width: 100%;
-    padding: 3.438rem 1.25rem 0;
+    padding: 0.5rem 1.25rem 0;
 
     @media ${mediumUp} {
       padding-top: 4.375rem;

@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { dark, white } from '../util/color';
 
 class Loading extends React.Component {
@@ -85,7 +86,7 @@ class Loading extends React.Component {
 
   render() {
     return (
-      <div
+      <StyledLoading
         className="loading-screen"
         style={{ background: this.state.background }}
       >
@@ -95,9 +96,28 @@ class Loading extends React.Component {
           alt="Runebear Logo"
         />
         <h2 style={{ color: this.state.color }}>{this.state.text}</h2>
-      </div>
+      </StyledLoading>
     );
   }
 }
+
+const StyledLoading = styled.div`
+  align-items: center;
+  color: ${white};
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding-top: 7.5rem;
+  position: relative;
+  width: 100vw;
+
+  h2 {
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 27rem;
+    width: 100%;
+  }
+`;
 
 export default Loading;
