@@ -30,7 +30,7 @@ const StyledWeeklyByPost = styled.div`
     text-transform: uppercase;
 
     @media ${mediumUp} {
-      margin-right: 4.375rem;
+      margin-right: 0;
     }
   }
 
