@@ -125,16 +125,16 @@ class App extends React.Component {
     return (
       <StyledApp>
         {loading ? (
-          <Loading className={loading ? 'visible' : ''} />
+          <Loading />
         ) : (
-          <div className={'wrapper ' + (loading ? '' : 'show')}>
+          <div className="wrapper">
             <Header
               changePage={this.changePage}
               pages={pages
                 .filter(page => page.slug !== 'footer')
                 .sort((a, b) => a.id - b.id)}
             />
-            <div className="main-content">
+            <div className="content">
               <Switch>
                 <Route
                   exact

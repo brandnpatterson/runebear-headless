@@ -58,17 +58,10 @@ const StyledApp = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    opacity: 0;
-    transition: 1.5s;
-    visibility: hidden;
-  }
-
-  .wrapper.show {
-    opacity: 1;
     visibility: visible;
   }
 
-  .main-content {
+  .content {
     display: flex;
     flex: auto;
     justify-content: center;
