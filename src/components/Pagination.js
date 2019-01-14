@@ -126,6 +126,7 @@ const StyledPagination = styled.div`
     display: flex;
     justify-content: center;
     margin: 3.125rem auto 6.25rem;
+    max-width: 100vw;
   }
 
   .pagination ul {
