@@ -58,6 +58,7 @@ const StyledApp = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
     visibility: visible;
   }
 
