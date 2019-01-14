@@ -61,10 +61,10 @@ const WeeklyByAuthor = ({
 const StyledAuthorLinks = styled.p`
   a {
     color: ${dark2};
+  }
 
-    &:hover {
-      color: ${blue};
-    }
+  a:hover {
+    color: ${blue};
   }
 `;
 

@@ -132,10 +132,6 @@ const StyledPagination = styled.div`
     display: flex;
   }
 
-  .content li + li {
-    margin-top: 0 !important;
-  }
-
   .cursor-default {
     cursor: default;
   }
