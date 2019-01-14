@@ -122,6 +122,7 @@ const StyledPagination = styled.div`
   }
 
   .pagination {
+    align-items: center;
     display: flex;
     justify-content: center;
     margin: 3.125rem auto 6.25rem;
@@ -129,6 +130,10 @@ const StyledPagination = styled.div`
 
   .pagination ul {
     display: flex;
+  }
+
+  .content li + li {
+    margin-top: 0 !important;
   }
 
   .cursor-default {

@@ -134,7 +134,7 @@ class App extends React.Component {
                 .filter(page => page.slug !== 'footer')
                 .sort((a, b) => a.id - b.id)}
             />
-            <div className="content">
+            <div className="main-content">
               <Switch>
                 <Route
                   exact

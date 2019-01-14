@@ -61,7 +61,7 @@ const StyledApp = styled.div`
     visibility: visible;
   }
 
-  .content {
+  .main-content {
     display: flex;
     flex: auto;
     justify-content: center;
