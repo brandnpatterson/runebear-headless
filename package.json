@@ -1,6 +1,6 @@
 {
   "name": "runebear",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "scripts": {
     "build": "react-scripts build && npm run create-cname",
@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "babel-polyfill": "^6.26.0",
     "prop-types": "^15.5.10",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
@@ -33,5 +32,8 @@
     "stylelint-config-sass-guidelines": "^5.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.3.1"
-  }
+  },
+  "browserslist": [
+    "last 2 versions"
+  ]
 }

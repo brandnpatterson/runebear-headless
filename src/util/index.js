@@ -14,7 +14,7 @@ export const ellipses = (c, m) => {
 
   range.push(m);
 
-  for (let i of range) {
+  range.forEach(i => {
     if (l) {
       if (i - l === 2) {
         rangeWithDots.push(l + 1);
@@ -26,7 +26,7 @@ export const ellipses = (c, m) => {
     rangeWithDots.push(i);
 
     l = i;
-  }
+  });
 
   return rangeWithDots;
 };
