@@ -3,7 +3,10 @@ import React from 'react';
 const NotFound = () => {
   return (
     <div style={{ textAlign: 'center' }}>
-      <img src="/runebear-logo.png" alt="Runebear Logo" />
+      <img
+        src="http://runebear.com/wp-content/uploads/2018/05/runebear-logo.png"
+        alt="Runebear Logo"
+      />
       <h1>No Bears Found!</h1>
     </div>
   );
