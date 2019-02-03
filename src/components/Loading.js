@@ -10,13 +10,13 @@ class Loading extends React.Component {
         alt: 'Runebear Logo',
         backgroundColor: dark,
         color: white,
-        image: '/runebear-logo.png'
+        image: 'https://admin.runebear.com/wp-content/uploads/2018/05/runebear-logo.png'
       },
       {
         alt: 'Runebear Word',
         backgroundColor: white,
         color: dark,
-        image: '/runebear-word.png'
+        image: 'https://admin.runebear.com/wp-content/uploads/2018/05/runebear-word.png'
       }
     ],
     backgroundInterval: null,
