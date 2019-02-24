@@ -1,7 +1,7 @@
 import React from 'react';
 import { array, object } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { decodeHtml, firstUpper } from '../../util';
+import { decodeHtml } from '../../util';
 
 import StyledWeeklySinglePost from '../../styled/StyledWeeklySinglePost';
 
@@ -11,7 +11,9 @@ const propTypes = {
 };
 
 const WeeklyBySinglePost = ({ post, posts }) => {
-  document.title = `${firstUpper(post.title.rendered)} | Rune Bear`;
+  const decodedTitle = decodeHtml(post.title.rendered);
+
+  document.title = `${decodedTitle} | Rune Bear`;
 
   let next;
   let prev;
@@ -56,7 +58,7 @@ const WeeklyBySinglePost = ({ post, posts }) => {
       </div>
       <header className="filter-header">
         <h1 style={{ textAlign: 'center' }}>
-          <strong>{decodeHtml(post.title.rendered.toUpperCase())}</strong>
+          <strong>{decodedTitle.toUpperCase()}</strong>
         </h1>
       </header>
       <div className="card-wrapper" key={post.id}>
