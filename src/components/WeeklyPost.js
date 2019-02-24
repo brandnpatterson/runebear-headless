@@ -1,6 +1,7 @@
 import React from 'react';
 import { array, func, object, string } from 'prop-types';
 import { Link } from 'react-router-dom';
+import { decodeHtml } from '../util';
 
 import StyledWeeklyPost from '../styled/StyledWeeklyPost';
 
@@ -21,9 +22,11 @@ const WeeklyPost = ({
   post,
   tags
 }) => {
+  const decodedTitle = decodeHtml(post.title.rendered);
+
   return (
     <StyledWeeklyPost key={post.id}>
-      <h2>{post.title.rendered}</h2>
+      <h2>{decodedTitle}</h2>
       <div className="card-content">
         <p dangerouslySetInnerHTML={{ __html: content }} />
         <Link
@@ -31,7 +34,7 @@ const WeeklyPost = ({
           className="card-read-more"
           to={`/weekly/${post.slug}`}
         >
-          ...Read more {post.title.rendered}
+          ...Read more {decodedTitle}
         </Link>
       </div>
       <div className="card-footer">
@@ -44,7 +47,7 @@ const WeeklyPost = ({
                     to={`/weekly/post-author/${author.slug}`}
                     className="card-author"
                   >
-                    {author.name}
+                    {decodeHtml(author.name)}
                   </Link>
                 </p>
               );

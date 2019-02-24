@@ -1,4 +1,4 @@
-export const ellipses = (c, m) => {
+export function ellipses(c, m) {
   const delta = 2;
   const range = [];
   const rangeWithDots = [];
@@ -29,12 +29,18 @@ export const ellipses = (c, m) => {
   });
 
   return rangeWithDots;
-};
+}
 
-export const firstUpper = str => {
+export function firstUpper(str) {
   return str
     .toLowerCase()
     .split(' ')
     .map(word => word[0].toUpperCase() + word.substr(1))
     .join(' ');
-};
+}
+
+export function decodeHtml(string) {
+  var el = document.createElement('div');
+  el.innerHTML = string;
+  return el.innerHTML;
+}
