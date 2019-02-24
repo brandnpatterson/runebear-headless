@@ -20,7 +20,7 @@ import WeeklyByTag from './components/pages/WeeklyByTag';
 
 class App extends React.Component {
   state = {
-    categories: null,
+    categories: [],
     currentGroup: [0, 1, 2, 3],
     currentPage: 1,
     loading: true,
