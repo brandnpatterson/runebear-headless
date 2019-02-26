@@ -35,6 +35,11 @@ const Weekly = ({ currentGroup, currentPage, changePage, pages, posts }) => {
           );
         } else return null;
       })}
+      {posts.length === 1 ? (
+        <p style={{ textAlign: 'center' }}>Loading other posts...</p>
+      ) : (
+        ''
+      )}
       <Pagination
         changePage={changePage}
         currentGroup={currentGroup}
