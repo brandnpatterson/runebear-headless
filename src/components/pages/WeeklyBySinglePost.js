@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { array, bool, object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { decodeHtml } from '../../util';
@@ -12,9 +12,20 @@ const propTypes = {
 };
 
 const WeeklyBySinglePost = ({ loading_secondary, post, posts }) => {
-  const decodedTitle = decodeHtml(post.title.rendered);
+  const [scrolled, setScrolled] = useState(false);
 
+  const decodedTitle = decodeHtml(post.title.rendered);
   document.title = `${decodedTitle} | Rune Bear`;
+
+  useEffect(() => {
+    // only scroll up on initial render
+    if (!scrolled) {
+      window.scrollTo(0, 0);
+      setScrolled(true);
+    }
+
+    return () => {};
+  });
 
   let next;
   let prev;
