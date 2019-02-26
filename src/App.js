@@ -50,7 +50,8 @@ class App extends React.Component {
       window.location.pathname.includes('weekly') &&
       !window.location.pathname.includes('categories') &&
       !window.location.pathname.includes('tags') &&
-      window.location.pathname !== '/weekly'
+      window.location.pathname !== '/weekly' &&
+      window.location.pathname.length > 8
     ) {
       /**
        *  Load Weekly Single Post, then all
