@@ -1,23 +1,46 @@
 import axios from 'axios';
 
-const endpoint = req =>
-  `http://runebear.com/wp-json/wp/v2/${req}?per_page=100&_embed`;
+export function endpoint(req, per_page = '100') {
+  return `http://runebear.com/wp-json/wp/v2/${req}?per_page=${per_page}&_embed`;
+}
 
-export const fetchAll = req => {
+export function fetchSinglePost(post_slug) {
   return new Promise((resolve, reject) => {
     axios
-      .get(endpoint(req))
+      .get(`http://runebear.com/wp-json/wp/v2/weekly_posts?slug=${post_slug}`)
+      .then(res => resolve(res.data))
+      .catch(err => reject(err));
+  });
+}
+
+export const fetchGroup = (req, per_page) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(endpoint(req, per_page))
       .then(res => resolve(res.data))
       .catch(err => reject(err));
   });
 };
 
-export const fetchRequests = () => {
+export function fetchFirstPage() {
   return Promise.all([
-    fetchAll('categories'),
-    fetchAll('pages'),
-    fetchAll('post_author'),
-    fetchAll('tags'),
-    fetchAll('weekly_posts')
+    fetchGroup('pages'),
+    fetchGroup('weekly_posts', '4')
   ]).catch(err => console.error(err));
-};
+}
+
+export function fetchAllRequests() {
+  return Promise.all([
+    fetchGroup('categories'),
+    fetchGroup('pages'),
+    fetchGroup('post_author'),
+    fetchGroup('tags'),
+    fetchGroup('weekly_posts')
+  ]).catch(err => console.error(err));
+}
+
+export function fetchPostAndPages(post_slug) {
+  return Promise.all([fetchGroup('pages'), fetchSinglePost(post_slug)]).catch(
+    err => console.error(err)
+  );
+}

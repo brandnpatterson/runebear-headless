@@ -20,6 +20,8 @@ const WeeklyByCategory = ({
 }) => {
   const category = match.params.category.replace(/-/g, ' ');
 
+  console.log(weeklyByCategory);
+
   return (
     <div className="filter-page">
       <header className="filter-header">
@@ -27,21 +29,25 @@ const WeeklyByCategory = ({
           <strong>{category.toUpperCase()}</strong>
         </h1>
       </header>
-      {currentGroup.map(index => {
-        if (weeklyByCategory.posts[index]) {
-          const post = weeklyByCategory.posts[index];
+      {weeklyByCategory.fromState.length === 0 ? (
+        <p style={{ textAlign: 'center' }}>Loading all {category}...</p>
+      ) : (
+        currentGroup.map(index => {
+          if (weeklyByCategory.posts[index]) {
+            const post = weeklyByCategory.posts[index];
 
-          return (
-            <WeeklyPost
-              authors={post._embedded && post._embedded['wp:term'][2]}
-              changePage={changePage}
-              content={post.excerpt.rendered}
-              key={post.id}
-              post={post}
-            />
-          );
-        } else return null;
-      })}
+            return (
+              <WeeklyPost
+                authors={post._embedded && post._embedded['wp:term'][2]}
+                changePage={changePage}
+                content={post.excerpt.rendered}
+                key={post.id}
+                post={post}
+              />
+            );
+          } else return null;
+        })
+      )}
       <Pagination
         changePage={changePage}
         currentGroup={currentGroup}

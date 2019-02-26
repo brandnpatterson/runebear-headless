@@ -27,21 +27,25 @@ const WeeklyByTag = ({
           <strong>{tag.toUpperCase()}</strong>
         </h1>
       </header>
-      {currentGroup.map(index => {
-        if (weeklyByTag.posts[index]) {
-          const post = weeklyByTag.posts[index];
+      {weeklyByTag.fromState.length === 0 ? (
+        <p style={{ textAlign: 'center' }}>Loading all {tag}...</p>
+      ) : (
+        currentGroup.map(index => {
+          if (weeklyByTag.posts[index]) {
+            const post = weeklyByTag.posts[index];
 
-          return (
-            <WeeklyPost
-              authors={post._embedded && post._embedded['wp:term'][2]}
-              changePage={changePage}
-              content={post.excerpt.rendered}
-              key={post.id}
-              post={post}
-            />
-          );
-        } else return null;
-      })}
+            return (
+              <WeeklyPost
+                authors={post._embedded && post._embedded['wp:term'][2]}
+                changePage={changePage}
+                content={post.excerpt.rendered}
+                key={post.id}
+                post={post}
+              />
+            );
+          } else return null;
+        })
+      )}
       <Pagination
         changePage={changePage}
         currentGroup={currentGroup}

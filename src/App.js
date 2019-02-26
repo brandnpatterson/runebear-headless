@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { fetchRequests } from './api';
+import { fetchFirstPage, fetchPostAndPages, fetchAllRequests } from './api';
 import { firstUpper } from './util';
 
 import About from './components/pages/About';
@@ -24,6 +24,7 @@ class App extends React.Component {
     currentGroup: [0, 1, 2, 3],
     currentPage: 1,
     loading: true,
+    loading_secondary: true,
     pageLength: 4,
     pages: [],
     post_author: [],
@@ -32,20 +33,51 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    if (window.location.search !== '') {
-      window.location.href = window.location.origin;
-    }
-
-    fetchRequests().then(data => {
-      this.setState({
-        categories: data[0],
-        pages: data[1],
-        post_author: data[2],
-        tags: data[3],
-        weekly_posts: data[4],
-        loading: false
+    const fetchAll = () => {
+      fetchAllRequests().then(data => {
+        this.setState({
+          categories: data[0],
+          loading_secondary: false,
+          pages: data[1],
+          post_author: data[2],
+          tags: data[3],
+          weekly_posts: data[4]
+        });
       });
-    });
+    };
+
+    if (
+      window.location.pathname.includes('weekly') &&
+      !window.location.pathname.includes('categories') &&
+      !window.location.pathname.includes('tags') &&
+      window.location.pathname !== '/weekly'
+    ) {
+      /**
+       *  Load Weekly Single Post, then all
+       */
+      fetchPostAndPages(window.location.pathname.split('/')[2])
+        .then(data => {
+          this.setState({
+            loading: false,
+            pages: data[0],
+            weekly_posts: data[1]
+          });
+        })
+        .then(() => fetchAll());
+    } else {
+      /**
+       *  Load First Page, then all
+       */
+      fetchFirstPage()
+        .then(data => {
+          this.setState({
+            loading: false,
+            pages: data[0],
+            weekly_posts: data[1]
+          });
+        })
+        .then(() => fetchAll());
+    }
   }
 
   changePage = (newPage = 1) => {
@@ -110,6 +142,7 @@ class App extends React.Component {
       currentGroup,
       currentPage,
       loading,
+      loading_secondary,
       pages,
       post_author,
       tags,
@@ -177,7 +210,6 @@ class App extends React.Component {
                   path="/weekly"
                   render={() => {
                     document.title = `Weekly | ${siteName}`;
-                    window.scrollTo(0, 0);
 
                     return (
                       <Weekly
@@ -196,7 +228,12 @@ class App extends React.Component {
                   render={({ match }) => {
                     return (
                       <WeeklyBySinglePost
-                        post={this.filterPosts(match.params.weeklySinglePost)}
+                        loading_secondary={loading_secondary}
+                        post={
+                          weekly_posts.length === 1
+                            ? weekly_posts[0]
+                            : this.filterPosts(match.params.weeklySinglePost)
+                        }
                         posts={weekly_posts}
                       />
                     );
