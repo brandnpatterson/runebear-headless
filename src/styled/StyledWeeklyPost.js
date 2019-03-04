@@ -34,7 +34,7 @@ const StyledWeeklyByPost = styled.div`
     }
 
     @media ${mediumUp} {
-      margin-right: 1.45rem;
+      margin-right: 1.3rem;
     }
   }
 
