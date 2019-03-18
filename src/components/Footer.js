@@ -18,7 +18,7 @@ const Footer = ({ pages }) => {
       />
       <a
         className="copyright"
-        href="https://github.com/brandnpatterson"
+        href="http://www.brandnpatterson.com"
         target="_blank"
         rel="noopener noreferrer"
       >
