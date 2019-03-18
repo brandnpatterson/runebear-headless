@@ -47,9 +47,9 @@ class App extends React.Component {
     };
 
     if (
-      window.location.pathname.includes('weekly') &&
-      !window.location.pathname.includes('categories') &&
-      !window.location.pathname.includes('tags') &&
+      window.location.pathname.indexOf('weekly') === 1 &&
+      window.location.pathname.indexOf('categories') === -1 &&
+      window.location.pathname.indexOf('tags') === -1 &&
       window.location.pathname !== '/weekly' &&
       window.location.pathname.length > 8
     ) {
@@ -69,6 +69,7 @@ class App extends React.Component {
       /**
        *  Load First Page, then all
        */
+
       fetchFirstPage()
         .then(data => {
           this.setState({
