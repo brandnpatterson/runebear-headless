@@ -54,6 +54,7 @@ const StyledSubmit = styled.div`
     font-weight: bold;
     margin: 1.875rem auto;
     padding-top: 0;
+    text-align: center;
   }
 
   .card p {

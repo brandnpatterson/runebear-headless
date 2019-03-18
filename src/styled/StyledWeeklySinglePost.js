@@ -76,7 +76,8 @@ const StyledWeeklySinglePost = styled.div`
     margin-bottom: 3.125rem;
 
     @media ${mediumUp} {
-      position: absolute;
+      margin-top: -5rem;
+      position: relative;
       top: 31.25rem;
       width: 62.5rem;
     }

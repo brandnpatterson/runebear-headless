@@ -119,7 +119,7 @@ const WeeklyBySinglePost = ({ loading_secondary, post, posts }) => {
             authors.map(author => {
               return (
                 <p key={author.id}>
-                  All from &nbsp;
+                  All from{' '}
                   <Link to={`/weekly/post-author/${author.slug}`}>
                     {author.name}
                   </Link>

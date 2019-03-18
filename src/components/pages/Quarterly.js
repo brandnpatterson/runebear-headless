@@ -11,23 +11,28 @@ const Quarterly = ({ pages }) => {
   const page = pages.filter(p => p.slug === 'quarterly')[0];
 
   return (
-    <StyledQuarterly
-      dangerouslySetInnerHTML={{ __html: page && page.content.rendered }}
-    />
+    <StyledQuarterly>
+      <div
+        className="quarterly-content"
+        dangerouslySetInnerHTML={{ __html: page && page.content.rendered }}
+      />
+    </StyledQuarterly>
   );
 };
 
 const StyledQuarterly = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  position: relative;
+  display: block;
 
-  @media ${mediumUp} {
-    flex-direction: row;
-    margin: 8rem auto 0;
-    max-width: 50rem;
+  .quarterly-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @media ${mediumUp} {
+      flex-direction: row;
+      margin: 8rem auto 0;
+    }
   }
 
   .speech-bubble-wrapper {
