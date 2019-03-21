@@ -62,6 +62,11 @@ const StyledWeeklySinglePost = styled.div`
 
   .categories-and-tags {
     display: flex;
+    flex-direction: column;
+  }
+
+  .categories-and-tags-container {
+    display: flex;
   }
 
   .arrow-wrapper {

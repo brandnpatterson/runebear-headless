@@ -81,35 +81,39 @@ const WeeklyBySinglePost = ({ loading_secondary, post, posts }) => {
         </div>
         <div className="card-footer">
           <div className="categories-and-tags">
-            {!loading_secondary
-              ? categories &&
-                categories.map(category => {
-                  return (
-                    <Link
-                      key={category.slug}
-                      to={`/weekly/categories/${category.slug}`}
-                    >
-                      <p className="card-categories">
-                        #{category.name.replace(/\s/g, '').replace(/-/g, '')}
-                        &nbsp;
-                      </p>
-                    </Link>
-                  );
-                })
-              : '#...'}
-            {!loading_secondary
-              ? tags &&
-                tags.map(tag => {
-                  return (
-                    <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
-                      <p className="card-tags">
-                        #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
-                        &nbsp;
-                      </p>
-                    </Link>
-                  );
-                })
-              : ''}
+            <div className="categories-and-tags-container">
+              {!loading_secondary
+                ? categories &&
+                  categories.map(category => {
+                    return (
+                      <Link
+                        key={category.slug}
+                        to={`/weekly/categories/${category.slug}`}
+                      >
+                        <p className="card-categories">
+                          #{category.name.replace(/\s/g, '').replace(/-/g, '')}
+                          &nbsp;
+                        </p>
+                      </Link>
+                    );
+                  })
+                : '#...'}
+            </div>
+            <div className="categories-and-tags-container">
+              {!loading_secondary
+                ? tags &&
+                  tags.map(tag => {
+                    return (
+                      <Link key={tag.slug} to={`/weekly/tags/${tag.slug}`}>
+                        <p className="card-tags">
+                          #{tag.name.replace(/\s/g, '').replace(/-/g, '')}
+                          &nbsp;
+                        </p>
+                      </Link>
+                    );
+                  })
+                : ''}
+            </div>
           </div>
         </div>
       </div>
