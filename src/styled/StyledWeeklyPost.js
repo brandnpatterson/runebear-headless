@@ -21,6 +21,11 @@ const StyledWeeklyByPost = styled.div`
 
   .categories-and-tags {
     display: flex;
+    flex-direction: column;
+  }
+
+  .categories-and-tags-container {
+    display: flex;
   }
 
   h2 {
