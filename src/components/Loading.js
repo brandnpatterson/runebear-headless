@@ -2,6 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { dark, white } from '../util/color';
 
+let url = '';
+
+if (process.env.NODE_ENV === 'development') {
+  url = 'http://runebear.com';
+}
+
 class Loading extends React.Component {
   state = {
     background: null,
@@ -10,15 +16,13 @@ class Loading extends React.Component {
         alt: 'Runebear Logo',
         backgroundColor: dark,
         color: white,
-        image:
-          'http://runebear.com/wp-content/uploads/2018/05/runebear-logo.png'
+        image: `${url}/wp-content/uploads/2018/05/runebear-logo.png`
       },
       {
         alt: 'Runebear Word',
         backgroundColor: white,
         color: dark,
-        image:
-          'http://runebear.com/wp-content/uploads/2018/05/runebear-word.png'
+        image: `${url}/wp-content/uploads/2018/05/runebear-word.png`
       }
     ],
     backgroundInterval: null,
