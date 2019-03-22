@@ -6,7 +6,7 @@
     "build": "react-scripts build && npm run create-cname",
     "create-cname": "echo 'runebear-test.surge.sh' > build/CNAME",
     "deploy": "npm run build && surge build",
-    "dev": "npm run stylelint && npm start",
+    "dev": "npm run stylelint &&  NODE_ENV=development npm start",
     "start": "react-scripts start",
     "stylelint": "stylelint src/**/*.js && stylelint src/**/**/*.js",
     "cypress": "cypress open",

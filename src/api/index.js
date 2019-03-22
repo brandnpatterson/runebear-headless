@@ -1,13 +1,19 @@
 import axios from 'axios';
 
+let url = '';
+
+if (process.env.NODE_ENV === 'development') {
+  url = 'http://runebear.com';
+}
+
 export function endpoint(req, per_page = '100') {
-  return `http://runebear.com/wp-json/wp/v2/${req}?per_page=${per_page}&_embed`;
+  return `${url}/wp-json/wp/v2/${req}?per_page=${per_page}&_embed`;
 }
 
 export function fetchSinglePost(post_slug) {
   return new Promise((resolve, reject) => {
     axios
-      .get(`http://runebear.com/wp-json/wp/v2/weekly_posts?slug=${post_slug}`)
+      .get(`${url}/wp-json/wp/v2/weekly_posts?slug=${post_slug}`)
       .then(res => resolve(res.data))
       .catch(err => reject(err));
   });
