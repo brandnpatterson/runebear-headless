@@ -16,7 +16,6 @@ const Pagination = ({ changePage, currentGroup, currentPage, posts }) => {
 
   const onPageSelect = e => {
     changePage(Number(e.target.textContent));
-    window.scrollTo(0, 0);
   };
 
   const onNextPage = () => {
@@ -28,7 +27,6 @@ const Pagination = ({ changePage, currentGroup, currentPage, posts }) => {
 
     if (isDisabled === false) {
       changePage('next');
-      window.scrollTo(0, 0);
     }
   };
 
@@ -37,7 +35,6 @@ const Pagination = ({ changePage, currentGroup, currentPage, posts }) => {
 
     if (prevPage !== 0) {
       changePage('prev');
-      window.scrollTo(0, 0);
     }
   };
 
