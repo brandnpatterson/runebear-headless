@@ -11,22 +11,18 @@ export function endpoint(req, per_page = '100') {
 }
 
 export function fetchSinglePost(post_slug) {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(`${url}/wp-json/wp/v2/weekly_posts?slug=${post_slug}`)
-      .then(res => resolve(res.data))
-      .catch(err => reject(err));
-  });
+  return axios
+    .get(`${url}/wp-json/wp/v2/weekly_posts?slug=${post_slug}`)
+    .then(res => res.data)
+    .catch(err => err);
 }
 
-export const fetchGroup = (req, per_page) => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(endpoint(req, per_page))
-      .then(res => resolve(res.data))
-      .catch(err => reject(err));
-  });
-};
+export function fetchGroup(req, per_page) {
+  return axios
+    .get(endpoint(req, per_page))
+    .then(res => res.data)
+    .catch(err => err);
+}
 
 export function fetchFirstPage() {
   return Promise.all([
