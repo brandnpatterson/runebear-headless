@@ -1,15 +1,17 @@
-import React from 'react';
-import { array } from 'prop-types';
-import styled from 'styled-components';
-import { gray } from '../../util/color';
-import { mediumUp, largeUp } from '../../util/media';
+import React from "react";
+import { array } from "prop-types";
+import styled from "styled-components";
+import { gray } from "../../util/color";
+import { mediumUp, largeUp } from "../../util/media";
 
 const propTypes = {
   pages: array.isRequired
 };
 
 const Submit = ({ pages }) => {
-  const page = pages.filter(p => p.slug === 'submit')[0];
+  const page = pages.filter(p => p.slug === "submit")[0];
+
+  window.scrollTo(0, 0);
 
   return (
     <StyledSubmit

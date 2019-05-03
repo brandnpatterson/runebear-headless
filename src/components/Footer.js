@@ -1,21 +1,17 @@
-import React from 'react';
-import { array } from 'prop-types';
-import styled from 'styled-components';
-import { blue, dark, light } from '../util/color';
-import { mediumDown, mediumUp } from '../util/media';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { blue, dark, light } from "../util/color";
+import { mediumDown, mediumUp } from "../util/media";
 
-const propTypes = {
-  pages: array.isRequired
-};
-
-const Footer = ({ pages }) => {
-  const page = pages.filter(p => p.slug === 'footer')[0];
-
+const Footer = () => {
   return (
     <StyledFooter>
-      <div
-        dangerouslySetInnerHTML={{ __html: page && page.content.rendered }}
-      />
+      <p>
+        <strong>Rune Bear</strong> is always looking for submissions from new
+        and established writers. Check out our <Link to="/submit"> SUBMIT</Link>{" "}
+        page for rules about how to send your prose or poetry.
+      </p>
       <a
         className="copyright"
         href="http://www.brandnpatterson.com"
@@ -84,7 +80,5 @@ const StyledFooter = styled.footer`
     color: ${blue};
   }
 `;
-
-Footer.propTypes = propTypes;
 
 export default Footer;
