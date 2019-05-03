@@ -1,22 +1,22 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { fetchFirstPage, fetchPostAndPages, fetchAllRequests } from './api';
-import { firstUpper } from './util';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import { fetchFirstPage, fetchPostAndPages, fetchAllRequests } from "./api";
+import { firstUpper } from "./util";
 
-import About from './components/pages/About';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Home from './components/pages/Home';
-import Loading from './components/Loading';
-import NotFound from './components/NotFound';
-import Quarterly from './components/pages/Quarterly';
-import StyledApp from './styled/StyledApp';
-import Submit from './components/pages/Submit';
-import Weekly from './components/pages/Weekly';
-import WeeklyByAuthor from './components/pages/WeeklyByAuthor';
-import WeeklyByCategory from './components/pages/WeeklyByCategory';
-import WeeklyBySinglePost from './components/pages/WeeklyBySinglePost';
-import WeeklyByTag from './components/pages/WeeklyByTag';
+import About from "./components/pages/About";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Home from "./components/pages/Home";
+import Loading from "./components/Loading";
+import NotFound from "./components/NotFound";
+import Quarterly from "./components/pages/Quarterly";
+import StyledApp from "./styled/StyledApp";
+import Submit from "./components/pages/Submit";
+import Weekly from "./components/pages/Weekly";
+import WeeklyByAuthor from "./components/pages/WeeklyByAuthor";
+import WeeklyByCategory from "./components/pages/WeeklyByCategory";
+import WeeklyBySinglePost from "./components/pages/WeeklyBySinglePost";
+import WeeklyByTag from "./components/pages/WeeklyByTag";
 
 class App extends React.Component {
   state = {
@@ -47,16 +47,16 @@ class App extends React.Component {
     };
 
     if (
-      window.location.pathname.indexOf('weekly') === 1 &&
-      window.location.pathname.indexOf('categories') === -1 &&
-      window.location.pathname.indexOf('tags') === -1 &&
-      window.location.pathname !== '/weekly' &&
+      window.location.pathname.indexOf("weekly") === 1 &&
+      window.location.pathname.indexOf("categories") === -1 &&
+      window.location.pathname.indexOf("tags") === -1 &&
+      window.location.pathname !== "/weekly" &&
       window.location.pathname.length > 8
     ) {
       /**
        *  Load Weekly Single Post, then all
        */
-      fetchPostAndPages(window.location.pathname.split('/')[2])
+      fetchPostAndPages(window.location.pathname.split("/")[2])
         .then(data => {
           this.setState({
             loading: false,
@@ -85,14 +85,16 @@ class App extends React.Component {
   changePage = (newPage = 1) => {
     const { currentGroup, currentPage, pageLength } = this.state;
 
-    if (newPage === 'next') {
+    window.scrollTo(0, 0);
+
+    if (newPage === "next") {
       const newGroup = currentGroup.map(c => c + pageLength);
 
       this.setState({
         currentGroup: newGroup,
         currentPage: currentPage + 1
       });
-    } else if (newPage === 'prev') {
+    } else if (newPage === "prev") {
       const newGroup = currentGroup.map(c => c - pageLength);
 
       this.setState({
@@ -122,7 +124,7 @@ class App extends React.Component {
       return this.state.weekly_posts.filter(post => post.slug === match)[0];
     }
 
-    const taxonomy = window.location.pathname.split('/')[2].replace(/-/g, '_');
+    const taxonomy = window.location.pathname.split("/")[2].replace(/-/g, "_");
 
     fromState
       .filter(i => i.slug === match)
@@ -150,11 +152,11 @@ class App extends React.Component {
       tags,
       weekly_posts
     } = this.state;
-    const siteName = 'Rune Bear';
+    const siteName = "Rune Bear";
 
     const setDocument = params => {
       window.scrollTo(0, 0);
-      document.title = `${firstUpper(params.replace(/-/g, ' '))} | ${siteName}`;
+      document.title = `${firstUpper(params.replace(/-/g, " "))} | ${siteName}`;
     };
 
     return (
@@ -166,7 +168,7 @@ class App extends React.Component {
             <Header
               changePage={this.changePage}
               pages={pages
-                .filter(page => page.slug !== 'footer')
+                .filter(page => page.slug !== "footer")
                 .sort((a, b) => a.id - b.id)}
             />
             <div className="main-content">

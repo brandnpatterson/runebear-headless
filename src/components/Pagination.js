@@ -1,8 +1,8 @@
-import React from 'react';
-import { array, func, number } from 'prop-types';
-import { smallOnly } from '../util/media';
-import { ellipses } from '../util';
-import styled from 'styled-components';
+import React from "react";
+import { array, func, number } from "prop-types";
+import { smallOnly } from "../util/media";
+import { ellipses } from "../util";
+import styled from "styled-components";
 
 const propTypes = {
   changePage: func.isRequired,
@@ -26,7 +26,7 @@ const Pagination = ({ changePage, currentGroup, currentPage, posts }) => {
     });
 
     if (isDisabled === false) {
-      changePage('next');
+      changePage("next");
     }
   };
 
@@ -34,7 +34,7 @@ const Pagination = ({ changePage, currentGroup, currentPage, posts }) => {
     let prevPage = currentPage - 1;
 
     if (prevPage !== 0) {
-      changePage('prev');
+      changePage("prev");
     }
   };
 
@@ -76,19 +76,20 @@ const Pagination = ({ changePage, currentGroup, currentPage, posts }) => {
     for (let i = 1, l = totalPages; i <= l; i++) {
       allPages.push(ellipses(i, l));
     }
+
     return allPages[currentPage - 1].map((page, index) => {
       return (
-        <li key={page !== '...' ? page : `${index}-index`}>
+        <li key={page !== "..." ? page : `${index}-index`}>
           <a
             className={
-              'pagination-link ' +
-              (page === currentPage ? 'is-current' : '') +
-              (page === '...' ? 'cursor-default' : '')
+              "pagination-link " +
+              (page === currentPage ? "is-current" : "") +
+              (page === "..." ? "cursor-default" : "")
             }
-            style={page === currentPage ? { pointerEvents: 'none' } : null}
+            style={page === currentPage ? { pointerEvents: "none" } : null}
             aria-label={`Page ${page}`}
             aria-current="page"
-            onClick={page === '...' ? null : onPageSelect}
+            onClick={page === "..." ? null : onPageSelect}
             data-id={page}
           >
             {page}
