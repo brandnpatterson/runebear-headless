@@ -5,7 +5,7 @@
 
 # Rune Bear
 
-<a href="http://runebear.com/" target="_blank" rel="noreferrer noopener">_Rune Bear_</a> is a digital literary magazine dedicated to the Strange, Surreal, Supernatural, and Speculative.
+<a href="http://runebear.com/" target="_blank">_Rune Bear_</a> is a digital literary magazine dedicated to the Strange, Surreal, Supernatural, and Speculative.
 
 ## Built With
 
